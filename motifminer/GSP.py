@@ -73,7 +73,7 @@ class GSP:
                         if sequence[parent_index : parent_index+k] == a:
                             self.frequent[a][i].append(parent_index)
                 
-                # Check if candidates comply with minimum support
+                # Check if candidate complies with minimum support
                 self._prune(a)
 
             k += 1        
