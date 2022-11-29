@@ -23,10 +23,8 @@ class GSP:
     Attributes
     ----------
     indexes : dict
-        Dictionary with patterns as keys and and dictionaries as 
-        values. The inner dictionaries have indexes of the sequences the
-        pattern occurs in as keys and a list of indexes in the sequence
-        that correspond to the start of the pattern as values.
+        Dictionary with patterns as keys and a list of occurences as 
+        values. Each occurence is a tuple of (sequence, index).
     maximal : dict
         Same as indexes but drops patterns contained in another pattern.
     """
@@ -40,7 +38,7 @@ class GSP:
         self._L = [[], []]
 
         self.sequences = sequences
-        self.frequent = {}
+        self.frequent = defaultdict(lambda: defaultdict(list))
         self.maximal = {}
 
     def mine(self):
@@ -66,12 +64,12 @@ class GSP:
                 # Count candidate occurences
                 self.frequent[a] = defaultdict(list)
 
-                # Find candidate in all sequences
-                for i, sequence in enumerate(self.sequences):
-                    # The candidate has the same index as its parent
-                    for parent_index in self.frequent[a[:-1]].get(i, []):
-                        if sequence[parent_index : parent_index+k] == a:
-                            self.frequent[a][i].append(parent_index)
+                # Find candidate in sequences parent occurs in
+                for seq, indexes in self.frequent[a[:-1]].items():
+                    sequence = self.sequences[seq]
+                    for index in indexes:
+                        if sequence[index : index+k] == a:
+                            self.frequent[a][seq].append(index)
                 
                 # Check if candidate complies with minimum support
                 self._prune(a)
@@ -116,16 +114,14 @@ class GSP:
     
     def _mine_1_patterns(self):
         """Mine frequent 1-patterns."""
-        # Initialize candidates and counts
+        # Divide sequences into indexes
+        for i, sequence in enumerate(self.sequences):
+            for j, item in enumerate(sequence):
+                self.frequent[item][i].append(j)
+                
+        # Prune infrequent patterns
         C = [*self._alphabet]
         for a in C:
-            self.frequent[a] = defaultdict(list)
-
-            # Find candidate in all sequences
-            for i, sequence in enumerate(self.sequences):
-                indexes = [j for j, char in enumerate(sequence) if a == char]
-                self.frequent[a][i] = indexes
-        
             self._prune(a)
     
     def _prune(self, a):
