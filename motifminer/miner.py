@@ -13,7 +13,38 @@ from .GSP import GSP
 from .mapper import Mapper
 
 class Miner:
-    """Motif miner class."""
+    """Motif miner class.
+    
+    Parameters
+    ----------
+    timeseries : numpy.ndarray
+        2D array with a collection of time series.
+    min_sup : float
+        Fraction of time series a motif should occur in.
+    w : int
+        Window size for Piecewise Aggregate Appriximation.
+    a : int
+        Alphabet size for discretization.
+    l : int
+        Minimum motif length.
+    top_k : int, optional
+        Number of motifs to return.
+        If 0 (default), all motifs are returned.
+    maximal : bool
+        Return only maximal patterns (default).
+        If False, returns all frequent motifs.
+    
+    Attributes
+    ----------
+    sequences : Iterable
+        Collection of time series discretized to sequences.
+    index_map : dict
+        Nested dictionary that maps frequent or maximal patterns to
+        indexes of pattern occurences.
+    motifs : list
+        List of constructed motifs ordered by the distances to their
+        occurences.
+    """
     def __init__(
         self,
         timeseries: np.ndarray,
@@ -32,53 +63,33 @@ class Miner:
             self.maximal = maximal
 
     def mine_motifs(self):
-        """Mine motifs from a database of time series.
+        """Perform all steps in motifminer pipeline."""
+        self.discretize()
+        self.mine_patterns()
+        self.map_patterns()
 
-        Parameters
-        ----------
-        timeseries : numpy.ndarray
-            2D array with a collection of time series.
-        min_sup : float
-            Fraction of time series a motif should occur in.
-        w : int
-            Window size for Piecewise Aggregate Appriximation.
-        a : int
-            Alphabet size for discretization.
-        l : int
-            Minimum motif length.
-        top_k : int, optional
-            Number of motifs to return.
-            If 0 (default), all motifs are returned.
-        maximal : bool
-            Return only maximal patterns (default).
-            If False, returns all frequent motifs.
+        return self.motifs if not self.top_k else self.motifs[:self.top_k]
 
-        Returns
-        -------
-        Numpy array of time series occurences.
-        At most one occurence is selected for each time series.
-        """
-        # {pattern: {idx of time series pattern occurs in: [start_idx]}}
-        index_map = self.get_indexes()
+    def discretize(self):
+        """Discretize time series to sequences."""
+        self.sequences = sax(self.timeseries, self.w, self.a)
 
-        # [np.ndarray(motif)]
-        mm = Mapper(self.timeseries, index_map, self.w)
-        motifs = [mm.map(pattern) for pattern in index_map]
-
-        motifs.sort(key=lambda x: x[1])
-        return motifs if not self.top_k else motifs[:self.top_k]
-
-    def get_indexes(self):
-        # Discretize time series to sequences
-        sequences = sax(self.timeseries, self.w, self.a)
-
+    def mine_patterns(self):
+        """Find frequent patterns in the sequences."""
         # Find frequent and maximal patterns in the sequences
-        gsp = GSP(sequences, self.a)
+        gsp = GSP(self.sequences, self.a)
         gsp.mine()
         gsp.prune(self.l)
 
         # Get indexes of frequent or maximal patterns
         if self.maximal:
-            return gsp.maximal
-        return gsp.frequent
-            
+            self.index_map = gsp.maximal
+        else:
+            self.index_map = gsp.frequent
+
+    def map_patterns(self):
+        """Map patterns back to motifs."""
+        mm = Mapper(self.timeseries, index_map, self.w)
+        self.motifs = [mm.map(pattern) for pattern in index_map]
+
+        self.motifs.sort(key=lambda x: x[1])
