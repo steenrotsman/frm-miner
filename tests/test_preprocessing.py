@@ -3,27 +3,17 @@ import unittest
 import numpy as np
 
 from motifminer import preprocessing
-
+from .test_data import ts, seq
 
 class TestPreprocessing(unittest.TestCase):
-    def setUp(self):
-        self.ts = np.array([
-            [0, 1, 2, 2, 1, 0],
-            [0, 0, 1, 1, 0, 0],
-            [2, 1, 1, 0, 0, 0],
-            [2, 1, 0, 0, 1, 2],
-            [0, 1, 0, 1, 0, 1]
-        ])
-    
     def test_standardize(self):
-        avg = np.mean(self.ts)
-        std = np.std(self.ts)
+        std = np.std(ts)
         
         a = -0.7/std
         b = 0.3/std
         c = 1.3/std
 
-        got = preprocessing._standardize(self.ts)
+        got = preprocessing._standardize(ts)
         
         expected = np.array([
             [a, b, c, c, b, a],
@@ -33,15 +23,15 @@ class TestPreprocessing(unittest.TestCase):
             [a, b, a, b, a, b]
         ])
 
-        self.assertTrue((np.round(got, 5) == np.round(expected, 5)).all())
+        self.assertTrue((np.round(got, 15) == np.round(expected, 15)).all())
 
     def test_paa_w_1(self):
-        paa = preprocessing._paa(self.ts, 1)
+        paa = preprocessing._paa(ts, 1)
 
-        self.assertTrue((paa == self.ts).all())
+        self.assertTrue((paa == ts).all())
     
     def test_paa_w_2(self):
-        paa = preprocessing._paa(self.ts, 2)
+        paa = preprocessing._paa(ts, 2)
 
         expected = np.array([
             [0.5, 2, 0.5],
@@ -54,7 +44,7 @@ class TestPreprocessing(unittest.TestCase):
         self.assertTrue((paa == expected).all())
     
     def test_paa_w_3(self):
-        paa = preprocessing._paa(self.ts, 3)
+        paa = preprocessing._paa(ts, 3)
 
         expected = np.array([
             [1, 1],
@@ -67,20 +57,12 @@ class TestPreprocessing(unittest.TestCase):
         self.assertTrue((paa == expected).all())
     
     def test_fast_sax(self):
-        sax = preprocessing._sax(self.ts, 1, 3)
+        sax = preprocessing._sax(ts, 1, 3)
 
-        self.assertTrue((sax == self.ts).all())
+        self.assertTrue((sax == ts).all())
     
     def test_sax(self):
-        sax = preprocessing.sax(self.ts, 1, 3)
+        sax = preprocessing.sax(ts, 1, 3)
 
-        expected = [
-            'abccba',
-            'aabbaa',
-            'cbbaaa',
-            'cbaabc',
-            'ababab'
-        ]
-
-        self.assertEqual(sax, expected)
+        self.assertEqual(sax, seq)
 
