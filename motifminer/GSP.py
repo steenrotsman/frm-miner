@@ -6,7 +6,6 @@ can be filtered to have a certain minimum length.
 """
 from collections import defaultdict
 from typing import Iterable
-from string import ascii_lowercase as lowercase
 
 class GSP:
     """Mine patterns from a collection of sequences with GSP.
@@ -31,15 +30,13 @@ class GSP:
     def __init__(
             self,
             sequences: Iterable,
-            alphabet_size: int,
-            min_sup: float = 0.5):        
-        self._alphabet = lowercase[:alphabet_size]
+            min_sup: float = 0.5):
         self._min_freq = len(sequences) * min_sup
         self._L = [[], []]
 
         self.sequences = sequences
         self.frequent = defaultdict(lambda: defaultdict(list))
-        self.maximal = {}
+        self.maximal = defaultdict(lambda: defaultdict(list))
 
     def mine(self):
         """Mine Generalised Sequential Patterns.
@@ -118,10 +115,9 @@ class GSP:
         for i, sequence in enumerate(self.sequences):
             for j, item in enumerate(sequence):
                 self.frequent[item][i].append(j)
-                
+
         # Prune infrequent patterns
-        C = [*self._alphabet]
-        for a in C:
+        for a in list(self.frequent.keys()):
             self._prune(a)
     
     def _prune(self, a):
