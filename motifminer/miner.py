@@ -89,7 +89,7 @@ class Miner:
 
     def map_patterns(self):
         """Map patterns back to motifs."""
-        mm = Mapper(self.timeseries, index_map, self.w)
-        self.motifs = [mm.map(pattern) for pattern in index_map]
+        mm = Mapper(self.timeseries, self.index_map, self.w)
+        self.motifs = [mm.map(pattern) for pattern in self.index_map]
 
         self.motifs.sort(key=lambda x: x[1])

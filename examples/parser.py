@@ -1,3 +1,6 @@
+import sys
+sys.path.append('.')
+sys.path.append('..')
 import argparse
 
 def parse():
