@@ -4,8 +4,6 @@ This module defines the mine_motifs function, which takes a database of
 time series and finds frequent or maximal motifs in it. The motifs can
 be filtered for length and ranked using different strategies.
 """
-from typing import Callable
-
 import numpy as np
 
 from .preprocessing import sax
@@ -77,7 +75,7 @@ class Miner:
     def mine_patterns(self):
         """Find frequent patterns in the sequences."""
         # Find frequent and maximal patterns in the sequences
-        gsp = GSP(self.sequences, self.a)
+        gsp = GSP(self.sequences, self.min_sup)
         gsp.mine()
         gsp.prune(self.l)
 
