@@ -7,7 +7,7 @@ def main():
     args = parse()
     data = np.loadtxt('BeetleFly.tsv', delimiter='\t')[:, 1:] # 8
     
-    mm = Miner(data, args.w, args.a, args.l)
+    mm = Miner(data, args.min_sup, args.w, args.a, args.l)
     motifs = mm.mine_motifs()
 
     if args.plot:

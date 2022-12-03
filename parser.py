@@ -6,6 +6,10 @@ def parse():
         description='Discover frequent motifs \
             of variable length in time series.')
     parser.add_argument(
+        '--min-sup', default=0.5, type=float, nargs='?',
+        help='set minimum support \
+            (default: %(default)s)')
+    parser.add_argument(
         '-w', default=8, type=int, nargs='?',
         help='set Piecewise Aggregate Approximation window size \
             (default: %(default)s)')

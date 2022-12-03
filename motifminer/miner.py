@@ -16,17 +16,19 @@ class Miner:
     """Motif miner class."""
     def __init__(
         self,
-        data: np.ndarray,
+        timeseries: np.ndarray,
+        min_sup: float,
         w: int,
         a: int,
         l: int,
-        topk: int = 0,
+        top_k: int = 0,
         maximal: bool = True):
-            self.data = data
+            self.timeseries = timeseries
+            self.min_sup = min_sup
             self.w = w
             self.a = a
             self.l = l
-            self.topk = topk
+            self.top_k = top_k
             self.maximal = maximal
 
     def mine_motifs(self):
@@ -34,15 +36,17 @@ class Miner:
 
         Parameters
         ----------
-        data : numpy.ndarray
+        timeseries : numpy.ndarray
             2D array with a collection of time series.
+        min_sup : float
+            Fraction of time series a motif should occur in.
         w : int
             Window size for Piecewise Aggregate Appriximation.
         a : int
             Alphabet size for discretization.
         l : int
             Minimum motif length.
-        topk : int, optional
+        top_k : int, optional
             Number of motifs to return.
             If 0 (default), all motifs are returned.
         maximal : bool
@@ -55,18 +59,18 @@ class Miner:
         At most one occurence is selected for each time series.
         """
         # {pattern: {idx of time series pattern occurs in: [start_idx]}}
-        indexes = self.get_indexes()
+        index_map = self.get_indexes()
 
         # [np.ndarray(motif)]
-        mm = Mapper(self.data, indexes, self.w)
-        motifs = [mm.map(pattern) for pattern in indexes]
+        mm = Mapper(self.timeseries, index_map, self.w)
+        motifs = [mm.map(pattern) for pattern in index_map]
 
         motifs.sort(key=lambda x: x[1])
-        return motifs
+        return motifs if not self.top_k else motifs[:self.top_k]
 
     def get_indexes(self):
         # Discretize time series to sequences
-        sequences = sax(self.data, self.w, self.a)
+        sequences = sax(self.timeseries, self.w, self.a)
 
         # Find frequent and maximal patterns in the sequences
         gsp = GSP(sequences, self.a)
