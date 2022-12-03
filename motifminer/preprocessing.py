@@ -4,7 +4,6 @@ This module defines various time series preprocessing functions, such as
 normalization, dimensionality reduction and discretization.
 """
 import numpy as np
-from numba import njit
 
 def sax(ts: np.ndarray, w: int, a: int):
     """Symbolic Aggregate approXimation.
@@ -24,10 +23,14 @@ def sax(ts: np.ndarray, w: int, a: int):
     List with a collection of discrete sequences from the time series.
     """
     sax = _sax(ts, w, a)
-    return [_to_string(sequence) for sequence in sax]
+    dim = len(sax.shape)
+    
+    if dim == 1:
+        return _to_string(sax)
+    elif dim == 2:
+        return [_to_string(sequence) for sequence in sax]
 
 
-@njit(cache=True)
 def _sax(ts: np.ndarray, w: int, a: int):
     """Fast SAX implementation."""
 
@@ -48,7 +51,6 @@ def _sax(ts: np.ndarray, w: int, a: int):
     return np.digitize(_paa(_standardize(ts), w), breakpoints[a])
 
 
-@njit(cache=True)
 def _standardize(ts: np.ndarray):
     """Standardize time series to a mean of 0 and a std of 1."""
     avg = np.mean(ts)
@@ -56,15 +58,23 @@ def _standardize(ts: np.ndarray):
     return (ts - avg) / std
 
 
-@njit(cache=True)
 def _paa(ts: np.ndarray, w: int):
     """Perform Piecewise Aggregate Approximation."""
-    new_length = int(ts.shape[1] / w)
-    paa = np.empty((ts.shape[0], new_length))
-    for i in range(ts.shape[0]):
-        serie = ts[i]
-        for j in range(new_length):
-            paa[i, j] = np.mean(serie[j*w:(j+1)*w])
+    dim = len(ts.shape)
+    
+    if dim == 1:
+        new_length = int(ts.shape[0] / w)
+        paa = np.empty((new_length))
+        for i in range(new_length):
+            paa[i] = np.mean(ts[i*w : (i+1)*w])
+    elif dim == 2:
+        new_length = int(ts.shape[1] / w)
+        paa = np.empty((ts.shape[0], new_length))
+        for i in range(ts.shape[0]):
+            serie = ts[i]
+            for j in range(new_length):
+                paa[i, j] = np.mean(serie[j*w:(j+1)*w])
+
     return paa
 
 
