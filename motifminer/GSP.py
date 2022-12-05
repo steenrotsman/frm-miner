@@ -7,6 +7,8 @@ can be filtered to have a certain minimum length.
 from collections import defaultdict
 from typing import Iterable
 
+from .motif import Motif
+
 class GSP:
     """Mine patterns from a collection of sequences with GSP.
 
@@ -22,8 +24,7 @@ class GSP:
     Attributes
     ----------
     indexes : dict
-        Dictionary with patterns as keys and a list of occurences as 
-        values. Each occurence is a tuple of (sequence, index).
+        Dictionary with patterns as keys and a list of Motifs as values.
     maximal : dict
         Same as indexes but drops patterns contained in another pattern.
     """
@@ -35,8 +36,8 @@ class GSP:
         self._L = [[], []]
 
         self.sequences = sequences
-        self.frequent = defaultdict(lambda: defaultdict(list))
-        self.maximal = defaultdict(lambda: defaultdict(list))
+        self.frequent = {}
+        self.maximal = {}
 
     def mine(self):
         """Mine Generalised Sequential Patterns.
@@ -114,7 +115,7 @@ class GSP:
         # Divide sequences into indexes
         for i, sequence in enumerate(self.sequences):
             for j, item in enumerate(sequence):
-                self.frequent[item][i].append(j)
+                self.frequent[item].record_index(i, j)
 
         # Prune infrequent patterns
         for a in list(self.frequent.keys()):
