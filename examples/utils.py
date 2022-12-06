@@ -3,6 +3,8 @@ sys.path.append('.')
 sys.path.append('..')
 import argparse
 
+import numpy as np
+
 def parse():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
@@ -42,6 +44,7 @@ def plot(data, motifs):
     plt.show()
 
     for motif in motifs:
-        plt.plot(motif[0].T)
+        plt.plot(np.array(motif.matches).T, color='black', linewidth=0.1)
+        plt.plot(motif.representative, color='blue')
         plt.ylim(-3, 3)
         plt.show()
