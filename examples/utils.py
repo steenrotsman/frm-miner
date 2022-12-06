@@ -25,7 +25,7 @@ def parse():
         help='minimal length of patterns to mine \
             (default: %(default)s)')
     parser.add_argument(
-        '--topk', default=0, type=int, nargs='?',
+        '-k', default=0, type=int, nargs='?',
         help='how many patterns to find the motifs of, finds all if 0 \
             (default: %(default)s)')
     parser.add_argument(
