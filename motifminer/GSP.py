@@ -24,7 +24,7 @@ class GSP:
     Attributes
     ----------
     indexes : dict
-        Dictionary with patterns as keys and a list of Motifs as values.
+        Dictionary with patterns as keys and Motifs as values.
     maximal : dict
         Same as indexes but drops patterns contained in another pattern.
     """
@@ -60,14 +60,14 @@ class GSP:
 
             for a in C:
                 # Count candidate occurences
-                self.frequent[a] = defaultdict(list)
+                self.frequent[a] = Motif(a)
 
                 # Find candidate in sequences parent occurs in
-                for seq, indexes in self.frequent[a[:-1]].items():
+                for seq, indexes in self.frequent[a[:-1]].indexes.items():
                     sequence = self.sequences[seq]
                     for index in indexes:
                         if sequence[index : index+k] == a:
-                            self.frequent[a][seq].append(index)
+                            self.frequent[a].record_index(seq, index)
                 
                 # Check if candidate complies with minimum support
                 self._prune(a)
@@ -115,6 +115,8 @@ class GSP:
         # Divide sequences into indexes
         for i, sequence in enumerate(self.sequences):
             for j, item in enumerate(sequence):
+                if item not in self.frequent:
+                    self.frequent[item] = Motif(item)
                 self.frequent[item].record_index(i, j)
 
         # Prune infrequent patterns
@@ -129,7 +131,7 @@ class GSP:
         - Adds frequent patterns to maximal pattern indexes
         - Removes frequent pattern parents from maximal pattern indexes
         """
-        if len(self.frequent[a]) < self._min_freq:
+        if len(self.frequent[a].indexes) < self._min_freq:
             # Delete indexes of this infrequent pattern
             self.frequent.pop(a)
         else:

@@ -11,6 +11,8 @@ from collections import defaultdict
 
 import numpy as np
 
+from .motif import Motif
+
 class Mapper:
     """Find frequent motifs of variable lengths in timeseries.
 
@@ -18,80 +20,61 @@ class Mapper:
     ----------
     timeseries : numpy.ndarray
         Collection of time series to mine frequent motifs in.
-    indexes : dict
-        See GSP.indexes.
     w : int
         Window size for Piecewise Aggregate Approximation; factor by
         which the sequences are shorter than the time series.
     """
-    def __init__(self, timeseries: np.ndarray, indexes: dict, w: int):
+    def __init__(self, timeseries: np.ndarray, w: int):
         self.timeseries = timeseries
-        self.indexes = indexes
         self._w = w
 
-    def map(self, pattern: str)-> np.ndarray:
-        """Translate a pattern to a motif.
+    def map(self, motif: str)-> np.ndarray:
+        """Translate a pattern to a motif."""
+        motif.occurences = self.get_occurences(motif)
 
-        Maps all occurences of the pattern to the collection of time
-        series and constructs a synthetic representative motif. This
-        representative motif can then be used directly, or to find the
-        most representative motif occurence.
+        motif.representative = self.get_representative(motif)
 
-        Parameters
-        ----------
-        pattern : str
-            The pattern to map to the time series.
-        
-        Returns
-        -------
-        motif : np.ndarray
-            A constructed average motif from all occurences.
-        rmse : float
-            Average RMSE between the synthetic motif and its occurences.
-        """
-        motifslist = self._find(pattern)
-        synthetic = self._mean([self._mean(motifs) for motifs in motifslist])
+        motif.matches, motif.rmse = self.get_matches(motif)
 
-        rmse = 0
-        for motifs in motifslist:
-            rmse += min([self._rmse(motif, synthetic) for motif in motifs])
-        
-        return synthetic, rmse / len(motifslist)    
+        return motif   
 
-    def _find(self, pattern: str)-> dict:
-        """Find occurences of a pattern in the time series.
+    def get_occurences(self, motif: Motif)-> list:
+        """Find occurences of a pattern in the time series."""
+        motif_len = len(motif.pattern) * self._w
 
-        Uses the indexes from miner to find the occurences of a pattern
-        in all timeseries.
-
-        Parameters
-        ----------
-        pattern : str
-            The pattern to look for in the timeseries.
-
-        Returns
-        -------
-        List of lists with motif occurences in the time series.
-        Occurences from the same time series are grouped together in the
-        outer list.
-        """
-        motif_len = len(pattern) * self._w
-
-        occurences = []
-        for i, indexes in self.indexes[pattern].items():
-            motifs = []
+        occ_by_ts = []
+        for i, indexes in motif.indexes.items():
+            occ_in_ts = []
             for index in indexes:
                 start = index * self._w
                 end = start + motif_len
-                motifs.append(self.timeseries[i][start : end])
-            occurences.append(motifs)
+                occ_in_ts.append(self.timeseries[i][start : end])
+            occ_by_ts.append(occ_in_ts)
         
-        return occurences
+        return occ_by_ts
+
+    def get_representative(self, motif):
+        """Get representative motif from occurences."""
+        return self._mean([self._mean(occ) for occ in motif.occurences])
+
+    def get_matches(self, motif: Motif):
+        """Get best matches and RMSE to representative motif."""
+        matches = []
+        rmse = 0.0
+
+        for occ_in_ts in motif.occurences:
+            best_match = None
+            min_rmse = 100
+            for occurence in occ_in_ts:
+                rmse = np.mean((occurence - motif.representative) ** 2) ** 0.5
+                if rmse < min_rmse:
+                    best_match = occurence
+                    min_rmse = rmse
+            rmse += min_rmse
+            matches.append(best_match)
+
+        return matches, rmse
 
     def _mean(self, a: list):
         """Wrapper around np.array and np.mean(axis=0)."""
-        return np.mean(np.array(a), axis=0)
-    
-    def _rmse(self, a: np.ndarray, b: np.ndarray):
-        """Root Mean Squared Error."""
-        return np.mean((a - b) ** 2) ** 0.5    
+        return np.mean(np.array(a), axis=0)  

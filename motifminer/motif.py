@@ -7,14 +7,18 @@ import numpy as np
 class Motif:
     pattern: str
     indexes: defaultdict(list)
-    occurences: np.ndarray
+    occurences: list
     representative: np.ndarray
+    matches: list
+    rmse: float
 
     def __init__(self, pattern):
         self.pattern = pattern
         self.indexes = defaultdict(list)
-        self.occurences = np.array([])
+        self.occurences = []
         self.representative = np.array([])
+        self.matches = []
+        self.rmse = 0.0
     
     def record_index(self, i, j):
         """Record starting index of pattern in sequence i at position j."""

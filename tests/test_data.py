@@ -17,7 +17,7 @@ seq = [
 ]
 
 patterns = [
-    'a', 'b', 'c',
-    'aa', 'ab', 'ba',
-    'baa'
+    'a', 'aa', 'ab',
+    'b', 'ba', 'baa',
+    'c', 'cb'
 ]

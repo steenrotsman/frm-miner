@@ -25,7 +25,7 @@ class Miner:
         Alphabet size for discretization.
     l : int
         Minimum motif length.
-    top_k : int, optional
+    k : int, optional
         Number of motifs to return.
         If 0 (default), all motifs are returned.
     maximal : bool
@@ -50,14 +50,14 @@ class Miner:
         w: int,
         a: int,
         l: int,
-        top_k: int = 0,
+        k: int = 0,
         maximal: bool = True):
             self.timeseries = timeseries
             self.min_sup = min_sup
             self.w = w
             self.a = a
             self.l = l
-            self.top_k = top_k
+            self.k = k
             self.maximal = maximal
 
     def mine_motifs(self):
@@ -66,7 +66,7 @@ class Miner:
         self.mine_patterns()
         self.map_patterns()
 
-        return self.motifs if not self.top_k else self.motifs[:self.top_k]
+        return self.motifs if not self.k else self.motifs[:self.k]
 
     def discretize(self):
         """Discretize time series to sequences."""
@@ -81,13 +81,13 @@ class Miner:
 
         # Get indexes of frequent or maximal patterns
         if self.maximal:
-            self.index_map = gsp.maximal
+            self.motifs = gsp.maximal.values()
         else:
-            self.index_map = gsp.frequent
+            self.motifs = gsp.frequent.values()
 
     def map_patterns(self):
         """Map patterns back to motifs."""
-        mm = Mapper(self.timeseries, self.index_map, self.w)
-        self.motifs = [mm.map(pattern) for pattern in self.index_map]
+        mm = Mapper(self.timeseries, self.w)
+        self.motifs = [mm.map(motif) for motif in self.motifs]
 
-        self.motifs.sort(key=lambda x: x[1])
+        self.motifs.sort(key=lambda motif: len(motif.matches))
