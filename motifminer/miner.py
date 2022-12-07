@@ -27,9 +27,9 @@ class Miner:
         Minimum motif length.
     k : int, optional
         Number of motifs to return.
-        If 0 (default), all motifs are returned.
-    maximal : bool
-        Return only maximal patterns (default).
+        If 0, all motifs are returned.
+    m : bool
+        Return only maximal patterns. 
         If False, returns all frequent motifs.
     
     Attributes
@@ -50,15 +50,16 @@ class Miner:
         w: int,
         a: int,
         l: int,
-        k: int = 0,
-        maximal: bool = True):
+        k: int,
+        m: bool
+        ):
             self.timeseries = timeseries
             self.min_sup = min_sup
             self.w = w
             self.a = a
             self.l = l
             self.k = k
-            self.maximal = maximal
+            self.m = m
 
     def mine_motifs(self):
         """Perform all steps in motifminer pipeline."""
@@ -80,7 +81,7 @@ class Miner:
         gsp.prune(self.l)
 
         # Get indexes of frequent or maximal patterns
-        if self.maximal:
+        if self.m:
             self.motifs = gsp.maximal.values()
         else:
             self.motifs = gsp.frequent.values()

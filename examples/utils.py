@@ -31,6 +31,10 @@ def parse():
         help='how many patterns to find the motifs of, finds all if 0 \
             (default: %(default)s)')
     parser.add_argument(
+        '-m', action='store_true',
+        help='mine maximal motifs (default: all frequent motifs).'
+    )
+    parser.add_argument(
         '--plot', action='store_true',
         help='plot the original timeseries and the motifs')
     args = parser.parse_args()
