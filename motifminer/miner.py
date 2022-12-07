@@ -8,7 +8,6 @@ import numpy as np
 
 from .preprocessing import sax
 from .GSP import GSP
-from .mapper import Mapper
 
 class Miner:
     """Motif miner class.
@@ -88,7 +87,28 @@ class Miner:
 
     def map_patterns(self):
         """Map patterns back to motifs."""
-        mm = Mapper(self.timeseries, self.w)
-        self.motifs = [mm.map(motif) for motif in self.motifs]
+        self.motifs = [self.map(motif) for motif in self.motifs]
 
         self.motifs.sort(key=lambda motif: len(motif.matches))
+    
+    def map(self, motif):
+        """Fill motif attributes."""
+        motif.occurences = self.get_occurences(motif)
+        motif.map()
+
+        return motif
+
+    def get_occurences(self, motif):
+        """Get the occurences of one motif in the time series."""
+        motif_len = len(motif.pattern) * self.w
+
+        occurences = []
+        for i, indexes in motif.indexes.items():
+            occ = []
+            for index in indexes:
+                start = index * self.w
+                end = start + motif_len
+                occ.append(self.timeseries[i][start : end])
+            occurences.append(occ)
+        
+        return occurences

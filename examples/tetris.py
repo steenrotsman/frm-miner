@@ -7,14 +7,24 @@ from utils import parse, plot
 from motifminer import Miner
 from motifminer.preprocessing import sax
 
-COLUMN = 'AU45_r'
+from cProfile import Profile
+from pstats import Stats
+
+COLUMN = 'AU17_r'
 
 def main():
     args = parse()
     data = get_data()
 
     mm = Miner(data, args.min_sup, args.w, args.a, args.l, args.k, args.m)
-    motifs = mm.mine_motifs()
+    # motifs = mm.mine_motifs()
+    test = lambda: mm.mine_motifs()
+    profiler = Profile()
+    profiler.runcall(test)
+    stats = Stats(profiler)
+    stats.strip_dirs()
+    stats.sort_stats('cumulative')
+    stats.print_stats()
 
     if args.plot:
         plot(data, motifs)
