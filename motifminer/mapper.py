@@ -73,7 +73,7 @@ class Mapper:
             rmse += min_rmse
             matches.append(best_match)
 
-        return matches, rmse
+        return matches, rmse / len(matches)
 
     def _mean(self, a: list):
         """Wrapper around np.array and np.mean(axis=0)."""
