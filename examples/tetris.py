@@ -17,7 +17,7 @@ def main():
     motifs = mm.mine_motifs()
 
     if args.plot:
-        plot(data, motifs)
+        plot(data, motifs, args.w, args.a)
 
 
 def get_data():

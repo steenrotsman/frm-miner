@@ -5,6 +5,8 @@ import argparse
 
 import numpy as np
 
+from motifminer.preprocessing import breakpoints, _standardize
+
 def parse():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
@@ -41,14 +43,23 @@ def parse():
 
     return args
 
-def plot(data, motifs):
+def plot(data, motifs, w, a):
     import matplotlib.pyplot as plt
-
-    plt.plot(data.T)
+    plt.plot(data.T, color='black', linewidth=0.5)
     plt.show()
 
     for motif in motifs:
-        plt.plot(np.array(motif.matches).T, color='black', linewidth=0.1)
+        plt.plot(np.array(list(motif.matches.values())).T, color='black', linewidth=0.1)
         plt.plot(motif.representative, color='blue')
+        plt.hlines(breakpoints[a], 0, len(motif.representative), colors='black', linewidth=0.3)
         plt.ylim(-3, 3)
+        plt.show()
+    
+        for k, m in motif.match_indexes.items():
+            x = np.arange(len(data[k]))
+            y = data[k]
+            m[0], m[1] = m[0] * w, m[1] * w
+            plt.plot(x[:m[0]+1], y[:m[0]+1], linewidth=0.5, color='black')
+            plt.plot(x[m[0]:m[1]+1], y[m[0]:m[1]+1], linewidth=2, color='blue')
+            plt.plot(x[m[1]:], y[m[1]:], linewidth=0.5, color='black')
         plt.show()

@@ -33,21 +33,6 @@ def sax(ts: np.ndarray, w: int, a: int):
 
 def _sax(ts: np.ndarray, w: int, a: int):
     """Fast SAX implementation."""
-
-    # Defined in Lin, Keogh, Lonardi, & Chiu (2003). A Symbolic
-    # Representation of Time Series, with Implications for Streaming
-    # Algorithms. Table 3.
-    breakpoints = {
-        3: np.array([-0.43, 0.43]),
-        4: np.array([-0.67, 0, 0.67]),
-        5: np.array([-0.84, -0.25, 0.25, 0.84]),
-        6: np.array([-0.97, -0.43, 0, 0.43, 0.97]),
-        7: np.array([-1.07, -0.57, -0.18, 0.18, 0.57, 1.07]),
-        8: np.array([-1.15, -0.67, -0.32, 0, 0.32, 0.67, 1.15]),
-        9: np.array([-1.22, -0.76, -0.43, -0.14, 0.14, 0.43, 0.76, 1.22]),
-        10: np.array([-1.28, -0.84, -0.52, -0.25, 0, 0.25, 0.52, 0.84, 1.28]),
-    }
-
     return np.digitize(_paa(_standardize(ts), w), breakpoints[a])
 
 
@@ -81,3 +66,17 @@ def _paa(ts: np.ndarray, w: int):
 def _to_string(sequence: np.ndarray):
     """Transform sequence of integers to string of letters."""
     return ''.join([chr(c + 97) for c in sequence])
+
+# Defined in Lin, Keogh, Lonardi, & Chiu (2003). A Symbolic
+# Representation of Time Series, with Implications for Streaming
+# Algorithms. Table 3.
+breakpoints = {
+    3: np.array([-0.43, 0.43]),
+    4: np.array([-0.67, 0, 0.67]),
+    5: np.array([-0.84, -0.25, 0.25, 0.84]),
+    6: np.array([-0.97, -0.43, 0, 0.43, 0.97]),
+    7: np.array([-1.07, -0.57, -0.18, 0.18, 0.57, 1.07]),
+    8: np.array([-1.15, -0.67, -0.32, 0, 0.32, 0.67, 1.15]),
+    9: np.array([-1.22, -0.76, -0.43, -0.14, 0.14, 0.43, 0.76, 1.22]),
+    10: np.array([-1.28, -0.84, -0.52, -0.25, 0, 0.25, 0.52, 0.84, 1.28]),
+}

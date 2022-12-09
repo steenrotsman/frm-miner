@@ -102,13 +102,13 @@ class Miner:
         """Get the occurences of one motif in the time series."""
         motif_len = len(motif.pattern) * self.w
 
-        occurences = []
+        occurences = {}
         for i, indexes in motif.indexes.items():
             occ = []
             for index in indexes:
                 start = index * self.w
                 end = start + motif_len
                 occ.append(self.timeseries[i][start : end])
-            occurences.append(occ)
+            occurences[i] = occ
         
         return occurences

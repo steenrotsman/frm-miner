@@ -13,7 +13,7 @@ def main():
     motifs = mm.mine_motifs()
 
     if args.plot:
-        plot(data, motifs)
+        plot(data, motifs, args.w, args.a)
 
 
 if __name__ == '__main__':
