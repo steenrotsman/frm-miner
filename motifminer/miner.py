@@ -89,7 +89,7 @@ class Miner:
         """Map patterns back to motifs."""
         self.motifs = [self.map(motif) for motif in self.motifs]
 
-        self.motifs.sort(key=lambda motif: motif.rmse)
+        self.motifs.sort(key=lambda motif: len(motif.matches), reverse=True)
     
     def map(self, motif):
         """Fill motif attributes."""
