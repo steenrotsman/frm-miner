@@ -1,13 +1,14 @@
 import unittest
 
 import numpy as np
+import tensorflow as tf
 
 from motifminer import preprocessing
 from .test_data import ts, seq
 
 class TestPreprocessing(unittest.TestCase):
     def test_standardize(self):
-        std = np.std(ts)
+        std = tf.math.reduce_std(ts)
         
         a = -0.7/std
         b = 0.3/std

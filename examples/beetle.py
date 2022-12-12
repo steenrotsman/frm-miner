@@ -10,6 +10,8 @@ def main():
     data = np.loadtxt(join('data', 'BeetleFly.tsv'), delimiter='\t')[:, 1:]
     
     mm = Miner(data, args.min_sup, args.w, args.a, args.l, args.k, args.m)
+    mm.discretize()
+    quit()
     motifs = mm.mine_motifs()
 
     if args.plot:
