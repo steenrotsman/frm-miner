@@ -1,7 +1,5 @@
 import unittest
 
-import numpy as np
-
 from motifminer.motif import Motif
 
 class TestMotif(unittest.TestCase):
@@ -9,8 +7,8 @@ class TestMotif(unittest.TestCase):
         a = Motif(pattern='abc')
         self.assertEqual(a.pattern, 'abc')
         self.assertEqual(a.indexes, {})
-        self.assertAlmostEqual(a.occurences.size, 0)
-        self.assertEqual(a.representative.size, 0)
+        self.assertEqual(len(a.matches), 0)
+        self.assertIsNone(a.representative)
     
     def test_record_index(self):
         a = Motif(pattern='abc')

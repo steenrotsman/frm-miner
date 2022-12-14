@@ -13,9 +13,3 @@ rag = tf.ragged.constant([
     [3, 4, 5],
     [6, 7, 8, 9]
 ], dtype=tf.float32)
-
-patterns = [
-    'a', 'aa', 'ab',
-    'b', 'ba', 'baa',
-    'c', 'cb'
-]
