@@ -4,7 +4,7 @@ This module defines the mine_motifs function, which takes a database of
 time series and finds frequent or maximal motifs in it. The motifs can
 be filtered for length and ranked using different strategies.
 """
-import numpy as np
+import tensorflow as tf
 
 from .preprocessing import sax
 from .GSP import GSP
@@ -14,7 +14,7 @@ class Miner:
     
     Parameters
     ----------
-    timeseries : numpy.ndarray
+    timeseries : tensorflow.Tensor
         2D array with a collection of time series.
     min_sup : float
         Fraction of time series a motif should occur in.
@@ -44,7 +44,7 @@ class Miner:
     """
     def __init__(
         self,
-        timeseries: np.ndarray,
+        timeseries: tf.Tensor,
         min_sup: float,
         w: int,
         a: int,
@@ -108,7 +108,15 @@ class Miner:
             for index in indexes:
                 start = index * self.w
                 end = start + motif_len
-                occ.append(self.timeseries[i][start : end])
+                occurence = self.timeseries[i][start : end]
+
+                # Ensure motif occurences are indeed all the same length
+                if too_short := motif_len - len(occurence):
+                    start -= too_short
+                    occurence = self.timeseries[i][start : end]
+ 
+                occ.append(occurence)
+ 
             occurences[i] = occ
         
         return occurences

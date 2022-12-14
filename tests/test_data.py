@@ -1,23 +1,15 @@
-import numpy as np
+import tensorflow as tf
 
-ts = np.array([
+ts = tf.constant([
     [0, 1, 2, 2, 1, 0],
     [0, 0, 1, 1, 0, 0],
     [2, 1, 1, 0, 0, 0],
     [2, 1, 0, 0, 1, 2],
     [0, 1, 0, 1, 0, 1]
-])
+], dtype=tf.float32)
 
-seq = [
-    'abccba',
-    'aabbaa',
-    'cbbaaa',
-    'cbaabc',
-    'ababab'
-]
-
-patterns = [
-    'a', 'aa', 'ab',
-    'b', 'ba', 'baa',
-    'c', 'cb'
-]
+rag = tf.ragged.constant([
+    [1, 2],
+    [3, 4, 5],
+    [6, 7, 8, 9]
+], dtype=tf.float32)
