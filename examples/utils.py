@@ -1,11 +1,13 @@
 import sys
+import argparse
+import os
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
+
 sys.path.append('.')
 sys.path.append('..')
-import argparse
-
-import numpy as np
-
-from motifminer.preprocessing import breakpoints, _standardize
+from motifminer.preprocessing import breakpoints
 
 def parse():
     """Parse command line arguments."""
@@ -45,18 +47,17 @@ def parse():
 
 def plot(data, motifs, w, a):
     import matplotlib.pyplot as plt
-    plt.plot(data.T, color='black', linewidth=0.5)
-    plt.show()
-
+    
     for motif in motifs:
-        plt.plot(np.array(list(motif.matches.values())).T, color='black', linewidth=0.1)
+        print(motif.pattern)
+        plt.plot(tf.transpose(motif.matches), color='black', linewidth=0.1)
         plt.plot(motif.representative, color='blue')
         plt.hlines(breakpoints[a], 0, len(motif.representative), colors='black', linewidth=0.3)
         plt.ylim(-3, 3)
         plt.show()
     
         for k, m in motif.match_indexes.items():
-            x = np.arange(len(data[k]))
+            x = list(range(len(data[k])))
             y = data[k]
             m[0], m[1] = m[0] * w, m[1] * w
             plt.plot(x[:m[0]+1], y[:m[0]+1], linewidth=0.5, color='black')

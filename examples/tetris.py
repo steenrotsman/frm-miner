@@ -1,11 +1,12 @@
 from os import listdir
 from os.path import join
 
-import numpy as np
-
 from utils import parse, plot
+import numpy as np
+import tensorflow as tf
+
 from motifminer import Miner
-from motifminer.preprocessing import sax
+from motifminer.preprocessing import standardize
 
 COLUMN = 'AU17_r'
 
@@ -22,7 +23,8 @@ def main():
 
 def get_data():
     try:
-        data = np.load(join('data', f'{COLUMN}.npy'))
+        data = np.load(join('data', f'{COLUMN}.npy'), allow_pickle=True)
+        data = tf.ragged.constant(data, dtype=tf.float32)
     except FileNotFoundError:
         path = join('data', 'tetris')
         files = listdir(path)
@@ -32,11 +34,11 @@ def get_data():
 
         data = []
         for file in files:
-            row = np.loadtxt(join(path, file), delimiter=',', skiprows=1, usecols=col, max_rows=18270)
+            row = np.loadtxt(join(path, file), delimiter=',', skiprows=1, usecols=col)
             data.append(row)
 
-        data = np.array(data)
-        np.save(join('data', COLUMN), data)
+        data = tf.ragged.constant(data, dtype=tf.float32)
+        np.save(join('data', COLUMN), data.numpy())
     
     return data
 
