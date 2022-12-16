@@ -11,7 +11,7 @@ def main():
     data = np.loadtxt(join('data', 'BeetleFly.tsv'), delimiter='\t')[:, 1:]
     data = tf.constant(data, dtype=tf.float32)
     
-    mm = Miner(data, args.min_sup, args.w, args.a, args.l, args.k, args.m)
+    mm = Miner(data, args.min_sup, args.w, args.a, args.l, args.o, args.k, args.m)
     motifs = mm.mine_motifs()
 
     if args.plot:

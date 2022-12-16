@@ -23,7 +23,9 @@ class Miner:
     a : int
         Alphabet size for discretization.
     l : int
-        Minimum motif length.
+        Minimal motif length.
+    o: float
+        Maximal fraction of patterns contained in longer patters.
     k : int, optional
         Number of motifs to return.
         If 0, all motifs are returned.
@@ -49,6 +51,7 @@ class Miner:
         w: int,
         a: int,
         l: int,
+        o: float,
         k: int,
         m: bool
         ):
@@ -57,6 +60,7 @@ class Miner:
             self.w = w
             self.a = a
             self.l = l
+            self.o = o
             self.k = k
             self.m = m
 
@@ -77,7 +81,7 @@ class Miner:
         # Find frequent and maximal patterns in the sequences
         gsp = GSP(self.sequences, self.min_sup)
         gsp.mine()
-        gsp.prune(self.l)
+        gsp.prune_trivial(self.l, self.o)
 
         # Get indexes of frequent or maximal patterns
         if self.m:

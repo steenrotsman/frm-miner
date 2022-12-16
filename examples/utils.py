@@ -31,13 +31,16 @@ def parse():
         help='minimal length of patterns to mine \
             (default: %(default)s)')
     parser.add_argument(
+        '-o', default=0.9, type=float, nargs='?',
+        help='maximal fraction of patterns contained in longer patters \
+            (default: %(default)s)')
+    parser.add_argument(
         '-k', default=0, type=int, nargs='?',
         help='how many patterns to find the motifs of, finds all if 0 \
             (default: %(default)s)')
     parser.add_argument(
         '-m', action='store_true',
-        help='mine maximal motifs (default: all frequent motifs).'
-    )
+        help='mine maximal motifs (default: all frequent motifs).')
     parser.add_argument(
         '--plot', action='store_true',
         help='plot the original timeseries and the motifs')
@@ -49,7 +52,6 @@ def plot(data, motifs, w, a):
     import matplotlib.pyplot as plt
     
     for motif in motifs:
-        print(motif.pattern)
         plt.plot(tf.transpose(motif.matches), color='black', linewidth=0.1)
         plt.plot(motif.representative, color='blue')
         plt.hlines(breakpoints[a], 0, len(motif.representative), colors='black', linewidth=0.3)

@@ -80,17 +80,84 @@ class GSP:
         Not all frequent patterns that comply with the minimum support
         are interesting. For example, 1-patterns are too trivial to be
         considered interesting.
+        Furthermore, mining only maximal patterns can leave patterns
+        that are trivial because they are almost contained in other
+        patterns. For instance, if aaaaaa is a frequent pattern, aaaaba
+        would still be a maximal pattern, as it differs by an item.
+        However, it could still be considered trivial, as almost all of
+        its contents are contained in the longer pattern.
 
         Parameters
         ----------
         l : int, optional.
             Minimum length of a pattern to be considered interesting.
+        o : float, optional.
+            Maximal redundancy ratio, calculated by
+            len(longest common substring) / len(shortest pattern).
+            If the redundancy ratio exceeds `o`, the shortest pattern is
+            pruned.
         """
         # Prune from frequent patterns
         self.frequent = {k: v for k, v in self.frequent.items() if len(k) >= l}
         
         # Prune from maximal patterns
         self.maximal = {k: v for k, v in self.maximal.items() if len(k) >= l}
+
+        # Prune patterns for which x% is overlapping from maximal
+        patterns = list(self.maximal)
+        patterns.sort(key=lambda x: (len(x), x), reverse=True)
+        pruned = []
+        
+        for p1 in patterns:
+            for p2 in patterns:
+                # Only check unseen patterns and pairs
+                if len(p2) >= len(p1) or p1 in pruned or p2 in pruned:
+                    continue
+
+                # Find longest common substring
+                n, m = len(p1), len(p2)
+                l = self.lcs(p1, p2, n, m)
+
+                # Check if shorter pattern consists mostly of lcs
+                if l / m > o:
+                    self.maximal.pop(p2, 0)
+                    pruned.append(p2)
+
+    def lcs(self, p1: str, p2: str, n: int, m: int)-> int:
+        """Longest common substring.
+        
+        Find the length of the longest string that is contained in two
+        patterns. Uses dynamic programming algorithm adapted from
+        https://www.geeksforgeeks.org/longest-common-substring-dp-29/
+
+        Parameters
+        ----------
+        p1 : str
+            String representation of first pattern.
+        p2 : str
+            String representation of second pattern.
+        n : int
+            Length of first pattern.
+        m : int
+            Length of second pattern.
+        
+        Returns
+        -------
+        res : int
+            Length of the longest common substring of `p1` and `p2`.
+        """
+        dp = [[0 for row in range(m + 1)] for col in range(2)]
+        res = 0
+        
+        for row in range(1, n + 1):
+            for col in range(1, m + 1):
+                if(p1[row - 1] == p2[col - 1]):
+                    dp[row % 2][col] = dp[(row - 1) % 2][col - 1] + 1
+                    if(dp[row % 2][col] > res):
+                        res = dp[row % 2][col]
+                else:
+                    dp[row % 2][col] = 0
+        return res
     
     def get_candidates(self, patterns: list[str])-> set[str]:
         """Use frequent (k-1)-patterns to generate candidate k-patterns.

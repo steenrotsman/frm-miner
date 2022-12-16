@@ -14,7 +14,7 @@ def main():
     args = parse()
     data = get_data()
 
-    mm = Miner(data, args.min_sup, args.w, args.a, args.l, args.k, args.m)
+    mm = Miner(data, args.min_sup, args.w, args.a, args.l, args.o, args.k, args.m)
     motifs = mm.mine_motifs()
 
     if args.plot:
