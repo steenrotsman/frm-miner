@@ -110,12 +110,12 @@ class GSP:
         
         for p1 in patterns:
             for p2 in patterns:
+                n, m = len(p1), len(p2)
                 # Only check unseen patterns and pairs
-                if len(p2) >= len(p1) or p1 in pruned or p2 in pruned:
+                if m > n or p1 == p2 or p1 in pruned or p2 in pruned:
                     continue
 
                 # Find longest common substring
-                n, m = len(p1), len(p2)
                 l = self.lcs(p1, p2, n, m)
 
                 # Check if shorter pattern consists mostly of lcs
