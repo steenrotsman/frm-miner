@@ -82,10 +82,9 @@ class GSP:
         considered interesting.
         Furthermore, mining only maximal patterns can leave patterns
         that are trivial because they are almost contained in other
-        patterns. For instance, if aaaaaa is a frequent pattern, aaaaba
-        would still be a maximal pattern, as it differs by an item.
-        However, it could still be considered trivial, as almost all of
-        its contents are contained in the longer pattern.
+        patterns. For instance, if aaaaaa is a frequent pattern, aabaa
+        could be considered trivial, as almost all of its contents are
+        contained in the longer pattern.
 
         Parameters
         ----------
@@ -93,7 +92,7 @@ class GSP:
             Minimum length of a pattern to be considered interesting.
         o : float, optional.
             Maximal redundancy ratio, calculated by
-            len(longest common substring) / len(shortest pattern).
+            len(longest common subsequence) / len(shortest pattern).
             If the redundancy ratio exceeds `o`, the shortest pattern is
             pruned.
         """
@@ -103,32 +102,31 @@ class GSP:
         # Prune from maximal patterns
         self.maximal = {k: v for k, v in self.maximal.items() if len(k) >= l}
 
-        # Prune patterns for which x% is overlapping from maximal
-        patterns = list(self.maximal)
+        # Prune patterns for which x% is overlapping from frequent
+        patterns = list(self.frequent)
         patterns.sort(key=lambda x: (len(x), x), reverse=True)
         pruned = []
         
         for p1 in patterns:
+            if p1 in pruned:
+                continue
             for p2 in patterns:
                 n, m = len(p1), len(p2)
                 # Only check unseen patterns and pairs
-                if m > n or p1 == p2 or p1 in pruned or p2 in pruned:
+                if m > n or p1 == p2 or p2 in pruned:
                     continue
 
-                # Find longest common substring
-                l = self.lcs(p1, p2, n, m)
-
                 # Check if shorter pattern consists mostly of lcs
-                if l / m > o:
-                    self.maximal.pop(p2, 0)
+                if self.lcs(p1, p2, n, m) / m >= o:
+                    self.frequent.pop(p2, 0)
                     pruned.append(p2)
 
     def lcs(self, p1: str, p2: str, n: int, m: int)-> int:
-        """Longest common substring.
+        """Longest common subsequence.
         
-        Find the length of the longest string that is contained in two
+        Find the length of the longest sequence that is contained in two
         patterns. Uses dynamic programming algorithm adapted from
-        https://www.geeksforgeeks.org/longest-common-substring-dp-29/
+        https://www.geeksforgeeks.org/longest-common-subsequence-dp-4/
 
         Parameters
         ----------
@@ -144,20 +142,25 @@ class GSP:
         Returns
         -------
         res : int
-            Length of the longest common substring of `p1` and `p2`.
+            Length of the longest common subsequence of `p1` and `p2`.
         """
-        dp = [[0 for row in range(m + 1)] for col in range(2)]
-        res = 0
-        
-        for row in range(1, n + 1):
-            for col in range(1, m + 1):
-                if(p1[row - 1] == p2[col - 1]):
-                    dp[row % 2][col] = dp[(row - 1) % 2][col - 1] + 1
-                    if(dp[row % 2][col] > res):
-                        res = dp[row % 2][col]
+        # declaring the array for storing the dp values
+        L = [[None]*(m+1) for i in range(n+1)]
+
+        """Following steps build L[n+1][m+1] in bottom up fashion
+        Note: L[i][j] contains length of LCS of X[0..i-1]
+        and Y[0..j-1]"""
+        for i in range(n+1):
+            for j in range(m+1):
+                if i == 0 or j == 0 :
+                    L[i][j] = 0
+                elif p1[i-1] == p2[j-1]:
+                    L[i][j] = L[i-1][j-1]+1
                 else:
-                    dp[row % 2][col] = 0
-        return res
+                    L[i][j] = max(L[i-1][j] , L[i][j-1])
+
+        # L[n][m]] contains the length of LCS of X[0..n-1] & Y[0..m-1]
+        return L[n][m]
     
     def get_candidates(self, patterns: list[str])-> set[str]:
         """Use frequent (k-1)-patterns to generate candidate k-patterns.
