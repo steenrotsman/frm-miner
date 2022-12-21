@@ -1,6 +1,6 @@
 from os.path import join
 
-from utils import parse, plot
+from utils import parse, plot, ostinato
 import numpy as np
 import tensorflow as tf
 
@@ -17,6 +17,7 @@ def main():
     if args.plot:
         plot(data, motifs, args.w, args.a)
 
+    ostinato(data.numpy().astype(np.float64), 25)
 
 if __name__ == '__main__':
     main()
