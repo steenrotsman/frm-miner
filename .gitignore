@@ -130,3 +130,6 @@ dmypy.json
 
 # Data
 *.csv
+
+# IDE
+.idea
