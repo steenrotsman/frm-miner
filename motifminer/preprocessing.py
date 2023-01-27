@@ -5,13 +5,14 @@ normalization, dimensionality reduction and discretization.
 """
 import tensorflow as tf
 
+
 def sax(ts: tf.Tensor, w: int, a: int):
     """Symbolic Aggregate approXimation.
     
     Parameters
     ----------
     ts : tf.Tensor
-        Potentially ragged 2D tensor of time series to dicretize.
+        Potentially data 2D tensor of time series to dicretize.
     w : int
         Window size for PAA.
     a : int
@@ -42,21 +43,23 @@ def standardize(ts: tf.Tensor):
 
 def paa(ts: tf.Tensor, w: int):
     """Perform Piecewise Aggregate Approximation."""
-    def _paa(row):
-        serie = []
-        j = 0
-        while len(serie) * w < tf.shape(row):
-            serie.append(tf.math.reduce_mean(row[j*w:(j+1)*w]))
-            j += 1
-        return tf.stack(serie)
+    if w == 1:
+        return ts
 
-    # Process row by row to accomodate ragged tensors
+    def _paa(row):
+        series = []
+        j = 0
+        while len(series) * w < tf.shape(row):
+            series.append(tf.math.reduce_mean(row[j*w:(j+1)*w]))
+            j += 1
+        return tf.stack(series)
+
+    # Process row by row to accommodate data tensors
     return tf.map_fn(_paa, ts)
 
 
-# Defined in Lin, Keogh, Lonardi, & Chiu (2003). A Symbolic
-# Representation of Time Series, with Implications for Streaming
-# Algorithms. Table 3.
+# Defined in Lin, Keogh, Linardi, & Chiu (2003). A Symbolic Representation of Time Series,
+# with Implications for Streaming Algorithms. Table 3.
 breakpoints = {
     3: [-0.43, 0.43],
     4: [-0.67, 0, 0.67],

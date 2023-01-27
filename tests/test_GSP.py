@@ -2,7 +2,8 @@ import unittest
 
 from motifminer.GSP import GSP
 from motifminer.preprocessing import sax
-from .test_data import ts, rag
+from test_data import ts, rag
+
 
 class TestMotif(unittest.TestCase):
     def test_lcs(self):

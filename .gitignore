@@ -130,6 +130,8 @@ dmypy.json
 
 # Data
 *.csv
+/experiments/UCRArchive_2018/
+/experiments/mpeg7/
 
 # IDE
 .idea

@@ -3,7 +3,8 @@ import unittest
 import tensorflow as tf
 
 from motifminer import preprocessing
-from .test_data import ts, rag
+from test_data import ts, rag
+
 
 class TestPreprocessing(unittest.TestCase):
     def test_standardize(self):

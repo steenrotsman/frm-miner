@@ -2,6 +2,7 @@ import unittest
 
 from motifminer.motif import Motif
 
+
 class TestMotif(unittest.TestCase):
     def test_init(self):
         a = Motif(pattern='abc')

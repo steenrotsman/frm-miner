@@ -5,9 +5,12 @@ time series and finds frequent or maximal motifs in it. The motifs can
 be filtered for length and ranked using different strategies.
 """
 import tensorflow as tf
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 
-from .preprocessing import sax
+from .preprocessing import sax, breakpoints
 from .GSP import GSP
+
 
 class Miner:
     """Motif miner class.
@@ -19,7 +22,7 @@ class Miner:
     min_sup : float
         Fraction of time series a motif should occur in.
     w : int
-        Window size for Piecewise Aggregate Appriximation.
+        Window size for Piecewise Aggregate Approximation.
     a : int
         Alphabet size for discretization.
     l : int
@@ -37,35 +40,35 @@ class Miner:
     ----------
     sequences : Iterable
         Collection of time series discretized to sequences.
-    index_map : dict
-        Nested dictionary that maps frequent or maximal patterns to
-        indexes of pattern occurences.
     motifs : list
-        List of constructed motifs ordered by the distances to their
-        occurences.
+        Constructed motifs ordered by the distances to their occurrences.
     """
+
     def __init__(
-        self,
-        timeseries: tf.Tensor,
-        min_sup: float,
-        w: int,
-        a: int,
-        l: int,
-        o: float,
-        k: int,
-        m: bool
-        ):
-            self.timeseries = timeseries
-            self.min_sup = min_sup
-            self.w = w
-            self.a = a
-            self.l = l
-            self.o = o
-            self.k = k
-            self.m = m
+            self,
+            timeseries: tf.Tensor,
+            min_sup: float,
+            w: int,
+            a: int,
+            l: int,
+            o: float,
+            k: int,
+            m: bool
+    ):
+        self.timeseries = timeseries
+        self.min_sup = min_sup
+        self.w = w
+        self.a = a
+        self.l = l
+        self.o = o
+        self.k = k
+        self.m = m
+
+        self.sequences = None
+        self.motifs = None
 
     def mine_motifs(self):
-        """Perform all steps in motifminer pipeline."""
+        """Perform all steps in motif mining pipeline."""
         self.discretize()
         self.mine_patterns()
         self.map_patterns()
@@ -94,33 +97,70 @@ class Miner:
         self.motifs = [self.map(motif) for motif in self.motifs]
 
         self.motifs.sort(key=lambda motif: motif.rmse)
-    
+
     def map(self, motif):
         """Fill motif attributes."""
-        motif.occurences = self.get_occurences(motif)
+        motif.occurrences = self.get_occurrences(motif)
         motif.map()
 
         return motif
 
-    def get_occurences(self, motif):
-        """Get the occurences of one motif in the time series."""
+    def get_occurrences(self, motif):
+        """Get the occurrences of one motif in the time series."""
         motif_len = len(motif.pattern) * self.w
 
-        occurences = {}
+        occurrences = {}
         for i, indexes in motif.indexes.items():
             occ = []
             for index in indexes:
                 start = index * self.w
                 end = start + motif_len
-                occurence = self.timeseries[i][start : end]
+                occurrence = self.timeseries[i][start: end]
 
-                # Ensure motif occurences are indeed all the same length
-                if too_short := motif_len - len(occurence):
+                # Ensure motif occurrences are indeed all the same length
+                if too_short := motif_len - len(occurrence):
                     start -= too_short
-                    occurence = self.timeseries[i][start : end]
- 
-                occ.append(occurence)
- 
-            occurences[i] = occ
-        
-        return occurences
+                    occurrence = self.timeseries[i][start: end]
+
+                occ.append(occurrence)
+
+            occurrences[i] = occ
+
+        return occurrences
+
+    def plot(self, motif, kind='all'):
+        if kind in ['all', 'representative']:
+            self._plot_representative(motif)
+        elif kind in ['all', 'timeseries']:
+            self._plot_timeseries(motif)
+        elif kind in ['all', 'box']:
+            self._plot_box(motif)
+        else:
+            raise ValueError(f'Invalid value for `kind`: "{kind}"')
+
+    def _plot_representative(self, motif):
+        plt.plot(tf.transpose(motif.matches), 'k', lw=0.1)
+        plt.plot(motif.representative, 'b', lw=1)
+        plt.hlines(breakpoints[self.a], 0, len(motif.representative), 'k', lw=0.3)
+        plt.ylim(-3, 3)
+        plt.show()
+
+    def _plot_timeseries(self, motif):
+        for k, m in motif.match_indexes.items():
+            x = list(range(len(self.timeseries[k])))
+            y = self.timeseries[k]
+            start, end = m[0] * self.w, m[1] * self.w
+            plt.plot(x[:start + 1], y[:start + 1], 'k', lw=0.5)
+            plt.plot(x[start:end + 1], y[start:end + 1], 'b', lw=1.5)
+            plt.plot(x[start:], y[end:], 'k', lw=0.5)
+        plt.show()
+
+    def _plot_box(self, motif):
+        fig, ax = plt.subplots(len(motif.match_indexes), sharex='all', sharey='all')
+        for i, (k, m) in enumerate(motif.match_indexes.items()):
+            # m[0], m[1] = m[0] * w, m[1] * w
+            ax[i].plot(self.timeseries[k], 'k')
+            ax[i].set_ylim((-3, 3))
+            ax[i].add_patch(Rectangle((m[0], -3), m[1] - m[0], 6, alpha=0.3))
+        plt.subplots_adjust(hspace=0)
+        plt.show()
