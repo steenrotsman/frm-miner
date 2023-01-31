@@ -1,20 +1,20 @@
 import unittest
 
-from motifminer.GSP import GSP
+from motifminer.PatternMiner import PatternMiner
 from motifminer.preprocessing import sax
 from test_data import ts, rag
 
 
 class TestMotif(unittest.TestCase):
     def test_lcs(self):
-        gsp = GSP([])
+        pm = PatternMiner([])
 
-        self.assertEqual(gsp.lcs('bbbbbbbbbb', 'bbbcbbb', 10, 7), 6)
+        self.assertEqual(pm.lcs('bbbbbbbbbb', 'bbbcbbb', 10, 7), 6)
 
     def test_mine(self):
         seq = sax(ts, 1, 3)
-        gsp = GSP(seq)
-        gsp.mine()
+        pm = PatternMiner(seq)
+        pm.mine()
 
         expected = [
             'a', 'aa', 'ab',
@@ -22,13 +22,13 @@ class TestMotif(unittest.TestCase):
             'c', 'cb'
         ]
         
-        self.assertListEqual(sorted(gsp.frequent.keys()), expected)
+        self.assertListEqual(sorted(pm.frequent.keys()), expected)
     
     def test_rag_mine(self):
         seq = sax(rag, 1, 3)
-        gsp = GSP(seq)
-        gsp.mine()
+        pm = PatternMiner(seq)
+        pm.mine()
 
         expected = ['a', 'b']
         
-        self.assertListEqual(sorted(gsp.frequent.keys()), expected)
+        self.assertListEqual(sorted(pm.frequent.keys()), expected)

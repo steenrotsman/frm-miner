@@ -1,17 +1,14 @@
-"""GSP module.
+"""PatternMiner module.
 
-This module defines the GSP class, a class that takes a collection of
+This module defines the PatternMiner class, a class that takes a collection of
 sequences and mines frequent and maximal patterns from it. The patterns
 can be filtered to have a certain minimum length.
 """
-from collections import defaultdict
-from typing import Iterable
-
 from .motif import Motif
 
 
-class GSP:
-    """Mine patterns from a collection of sequences with GSP.
+class PatternMiner:
+    """Mine patterns from a collection of sequences with PatternMiner.
 
     Parameters
     ----------
@@ -31,7 +28,7 @@ class GSP:
     """
     def __init__(
             self,
-            sequences: Iterable,
+            sequences: list,
             min_sup: float = 0.5):
         self._min_freq = len(sequences) * min_sup
         self._L = [[], []]

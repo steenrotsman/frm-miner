@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
 from .preprocessing import sax, breakpoints
-from .GSP import GSP
+from .PatternMiner import PatternMiner
 
 
 class Miner:
@@ -82,15 +82,15 @@ class Miner:
     def mine_patterns(self):
         """Find frequent patterns in the sequences."""
         # Find frequent and maximal patterns in the sequences
-        gsp = GSP(self.sequences, self.min_sup)
-        gsp.mine()
-        gsp.prune_trivial(self.l, self.o)
+        pm = PatternMiner(self.sequences, self.min_sup)
+        pm.mine()
+        pm.prune_trivial(self.l, self.o)
 
         # Get indexes of frequent or maximal patterns
         if self.m:
-            self.motifs = gsp.maximal.values()
+            self.motifs = pm.maximal.values()
         else:
-            self.motifs = gsp.frequent.values()
+            self.motifs = pm.frequent.values()
 
     def map_patterns(self):
         """Map patterns back to motifs."""

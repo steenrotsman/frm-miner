@@ -4,10 +4,8 @@ The data set is freely available from https://dabi.temple.edu/external/shape/MPE
 
 After mining motifs from the contours, they are mapped back to the images.
 """
-from os import listdir
 from os.path import join
 import itertools
-import re
 
 from PIL import Image
 import numpy as np
@@ -30,7 +28,7 @@ K = 10
 
 def main():
     # Load data
-    files = [join(IMG_DIR, file) for file in listdir(IMG_DIR) if re.match(f'^{NAME}', file)]
+    files = [join(IMG_DIR, f'{NAME}-{i+1}.gif') for i in range(20)]
     ts, contours = get_all_ts(files)
 
     # Mine motifs
@@ -97,11 +95,9 @@ def get_ts(center, contour):
 def plot_ts(motifs, contours, ts, w):
     """Plot the time series with motifs that occur in them."""
     for i, (contour, t) in enumerate(zip(contours, ts)):
-        if i > 5:
-            continue
-
         fig, axd = plt.subplot_mosaic([['ts', 'contour']], figsize=(15, 3), gridspec_kw={'width_ratios': [4, 1]})
         fig.set_dpi(300)
+        fig.tight_layout()
 
         # Plot motifs in ts
         axd['ts'].plot(t, 'k', lw=0.5)
@@ -117,6 +113,7 @@ def plot_contours(motifs, contours, w):
     """Plot the images with motifs that occur in them."""
     fig, axs = plt.subplots(ncols=5, nrows=4)
     fig.set_dpi(300)
+
     for (i, contour), ax in zip(enumerate(contours), itertools.chain.from_iterable(axs)):
         plot_contour(motifs, contour, i, w, ax)
 
@@ -125,7 +122,7 @@ def plot_contours(motifs, contours, w):
 
 def plot_contour(motifs, contour, i, w, ax):
     x, y = contour_to_xy(contour)
-    ax.set(xticks=[], yticks=[])
+    ax.set(xticks=[], yticks=[], ylim=[1, 0])
     ax.plot(x, y, 'k', lw=0.5)
     plot_motifs(motifs, i, x, y, w, ax)
 
