@@ -1,18 +1,16 @@
 import unittest
 
 from motifminer.PatternMiner import PatternMiner
-from motifminer.preprocessing import sax
-from test_data import ts, rag
+from test_data import seq, rseq
 
 
-class TestMotif(unittest.TestCase):
+class TestPatternMiner(unittest.TestCase):
     def test_lcs(self):
         pm = PatternMiner([])
 
         self.assertEqual(pm.lcs('bbbbbbbbbb', 'bbbcbbb', 10, 7), 6)
 
     def test_mine(self):
-        seq = sax(ts, 1, 3)
         pm = PatternMiner(seq)
         pm.mine()
 
@@ -25,8 +23,7 @@ class TestMotif(unittest.TestCase):
         self.assertListEqual(sorted(pm.frequent.keys()), expected)
     
     def test_rag_mine(self):
-        seq = sax(rag, 1, 3)
-        pm = PatternMiner(seq)
+        pm = PatternMiner(rseq)
         pm.mine()
 
         expected = ['a', 'b']

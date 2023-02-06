@@ -1,72 +1,98 @@
 """Preprocessing module.
 
-This module defines various time series preprocessing functions, such as
-normalization, dimensionality reduction and discretization.
+This module defines two time series preprocessing functions for standardisation and SAX representation.
 """
-import tensorflow as tf
+import itertools
+from typing import Union
+
+# https://stackoverflow.com/a/60617044
+numeric = Union[int, float]
 
 
-def sax(ts: tf.Tensor, w: int, a: int):
+def sax(timeseries: list[list[numeric]], segment_size: int, alphabet_size: int) -> list[str]:
     """Symbolic Aggregate approXimation.
     
     Parameters
     ----------
-    ts : tf.Tensor
-        Potentially data 2D tensor of time series to dicretize.
-    w : int
-        Window size for PAA.
-    a : int
-        Alphabet size; number of discrete elements the time series are
-        to be binned into.
+    timeseries : list
+        List of lists containing normalised time series to dicretise.
+    segment_size : int
+        Segment size for PAA, factor by which discrete representation is shorter than time series.
+    alphabet_size : int
+        Alphabet size; number of discrete elements the time series are to be binned into.
     
     Returns
     -------
     List with a collection of discrete sequences from the time series.
     """
-    def _discretize(row):
-        discrete = tf.searchsorted(breakpoints[a], row)
-        discrete += 97
-        discrete = tf.strings.unicode_encode(discrete, 'UTF-8')
-        return discrete.numpy().decode('utf-8')
-
-    standardized = standardize(ts)
-    aggregated = paa(standardized, w)
-    return [_discretize(row) for row in aggregated]
+    return [get_sax(series, segment_size, alphabet_size) for series in timeseries]
 
 
-def standardize(ts: tf.Tensor):
-    """Standardize time series to a mean of 0 and a std of 1."""
-    avg = tf.math.reduce_mean(ts)
-    std = tf.math.reduce_std(ts)
-    return (ts - avg) / std
+def get_sax(series: list[numeric], segment_size: int, alphabet_size: int) -> str:
+    """Get SAX representation of one time series."""
+    segments = [series[i:i + segment_size] for i in range(0, len(series) - segment_size + 1, segment_size)]
+    segments = [sum(seg) / len(seg) for seg in segments]
+    for i, seg in enumerate(segments):
+        for b, c in breakpoints[alphabet_size].items():
+            if seg <= b:
+                segments[i] = c
+                break
+    sax_representation = ''.join(segments)
+    return sax_representation
 
 
-def paa(ts: tf.Tensor, w: int):
-    """Perform Piecewise Aggregate Approximation."""
-    if w == 1:
-        return ts
+def standardise(timeseries: list[list], local: bool = True) -> list[list[numeric]]:
+    """Standardise time series.
 
-    def _paa(row):
-        series = []
-        j = 0
-        while len(series) * w < tf.shape(row):
-            series.append(tf.math.reduce_mean(row[j*w:(j+1)*w]))
-            j += 1
-        return tf.stack(series)
+    Standardises data to have a mean of zero and a standard deviation of one.
 
-    # Process row by row to accommodate data tensors
-    return tf.map_fn(_paa, ts)
+    Parameters
+    ----------
+    timeseries
+        Database of time series to standardise.
+    local : bool
+        Use the local (True) or global (False) mean and standard deviation for standardisation.
+
+    Returns
+    -------
+    standardised
+        Database of standardised time series.
+    """
+    if local:
+        standardised = []
+        for series in timeseries:
+            n = len(series)
+            mean = sum(series) / n
+            standardised.append(get_standardised(series, mean, get_std(series, mean, n)))
+    else:
+        flat_ts = list(itertools.chain.from_iterable(timeseries))
+        n = len(flat_ts)
+        global_mean = sum(flat_ts) / n
+        global_std = get_std(flat_ts, global_mean, n)
+        standardised = [get_standardised(series, global_mean, global_std) for series in timeseries]
+
+    return standardised
+
+
+def get_standardised(series: list[numeric], m: float, std: float) -> list[float]:
+    """Perform standardisation on one time series."""
+    return [(x - m) / std for x in series]
+
+
+def get_std(series: list[numeric], mean: float, n: int) -> float:
+    """Calculate the standard deviation of a list given its mean and length."""
+    return (sum((x - mean) ** 2 for x in series) / n) ** 0.5
 
 
 # Defined in Lin, Keogh, Linardi, & Chiu (2003). A Symbolic Representation of Time Series,
 # with Implications for Streaming Algorithms. Table 3.
 breakpoints = {
-    3: [-0.43, 0.43],
-    4: [-0.67, 0, 0.67],
-    5: [-0.84, -0.25, 0.25, 0.84],
-    6: [-0.97, -0.43, 0, 0.43, 0.97],
-    7: [-1.07, -0.57, -0.18, 0.18, 0.57, 1.07],
-    8: [-1.15, -0.67, -0.32, 0, 0.32, 0.67, 1.15],
-    9: [-1.22, -0.76, -0.43, -0.14, 0.14, 0.43, 0.76, 1.22],
-    10: [-1.28, -0.84, -0.52, -0.25, 0, 0.25, 0.52, 0.84, 1.28],
+    3: {-0.43: 'a', 0.43: 'b', 10: 'c'},
+    4: {-0.67: 'a', 0: 'b', 0.67: 'c', 10: 'd'},
+    5: {-0.84: 'a', -0.25: 'b', 0.25: 'c', 0.84: 'd', 10: 'e'},
+    6: {-0.97: 'a', -0.43: 'b', 0: 'c', 0.43: 'd', 0.97: 'e', 10: 'f'},
+    7: {-1.07: 'a', -0.57: 'b', -0.18: 'c', 0.18: 'd', 0.57: 'e', 1.07: 'f', 10: 'g'},
+    8: {-1.15: 'a', -0.67: 'b', -0.32: 'c', 0: 'd', 0.32: 'e', 0.67: 'f', 1.15: 'g', 10: 'h'},
+    9: {-1.22: 'a', -0.76: 'b', -0.43: 'c', -0.14: 'd', 0.14: 'e', 0.43: 'f', 0.76: 'g', 1.22: 'h', 10: 'i'},
+    10: {-1.28: 'a', -0.84: 'b', -0.52: 'c', -0.25: 'd', 0: 'e', 0.25: 'f', 0.52: 'g', 0.84: 'h', 1.28: 'i', 10: 'j'},
 }

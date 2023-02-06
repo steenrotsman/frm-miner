@@ -1,7 +1,6 @@
 from collections import defaultdict
 
-import tensorflow as tf
-from tensorflow.math import reduce_mean as mean
+import numpy as np
 
 
 class Motif:
@@ -20,14 +19,14 @@ class Motif:
     
     def map(self):
         """Map representative, matches, and rmse using occurrences."""
-        self.representative = mean([mean(o, 0) for o in self.occurrences.values()], 0)
+        self.representative = np.mean([np.mean(o, 0) for o in self.occurrences.values()], 0)
 
         for seq, occurrences in self.occurrences.items():
             best_match = None
             best_match_index = []
             min_rmse = 100
             for i, occurrence in enumerate(occurrences):
-                rmse = mean((occurrence - self.representative) ** 2) ** 0.5
+                rmse = np.mean((occurrence - self.representative) ** 2) ** 0.5
                 if rmse < min_rmse:
                     best_match = occurrence
                     min_rmse = rmse
@@ -37,4 +36,3 @@ class Motif:
             self.matches.append(best_match)
             self.match_indexes[seq] = best_match_index
         self.rmse /= len(self.match_indexes)
-        self.matches = tf.stack(self.matches)

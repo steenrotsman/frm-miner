@@ -7,7 +7,6 @@ The proposed algorithm is then run and the motifs it finds are plotted.
 import itertools
 
 import numpy as np
-import tensorflow as tf
 import matplotlib.pyplot as plt
 import stumpy
 
@@ -22,10 +21,11 @@ NOISE_LEVELS = [0.1, 0.3, 0.5, 0.7, 0.9]
 
 # Parameters
 MIN_SUP = 0.5
-W = 25
-A = 5
-L = 3
-O = 0.8
+SEGMENT = 25
+ALPHABET = 5
+MIN_LEN = 3
+MAX_OVERLAP = 0.8
+LOCAL = False
 K = 5
 
 np.random.seed(42)
@@ -42,11 +42,10 @@ def main():
         # Put noisy motif into data
         data = get_data(noise, motif, noise_level)
 
-        # Mining is fast if we now the motif length beforehand...
-        plot_ostinato(data.numpy().astype(np.float64), 500)
+        # plot_ostinato(data, MOTIF_LEN)
 
         # Mine motifs of variable length
-        mm = Miner(data, MIN_SUP, W, A, L, O, K, False)
+        mm = Miner(data, MIN_SUP, SEGMENT, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
         motifs.append(mm.mine_motifs())
 
     plot_motifs(motifs, NOISE_LEVELS, MOTIF_LEN)
@@ -74,7 +73,7 @@ def get_data(noise, motif, noise_level):
         # Add row to simulation data
         data.append(row)
 
-    return tf.ragged.constant(data, dtype=tf.float32)
+    return data
 
 
 def plot_motif(motif, noise_levels):
@@ -108,9 +107,10 @@ def plot_motifs(motifs, noise_levels, max_length):
     flat_motifs = itertools.chain.from_iterable(motifs)
     flat_axs = itertools.chain.from_iterable(axs)
     for motif, ax in zip(flat_motifs, flat_axs):
-        ax.plot(tf.transpose(motif.matches), 'k', lw=0.1)
+        ax.plot(motif.matches, 'k', lw=0.1)
         ax.plot(motif.representative, 'b', lw=1)
-        ax.hlines(breakpoints[A], 0, max_length, 'k', lw=0.3)
+        breaks = list(breakpoints[ALPHABET].keys())[:-1]
+        ax.hlines(breaks, 0, max_length, 'k', lw=0.3)
         remove_spines(ax)
         ax.set_xticks([0, max_length])
 
