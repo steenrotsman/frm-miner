@@ -20,10 +20,10 @@ SAMPLE = True
 
 MIN_SUP = 0.5
 SEGMENT = 4
-ALPHABET = 5
+ALPHABET = 4
 MIN_LEN = 5
-MAX_OVERLAP = 0.9
-LOCAL = False
+MAX_OVERLAP = 0.8
+LOCAL = True
 K = 10
 
 
@@ -96,7 +96,7 @@ def get_ts(center, contour):
 def sample(ts, length=512):
     step = len(ts)/length
     res = []
-    #bresenham interpolation
+    # Bresenham interpolation
     a = 0
     while a < len(ts):
         if len(res) == length:
@@ -121,12 +121,14 @@ def plot_ts(motifs, contours, ts):
         # Plot motifs in corresponding figure
         plot_contour(motifs, contour, i, axd['contour'])
         plt.show()
+        return
 
 
 def plot_contours(motifs, contours):
     """Plot the images with motifs that occur in them."""
-    fig, axs = plt.subplots(ncols=5, nrows=4)
+    fig, axs = plt.subplots(ncols=5, nrows=4, figsize=(20, 16))
     fig.set_dpi(300)
+    fig.tight_layout()
 
     for (i, contour), ax in zip(enumerate(contours), itertools.chain.from_iterable(axs)):
         plot_contour(motifs, contour, i, ax)

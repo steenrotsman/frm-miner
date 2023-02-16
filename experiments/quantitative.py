@@ -4,29 +4,30 @@ This module provides a quantitative experiment that injects different motifs int
 A random noise time series database is generated, into which constructed motifs are injected.
 The proposed algorithm is then run and the motifs it finds are plotted.
 """
-import itertools
+from itertools import chain
 
 import numpy as np
 import matplotlib.pyplot as plt
 import stumpy
 
 from motifminer.miner import Miner
-from motifminer.preprocessing import breakpoints
+from plot import plot_motifs, remove_spines
 
 # Simulation settings
 UNITS = 100
 TS_LEN = 10000
 MOTIF_LEN = 500
 NOISE_LEVELS = [0.1, 0.3, 0.5, 0.7, 0.9]
+INJECT = 75
 
 # Parameters
 MIN_SUP = 0.5
-SEGMENT = 25
-ALPHABET = 5
+SEGMENT = 20
+ALPHABET = 4
 MIN_LEN = 3
 MAX_OVERLAP = 0.8
-LOCAL = False
-K = 5
+LOCAL = True
+K = 3
 
 np.random.seed(42)
 
@@ -38,83 +39,105 @@ def main():
     plot_example(noise[:5], motif, 0.5)
 
     motifs = []
+    overlaps = []
     for noise_level in NOISE_LEVELS:
         # Put noisy motif into data
-        data = get_data(noise, motif, noise_level)
-
-        # plot_ostinato(data, MOTIF_LEN)
+        data, locations = get_data(noise, motif, noise_level, INJECT)
 
         # Mine motifs of variable length
         mm = Miner(data, MIN_SUP, SEGMENT, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
-        motifs.append(mm.mine_motifs())
+        top_motifs = mm.mine_motifs()
+        motifs.append(top_motifs)
 
-    plot_motifs(motifs, NOISE_LEVELS, MOTIF_LEN)
+        # Find if occurrences of top_motifs correspond to actual locations
+        overlap = get_overlap(top_motifs, locations)
+        overlaps.append(overlap)
+
+    fig, axs = plt.subplots(nrows=len(motifs[0]), figsize=(15, 3), ncols=len(NOISE_LEVELS), sharey='all', sharex='all')
+    plot_motifs(fig, chain.from_iterable(axs.T), chain.from_iterable(motifs), ALPHABET, MOTIF_LEN)
+    print(np.array(overlaps).T)
 
 
 def get_motif(length):
     steps = np.linspace(0, np.pi, length)
-    waves = np.sin(2 * steps) + np.sin(3 * steps)
+    waves = np.sin(3 * steps) + np.sin(4 * steps)
 
     return waves
 
 
-def get_data(noise, motif, noise_level):
+def get_data(noise, motif, noise_level, inject):
     data = []
     motif_len = len(motif)
 
-    for i, row in enumerate(noise):
-        # Add random noise to motif
-        noisy_motif = motif + np.random.normal(scale=noise_level, size=motif_len)
+    # Randomly select locations where to inject noisy motif
+    locations = np.random.randint(0, noise.shape[1], size=len(noise))
+    locations[inject:] = -1
+    np.random.shuffle(locations)
 
-        # Inject motif into row at different positions
-        loc = np.random.randint(0, noise.shape[1])
-        row = np.hstack((row[:loc], noisy_motif, row[loc:]))
+    for row, loc in zip(noise, locations):
+        if loc == -1:
+            # Add extra random noise to row
+            row = np.hstack((row, np.random.normal(size=len(motif))))
+        else:
+            # Add noisy motif to row
+            noisy_motif = motif + np.random.normal(scale=noise_level, size=motif_len)
+            row = np.hstack((row[:loc], noisy_motif, row[loc:]))
 
         # Add row to simulation data
         data.append(row)
 
-    return data
+    return data, locations
+
+
+def get_overlap(top_motifs, locations):
+    overlap = []
+    for motif in top_motifs:
+        success = 0
+        for i, (start, end) in motif.match_indexes.items():
+            true_start = locations[i]
+            true_end = locations[i] + MOTIF_LEN
+
+            # Check if match doesn't completely fall outside of range
+            if true_start < 0 or start > true_end or end < true_start:
+                continue
+
+            if start < true_start:
+                success += end - true_start > true_start - start
+            elif end > true_end:
+                success += end - true_end < true_end - start
+            else:
+                success += True
+        overlap.append(success / len(motif.match_indexes))
+
+    return overlap
 
 
 def plot_motif(motif, noise_levels):
-    fig, axs = plt.subplots(ncols=len(noise_levels), sharex='all', sharey='all')
+    fig, axs = plt.subplots(ncols=len(noise_levels), figsize=(15, 3), sharex='all', sharey='all')
     fig.set_dpi(300)
+    fig.tight_layout()
 
     for noise_level, ax in zip(noise_levels, axs):
         for j in range(1):
             ax.plot(motif + np.random.normal(scale=noise_level, size=len(motif)), 'k', linewidth=0.3)
             remove_spines(ax)
+            ax.set_xticks([0, len(motif)])
 
     plt.show()
 
 
 def plot_example(noise, motif, noise_level):
-    data = get_data(noise, motif, noise_level)
-    fig, axs = plt.subplots(nrows=noise.shape[0], sharex='all', sharey='all')
+    data, _ = get_data(noise, motif, noise_level, len(noise))
+    fig, axs = plt.subplots(nrows=noise.shape[0], figsize=(15, 3), sharex='all', sharey='all')
     fig.set_dpi(300)
+    fig.tight_layout()
 
     for row, ax in zip(data, axs):
         ax.plot(row, 'k')
         remove_spines(ax)
+        ax.set_xticks([0, len(row)])
+        ax.margins(0.01)
 
-    plt.show()
-
-
-def plot_motifs(motifs, noise_levels, max_length):
-    fig, axs = plt.subplots(nrows=len(noise_levels), ncols=len(motifs[0]), sharey='all', sharex='all')
-    fig.set_dpi(300)
-
-    flat_motifs = itertools.chain.from_iterable(motifs)
-    flat_axs = itertools.chain.from_iterable(axs)
-    for motif, ax in zip(flat_motifs, flat_axs):
-        ax.plot(motif.matches, 'k', lw=0.1)
-        ax.plot(motif.representative, 'b', lw=1)
-        breaks = list(breakpoints[ALPHABET].keys())[:-1]
-        ax.hlines(breaks, 0, max_length, 'k', lw=0.3)
-        remove_spines(ax)
-        ax.set_xticks([0, max_length])
-
-    fig.tight_layout()
     plt.show()
 
 
@@ -134,13 +157,6 @@ def plot_ostinato(data, m):
         nn_idxs.append(np.argmin(stumpy.core.mass(consensus_motif, ts)))
         ax.plot(stumpy.core.z_norm(ts[nn_idxs[i] : nn_idxs[i]+m]), c, lw=lw)
     plt.show()
-
-
-def remove_spines(ax):
-    ax.axes.get_yaxis().set_visible(False)
-    ax.spines['left'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
 
 
 if __name__ == '__main__':

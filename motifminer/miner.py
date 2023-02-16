@@ -50,7 +50,7 @@ class Miner:
             alphabet: int,
             min_len: int,
             max_overlap: float,
-            local: bool,
+            local: bool = True,
             k: int = 0,
             maximal: bool = False
     ):

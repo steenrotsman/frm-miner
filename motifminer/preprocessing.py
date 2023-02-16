@@ -28,12 +28,11 @@ def sax(timeseries: list[list[numeric]], segment_size: int, alphabet_size: int) 
     return [get_sax(series, segment_size, alphabet_size) for series in timeseries]
 
 
-def get_sax(series: list[numeric], segment_size: int, alphabet_size: int) -> str:
+def get_sax(series: list[numeric], ss: int, a: int) -> str:
     """Get SAX representation of one time series."""
-    segments = [series[i:i + segment_size] for i in range(0, len(series) - segment_size + 1, segment_size)]
-    segments = [sum(seg) / len(seg) for seg in segments]
+    segments = [sum(series[i:i + ss]) / ss for i in range(0, len(series) - ss + 1, ss)]
     for i, seg in enumerate(segments):
-        for b, c in breakpoints[alphabet_size].items():
+        for b, c in breakpoints[a].items():
             if seg <= b:
                 segments[i] = c
                 break

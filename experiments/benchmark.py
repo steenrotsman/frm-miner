@@ -13,9 +13,8 @@ Results are saved to the file runtime.csv.
 from os.path import join
 from itertools import product
 from time import perf_counter
+from collections import defaultdict
 
-import tensorflow as tf
-import numpy as np
 import stumpy
 
 from motifminer.miner import Miner
@@ -23,32 +22,33 @@ from motifminer.miner import Miner
 FILE = 'benchmark.csv'
 FOLDER = 'UCRArchive_2018'
 FILES = ['Mallat', 'OliveOil', 'ToeSegmentation1', 'InlineSkate', 'FaceAll']
-
+ITER = 10
 PARTITIONS = ['TRAIN', 'TEST']
 
 # Parameters for proposed algorithm
 MIN_SUP = [0.5, 0.7, 0.9]
-W = [4, 8, 16]
-A = [5, 7, 9]
-L = [3]
-O = [0.7, 0.8, 0.9]
+SEGMENT = [4, 8, 16]
+ALPHABET = [5, 7, 9]
+MIN_LEN = [3]
+MAX_OVERLAP = [0.7, 0.8, 0.9]
 
 # Parameters for baseline algorithms
-M = [25, 50, 100]
+LENGTH = [25, 50, 100]
 
 
 def main():
     # Get already calculated combinations from file
-    combinations = []
+    seen = defaultdict(list)
     with open(FILE) as fp:
         for row in fp.readlines():
-            combinations.append(row.split(',')[1])
+            fields = row.split(',')
+            seen[fields[0]].append(fields[1])
 
     # Calculate and save run times to file
     with open(FILE, 'a') as fp:
         for name, data in get_data():
-            benchmark_mm(data, name, fp, combinations)
-            benchmark_ostinato([a.astype(np.float64) for a in data.numpy()], name, fp, combinations)
+            benchmark_mm(data, name, fp, seen[name])
+            benchmark_ostinato(data, name, fp, seen[name])
 
 
 def get_data():
@@ -57,28 +57,31 @@ def get_data():
         for part in PARTITIONS:
             with open(join(FOLDER, fn, f'{fn}_{part}.tsv')) as f:
                 for row in f:
+                    # Split data on tabs
                     data.append(row.strip('\n').split('\t')[1:])
-        data = tf.ragged.constant(data)
-        data = tf.strings.to_number(data)
+
+        # Parse data to floats
+        data = [[float(x) for x in row] for row in data]
+
         yield fn, data
 
 
-def benchmark_mm(data, name, fp, combinations):
-    for min_sup, w, a, l, o in product(MIN_SUP, W, A, L, O):
-        if (combination := f'mm_{min_sup}_{w}_{a}_{l}_{o}') in combinations:
+def benchmark_mm(data, name, fp, seen):
+    for min_sup, s, a, l, o, i in product(MIN_SUP, SEGMENT, ALPHABET, MIN_LEN, MAX_OVERLAP, range(ITER)):
+        if (combination := f'mm_{min_sup}_{s}_{a}_{l}_{o}_{i}') in seen:
             continue
 
         start = perf_counter()
-        mm = Miner(data, min_sup, w, a, l, o, 0, False)
+        mm = Miner(data, min_sup, s, a, l, o)
         mm.mine_motifs()
         end = perf_counter()
 
         fp.write(f'{name},{combination},{end-start}\n')
 
 
-def benchmark_ostinato(data, name, fp, combinations):
-    for m in M:
-        if combination := f'ostinato_{m}' in combinations:
+def benchmark_ostinato(data, name, fp, seen):
+    for m, i in product(LENGTH, range(ITER)):
+        if (combination := f'ostinato_{m}_{i}') in seen:
             continue
 
         start = perf_counter()
