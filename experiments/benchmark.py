@@ -17,7 +17,7 @@ from collections import defaultdict
 
 import stumpy
 
-from motifminer.miner import Miner
+from frm.miner import Miner
 
 FILE = 'benchmark.csv'
 FOLDER = 'UCRArchive_2018'

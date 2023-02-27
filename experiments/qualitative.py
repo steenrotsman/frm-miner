@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2 as cv
 
-from motifminer.miner import Miner
+from frm.miner import Miner
 
 IMG_DIR = 'mpeg7'
 NAME = 'fly'
@@ -23,7 +23,7 @@ SEGMENT = 4
 ALPHABET = 4
 MIN_LEN = 5
 MAX_OVERLAP = 0.8
-LOCAL = True
+LOCAL = False
 K = 10
 
 

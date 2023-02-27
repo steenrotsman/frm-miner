@@ -1,6 +1,6 @@
 import unittest
 
-from motifminer.motif import Motif
+from frm.motif import Motif
 
 
 class TestMotif(unittest.TestCase):

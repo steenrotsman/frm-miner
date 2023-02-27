@@ -5,7 +5,7 @@ from datetime import datetime
 
 import matplotlib.pyplot as plt
 
-from motifminer.miner import Miner
+from frm.miner import Miner
 from plot import plot_motifs
 
 JSON_DIR = 'bike'

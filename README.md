@@ -1,9 +1,7 @@
-# MOTIFMINER #
+# FRM-Miner #
 
-Mine motifs of variable length.
+Frequent Representative Motif Miner to discover frequently occurring motifs of variable length.
 
 ### Dependencies
 
 * NumPy
-* Tensorflow
-* Numba (planned migration to Cython)

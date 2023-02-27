@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import stumpy
 
-from motifminer.miner import Miner
+from frm.miner import Miner
 from plot import plot_motifs, remove_spines
 
 # Simulation settings
@@ -21,7 +21,7 @@ NOISE_LEVELS = [0.1, 0.3, 0.5, 0.7, 0.9]
 INJECT = 75
 
 # Parameters
-MIN_SUP = 0.5
+MIN_SUP = 0.3
 SEGMENT = 20
 ALPHABET = 4
 MIN_LEN = 3
@@ -40,6 +40,7 @@ def main():
 
     motifs = []
     overlaps = []
+    consensus_motifs = []
     for noise_level in NOISE_LEVELS:
         # Put noisy motif into data
         data, locations = get_data(noise, motif, noise_level, INJECT)
@@ -53,9 +54,12 @@ def main():
         overlap = get_overlap(top_motifs, locations)
         overlaps.append(overlap)
 
+        consensus_motifs.append(ostinato(data, MOTIF_LEN))
+
     fig, axs = plt.subplots(nrows=len(motifs[0]), figsize=(15, 3), ncols=len(NOISE_LEVELS), sharey='all', sharex='all')
     plot_motifs(fig, chain.from_iterable(axs.T), chain.from_iterable(motifs), ALPHABET, MOTIF_LEN)
     print(np.array(overlaps).T)
+    plot_ostinato(consensus_motifs)
 
 
 def get_motif(length):
@@ -141,21 +145,27 @@ def plot_example(noise, motif, noise_level):
     plt.show()
 
 
-def plot_ostinato(data, m):
+def ostinato(data, m):
     radius, idx, subidx = stumpy.ostinato(data, m)
-    consensus_motif = data[idx][subidx : subidx+m]
+    print(idx, subidx)
+    return data[idx][subidx : subidx+m]
+    # 9 5761
+    # 18 7006
+    # 91 397
+    # 78 8235
+    # 89 5164
 
-    # Plot consensus motif and best match in every ts
-    fig, ax = plt.subplots()
+
+def plot_ostinato(consensus_motifs):
+    fig, axs = plt.subplots(ncols=len(consensus_motifs), figsize=(15, 3))
     fig.set_dpi(300)
-    nn_idxs = []
-    for i, ts in enumerate(data):
-        if i == idx:
-            c, lw = 'b', 1
-        else:
-            c, lw = 'k', 0.01
-        nn_idxs.append(np.argmin(stumpy.core.mass(consensus_motif, ts)))
-        ax.plot(stumpy.core.z_norm(ts[nn_idxs[i] : nn_idxs[i]+m]), c, lw=lw)
+    fig.tight_layout()
+
+    for motif, ax in zip(consensus_motifs, axs):
+        ax.plot(motif, 'b', lw=1)
+        ax.set(ylim=(-3, 3), xticks=[0, len(motif)], yticks=[])
+        remove_spines(ax)
+
     plt.show()
 
 

@@ -1,6 +1,6 @@
 import unittest
 
-from motifminer.PatternMiner import PatternMiner
+from frm.patterns import PatternMiner
 from test_data import seq, rseq
 
 

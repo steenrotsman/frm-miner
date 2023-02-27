@@ -5,7 +5,7 @@ time series and finds frequent or maximal motifs in it. The motifs can
 be filtered for length and ranked using different strategies.
 """
 from .preprocessing import standardise, sax
-from .PatternMiner import PatternMiner
+from .patterns import PatternMiner
 
 
 class Miner:

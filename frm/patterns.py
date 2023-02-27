@@ -1,4 +1,4 @@
-"""PatternMiner module.
+"""Patterns module.
 
 This module defines the PatternMiner class, a class that takes a collection of
 sequences and mines frequent and maximal patterns from it. The patterns
