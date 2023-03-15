@@ -13,9 +13,11 @@ import matplotlib.pyplot as plt
 import cv2 as cv
 
 from frm.miner import Miner
+from frm.preprocessing import standardise
+from plot import remove_spines, COLORS, WIDTH
 
 IMG_DIR = 'mpeg7'
-NAME = 'fly'
+NAME = 'bird'
 SAMPLE = True
 
 MIN_SUP = 0.5
@@ -23,7 +25,7 @@ SEGMENT = 4
 ALPHABET = 4
 MIN_LEN = 5
 MAX_OVERLAP = 0.8
-LOCAL = False
+LOCAL = True
 K = 10
 
 
@@ -37,8 +39,9 @@ def main():
     motifs = miner.mine_motifs()
 
     # Plot motifs
-    plot_contours(motifs, contours)
-    plot_ts(motifs, contours, ts)
+    # plot_contours(motifs, contours)
+    # plot_ts(motifs, contours, ts)
+    plot_pipeline(ts, 256)
 
 
 def get_all_ts(files: list):
@@ -109,13 +112,13 @@ def sample(ts, length=512):
 def plot_ts(motifs, contours, ts):
     """Plot the time series with motifs that occur in them."""
     for i, (contour, t) in enumerate(zip(contours, ts)):
-        fig, axd = plt.subplot_mosaic([['ts', 'contour']], figsize=(15, 3), gridspec_kw={'width_ratios': [4, 1]})
-        fig.set_dpi(300)
-        fig.tight_layout()
+        fig, axd = plt.subplot_mosaic([['ts', 'contour']], gridspec_kw={'width_ratios': [4, 1]}, layout='constrained')
+        fig.set_dpi(1200)
 
         # Plot motifs in ts
         axd['ts'].plot(t, 'k', lw=0.5)
         axd['ts'].set(xticks=[0, len(t)], yticks=[])
+        remove_spines(axd['ts'])
         plot_motifs(motifs, i, list(range(len(t))), t, axd['ts'])
 
         # Plot motifs in corresponding figure
@@ -126,9 +129,8 @@ def plot_ts(motifs, contours, ts):
 
 def plot_contours(motifs, contours):
     """Plot the images with motifs that occur in them."""
-    fig, axs = plt.subplots(ncols=5, nrows=4, figsize=(20, 16))
-    fig.set_dpi(300)
-    fig.tight_layout()
+    fig, axs = plt.subplots(ncols=5, nrows=4, figsize=(WIDTH, WIDTH/5*4), layout='constrained')
+    fig.set_dpi(1200)
 
     for (i, contour), ax in zip(enumerate(contours), itertools.chain.from_iterable(axs)):
         plot_contour(motifs, contour, i, ax)
@@ -155,13 +157,54 @@ def contour_to_xy(contour):
 
 def plot_motifs(motifs, i, x, y, ax):
     """Plot all motifs occurring in a unit."""
-    colors = [
-        'maroon', 'steelblue', 'olive', 'salmon', 'teal', 'seagreen', 'purple', 'goldenrod', 'orange', 'tomato'
-    ]
-    for motif, color in zip(motifs, colors):
+    for motif, color in zip(motifs, COLORS):
         if m := motif.match_indexes.get(i, False):
             start, end = m
             ax.plot(x[start : end], y[start : end], color, lw=1.5)
+
+
+def plot_pipeline(ts, length):
+    D = np.array(standardise([t[:length] for t in ts[:5]]))
+    mm = Miner(D, 0.6, int(length/16), 4, 3, 0.8)
+    mm.mine_motifs()
+
+    fig, axs = plt.subplots(ncols=5, layout='compressed')
+    fig.set_dpi(1200)
+    fig.align_labels()
+
+    # Time series database
+    axs[0].plot(D.T, lw=0.5)
+    axs[0].set(ylim=(-4, 4), xticks=[0, length], yticks=[], xlabel='Time series database')
+    remove_spines(axs[0])
+
+    # Sequence database
+    for s, y in zip(mm.sequences, range(7, -1, -1)):
+        axs[1].text(0, y / 10, s, fontsize=6)
+    axs[1].set(xticks=[], yticks=[], xlabel='Sequence database')
+    remove_spines(axs[1])
+
+    # Sequence motifs
+    for motif, y in zip(mm.motifs, range(7, -1, -1)):
+        axs[2].text(0.3, y / 10 + 0.025, motif.pattern, fontsize=6)
+    axs[2].set(xticks=[], yticks=[], xlabel='Sequence motifs', )
+    remove_spines(axs[2])
+
+    # Occurrences and representative motif
+    for i, ts in enumerate(D):
+        axs[3].plot(ts, 'k', lw=0.25)
+        for motif, color in zip(mm.motifs, COLORS):
+            if i in motif.match_indexes:
+                start, end = motif.match_indexes[i]
+                axs[3].plot(list(range(start, end)), ts[start:end], color, lw=0.5)
+
+            axs[4].plot(motif.representative, color, lw=0.5)
+
+    axs[3].set(xticks=[0, length], yticks=[], xlabel='Occurrences')
+    axs[4].set(xticks=[0, length/2], yticks=[], xlabel='Representative motifs')
+    remove_spines(axs[3])
+    remove_spines(axs[4])
+
+    plt.show()
 
 
 if __name__ == '__main__':

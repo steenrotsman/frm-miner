@@ -133,6 +133,7 @@ dmypy.json
 /experiments/UCRArchive_2018/
 /experiments/mpeg7/
 /experiments/fit
+/experiments/figs
 
 # IDE
 .idea

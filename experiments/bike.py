@@ -29,30 +29,8 @@ def main():
     miner = Miner(field, MIN_SUP, SEGMENT, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
     motifs = miner.mine_motifs()
 
-    fig, axs = plt.subplots(ncols=4, figsize=(16, 4))
+    fig, axs = plt.subplots(ncols=4, layout='compressed')
     plot_motifs(fig, axs, motifs, ALPHABET)
-    quit()
-    # Find coordinate of motif occurrences
-    lat = get_fields(records, 'position_lat')
-    long = get_fields(records, 'position_long')
-    alt = get_fields(records, 'altitude')
-
-    for motif in motifs:
-        lat_matches = []
-        long_matches = []
-        alt_matches = []
-        for ts, (start, end) in motif.match_indexes.items():
-            # Just match beginning of motif
-            lat_matches.append(lat[ts][start])
-            long_matches.append(long[ts][start])
-            alt_matches.append(alt[ts][start : end])
-
-        coord_matches = list(zip(lat_matches, long_matches))
-
-        print(len(coord_matches))
-        plt.scatter(long_matches, lat_matches)
-        plt.axis('square')
-        plt.show()
 
 
 def get_records(directory, parse_timestamp):
