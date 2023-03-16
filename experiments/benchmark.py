@@ -26,7 +26,7 @@ ITER = 10
 PARTITIONS = ['TRAIN', 'TEST']
 
 # Parameters for proposed algorithm
-MIN_SUP = [0.5, 0.7, 0.9]
+MIN_SUP = [0.3, 0.5, 0.7, 0.9]
 SEGMENT = [4, 8, 16]
 ALPHABET = [5, 7, 9]
 MIN_LEN = [3]
