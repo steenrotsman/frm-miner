@@ -1,14 +1,11 @@
 """
-This module provides a runtime comparison of 5 data sets of the proposed method and existing methods.
-
-Baseline methods that are compared against are:
-- Ostinato
+This module provides a runtime comparison of FRM-Miner and Ostinato.
 
 Data sets are supplied by the UCR archive as two .tsv files, a train set and a test set.
 The train and test files are joined into one data set, for which the baseline is then mined
 
-To replicate this experiment, add your own unmodified copy of UCRArchive_2018 found here https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/
-Results are saved to the file runtime.csv.
+To replicate this experiment, add a copy of UCRArchive_2018 from https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/
+Results are saved to the file runtime.csv and benchmark.R gives code to analyse the results.
 """
 from os.path import join
 from itertools import product
@@ -25,9 +22,9 @@ FILES = ['Mallat', 'OliveOil', 'ToeSegmentation1', 'InlineSkate', 'FaceAll']
 ITER = 10
 PARTITIONS = ['TRAIN', 'TEST']
 
-# Parameters for proposed algorithm
-MIN_SUP = [0.5, 0.7, 0.9]
-SEGMENT = [4, 8, 16]
+# Parameters for FRM-Miner
+MINSUP = [0.3, 0.5, 0.7, 0.9]
+SEGLEN = [4, 8, 16]
 ALPHABET = [5, 7, 9]
 MIN_LEN = [3]
 MAX_OVERLAP = [0.7, 0.8, 0.9]
@@ -67,12 +64,12 @@ def get_data():
 
 
 def benchmark_mm(data, name, fp, seen):
-    for min_sup, s, a, l, o, i in product(MIN_SUP, SEGMENT, ALPHABET, MIN_LEN, MAX_OVERLAP, range(ITER)):
-        if (combination := f'mm_{min_sup}_{s}_{a}_{l}_{o}_{i}') in seen:
+    for minsup, s, a, l, o, i in product(MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, range(ITER)):
+        if (combination := f'mm_{minsup}_{s}_{a}_{l}_{o}_{i}') in seen:
             continue
 
         start = perf_counter()
-        mm = Miner(data, min_sup, s, a, l, o)
+        mm = Miner(data, minsup, s, a, l, o)
         mm.mine_motifs()
         end = perf_counter()
 
