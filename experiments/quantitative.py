@@ -21,7 +21,7 @@ NOISE_LEVELS = [0.1, 0.3, 0.5, 0.7, 0.9]
 INJECT = 100
 
 # Parameters
-MIN_SUP = 0.3
+MINSUP = 0.3
 SEGLEN = 20
 ALPHABET = 4
 MIN_LEN = 3
@@ -46,7 +46,7 @@ def main():
         data, locations = get_data(noise, motif, noise_level, INJECT)
 
         # Mine motifs of variable length
-        mm = Miner(data, MIN_SUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
+        mm = Miner(data, MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
         top_motifs = mm.mine_motifs()
         motifs.append(top_motifs)
 

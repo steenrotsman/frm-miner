@@ -14,7 +14,7 @@ class PatternMiner:
     ----------
     sequences : list
         Collection of sequences with distinct values.
-    min_sup : float
+    minsup : float
         The minimum support for a pattern.
     
     Attributes
@@ -27,13 +27,13 @@ class PatternMiner:
     def __init__(
             self,
             sequences: list,
-            min_sup: float = 0.5):
+            minsup: float = 0.5):
         self.sequences = sequences
         self.frequent = {}
         self.maximal = {}
 
         # Frequency is easier to check than support
-        self._min_freq = len(sequences) * min_sup
+        self._min_freq = len(sequences) * minsup
 
         # Keep track of length we're currently mining
         self._k = 2

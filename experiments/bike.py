@@ -13,7 +13,7 @@ FIELD = 'speed'
 PARSE_TIMESTAMP = False
 
 # Miner parameters
-MIN_SUP = 0.5
+MINSUP = 0.5
 SEGLEN = 15
 ALPHABET = 5
 MIN_LEN = 3
@@ -26,7 +26,7 @@ def main():
     records = get_records(JSON_DIR, PARSE_TIMESTAMP)
     field = get_fields(records, FIELD)
 
-    miner = Miner(field, MIN_SUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
+    miner = Miner(field, MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
     motifs = miner.mine_motifs()
 
     fig, axs = plt.subplots(ncols=4, layout='compressed')

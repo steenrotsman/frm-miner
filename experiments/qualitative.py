@@ -20,7 +20,7 @@ IMG_DIR = 'mpeg7'
 NAMES = ['bird', 'fly']
 SAMPLE = True
 
-MIN_SUP = 0.5
+MINSUP = 0.5
 SEGLEN = 4
 ALPHABET = 4
 MIN_LEN = 5
@@ -47,7 +47,7 @@ def temp(name):
     ts, contours = get_all_ts(files)
 
     # Mine motifs
-    miner = Miner(ts, MIN_SUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
+    miner = Miner(ts, MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
     motifs = miner.mine_motifs()
 
     return ts, contours, motifs

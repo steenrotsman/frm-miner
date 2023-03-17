@@ -15,14 +15,14 @@ class Miner:
     ----------
     timeseries : list
         List of lists with akm database of time series.
-    min_sup : float
+    minsup : float
         Fraction of time series a motif should occur in.
     seglen : int
         Segment length for Piecewise Aggregate Approximation.
     alphabet : int
         Alphabet size for discretisation.
     min_len : int
-        Minimal motif length.
+        Minimal pattern length.
     max_overlap: float
         Maximal fraction of patterns contained in longer patters.
     local : bool
@@ -45,7 +45,7 @@ class Miner:
     def __init__(
             self,
             timeseries: list,
-            min_sup: float,
+            minsup: float,
             seglen: int,
             alphabet: int,
             min_len: int,
@@ -55,7 +55,7 @@ class Miner:
             maximal: bool = False
     ):
         self.timeseries = timeseries
-        self.min_sup = min_sup
+        self.minsup = minsup
         self.seglen = seglen
         self.alphabet = alphabet
         self.min_len = min_len
@@ -88,7 +88,7 @@ class Miner:
     def mine_patterns(self):
         """Find frequent patterns in the sequences."""
         # Find frequent and maximal patterns in the sequences
-        pm = PatternMiner(self.sequences, self.min_sup)
+        pm = PatternMiner(self.sequences, self.minsup)
         pm.mine()
         pm.prune_trivial(self.min_len, self.max_overlap)
 
