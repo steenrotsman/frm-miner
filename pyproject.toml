@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "frm-miner"
+authors = [
+    {name = "Stijn J. Rotman", email = "s.j.rotman@uvt.nl"},
+]
+description = "Mine Frequent Representative Motifs"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "numpy",
+]
+dynamic = ["version"]
+
+[tool.setuptools.packages.find]
+include = ["frm*"]
+namespaces = false  # true by default
