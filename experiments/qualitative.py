@@ -17,11 +17,11 @@ from frm.preprocessing import standardise
 from plot import remove_spines, COLORS, WIDTH
 
 IMG_DIR = 'mpeg7'
-NAME = 'bird'
+NAMES = ['bird', 'fly']
 SAMPLE = True
 
 MIN_SUP = 0.5
-SEGMENT = 4
+SEGLEN = 4
 ALPHABET = 4
 MIN_LEN = 5
 MAX_OVERLAP = 0.8
@@ -30,18 +30,27 @@ K = 10
 
 
 def main():
+    ts_bird, contours_bird, motifs_bird = temp(NAMES[0])
+    ts_fly, contours_fly, motifs_fly = temp(NAMES[1])
+
+    # Plot motifs
+    plot_contours(motifs_fly, contours_fly)
+    plot_ts(motifs_fly, contours_fly, ts_fly)
+
+    # Plot pipeline
+    plot_pipeline(ts_bird, 256)
+
+
+def temp(name):
     # Load data
-    files = [join(IMG_DIR, f'{NAME}-{i+1}.gif') for i in range(20)]
+    files = [join(IMG_DIR, f'{name}-{i + 1}.gif') for i in range(20)]
     ts, contours = get_all_ts(files)
 
     # Mine motifs
-    miner = Miner(ts, MIN_SUP, SEGMENT, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
+    miner = Miner(ts, MIN_SUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
     motifs = miner.mine_motifs()
 
-    # Plot motifs
-    # plot_contours(motifs, contours)
-    # plot_ts(motifs, contours, ts)
-    plot_pipeline(ts, 256)
+    return ts, contours, motifs
 
 
 def get_all_ts(files: list):

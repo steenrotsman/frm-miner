@@ -17,8 +17,8 @@ class Miner:
         List of lists with akm database of time series.
     min_sup : float
         Fraction of time series a motif should occur in.
-    segment : int
-        Segment size for Piecewise Aggregate Approximation.
+    seglen : int
+        Segment length for Piecewise Aggregate Approximation.
     alphabet : int
         Alphabet size for discretisation.
     min_len : int
@@ -46,7 +46,7 @@ class Miner:
             self,
             timeseries: list,
             min_sup: float,
-            segment: int,
+            seglen: int,
             alphabet: int,
             min_len: int,
             max_overlap: float,
@@ -56,7 +56,7 @@ class Miner:
     ):
         self.timeseries = timeseries
         self.min_sup = min_sup
-        self.segment = segment
+        self.seglen = seglen
         self.alphabet = alphabet
         self.min_len = min_len
         self.max_overlap = max_overlap
@@ -83,7 +83,7 @@ class Miner:
 
     def discretise(self):
         """Discretise time series to sequences."""
-        self.sequences = sax(self.timeseries, self.segment, self.alphabet)
+        self.sequences = sax(self.timeseries, self.seglen, self.alphabet)
 
     def mine_patterns(self):
         """Find frequent patterns in the sequences."""
@@ -110,19 +110,19 @@ class Miner:
         """Fill motif attributes."""
         motif.occurrences = self.get_occurrences(motif)
         motif.map()
-        motif.match_indexes = {k: [s * self.segment, e * self.segment] for k, (s, e) in motif.match_indexes.items()}
+        motif.match_indexes = {k: [s * self.seglen, e * self.seglen] for k, (s, e) in motif.match_indexes.items()}
 
         return motif
 
     def get_occurrences(self, motif):
         """Get the occurrences of one motif in the time series."""
-        motif_len = len(motif.pattern) * self.segment
+        motif_len = len(motif.pattern) * self.seglen
 
         occurrences = {}
         for i, indexes in motif.indexes.items():
             occ = []
             for index in indexes:
-                start = index * self.segment
+                start = index * self.seglen
                 end = start + motif_len
                 occurrence = self.timeseries[i][start: end]
 

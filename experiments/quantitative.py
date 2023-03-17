@@ -22,7 +22,7 @@ INJECT = 100
 
 # Parameters
 MIN_SUP = 0.3
-SEGMENT = 20
+SEGLEN = 20
 ALPHABET = 4
 MIN_LEN = 3
 MAX_OVERLAP = 0.8
@@ -46,7 +46,7 @@ def main():
         data, locations = get_data(noise, motif, noise_level, INJECT)
 
         # Mine motifs of variable length
-        mm = Miner(data, MIN_SUP, SEGMENT, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
+        mm = Miner(data, MIN_SUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
         top_motifs = mm.mine_motifs()
         motifs.append(top_motifs)
 
@@ -119,7 +119,6 @@ def get_overlap(top_motifs, locations):
 def plot_motif(motif, noise_levels):
     fig, axs = plt.subplots(ncols=len(noise_levels), layout='compressed', sharex='all', sharey='all')
     fig.set_dpi(1200)
-    # fig.tight_layout()
 
     for noise_level, ax in zip(noise_levels, axs):
         for j in range(1):
@@ -134,7 +133,6 @@ def plot_example(noise, motif, noise_level):
     data, _ = get_data(noise, motif, noise_level, len(noise))
     fig, axs = plt.subplots(nrows=noise.shape[0], layout='compressed', sharex='all', sharey='all')
     fig.set_dpi(1200)
-    # fig.tight_layout()
 
     for row, ax in zip(data, axs):
         ax.plot(row, 'k')
@@ -146,12 +144,12 @@ def plot_example(noise, motif, noise_level):
 
 
 def ostinato(data, m, points=[(9, 5761), (18, 7006), (91, 397), (78, 8235), (89, 5164)]):
-    for idx, subidx in points:
-        yield data[idx][subidx : subidx+m]
+    # for idx, subidx in points:
+    #     yield data[idx][subidx : subidx+m]
 
-    # radius, idx, subidx = stumpy.ostinato(data, m)
-    # print(idx, subidx)
-    # return data[idx][subidx : subidx+m]
+    radius, idx, subidx = stumpy.ostinato(data, m)
+    print(idx, subidx)
+    return data[idx][subidx : subidx+m]
     # 9 5761
     # 18 7006
     # 91 397
@@ -162,7 +160,6 @@ def ostinato(data, m, points=[(9, 5761), (18, 7006), (91, 397), (78, 8235), (89,
 def plot_ostinato(consensus_motifs):
     fig, axs = plt.subplots(ncols=len(consensus_motifs), layout='compressed')
     fig.set_dpi(1200)
-    # fig.tight_layout()
 
     for motif, ax in zip(consensus_motifs, axs):
         ax.plot(motif, 'k', lw=0.5)

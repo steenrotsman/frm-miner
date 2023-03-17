@@ -9,28 +9,28 @@ from typing import Union
 numeric = Union[int, float]
 
 
-def sax(timeseries: list[list[numeric]], segment_size: int, alphabet_size: int) -> list[str]:
+def sax(timeseries: list[list[numeric]], seglen: int, alphabet: int) -> list[str]:
     """Symbolic Aggregate approXimation.
     
     Parameters
     ----------
     timeseries : list
         List of lists containing normalised time series to dicretise.
-    segment_size : int
-        Segment size for PAA, factor by which discrete representation is shorter than time series.
-    alphabet_size : int
+    seglen : int
+        Segment length for PAA, factor by which discrete representation is shorter than time series.
+    alphabet : int
         Alphabet size; number of discrete elements the time series are to be binned into.
     
     Returns
     -------
     List with a collection of discrete sequences from the time series.
     """
-    return [get_sax(series, segment_size, alphabet_size) for series in timeseries]
+    return [get_sax(series, seglen, alphabet) for series in timeseries]
 
 
-def get_sax(series: list[numeric], ss: int, a: int) -> str:
+def get_sax(series: list[numeric], seglen: int, a: int) -> str:
     """Get SAX representation of one time series."""
-    segments = [sum(series[i:i + ss]) / ss for i in range(0, len(series) - ss + 1, ss)]
+    segments = [sum(series[i:i + seglen]) / seglen for i in range(0, len(series) - seglen + 1, seglen)]
     for i, seg in enumerate(segments):
         for b, c in breakpoints[a].items():
             if seg <= b:
