@@ -18,7 +18,7 @@ UNITS = 100
 TS_LEN = 10000
 MOTIF_LEN = 500
 NOISE_LEVELS = [0.1, 0.3, 0.5, 0.7, 0.9]
-INJECT = 100
+INJECT = 75
 
 # Parameters
 MINSUP = 0.3
@@ -29,7 +29,7 @@ MAX_OVERLAP = 0.8
 LOCAL = True
 K = 3
 
-np.random.seed(42)
+np.random.seed(123)
 
 
 def main():
@@ -54,7 +54,7 @@ def main():
         overlap = get_overlap(top_motifs, locations)
         overlaps.append(overlap)
 
-        consensus_motifs.append(next(ostinato(data, MOTIF_LEN)))
+        consensus_motifs.append(ostinato(data, MOTIF_LEN))
 
     fig, axs = plt.subplots(nrows=len(motifs[0]), layout='compressed', ncols=len(NOISE_LEVELS), sharey='all', sharex='all')
     plot_motifs(fig, chain.from_iterable(axs.T), chain.from_iterable(motifs), ALPHABET, MOTIF_LEN)
@@ -143,18 +143,10 @@ def plot_example(noise, motif, noise_level):
     plt.show()
 
 
-def ostinato(data, m, points=[(9, 5761), (18, 7006), (91, 397), (78, 8235), (89, 5164)]):
-    # for idx, subidx in points:
-    #     yield data[idx][subidx : subidx+m]
-
+def ostinato(data, m):
     radius, idx, subidx = stumpy.ostinato(data, m)
     print(idx, subidx)
     return data[idx][subidx : subidx+m]
-    # 9 5761
-    # 18 7006
-    # 91 397
-    # 78 8235
-    # 89 5164
 
 
 def plot_ostinato(consensus_motifs):

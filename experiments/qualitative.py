@@ -183,7 +183,7 @@ def plot_pipeline(ts, length):
 
     # Time series database
     axs[0].plot(D.T, lw=0.5)
-    axs[0].set(ylim=(-4, 4), xticks=[0, length], yticks=[], xlabel='Time series database')
+    axs[0].set(ylim=(-3, 3), xticks=[0, length], yticks=[], xlabel='Time series database')
     remove_spines(axs[0])
 
     # Sequence database
@@ -193,9 +193,9 @@ def plot_pipeline(ts, length):
     remove_spines(axs[1])
 
     # Sequence motifs
-    for motif, y in zip(mm.motifs, range(7, -1, -1)):
-        axs[2].text(0.3, y / 10 + 0.025, motif.pattern, fontsize=6)
-    axs[2].set(xticks=[], yticks=[], xlabel='Sequence motifs', )
+    for motif, y, color in zip(mm.motifs, range(7, -1, -1), COLORS):
+        axs[2].text(0.3, y / 10 + 0.025, motif.pattern, fontsize=6, color=color)
+    axs[2].set(xticks=[], yticks=[], xlabel='Sequence motifs')
     remove_spines(axs[2])
 
     # Occurrences and representative motif
@@ -208,8 +208,8 @@ def plot_pipeline(ts, length):
 
             axs[4].plot(motif.representative, color, lw=0.5)
 
-    axs[3].set(xticks=[0, length], yticks=[], xlabel='Occurrences')
-    axs[4].set(xticks=[0, length/2], yticks=[], xlabel='Representative motifs')
+    axs[3].set(ylim=(-3, 3), xticks=[0, length], yticks=[], xlabel='Occurrences')
+    axs[4].set(ylim=(-3, 3), xticks=[0, length/2], yticks=[], xlabel='Representative motifs')
     remove_spines(axs[3])
     remove_spines(axs[4])
 
