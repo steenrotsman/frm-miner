@@ -90,7 +90,7 @@ class Miner:
         # Find frequent and maximal patterns in the sequences
         pm = PatternMiner(self.sequences, self.minsup)
         pm.mine()
-        pm.prune_trivial(self.min_len, self.max_overlap)
+        pm.remove_redundant(self.min_len, self.max_overlap)
 
         # Get indexes of frequent or maximal patterns
         if self.maximal:

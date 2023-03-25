@@ -72,8 +72,8 @@ class PatternMiner:
 
             self._k += 1
     
-    def prune_trivial(self, min_len: int = 3, o: float = 0.9):
-        """Prune trivial patterns.
+    def remove_redundant(self, min_len: int = 3, o: float = 0.9):
+        """Remove redundant patterns.
         
         Not all frequent patterns that comply with the minimum support
         are interesting. For example, 1-patterns are too trivial to be
