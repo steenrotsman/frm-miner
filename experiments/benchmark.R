@@ -24,6 +24,6 @@ ostinato <- benchmark %>%
   summarise(runtime = mean(runtime)) %>%
   pivot_wider(names_from = length, values_from = runtime)
 
-res <- inner_join(frm, ostinato, by = "Name") %>%
+res <- left_join(frm, ostinato, by = "Name") %>%
   arrange(`50`)
 print(xtable(res), include.rownames = FALSE)
