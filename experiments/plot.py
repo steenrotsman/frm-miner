@@ -40,7 +40,7 @@ def plot_motifs(fig, flat_axs, motifs, alphabet, length=0):
 
         # Plot gridlines corresponding to the SAX breakpoints
         if alphabet:
-            ax.hlines(list(breakpoints[alphabet].keys())[:-1], 0, limit, 'k', lw=0.3)
+            ax.hlines(list(breakpoints[alphabet].keys()), 0, limit, 'k', lw=0.3)
 
         # Aesthetics
         ax.set(ylim=(-3, 3), xticks=[0, limit], yticks=[])

@@ -50,11 +50,11 @@ def main():
             top_motifs = mm.mine_motifs()
             motifs.append(top_motifs)
 
-            # consensus_motifs.append(ostinato(data, MOTIF_LEN))
+            consensus_motifs.append(ostinato(data, MOTIF_LEN))
 
         fig, axs = plt.subplots(nrows=len(motifs[0]), layout='compressed', ncols=len(NOISE_LEVELS), sharey='all', sharex='all')
         plot_motifs(fig, chain.from_iterable(axs.T), chain.from_iterable(motifs), ALPHABET, MOTIF_LEN)
-        # plot_ostinato(consensus_motifs)
+        plot_ostinato(consensus_motifs)
 
 
 def get_motif(length):
@@ -115,7 +115,21 @@ def plot_example(noise, motif, noise_level):
     plt.show()
 
 
-def ostinato(data, m):
+def ostinato(data, m, i=[0]):
+    # Pre-computed points, comment out until line 129 to calculate consensus motifs again
+    points = [
+        (62, 6643), (33, 1458), (95, 854), (51, 4179), (34, 6438),
+        (51, 1331), (17, 123), (52, 6474), (67, 1464), (57, 4099),
+    ]
+
+    idx, subidx = points[i[0]]
+    consensus_motif = data[idx][subidx : subidx+m]
+
+    # Terrible hack
+    i[0] = i[0] + 1
+    return consensus_motif
+
+    # Warning: takes long
     radius, idx, subidx = stumpy.ostinato(data, m)
     print(idx, subidx)
     return data[idx][subidx : subidx+m]
