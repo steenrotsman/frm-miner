@@ -19,4 +19,6 @@ Code for Figure 1 and Figure 2 is found in `experiments/qualitative.py`, it uses
 * opencv-python
 * Pillow
 * stumpy
+* tqdm
+* yfinance (optional)
 * fitdecode (optional)
