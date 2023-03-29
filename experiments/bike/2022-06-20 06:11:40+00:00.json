@@ -1,8 +1,6 @@
 [
     {
         "timestamp": "2022-06-20 06:11:40+00:00",
-        "position_lat": 52.08956557854199,
-        "position_long": 5.104004496052752,
         "distance": 0.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -14,8 +12,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:41+00:00",
-        "position_lat": 52.089575553006526,
-        "position_long": 5.103942889065934,
         "distance": 5.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -27,8 +23,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:42+00:00",
-        "position_lat": 52.08959558575462,
-        "position_long": 5.103879521879491,
         "distance": 9.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -40,8 +34,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:43+00:00",
-        "position_lat": 52.089625592967245,
-        "position_long": 5.103824536596017,
         "distance": 14.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -53,8 +45,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:44+00:00",
-        "position_lat": 52.089655600179874,
-        "position_long": 5.103772904073731,
         "distance": 19.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -66,8 +56,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:45+00:00",
-        "position_lat": 52.089692229095846,
-        "position_long": 5.103721187732415,
         "distance": 25.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -79,8 +67,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:46+00:00",
-        "position_lat": 52.08973061821145,
-        "position_long": 5.10367450053288,
         "distance": 30.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -92,8 +78,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:47+00:00",
-        "position_lat": 52.08976892350801,
-        "position_long": 5.103627897152374,
         "distance": 36.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -105,8 +89,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:48+00:00",
-        "position_lat": 52.089807228804574,
-        "position_long": 5.103582886333433,
         "distance": 41.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -118,8 +100,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:49+00:00",
-        "position_lat": 52.089845617920176,
-        "position_long": 5.103544497217837,
         "distance": 47.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -131,8 +111,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:50+00:00",
-        "position_lat": 52.0898756251328,
-        "position_long": 5.103516166385803,
         "distance": 52.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -144,8 +122,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:51+00:00",
-        "position_lat": 52.089900603203645,
-        "position_long": 5.1034911883149565,
         "distance": 57.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -157,8 +133,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:52+00:00",
-        "position_lat": 52.08992893403568,
-        "position_long": 5.103464533863517,
         "distance": 61.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -170,8 +144,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:53+00:00",
-        "position_lat": 52.08995223572593,
-        "position_long": 5.103441232173264,
         "distance": 65.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -183,8 +155,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:54+00:00",
-        "position_lat": 52.08997226847403,
-        "position_long": 5.103409548580043,
         "distance": 68.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -196,8 +166,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:55+00:00",
-        "position_lat": 52.089988948460935,
-        "position_long": 5.103371159464447,
         "distance": 72.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -209,8 +177,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:56+00:00",
-        "position_lat": 52.089990624841526,
-        "position_long": 5.103321203322754,
         "distance": 76.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -222,8 +188,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:57+00:00",
-        "position_lat": 52.08998056655797,
-        "position_long": 5.103267894419874,
         "distance": 79.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -235,8 +199,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:58+00:00",
-        "position_lat": 52.08996388657106,
-        "position_long": 5.103207879994619,
         "distance": 84.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -248,8 +210,6 @@
     },
     {
         "timestamp": "2022-06-20 06:11:59+00:00",
-        "position_lat": 52.08994561402259,
-        "position_long": 5.103149541949958,
         "distance": 88.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -261,8 +221,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:00+00:00",
-        "position_lat": 52.08992893403568,
-        "position_long": 5.103086174763515,
         "distance": 93.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -274,8 +232,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:01+00:00",
-        "position_lat": 52.08990563234543,
-        "position_long": 5.103014509493134,
         "distance": 98.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -287,8 +243,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:02+00:00",
-        "position_lat": 52.08988224683615,
-        "position_long": 5.102941167842158,
         "distance": 104.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -300,8 +254,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:03+00:00",
-        "position_lat": 52.08986062152649,
-        "position_long": 5.102864557249026,
         "distance": 109.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -313,8 +265,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:04+00:00",
-        "position_lat": 52.089838912397795,
-        "position_long": 5.1027878628368635,
         "distance": 116.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -326,8 +276,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:05+00:00",
-        "position_lat": 52.08981561070755,
-        "position_long": 5.102707899482543,
         "distance": 122.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -339,8 +287,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:06+00:00",
-        "position_lat": 52.089792225198266,
-        "position_long": 5.102631205070381,
         "distance": 128.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -352,8 +298,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:07+00:00",
-        "position_lat": 52.08976724712742,
-        "position_long": 5.102554510658218,
         "distance": 135.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -365,8 +309,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:08+00:00",
-        "position_lat": 52.089743945437164,
-        "position_long": 5.102472870923305,
         "distance": 141.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -378,8 +320,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:09+00:00",
-        "position_lat": 52.089717290985725,
-        "position_long": 5.102394500130548,
         "distance": 147.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -391,8 +331,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:10+00:00",
-        "position_lat": 52.089690552715254,
-        "position_long": 5.102311184015041,
         "distance": 154.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -404,8 +342,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:11+00:00",
-        "position_lat": 52.089667251025,
-        "position_long": 5.102227867899533,
         "distance": 161.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -417,8 +353,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:12+00:00",
-        "position_lat": 52.08963892019297,
-        "position_long": 5.102144551784026,
         "distance": 167.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -430,8 +364,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:13+00:00",
-        "position_lat": 52.08961226574153,
-        "position_long": 5.102062828230082,
         "distance": 174.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -443,8 +375,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:14+00:00",
-        "position_lat": 52.08958896405127,
-        "position_long": 5.101979512114574,
         "distance": 180.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -456,8 +386,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:15+00:00",
-        "position_lat": 52.08956557854199,
-        "position_long": 5.101896195999066,
         "distance": 187.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -469,8 +397,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:16+00:00",
-        "position_lat": 52.089540600471146,
-        "position_long": 5.101812879883559,
         "distance": 193.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -482,8 +408,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:17+00:00",
-        "position_lat": 52.0895172987809,
-        "position_long": 5.101726211006864,
         "distance": 200.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -495,8 +419,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:18+00:00",
-        "position_lat": 52.08949223689102,
-        "position_long": 5.101639542130169,
         "distance": 206.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -508,8 +430,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:19+00:00",
-        "position_lat": 52.089472287961954,
-        "position_long": 5.101552873253473,
         "distance": 213.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -521,8 +441,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:20+00:00",
-        "position_lat": 52.08944890245267,
-        "position_long": 5.101467880757372,
         "distance": 220.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -534,8 +452,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:21+00:00",
-        "position_lat": 52.089423924381826,
-        "position_long": 5.101382888261271,
         "distance": 226.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -547,8 +463,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:22+00:00",
-        "position_lat": 52.08939726993039,
-        "position_long": 5.101297895765169,
         "distance": 233.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -560,8 +474,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:23+00:00",
-        "position_lat": 52.08937229185954,
-        "position_long": 5.101211226888474,
         "distance": 240.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -573,8 +485,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:24+00:00",
-        "position_lat": 52.08934722996966,
-        "position_long": 5.101127826953936,
         "distance": 246.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -586,8 +496,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:25+00:00",
-        "position_lat": 52.08932057551822,
-        "position_long": 5.1010411580772415,
         "distance": 253.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -599,8 +507,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:26+00:00",
-        "position_lat": 52.089295597447375,
-        "position_long": 5.1009544892005465,
         "distance": 260.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -612,8 +518,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:27+00:00",
-        "position_lat": 52.08927061937653,
-        "position_long": 5.100871173085039,
         "distance": 267.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -625,8 +529,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:28+00:00",
-        "position_lat": 52.08923893578331,
-        "position_long": 5.10078282782775,
         "distance": 273.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -638,8 +540,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:29+00:00",
-        "position_lat": 52.089207252190086,
-        "position_long": 5.100692890008897,
         "distance": 280.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -651,8 +551,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:30+00:00",
-        "position_lat": 52.08918059773865,
-        "position_long": 5.100604544751609,
         "distance": 287.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -664,8 +562,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:31+00:00",
-        "position_lat": 52.08915059052602,
-        "position_long": 5.100514523113726,
         "distance": 294.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -677,8 +573,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:32+00:00",
-        "position_lat": 52.08912058331339,
-        "position_long": 5.100424501475843,
         "distance": 301.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -690,8 +584,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:33+00:00",
-        "position_lat": 52.089090576100766,
-        "position_long": 5.100334563656991,
         "distance": 308.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -703,8 +595,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:34+00:00",
-        "position_lat": 52.08906224526873,
-        "position_long": 5.1002395128773275,
         "distance": 315.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -716,8 +606,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:35+00:00",
-        "position_lat": 52.089032238056106,
-        "position_long": 5.100144545916693,
         "distance": 322.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -729,8 +617,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:36+00:00",
-        "position_lat": 52.08900558360466,
-        "position_long": 5.100056200659404,
         "distance": 330.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -742,8 +628,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:37+00:00",
-        "position_lat": 52.08897725277263,
-        "position_long": 5.0999628262603345,
         "distance": 337.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -755,8 +639,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:38+00:00",
-        "position_lat": 52.08894892194059,
-        "position_long": 5.099869535680294,
         "distance": 344.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -768,8 +650,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:39+00:00",
-        "position_lat": 52.08892059110856,
-        "position_long": 5.099777837661818,
         "distance": 351.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -781,8 +661,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:40+00:00",
-        "position_lat": 52.08889226027653,
-        "position_long": 5.099687899842965,
         "distance": 358.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -794,8 +672,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:41+00:00",
-        "position_lat": 52.08886392944449,
-        "position_long": 5.099596201824489,
         "distance": 365.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -807,8 +683,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:42+00:00",
-        "position_lat": 52.08883559861246,
-        "position_long": 5.099502827425419,
         "distance": 373.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -820,8 +694,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:43+00:00",
-        "position_lat": 52.088807267780425,
-        "position_long": 5.099412889606566,
         "distance": 380.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -833,8 +705,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:44+00:00",
-        "position_lat": 52.088780613328986,
-        "position_long": 5.099324544349277,
         "distance": 387.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -846,8 +716,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:45+00:00",
-        "position_lat": 52.088752282496955,
-        "position_long": 5.099232846330801,
         "distance": 394.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -859,8 +727,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:46+00:00",
-        "position_lat": 52.088722275284326,
-        "position_long": 5.099142824692919,
         "distance": 401.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -872,8 +738,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:47+00:00",
-        "position_lat": 52.08869394445229,
-        "position_long": 5.099052886874066,
         "distance": 408.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -885,8 +749,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:48+00:00",
-        "position_lat": 52.08866896638145,
-        "position_long": 5.09896621799737,
         "distance": 415.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -898,8 +760,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:49+00:00",
-        "position_lat": 52.08864390449157,
-        "position_long": 5.098877872740082,
         "distance": 422.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -911,8 +771,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:50+00:00",
-        "position_lat": 52.08861725004013,
-        "position_long": 5.09879288024398,
         "distance": 429.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -924,8 +782,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:51+00:00",
-        "position_lat": 52.08859227196928,
-        "position_long": 5.098706211367285,
         "distance": 435.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -937,8 +793,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:52+00:00",
-        "position_lat": 52.088567293898436,
-        "position_long": 5.0986195424905905,
         "distance": 442.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -950,8 +804,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:53+00:00",
-        "position_lat": 52.088540555627965,
-        "position_long": 5.098531197233301,
         "distance": 449.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -963,8 +815,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:54+00:00",
-        "position_lat": 52.088513901176526,
-        "position_long": 5.098439499214825,
         "distance": 456.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -976,8 +826,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:55+00:00",
-        "position_lat": 52.08848724672509,
-        "position_long": 5.098346208634785,
         "distance": 463.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -989,8 +837,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:56+00:00",
-        "position_lat": 52.08846059227365,
-        "position_long": 5.098257863377496,
         "distance": 470.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1002,8 +848,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:57+00:00",
-        "position_lat": 52.0884339378222,
-        "position_long": 5.09816616535902,
         "distance": 478.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1015,8 +859,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:58+00:00",
-        "position_lat": 52.08840728337076,
-        "position_long": 5.09807287477898,
         "distance": 485.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1028,8 +870,6 @@
     },
     {
         "timestamp": "2022-06-20 06:12:59+00:00",
-        "position_lat": 52.08837895253873,
-        "position_long": 5.0979795003799095,
         "distance": 492.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1041,8 +881,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:00+00:00",
-        "position_lat": 52.0883489453261,
-        "position_long": 5.0978845334192755,
         "distance": 500.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1054,8 +892,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:01+00:00",
-        "position_lat": 52.08832061449407,
-        "position_long": 5.0977895664586415,
         "distance": 507.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1067,8 +903,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:02+00:00",
-        "position_lat": 52.08828893090085,
-        "position_long": 5.097694515678978,
         "distance": 514.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1080,8 +914,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:03+00:00",
-        "position_lat": 52.08825892368822,
-        "position_long": 5.097602901479531,
         "distance": 522.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1093,8 +925,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:04+00:00",
-        "position_lat": 52.088232269236784,
-        "position_long": 5.097511203461055,
         "distance": 529.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1106,8 +936,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:05+00:00",
-        "position_lat": 52.088203938404746,
-        "position_long": 5.097417829061985,
         "distance": 537.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1119,8 +947,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:06+00:00",
-        "position_lat": 52.088175607572715,
-        "position_long": 5.097327891243133,
         "distance": 544.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1132,8 +958,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:07+00:00",
-        "position_lat": 52.08814727674068,
-        "position_long": 5.097232840463469,
         "distance": 551.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1145,8 +969,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:08+00:00",
-        "position_lat": 52.08811894590865,
-        "position_long": 5.097139549883429,
         "distance": 559.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1158,8 +980,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:09+00:00",
-        "position_lat": 52.08809061507661,
-        "position_long": 5.097052881006734,
         "distance": 566.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1171,8 +991,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:10+00:00",
-        "position_lat": 52.08806228424458,
-        "position_long": 5.096964535749445,
         "distance": 573.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1184,8 +1002,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:11+00:00",
-        "position_lat": 52.08803562979314,
-        "position_long": 5.096864539647029,
         "distance": 580.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1197,8 +1013,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:12+00:00",
-        "position_lat": 52.0880072989611,
-        "position_long": 5.096761190783427,
         "distance": 587.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1210,8 +1024,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:13+00:00",
-        "position_lat": 52.08797729174848,
-        "position_long": 5.0966645474422,
         "distance": 595.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1223,8 +1035,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:14+00:00",
-        "position_lat": 52.0879522298586,
-        "position_long": 5.096569496662536,
         "distance": 602.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1236,8 +1046,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:15+00:00",
-        "position_lat": 52.08792389902657,
-        "position_long": 5.096479558843683,
         "distance": 609.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1249,8 +1057,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:16+00:00",
-        "position_lat": 52.08789556819453,
-        "position_long": 5.0963912135863945,
         "distance": 616.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1262,8 +1068,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:17+00:00",
-        "position_lat": 52.087870590123686,
-        "position_long": 5.096306221090293,
         "distance": 623.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1275,8 +1079,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:18+00:00",
-        "position_lat": 52.08784728843344,
-        "position_long": 5.096226173916943,
         "distance": 630.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1288,8 +1090,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:19+00:00",
-        "position_lat": 52.08782557930475,
-        "position_long": 5.096151155885374,
         "distance": 637.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1301,8 +1101,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:20+00:00",
-        "position_lat": 52.087805630375684,
-        "position_long": 5.096079490614993,
         "distance": 643.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1314,8 +1112,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:21+00:00",
-        "position_lat": 52.087783921246995,
-        "position_long": 5.096014530866986,
         "distance": 649.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1327,8 +1123,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:22+00:00",
-        "position_lat": 52.08775559041496,
-        "position_long": 5.09594957111898,
         "distance": 655.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1340,8 +1134,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:23+00:00",
-        "position_lat": 52.087723906821736,
-        "position_long": 5.095889556693725,
         "distance": 661.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1353,8 +1145,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:24+00:00",
-        "position_lat": 52.08768560152517,
-        "position_long": 5.095836163971815,
         "distance": 666.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1366,8 +1156,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:25+00:00",
-        "position_lat": 52.08764394346742,
-        "position_long": 5.095787884210716,
         "distance": 672.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1379,8 +1167,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:26+00:00",
-        "position_lat": 52.08760555435182,
-        "position_long": 5.0957361678694,
         "distance": 678.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1392,8 +1178,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:27+00:00",
-        "position_lat": 52.08757227819704,
-        "position_long": 5.095684535347114,
         "distance": 684.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1405,8 +1189,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:28+00:00",
-        "position_lat": 52.087535565462034,
-        "position_long": 5.095637848147579,
         "distance": 689.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1418,8 +1200,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:29+00:00",
-        "position_lat": 52.087500612926654,
-        "position_long": 5.095594513709231,
         "distance": 695.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1431,8 +1211,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:30+00:00",
-        "position_lat": 52.08746557657225,
-        "position_long": 5.095556208412664,
         "distance": 700.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1444,8 +1222,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:31+00:00",
-        "position_lat": 52.08743230041746,
-        "position_long": 5.095521172058256,
         "distance": 705.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1457,8 +1233,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:32+00:00",
-        "position_lat": 52.08740556214699,
-        "position_long": 5.095481190381096,
         "distance": 710.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1470,8 +1244,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:33+00:00",
-        "position_lat": 52.08737723131496,
-        "position_long": 5.095439532323342,
         "distance": 715.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1483,8 +1255,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:34+00:00",
-        "position_lat": 52.08734722410233,
-        "position_long": 5.095401227026776,
         "distance": 719.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1496,8 +1266,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:35+00:00",
-        "position_lat": 52.08731889327029,
-        "position_long": 5.095352863446647,
         "distance": 724.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1509,8 +1277,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:36+00:00",
-        "position_lat": 52.08728888605767,
-        "position_long": 5.095307852627705,
         "distance": 729.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1522,8 +1288,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:37+00:00",
-        "position_lat": 52.08725896266407,
-        "position_long": 5.095264518189358,
         "distance": 734.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1535,8 +1299,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:38+00:00",
-        "position_lat": 52.087230631832035,
-        "position_long": 5.095224536512198,
         "distance": 739.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1548,8 +1310,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:39+00:00",
-        "position_lat": 52.08720221718097,
-        "position_long": 5.09518120207385,
         "distance": 743.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1561,8 +1321,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:40+00:00",
-        "position_lat": 52.087170617406784,
-        "position_long": 5.0951345148743155,
         "distance": 748.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1574,8 +1332,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:41+00:00",
-        "position_lat": 52.08713893381356,
-        "position_long": 5.095082882352029,
         "distance": 753.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1587,8 +1343,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:42+00:00",
-        "position_lat": 52.08710725022034,
-        "position_long": 5.095029489630119,
         "distance": 758.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1600,8 +1354,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:43+00:00",
-        "position_lat": 52.08707062130436,
-        "position_long": 5.094979533488426,
         "distance": 764.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1613,8 +1365,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:44+00:00",
-        "position_lat": 52.08702896324661,
-        "position_long": 5.094932846288891,
         "distance": 770.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1626,8 +1376,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:45+00:00",
-        "position_lat": 52.08698889775042,
-        "position_long": 5.094882890147199,
         "distance": 775.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1639,8 +1387,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:46+00:00",
-        "position_lat": 52.08694891607326,
-        "position_long": 5.094832850186476,
         "distance": 781.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1652,8 +1398,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:47+00:00",
-        "position_lat": 52.08691228715729,
-        "position_long": 5.0947828940447835,
         "distance": 787.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1665,8 +1409,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:48+00:00",
-        "position_lat": 52.08687557442229,
-        "position_long": 5.094739559606436,
         "distance": 793.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1678,8 +1420,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:49+00:00",
-        "position_lat": 52.086842298267506,
-        "position_long": 5.094692872406901,
         "distance": 799.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1691,8 +1431,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:50+00:00",
-        "position_lat": 52.086815559997035,
-        "position_long": 5.094636210742833,
         "distance": 804.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1704,8 +1442,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:51+00:00",
-        "position_lat": 52.08680055639072,
-        "position_long": 5.0945694907952035,
         "distance": 809.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1717,8 +1453,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:52+00:00",
-        "position_lat": 52.08679896382915,
-        "position_long": 5.094497825524822,
         "distance": 814.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1730,8 +1464,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:53+00:00",
-        "position_lat": 52.086812291054876,
-        "position_long": 5.094426160254441,
         "distance": 819.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1743,8 +1475,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:54+00:00",
-        "position_lat": 52.086835592745125,
-        "position_long": 5.094357847745247,
         "distance": 825.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1756,8 +1486,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:55+00:00",
-        "position_lat": 52.086867276338346,
-        "position_long": 5.094296156939398,
         "distance": 831.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1769,8 +1497,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:56+00:00",
-        "position_lat": 52.086897283550975,
-        "position_long": 5.0942379027137665,
         "distance": 836.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1782,8 +1508,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:57+00:00",
-        "position_lat": 52.08693055970576,
-        "position_long": 5.094177888288511,
         "distance": 842.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1795,8 +1519,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:58+00:00",
-        "position_lat": 52.086967272440766,
-        "position_long": 5.0941195502438505,
         "distance": 848.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1808,8 +1530,6 @@
     },
     {
         "timestamp": "2022-06-20 06:13:59+00:00",
-        "position_lat": 52.087002224976146,
-        "position_long": 5.094057859438002,
         "distance": 854.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1821,8 +1541,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:00+00:00",
-        "position_lat": 52.08703558494996,
-        "position_long": 5.09399952139334,
         "distance": 860.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1834,8 +1552,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:01+00:00",
-        "position_lat": 52.08706726854318,
-        "position_long": 5.093951157813212,
         "distance": 866.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1847,8 +1563,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:02+00:00",
-        "position_lat": 52.08709224661403,
-        "position_long": 5.093916205277833,
         "distance": 871.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1860,8 +1574,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:03+00:00",
-        "position_lat": 52.087112279362124,
-        "position_long": 5.093891227206987,
         "distance": 876.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1873,8 +1585,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:04+00:00",
-        "position_lat": 52.08713222829119,
-        "position_long": 5.093867841697704,
         "distance": 879.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1886,8 +1596,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:05+00:00",
-        "position_lat": 52.08715226103928,
-        "position_long": 5.093836158104483,
         "distance": 883.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1899,8 +1607,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:06+00:00",
-        "position_lat": 52.087172293787376,
-        "position_long": 5.093802881949697,
         "distance": 886.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1912,8 +1618,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:07+00:00",
-        "position_lat": 52.08719727185822,
-        "position_long": 5.09375954751135,
         "distance": 890.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1925,8 +1629,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:08+00:00",
-        "position_lat": 52.0872322243936,
-        "position_long": 5.093707831170034,
         "distance": 894.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1938,8 +1640,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:09+00:00",
-        "position_lat": 52.08726726074801,
-        "position_long": 5.093656198647747,
         "distance": 900.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1951,8 +1651,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:10+00:00",
-        "position_lat": 52.08730229710242,
-        "position_long": 5.0935978606030865,
         "distance": 906.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1964,8 +1662,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:11+00:00",
-        "position_lat": 52.08734060239898,
-        "position_long": 5.093542875319613,
         "distance": 911.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1977,8 +1673,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:12+00:00",
-        "position_lat": 52.0873722859922,
-        "position_long": 5.0934911589782965,
         "distance": 917.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -1990,8 +1684,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:13+00:00",
-        "position_lat": 52.08740723852758,
-        "position_long": 5.093437850075416,
         "distance": 923.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2003,8 +1695,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:14+00:00",
-        "position_lat": 52.08744562764318,
-        "position_long": 5.093387893933723,
         "distance": 928.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2016,8 +1706,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:15+00:00",
-        "position_lat": 52.08748058017856,
-        "position_long": 5.093334501211814,
         "distance": 934.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2029,8 +1717,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:16+00:00",
-        "position_lat": 52.08751394015238,
-        "position_long": 5.093277839547746,
         "distance": 940.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2042,8 +1728,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:17+00:00",
-        "position_lat": 52.087543947365,
-        "position_long": 5.093216232560927,
         "distance": 945.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2055,8 +1739,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:18+00:00",
-        "position_lat": 52.08757722351979,
-        "position_long": 5.093152865374485,
         "distance": 951.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2068,8 +1750,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:19+00:00",
-        "position_lat": 52.08761561263538,
-        "position_long": 5.093087905626478,
         "distance": 957.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2081,8 +1761,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:20+00:00",
-        "position_lat": 52.087657270693136,
-        "position_long": 5.093022862059442,
         "distance": 963.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2094,8 +1772,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:21+00:00",
-        "position_lat": 52.087657270693136,
-        "position_long": 5.093022862059442,
         "distance": 970.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2107,8 +1783,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:22+00:00",
-        "position_lat": 52.0877339651053,
-        "position_long": 5.092896211505587,
         "distance": 976.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2120,8 +1794,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:23+00:00",
-        "position_lat": 52.08777059402127,
-        "position_long": 5.092827898996393,
         "distance": 983.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2133,8 +1805,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:24+00:00",
-        "position_lat": 52.087805630375684,
-        "position_long": 5.092757826287576,
         "distance": 989.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2146,8 +1816,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:25+00:00",
-        "position_lat": 52.08784393567225,
-        "position_long": 5.092682892075037,
         "distance": 996.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2159,8 +1827,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:26+00:00",
-        "position_lat": 52.08788391734941,
-        "position_long": 5.092607874043468,
         "distance": 1002.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2172,8 +1838,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:27+00:00",
-        "position_lat": 52.08792389902657,
-        "position_long": 5.092532856011899,
         "distance": 1009.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2185,8 +1849,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:28+00:00",
-        "position_lat": 52.08796061176157,
-        "position_long": 5.092454569038172,
         "distance": 1016.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2198,8 +1860,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:29+00:00",
-        "position_lat": 52.087985589832414,
-        "position_long": 5.092376198245416,
         "distance": 1023.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2211,8 +1871,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:30+00:00",
-        "position_lat": 52.088025571509576,
-        "position_long": 5.092306209355629,
         "distance": 1030.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2224,8 +1882,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:31+00:00",
-        "position_lat": 52.08806890594792,
-        "position_long": 5.092229514943466,
         "distance": 1037.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2237,8 +1893,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:32+00:00",
-        "position_lat": 52.08810729506352,
-        "position_long": 5.092151227969739,
         "distance": 1044.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2250,8 +1904,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:33+00:00",
-        "position_lat": 52.08814727674068,
-        "position_long": 5.092074533557577,
         "distance": 1051.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2263,8 +1915,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:34+00:00",
-        "position_lat": 52.08818558203725,
-        "position_long": 5.091999515526008,
         "distance": 1057.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2276,8 +1926,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:35+00:00",
-        "position_lat": 52.08821726563047,
-        "position_long": 5.091932879397408,
         "distance": 1064.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2289,8 +1937,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:36+00:00",
-        "position_lat": 52.08825221816585,
-        "position_long": 5.09186289050762,
         "distance": 1070.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2302,8 +1948,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:37+00:00",
-        "position_lat": 52.08828725452025,
-        "position_long": 5.091792901617833,
         "distance": 1077.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2315,8 +1959,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:38+00:00",
-        "position_lat": 52.08832061449407,
-        "position_long": 5.091731210811984,
         "distance": 1083.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2328,8 +1970,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:39+00:00",
-        "position_lat": 52.08834726894551,
-        "position_long": 5.091664490864354,
         "distance": 1090.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2341,8 +1981,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:40+00:00",
-        "position_lat": 52.08837559977754,
-        "position_long": 5.091601207496941,
         "distance": 1096.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2354,8 +1992,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:41+00:00",
-        "position_lat": 52.08840895975136,
-        "position_long": 5.091537840310499,
         "distance": 1101.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2367,8 +2003,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:42+00:00",
-        "position_lat": 52.088450617809116,
-        "position_long": 5.091479502265838,
         "distance": 1107.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2380,8 +2014,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:43+00:00",
-        "position_lat": 52.0884838939639,
-        "position_long": 5.091424516982364,
         "distance": 1113.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2393,8 +2025,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:44+00:00",
-        "position_lat": 52.08851893031831,
-        "position_long": 5.091372884460077,
         "distance": 1119.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2406,8 +2036,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:45+00:00",
-        "position_lat": 52.08854726115034,
-        "position_long": 5.0913178991766035,
         "distance": 1125.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2419,8 +2047,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:46+00:00",
-        "position_lat": 52.08857559198238,
-        "position_long": 5.091266182835287,
         "distance": 1130.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2432,8 +2058,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:47+00:00",
-        "position_lat": 52.08860392281441,
-        "position_long": 5.091214550313001,
         "distance": 1136.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2445,8 +2069,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:48+00:00",
-        "position_lat": 52.088632253646445,
-        "position_long": 5.091164510352279,
         "distance": 1141.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2458,8 +2080,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:49+00:00",
-        "position_lat": 52.088660584478475,
-        "position_long": 5.091111201449399,
         "distance": 1146.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2471,8 +2091,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:50+00:00",
-        "position_lat": 52.088690591691105,
-        "position_long": 5.091046157882363,
         "distance": 1150.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2484,8 +2102,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:51+00:00",
-        "position_lat": 52.08872889698767,
-        "position_long": 5.090992848979482,
         "distance": 1155.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2497,8 +2113,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:52+00:00",
-        "position_lat": 52.0887755841872,
-        "position_long": 5.090969547289229,
         "distance": 1161.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2510,8 +2124,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:53+00:00",
-        "position_lat": 52.08882394776733,
-        "position_long": 5.0909744926119815,
         "distance": 1166.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2523,8 +2135,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:54+00:00",
-        "position_lat": 52.088872227528434,
-        "position_long": 5.0909978781212635,
         "distance": 1171.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2536,8 +2146,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:55+00:00",
-        "position_lat": 52.08891723834737,
-        "position_long": 5.091031238095079,
         "distance": 1177.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2549,8 +2157,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:56+00:00",
-        "position_lat": 52.08894389279882,
-        "position_long": 5.091054539785331,
         "distance": 1182.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2562,8 +2168,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:57+00:00",
-        "position_lat": 52.08897390001144,
-        "position_long": 5.091084546997958,
         "distance": 1187.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2575,8 +2179,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:58+00:00",
-        "position_lat": 52.088983958295,
-        "position_long": 5.0911128778299926,
         "distance": 1191.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2588,8 +2190,6 @@
     },
     {
         "timestamp": "2022-06-20 06:14:59+00:00",
-        "position_lat": 52.08901228912704,
-        "position_long": 5.091147830365371,
         "distance": 1194.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2601,8 +2201,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:00+00:00",
-        "position_lat": 52.08904724166241,
-        "position_long": 5.091186219480967,
         "distance": 1199.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2614,8 +2212,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:01+00:00",
-        "position_lat": 52.08909392886195,
-        "position_long": 5.09120952117122,
         "distance": 1204.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2627,8 +2223,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:02+00:00",
-        "position_lat": 52.089148914145426,
-        "position_long": 5.091192841184313,
         "distance": 1209.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2640,8 +2234,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:03+00:00",
-        "position_lat": 52.08918059773865,
-        "position_long": 5.091154535887746,
         "distance": 1214.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2653,8 +2245,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:04+00:00",
-        "position_lat": 52.08922560855759,
-        "position_long": 5.091099550604272,
         "distance": 1219.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2666,8 +2256,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:05+00:00",
-        "position_lat": 52.08925729215081,
-        "position_long": 5.091032830656642,
         "distance": 1225.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2679,8 +2267,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:06+00:00",
-        "position_lat": 52.08927388831869,
-        "position_long": 5.090962841766855,
         "distance": 1231.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2692,8 +2278,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:07+00:00",
-        "position_lat": 52.08931395381487,
-        "position_long": 5.0909028273415995,
         "distance": 1237.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2705,8 +2289,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:08+00:00",
-        "position_lat": 52.08934890635025,
-        "position_long": 5.090841220354781,
         "distance": 1243.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2718,8 +2300,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:09+00:00",
-        "position_lat": 52.08939559354979,
-        "position_long": 5.090776176787744,
         "distance": 1249.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2731,8 +2311,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:10+00:00",
-        "position_lat": 52.08943557522695,
-        "position_long": 5.090714569800926,
         "distance": 1255.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2744,8 +2322,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:11+00:00",
-        "position_lat": 52.08948393880708,
-        "position_long": 5.090646173472702,
         "distance": 1261.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2757,8 +2333,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:12+00:00",
-        "position_lat": 52.08953062600661,
-        "position_long": 5.090577860963508,
         "distance": 1267.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2770,8 +2344,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:13+00:00",
-        "position_lat": 52.0895639021614,
-        "position_long": 5.090511224834908,
         "distance": 1274.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2783,8 +2355,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:14+00:00",
-        "position_lat": 52.08959558575462,
-        "position_long": 5.09044953402906,
         "distance": 1280.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2796,8 +2366,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:15+00:00",
-        "position_lat": 52.08962391658665,
-        "position_long": 5.090391195984398,
         "distance": 1285.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2809,8 +2377,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:16+00:00",
-        "position_lat": 52.08963892019297,
-        "position_long": 5.0903378870815175,
         "distance": 1291.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2822,8 +2388,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:17+00:00",
-        "position_lat": 52.089667251025,
-        "position_long": 5.0902829017980435,
         "distance": 1296.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2835,8 +2399,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:18+00:00",
-        "position_lat": 52.08968225463131,
-        "position_long": 5.090194556540755,
         "distance": 1302.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2848,8 +2410,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:19+00:00",
-        "position_lat": 52.08970723270216,
-        "position_long": 5.090181229315035,
         "distance": 1307.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2861,8 +2421,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:20+00:00",
-        "position_lat": 52.08973891629538,
-        "position_long": 5.090127836593125,
         "distance": 1312.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2874,8 +2432,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:21+00:00",
-        "position_lat": 52.08976221798564,
-        "position_long": 5.090087854915965,
         "distance": 1316.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2887,8 +2443,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:22+00:00",
-        "position_lat": 52.08977889797254,
-        "position_long": 5.090066229606307,
         "distance": 1321.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2900,8 +2454,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:23+00:00",
-        "position_lat": 52.08980890518517,
-        "position_long": 5.090082825774184,
         "distance": 1325.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2913,8 +2465,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:24+00:00",
-        "position_lat": 52.089833967075045,
-        "position_long": 5.0901128329868115,
         "distance": 1328.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2926,8 +2476,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:25+00:00",
-        "position_lat": 52.08987059599102,
-        "position_long": 5.090149545721814,
         "distance": 1332.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2939,8 +2487,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:26+00:00",
-        "position_lat": 52.089898926823054,
-        "position_long": 5.090191203779567,
         "distance": 1336.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2952,8 +2498,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:27+00:00",
-        "position_lat": 52.0899422612614,
-        "position_long": 5.090224563753383,
         "distance": 1340.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2965,8 +2509,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:28+00:00",
-        "position_lat": 52.08997059209344,
-        "position_long": 5.090264545430543,
         "distance": 1345.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2978,8 +2520,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:29+00:00",
-        "position_lat": 52.089997246544876,
-        "position_long": 5.090287847120796,
         "distance": 1350.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -2991,8 +2531,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:30+00:00",
-        "position_lat": 52.09002222461572,
-        "position_long": 5.090319530714017,
         "distance": 1354.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3004,8 +2542,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:31+00:00",
-        "position_lat": 52.090053908208944,
-        "position_long": 5.090344508784863,
         "distance": 1359.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3017,8 +2553,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:32+00:00",
-        "position_lat": 52.09009229732454,
-        "position_long": 5.090354567068426,
         "distance": 1363.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3030,8 +2564,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:33+00:00",
-        "position_lat": 52.09012557347933,
-        "position_long": 5.090344508784863,
         "distance": 1367.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3043,8 +2575,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:34+00:00",
-        "position_lat": 52.09015390431136,
-        "position_long": 5.090332857939736,
         "distance": 1372.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3056,8 +2586,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:35+00:00",
-        "position_lat": 52.09018894066577,
-        "position_long": 5.0902829017980435,
         "distance": 1376.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3069,8 +2597,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:36+00:00",
-        "position_lat": 52.09022724596233,
-        "position_long": 5.090234538217915,
         "distance": 1381.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3082,8 +2608,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:37+00:00",
-        "position_lat": 52.09025725317496,
-        "position_long": 5.090171171031473,
         "distance": 1386.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3095,8 +2619,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:38+00:00",
-        "position_lat": 52.09028558400699,
-        "position_long": 5.090104534902872,
         "distance": 1391.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3108,8 +2630,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:39+00:00",
-        "position_lat": 52.09031726760021,
-        "position_long": 5.090039491335837,
         "distance": 1397.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3121,8 +2641,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:40+00:00",
-        "position_lat": 52.09034392205165,
-        "position_long": 5.089989535194143,
         "distance": 1403.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3134,8 +2652,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:41+00:00",
-        "position_lat": 52.09037895840606,
-        "position_long": 5.089917869923762,
         "distance": 1408.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3147,8 +2663,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:42+00:00",
-        "position_lat": 52.09042229284441,
-        "position_long": 5.089861208259695,
         "distance": 1414.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3160,8 +2674,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:43+00:00",
-        "position_lat": 52.090442241773474,
-        "position_long": 5.0897928957505005,
         "distance": 1420.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3173,8 +2685,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:44+00:00",
-        "position_lat": 52.09048389983123,
-        "position_long": 5.0897295285640585,
         "distance": 1426.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3186,8 +2696,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:45+00:00",
-        "position_lat": 52.09052723426958,
-        "position_long": 5.089637830545582,
         "distance": 1432.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3199,8 +2707,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:46+00:00",
-        "position_lat": 52.09057224508852,
-        "position_long": 5.089574547178169,
         "distance": 1438.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3212,8 +2718,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:47+00:00",
-        "position_lat": 52.09060392868174,
-        "position_long": 5.089511179991727,
         "distance": 1445.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3225,8 +2729,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:48+00:00",
-        "position_lat": 52.09063058313318,
-        "position_long": 5.089447896624314,
         "distance": 1451.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3238,8 +2740,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:49+00:00",
-        "position_lat": 52.090655561204024,
-        "position_long": 5.089356198605838,
         "distance": 1458.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3251,8 +2751,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:50+00:00",
-        "position_lat": 52.090687244797245,
-        "position_long": 5.089311187786897,
         "distance": 1464.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3264,8 +2762,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:51+00:00",
-        "position_lat": 52.09073560837738,
-        "position_long": 5.089252849742236,
         "distance": 1471.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3277,8 +2773,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:52+00:00",
-        "position_lat": 52.090755557306444,
-        "position_long": 5.0891211700465995,
         "distance": 1477.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3290,8 +2784,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:53+00:00",
-        "position_lat": 52.09079394642204,
-        "position_long": 5.089049504776217,
         "distance": 1484.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3303,8 +2795,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:54+00:00",
-        "position_lat": 52.09082722257682,
-        "position_long": 5.088999548634525,
         "distance": 1490.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3316,8 +2806,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:55+00:00",
-        "position_lat": 52.090868964453605,
-        "position_long": 5.088916232519018,
         "distance": 1497.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3329,8 +2817,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:56+00:00",
-        "position_lat": 52.09090559336958,
-        "position_long": 5.088851188951981,
         "distance": 1504.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3342,8 +2828,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:57+00:00",
-        "position_lat": 52.090942222285555,
-        "position_long": 5.088776170920412,
         "distance": 1511.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3355,8 +2839,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:58+00:00",
-        "position_lat": 52.090983964162334,
-        "position_long": 5.088704505650031,
         "distance": 1518.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3368,8 +2850,6 @@
     },
     {
         "timestamp": "2022-06-20 06:15:59+00:00",
-        "position_lat": 52.09101229499437,
-        "position_long": 5.088629571437492,
         "distance": 1524.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3381,8 +2861,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:00+00:00",
-        "position_lat": 52.09106392751666,
-        "position_long": 5.088542902560797,
         "distance": 1531.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3394,8 +2872,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:01+00:00",
-        "position_lat": 52.09109728749047,
-        "position_long": 5.088476182613167,
         "distance": 1538.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3407,8 +2883,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:02+00:00",
-        "position_lat": 52.09112888726466,
-        "position_long": 5.088396219258847,
         "distance": 1544.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3420,8 +2894,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:03+00:00",
-        "position_lat": 52.0911738980836,
-        "position_long": 5.088327906749653,
         "distance": 1551.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3433,8 +2905,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:04+00:00",
-        "position_lat": 52.09120055253504,
-        "position_long": 5.088247859576303,
         "distance": 1557.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3446,8 +2916,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:05+00:00",
-        "position_lat": 52.09123894165064,
-        "position_long": 5.088162867080202,
         "distance": 1564.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3459,8 +2927,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:06+00:00",
-        "position_lat": 52.09126559610208,
-        "position_long": 5.088094554571008,
         "distance": 1571.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3472,8 +2938,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:07+00:00",
-        "position_lat": 52.091298956075896,
-        "position_long": 5.088014507397658,
         "distance": 1577.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3485,8 +2949,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:08+00:00",
-        "position_lat": 52.091325610527335,
-        "position_long": 5.087912834914649,
         "distance": 1584.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3498,8 +2960,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:09+00:00",
-        "position_lat": 52.09136726858509,
-        "position_long": 5.0878529043084235,
         "distance": 1590.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3511,8 +2971,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:10+00:00",
-        "position_lat": 52.09139727579772,
-        "position_long": 5.08777118075448,
         "distance": 1597.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3524,8 +2982,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:11+00:00",
-        "position_lat": 52.0914322283331,
-        "position_long": 5.087692893780754,
         "distance": 1604.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3537,8 +2993,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:12+00:00",
-        "position_lat": 52.0914689410681,
-        "position_long": 5.087617875749185,
         "distance": 1610.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3550,8 +3004,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:13+00:00",
-        "position_lat": 52.09150221722288,
-        "position_long": 5.087541181337023,
         "distance": 1617.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3563,8 +3015,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:14+00:00",
-        "position_lat": 52.091535577196694,
-        "position_long": 5.087469516066641,
         "distance": 1623.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3576,8 +3026,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:15+00:00",
-        "position_lat": 52.091573966312296,
-        "position_long": 5.087396174415666,
         "distance": 1630.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3589,8 +3037,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:16+00:00",
-        "position_lat": 52.091608918847676,
-        "position_long": 5.087316211061346,
         "distance": 1637.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3602,8 +3048,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:17+00:00",
-        "position_lat": 52.09163724967971,
-        "position_long": 5.0872245130428695,
         "distance": 1643.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3615,8 +3059,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:18+00:00",
-        "position_lat": 52.09166893327293,
-        "position_long": 5.087132898843423,
         "distance": 1651.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3628,8 +3070,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:19+00:00",
-        "position_lat": 52.09170388580831,
-        "position_long": 5.087052851670073,
         "distance": 1658.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3641,8 +3081,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:20+00:00",
-        "position_lat": 52.09173892216271,
-        "position_long": 5.086976157257911,
         "distance": 1665.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3654,8 +3092,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:21+00:00",
-        "position_lat": 52.09177060575594,
-        "position_long": 5.0868928411424035,
         "distance": 1672.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3667,8 +3103,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:22+00:00",
-        "position_lat": 52.09179893658797,
-        "position_long": 5.086806172265708,
         "distance": 1679.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3680,8 +3114,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:23+00:00",
-        "position_lat": 52.09182726742,
-        "position_long": 5.086732830614733,
         "distance": 1685.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3693,8 +3125,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:24+00:00",
-        "position_lat": 52.09185056911026,
-        "position_long": 5.086656220021601,
         "distance": 1692.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3706,8 +3136,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:25+00:00",
-        "position_lat": 52.091872278238945,
-        "position_long": 5.08657617284825,
         "distance": 1698.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3719,8 +3147,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:26+00:00",
-        "position_lat": 52.091898932690384,
-        "position_long": 5.086486235029398,
         "distance": 1704.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3732,8 +3158,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:27+00:00",
-        "position_lat": 52.09192558714182,
-        "position_long": 5.086387831488547,
         "distance": 1711.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3745,8 +3169,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:28+00:00",
-        "position_lat": 52.09195056521267,
-        "position_long": 5.086301162611851,
         "distance": 1718.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3758,8 +3180,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:29+00:00",
-        "position_lat": 52.09197721966411,
-        "position_long": 5.086219522876937,
         "distance": 1725.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3771,8 +3191,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:30+00:00",
-        "position_lat": 52.09200228155399,
-        "position_long": 5.086134530380836,
         "distance": 1731.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3784,8 +3202,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:31+00:00",
-        "position_lat": 52.09202893600543,
-        "position_long": 5.08605615958808,
         "distance": 1738.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3797,8 +3213,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:32+00:00",
-        "position_lat": 52.092053914076274,
-        "position_long": 5.085979548994947,
         "distance": 1745.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3810,8 +3224,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:33+00:00",
-        "position_lat": 52.09208056852771,
-        "position_long": 5.085902854582785,
         "distance": 1751.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3823,8 +3235,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:34+00:00",
-        "position_lat": 52.09210563041759,
-        "position_long": 5.085824567609058,
         "distance": 1757.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3836,8 +3246,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:35+00:00",
-        "position_lat": 52.09213723019178,
-        "position_long": 5.085751225958083,
         "distance": 1764.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3849,8 +3257,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:36+00:00",
-        "position_lat": 52.09216556102382,
-        "position_long": 5.085679560687701,
         "distance": 1770.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3862,8 +3268,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:37+00:00",
-        "position_lat": 52.09219229929428,
-        "position_long": 5.085599513514352,
         "distance": 1776.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3875,8 +3279,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:38+00:00",
-        "position_lat": 52.09222063012632,
-        "position_long": 5.085524495482783,
         "distance": 1782.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3888,8 +3290,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:39+00:00",
-        "position_lat": 52.09225725904229,
-        "position_long": 5.085459535734777,
         "distance": 1789.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3901,8 +3301,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:40+00:00",
-        "position_lat": 52.09228726625492,
-        "position_long": 5.0853878704643956,
         "distance": 1795.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3914,8 +3312,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:41+00:00",
-        "position_lat": 52.09231894984814,
-        "position_long": 5.0853162051940135,
         "distance": 1801.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3927,8 +3323,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:42+00:00",
-        "position_lat": 52.09235390238352,
-        "position_long": 5.085249569065414,
         "distance": 1808.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3940,8 +3334,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:43+00:00",
-        "position_lat": 52.092388938737926,
-        "position_long": 5.085182849117784,
         "distance": 1814.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3953,8 +3345,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:44+00:00",
-        "position_lat": 52.0924255676539,
-        "position_long": 5.085121158311935,
         "distance": 1820.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3966,8 +3356,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:45+00:00",
-        "position_lat": 52.09246060400831,
-        "position_long": 5.085056198563929,
         "distance": 1826.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3979,8 +3367,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:46+00:00",
-        "position_lat": 52.09249723292428,
-        "position_long": 5.0849961841386735,
         "distance": 1832.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -3992,8 +3378,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:47+00:00",
-        "position_lat": 52.092538890982034,
-        "position_long": 5.084937846094013,
         "distance": 1838.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -4005,8 +3389,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:48+00:00",
-        "position_lat": 52.09257895647823,
-        "position_long": 5.084866180823631,
         "distance": 1845.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -4018,8 +3400,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:49+00:00",
-        "position_lat": 52.09261726177479,
-        "position_long": 5.08478621746931,
         "distance": 1851.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4031,8 +3411,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:50+00:00",
-        "position_lat": 52.09265556707136,
-        "position_long": 5.084709523057148,
         "distance": 1859.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4044,8 +3422,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:51+00:00",
-        "position_lat": 52.092692279806364,
-        "position_long": 5.084641210547955,
         "distance": 1866.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4057,8 +3433,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:52+00:00",
-        "position_lat": 52.09272723234174,
-        "position_long": 5.084571221658167,
         "distance": 1873.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4070,8 +3444,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:53+00:00",
-        "position_lat": 52.09276059231556,
-        "position_long": 5.084501232768379,
         "distance": 1880.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4083,8 +3455,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:54+00:00",
-        "position_lat": 52.09278892314759,
-        "position_long": 5.084417832833842,
         "distance": 1886.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4096,8 +3466,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:55+00:00",
-        "position_lat": 52.092817253979625,
-        "position_long": 5.084337869479522,
         "distance": 1893.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4109,8 +3477,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:56+00:00",
-        "position_lat": 52.09285061395344,
-        "position_long": 5.084276178673673,
         "distance": 1900.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4122,8 +3488,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:57+00:00",
-        "position_lat": 52.09287894478547,
-        "position_long": 5.084214571686854,
         "distance": 1906.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4135,8 +3499,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:58+00:00",
-        "position_lat": 52.092905599236914,
-        "position_long": 5.084151204500412,
         "distance": 1911.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4148,8 +3510,6 @@
     },
     {
         "timestamp": "2022-06-20 06:16:59+00:00",
-        "position_lat": 52.092933930068945,
-        "position_long": 5.084094542836343,
         "distance": 1917.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4161,8 +3521,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:00+00:00",
-        "position_lat": 52.092965613662166,
-        "position_long": 5.084031175649901,
         "distance": 1922.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4174,8 +3532,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:01+00:00",
-        "position_lat": 52.092995620874795,
-        "position_long": 5.083967892282488,
         "distance": 1928.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4187,8 +3543,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:02+00:00",
-        "position_lat": 52.093030573410175,
-        "position_long": 5.08390620147664,
         "distance": 1933.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4200,8 +3554,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:03+00:00",
-        "position_lat": 52.0930605806228,
-        "position_long": 5.08383956534804,
         "distance": 1939.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4213,8 +3565,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:04+00:00",
-        "position_lat": 52.09309226421602,
-        "position_long": 5.083781227303378,
         "distance": 1945.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4226,8 +3576,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:05+00:00",
-        "position_lat": 52.093118918667464,
-        "position_long": 5.083726158200875,
         "distance": 1951.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4239,8 +3587,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:06+00:00",
-        "position_lat": 52.09315227864128,
-        "position_long": 5.08366622759465,
         "distance": 1956.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4252,8 +3598,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:07+00:00",
-        "position_lat": 52.09318723117666,
-        "position_long": 5.083607889549988,
         "distance": 1961.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4265,8 +3609,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:08+00:00",
-        "position_lat": 52.09322059115047,
-        "position_long": 5.083544522363546,
         "distance": 1967.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4278,8 +3620,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:09+00:00",
-        "position_lat": 52.09324892198251,
-        "position_long": 5.083502864305792,
         "distance": 1973.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4291,8 +3631,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:10+00:00",
-        "position_lat": 52.09328395833691,
-        "position_long": 5.083441173499943,
         "distance": 1979.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4304,8 +3642,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:11+00:00",
-        "position_lat": 52.09332058725288,
-        "position_long": 5.083367831848968,
         "distance": 1985.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4317,8 +3653,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:12+00:00",
-        "position_lat": 52.093352270846104,
-        "position_long": 5.0832895448752415,
         "distance": 1991.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4330,8 +3664,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:13+00:00",
-        "position_lat": 52.093383954439325,
-        "position_long": 5.083212850463079,
         "distance": 1998.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4343,8 +3675,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:14+00:00",
-        "position_lat": 52.093420583355304,
-        "position_long": 5.083132887108759,
         "distance": 2004.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4356,8 +3686,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:15+00:00",
-        "position_lat": 52.09345561970971,
-        "position_long": 5.0830561926965965,
         "distance": 2011.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4369,8 +3697,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:16+00:00",
-        "position_lat": 52.09349392500628,
-        "position_long": 5.08297790572287,
         "distance": 2018.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4382,8 +3708,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:17+00:00",
-        "position_lat": 52.09353390668343,
-        "position_long": 5.082899534930114,
         "distance": 2025.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4395,8 +3719,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:18+00:00",
-        "position_lat": 52.093572295799035,
-        "position_long": 5.082821164137358,
         "distance": 2032.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4408,8 +3730,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:19+00:00",
-        "position_lat": 52.09361227747619,
-        "position_long": 5.082746229924819,
         "distance": 2039.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4421,8 +3741,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:20+00:00",
-        "position_lat": 52.09364890639217,
-        "position_long": 5.0826728882738434,
         "distance": 2045.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4434,8 +3752,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:21+00:00",
-        "position_lat": 52.09368729550776,
-        "position_long": 5.0825978702422745,
         "distance": 2052.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4447,8 +3763,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:22+00:00",
-        "position_lat": 52.09372224804314,
-        "position_long": 5.082526204971893,
         "distance": 2059.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4460,8 +3774,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:23+00:00",
-        "position_lat": 52.09375896077814,
-        "position_long": 5.082452863320919,
         "distance": 2066.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4473,8 +3785,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:24+00:00",
-        "position_lat": 52.09379391331352,
-        "position_long": 5.08237784528935,
         "distance": 2072.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4486,8 +3796,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:25+00:00",
-        "position_lat": 52.09383062604852,
-        "position_long": 5.082299558315623,
         "distance": 2079.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4499,8 +3807,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:26+00:00",
-        "position_lat": 52.0938655785839,
-        "position_long": 5.082222863903461,
         "distance": 2086.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4512,8 +3818,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:27+00:00",
-        "position_lat": 52.09390061493831,
-        "position_long": 5.082144493110705,
         "distance": 2092.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4525,8 +3829,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:28+00:00",
-        "position_lat": 52.093938920234876,
-        "position_long": 5.082069558898166,
         "distance": 2099.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4538,8 +3840,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:29+00:00",
-        "position_lat": 52.09397890191204,
-        "position_long": 5.08199621724719,
         "distance": 2106.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4551,8 +3851,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:30+00:00",
-        "position_lat": 52.0940188835892,
-        "position_long": 5.081922875596216,
         "distance": 2112.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4564,8 +3862,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:31+00:00",
-        "position_lat": 52.09405894908539,
-        "position_long": 5.081852886706428,
         "distance": 2119.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4577,8 +3873,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:32+00:00",
-        "position_lat": 52.09409893076255,
-        "position_long": 5.08178289781664,
         "distance": 2126.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4590,8 +3884,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:33+00:00",
-        "position_lat": 52.09413891243971,
-        "position_long": 5.0817128251078225,
         "distance": 2133.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4603,8 +3895,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:34+00:00",
-        "position_lat": 52.094178894116865,
-        "position_long": 5.081642836218035,
         "distance": 2140.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4616,8 +3906,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:35+00:00",
-        "position_lat": 52.09422055217462,
-        "position_long": 5.081572847328247,
         "distance": 2146.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4629,8 +3917,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:36+00:00",
-        "position_lat": 52.09426061767081,
-        "position_long": 5.081501182057866,
         "distance": 2153.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4642,8 +3928,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:37+00:00",
-        "position_lat": 52.094300599347974,
-        "position_long": 5.081432869548673,
         "distance": 2160.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4655,8 +3939,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:38+00:00",
-        "position_lat": 52.09434058102513,
-        "position_long": 5.081362880658885,
         "distance": 2167.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4668,8 +3950,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:39+00:00",
-        "position_lat": 52.094387268224665,
-        "position_long": 5.081301189853036,
         "distance": 2173.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4681,8 +3961,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:40+00:00",
-        "position_lat": 52.09443563180479,
-        "position_long": 5.0812428518083745,
         "distance": 2180.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4694,8 +3972,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:41+00:00",
-        "position_lat": 52.094483911565895,
-        "position_long": 5.081186190144307,
         "distance": 2187.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4707,8 +3983,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:42+00:00",
-        "position_lat": 52.09453227514602,
-        "position_long": 5.081132881241427,
         "distance": 2194.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4720,8 +3994,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:43+00:00",
-        "position_lat": 52.09457728596497,
-        "position_long": 5.081082841280704,
         "distance": 2200.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4733,8 +4005,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:44+00:00",
-        "position_lat": 52.0946222967839,
-        "position_long": 5.081032885139011,
         "distance": 2207.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4746,8 +4016,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:45+00:00",
-        "position_lat": 52.094660602080474,
-        "position_long": 5.080981168797695,
         "distance": 2213.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4759,8 +4027,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:46+00:00",
-        "position_lat": 52.094700583757636,
-        "position_long": 5.080932889036597,
         "distance": 2219.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4772,8 +4038,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:47+00:00",
-        "position_lat": 52.09473729649263,
-        "position_long": 5.0808912309788425,
         "distance": 2225.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4785,8 +4049,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:48+00:00",
-        "position_lat": 52.094782223492544,
-        "position_long": 5.080851165482653,
         "distance": 2231.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4798,8 +4060,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:49+00:00",
-        "position_lat": 52.094825557930896,
-        "position_long": 5.0808078310443054,
         "distance": 2237.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4811,8 +4071,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:50+00:00",
-        "position_lat": 52.09486394704649,
-        "position_long": 5.080762904044394,
         "distance": 2243.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4824,8 +4082,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:51+00:00",
-        "position_lat": 52.094902252343054,
-        "position_long": 5.080711187703078,
         "distance": 2249.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4837,8 +4093,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:52+00:00",
-        "position_lat": 52.094940557639625,
-        "position_long": 5.080662824122949,
         "distance": 2254.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4850,8 +4104,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:53+00:00",
-        "position_lat": 52.09498062313581,
-        "position_long": 5.080617897123037,
         "distance": 2260.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4863,8 +4115,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:54+00:00",
-        "position_lat": 52.09500392482607,
-        "position_long": 5.080581184388035,
         "distance": 2266.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4876,8 +4126,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:55+00:00",
-        "position_lat": 52.09503560841929,
-        "position_long": 5.080594511613755,
         "distance": 2270.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4889,8 +4137,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:56+00:00",
-        "position_lat": 52.095060586490135,
-        "position_long": 5.0806378460521024,
         "distance": 2275.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4902,8 +4148,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:57+00:00",
-        "position_lat": 52.095080619238225,
-        "position_long": 5.080692831335576,
         "distance": 2280.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4915,8 +4159,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:58+00:00",
-        "position_lat": 52.0950988917867,
-        "position_long": 5.080754522141425,
         "distance": 2285.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4928,8 +4170,6 @@
     },
     {
         "timestamp": "2022-06-20 06:17:59+00:00",
-        "position_lat": 52.09512227729598,
-        "position_long": 5.080821158270026,
         "distance": 2290.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4941,8 +4181,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:00+00:00",
-        "position_lat": 52.09514390260564,
-        "position_long": 5.0808912309788425,
         "distance": 2295.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4954,8 +4192,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:01+00:00",
-        "position_lat": 52.09516561173433,
-        "position_long": 5.080959543488037,
         "distance": 2301.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4967,8 +4203,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:02+00:00",
-        "position_lat": 52.09519058980518,
-        "position_long": 5.081031208758418,
         "distance": 2307.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4980,8 +4214,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:03+00:00",
-        "position_lat": 52.095203917030894,
-        "position_long": 5.081102874028799,
         "distance": 2313.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -4993,8 +4225,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:04+00:00",
-        "position_lat": 52.09522562615958,
-        "position_long": 5.08117453929918,
         "distance": 2319.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5006,8 +4236,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:05+00:00",
-        "position_lat": 52.09524557508865,
-        "position_long": 5.081247880950156,
         "distance": 2325.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5019,8 +4247,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:06+00:00",
-        "position_lat": 52.09526225507555,
-        "position_long": 5.081319546220537,
         "distance": 2330.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5032,8 +4258,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:07+00:00",
-        "position_lat": 52.09529058590759,
-        "position_long": 5.081387858729731,
         "distance": 2336.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5045,8 +4269,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:08+00:00",
-        "position_lat": 52.09531891673962,
-        "position_long": 5.081459524000112,
         "distance": 2342.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5058,8 +4280,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:09+00:00",
-        "position_lat": 52.09534389481047,
-        "position_long": 5.0815295128899,
         "distance": 2348.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5071,8 +4291,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:10+00:00",
-        "position_lat": 52.09536560393916,
-        "position_long": 5.081591203695749,
         "distance": 2354.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5084,8 +4302,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:11+00:00",
-        "position_lat": 52.09538890562941,
-        "position_long": 5.081652894501597,
         "distance": 2360.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5097,8 +4313,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:12+00:00",
-        "position_lat": 52.09540223285513,
-        "position_long": 5.081699497882103,
         "distance": 2365.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5110,8 +4324,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:13+00:00",
-        "position_lat": 52.09544389091288,
-        "position_long": 5.081747861462231,
         "distance": 2370.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5123,8 +4335,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:14+00:00",
-        "position_lat": 52.0954772508867,
-        "position_long": 5.0817878431393915,
         "distance": 2375.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5136,8 +4346,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:15+00:00",
-        "position_lat": 52.095515556183265,
-        "position_long": 5.08180955226808,
         "distance": 2380.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5149,8 +4357,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:16+00:00",
-        "position_lat": 52.095542294453736,
-        "position_long": 5.081821203113207,
         "distance": 2385.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5162,8 +4368,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:17+00:00",
-        "position_lat": 52.09558722145365,
-        "position_long": 5.081834530338926,
         "distance": 2390.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5175,8 +4379,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:18+00:00",
-        "position_lat": 52.09562561056924,
-        "position_long": 5.081854563087021,
         "distance": 2395.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5188,8 +4390,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:19+00:00",
-        "position_lat": 52.095662239485215,
-        "position_long": 5.081896221144775,
         "distance": 2400.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5201,8 +4401,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:20+00:00",
-        "position_lat": 52.0956856249945,
-        "position_long": 5.081949530047655,
         "distance": 2405.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5214,8 +4412,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:21+00:00",
-        "position_lat": 52.09571060306535,
-        "position_long": 5.082006191711723,
         "distance": 2410.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5227,8 +4423,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:22+00:00",
-        "position_lat": 52.09573725751679,
-        "position_long": 5.0820761806015105,
         "distance": 2415.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5240,8 +4434,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:23+00:00",
-        "position_lat": 52.09576055920704,
-        "position_long": 5.082144493110705,
         "distance": 2420.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5253,8 +4445,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:24+00:00",
-        "position_lat": 52.095785621096915,
-        "position_long": 5.082211213058335,
         "distance": 2426.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5266,8 +4456,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:25+00:00",
-        "position_lat": 52.095812275548354,
-        "position_long": 5.082282878328716,
         "distance": 2431.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5279,8 +4467,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:26+00:00",
-        "position_lat": 52.09583557723861,
-        "position_long": 5.082354543599097,
         "distance": 2437.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5292,8 +4478,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:27+00:00",
-        "position_lat": 52.09586893721242,
-        "position_long": 5.0824162344049455,
         "distance": 2443.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5305,8 +4489,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:28+00:00",
-        "position_lat": 52.09589559166386,
-        "position_long": 5.082482870533545,
         "distance": 2449.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5318,8 +4500,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:29+00:00",
-        "position_lat": 52.0959239224959,
-        "position_long": 5.082552859423333,
         "distance": 2455.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5331,8 +4511,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:30+00:00",
-        "position_lat": 52.09594722418615,
-        "position_long": 5.082626201074309,
         "distance": 2461.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5344,8 +4522,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:31+00:00",
-        "position_lat": 52.095967256934244,
-        "position_long": 5.08269786634469,
         "distance": 2467.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5357,8 +4533,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:32+00:00",
-        "position_lat": 52.09598728968234,
-        "position_long": 5.08277782969901,
         "distance": 2473.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5370,8 +4544,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:33+00:00",
-        "position_lat": 52.09601394413378,
-        "position_long": 5.082852847730579,
         "distance": 2479.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5383,8 +4555,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:34+00:00",
-        "position_lat": 52.09604227496581,
-        "position_long": 5.082922836620367,
         "distance": 2485.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5396,8 +4566,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:35+00:00",
-        "position_lat": 52.096062223894876,
-        "position_long": 5.082994501890748,
         "distance": 2491.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5409,8 +4577,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:36+00:00",
-        "position_lat": 52.09608560940416,
-        "position_long": 5.0830561926965965,
         "distance": 2497.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5422,8 +4588,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:37+00:00",
-        "position_lat": 52.09609893662988,
-        "position_long": 5.083129534347572,
         "distance": 2502.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5435,8 +4599,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:38+00:00",
-        "position_lat": 52.096113940236194,
-        "position_long": 5.083202875998547,
         "distance": 2508.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5448,8 +4610,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:39+00:00",
-        "position_lat": 52.09613388916526,
-        "position_long": 5.083261214043208,
         "distance": 2514.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5461,8 +4621,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:40+00:00",
-        "position_lat": 52.09614394744882,
-        "position_long": 5.083321228468463,
         "distance": 2519.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5474,8 +4632,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:41+00:00",
-        "position_lat": 52.09615224553276,
-        "position_long": 5.083377890132531,
         "distance": 2524.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5487,8 +4643,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:42+00:00",
-        "position_lat": 52.09615895105514,
-        "position_long": 5.083414519048503,
         "distance": 2528.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5500,8 +4654,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:43+00:00",
-        "position_lat": 52.096172278280854,
-        "position_long": 5.083441173499943,
         "distance": 2532.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5513,8 +4665,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:44+00:00",
-        "position_lat": 52.09618895826776,
-        "position_long": 5.08345282434507,
         "distance": 2535.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5526,8 +4676,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:45+00:00",
-        "position_lat": 52.09620723081623,
-        "position_long": 5.083476209854352,
         "distance": 2538.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5539,8 +4687,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:46+00:00",
-        "position_lat": 52.09620723081623,
-        "position_long": 5.083491213460666,
         "distance": 2541.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5552,8 +4698,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:47+00:00",
-        "position_lat": 52.096212259958016,
-        "position_long": 5.083506217066979,
         "distance": 2543.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5565,8 +4709,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:48+00:00",
-        "position_lat": 52.09622223442255,
-        "position_long": 5.083502864305792,
         "distance": 2545.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5578,8 +4720,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:49+00:00",
-        "position_lat": 52.09622893994492,
-        "position_long": 5.0835145151509185,
         "distance": 2546.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5591,8 +4731,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:50+00:00",
-        "position_lat": 52.096240590790046,
-        "position_long": 5.0835195442927,
         "distance": 2548.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5604,8 +4742,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:51+00:00",
-        "position_lat": 52.096268921622084,
-        "position_long": 5.083517867912105,
         "distance": 2549.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5617,8 +4753,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:52+00:00",
-        "position_lat": 52.09628727798958,
-        "position_long": 5.083521220673293,
         "distance": 2551.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5630,8 +4764,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:53+00:00",
-        "position_lat": 52.09631057967984,
-        "position_long": 5.083497835164011,
         "distance": 2553.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5643,8 +4775,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:54+00:00",
-        "position_lat": 52.09633396518912,
-        "position_long": 5.083476209854352,
         "distance": 2556.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5656,8 +4786,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:55+00:00",
-        "position_lat": 52.09637562324687,
-        "position_long": 5.083437904557785,
         "distance": 2560.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5669,8 +4797,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:56+00:00",
-        "position_lat": 52.09641895768522,
-        "position_long": 5.083411166287315,
         "distance": 2564.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5682,8 +4808,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:57+00:00",
-        "position_lat": 52.096453910220596,
-        "position_long": 5.083382835455282,
         "distance": 2569.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5695,8 +4819,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:58+00:00",
-        "position_lat": 52.09650059742013,
-        "position_long": 5.083349559300497,
         "distance": 2575.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5708,8 +4830,6 @@
     },
     {
         "timestamp": "2022-06-20 06:18:59+00:00",
-        "position_lat": 52.09653554995551,
-        "position_long": 5.083309493804307,
         "distance": 2580.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5721,8 +4841,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:00+00:00",
-        "position_lat": 52.09658391353564,
-        "position_long": 5.08326615936596,
         "distance": 2586.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5734,8 +4852,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:01+00:00",
-        "position_lat": 52.09662724797399,
-        "position_long": 5.083231206830581,
         "distance": 2592.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5747,8 +4863,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:02+00:00",
-        "position_lat": 52.09667058241234,
-        "position_long": 5.083196170476172,
         "distance": 2598.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5760,8 +4874,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:03+00:00",
-        "position_lat": 52.096720622373056,
-        "position_long": 5.083152836037824,
         "distance": 2603.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5773,8 +4885,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:04+00:00",
-        "position_lat": 52.09676395681141,
-        "position_long": 5.08311117798007,
         "distance": 2609.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5786,8 +4896,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:05+00:00",
-        "position_lat": 52.09680226210797,
-        "position_long": 5.083082847148036,
         "distance": 2615.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5799,8 +4907,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:06+00:00",
-        "position_lat": 52.09684894930751,
-        "position_long": 5.083041189090283,
         "distance": 2621.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5812,8 +4918,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:07+00:00",
-        "position_lat": 52.09689722906861,
-        "position_long": 5.082992825510154,
         "distance": 2627.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5825,8 +4929,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:08+00:00",
-        "position_lat": 52.096935618184204,
-        "position_long": 5.082946222129649,
         "distance": 2633.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5838,8 +4940,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:09+00:00",
-        "position_lat": 52.096975599861366,
-        "position_long": 5.082894505788333,
         "distance": 2640.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5851,8 +4951,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:10+00:00",
-        "position_lat": 52.097030585144836,
-        "position_long": 5.082829546040326,
         "distance": 2646.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5864,8 +4962,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:11+00:00",
-        "position_lat": 52.09707727234437,
-        "position_long": 5.08277782969901,
         "distance": 2653.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5877,8 +4973,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:12+00:00",
-        "position_lat": 52.09711557764094,
-        "position_long": 5.082719491654348,
         "distance": 2659.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5890,8 +4984,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:13+00:00",
-        "position_lat": 52.09714726123416,
-        "position_long": 5.082659561048123,
         "distance": 2666.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5903,8 +4995,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:14+00:00",
-        "position_lat": 52.097180621207976,
-        "position_long": 5.082587895777742,
         "distance": 2672.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5916,8 +5006,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:15+00:00",
-        "position_lat": 52.09721389736276,
-        "position_long": 5.082519499449519,
         "distance": 2679.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5929,8 +5017,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:16+00:00",
-        "position_lat": 52.097242228194794,
-        "position_long": 5.082451186940324,
         "distance": 2685.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5942,8 +5028,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:17+00:00",
-        "position_lat": 52.097265613704074,
-        "position_long": 5.082387903572912,
         "distance": 2691.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5955,8 +5039,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:18+00:00",
-        "position_lat": 52.09728229369098,
-        "position_long": 5.08231623830253,
         "distance": 2697.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5968,8 +5050,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:19+00:00",
-        "position_lat": 52.097295620916704,
-        "position_long": 5.0822461655937134,
         "distance": 2703.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5981,8 +5061,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:20+00:00",
-        "position_lat": 52.097303919000645,
-        "position_long": 5.0821828822263,
         "distance": 2709.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -5994,8 +5072,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:21+00:00",
-        "position_lat": 52.097323951748734,
-        "position_long": 5.082106187814138,
         "distance": 2714.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -6007,8 +5083,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:22+00:00",
-        "position_lat": 52.09733727897446,
-        "position_long": 5.082031169782569,
         "distance": 2720.0,
         "enhanced_altitude": -25.0,
         "altitude": -25.0,
@@ -6020,8 +5094,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:23+00:00",
-        "position_lat": 52.09734892981958,
-        "position_long": 5.081959504512188,
         "distance": 2726.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -6033,8 +5105,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:24+00:00",
-        "position_lat": 52.09735228258077,
-        "position_long": 5.081886162861213,
         "distance": 2731.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -6046,8 +5116,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:25+00:00",
-        "position_lat": 52.097362257045305,
-        "position_long": 5.081804523126299,
         "distance": 2737.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -6059,8 +5127,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:26+00:00",
-        "position_lat": 52.09736896256768,
-        "position_long": 5.0817212070107916,
         "distance": 2742.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -6072,8 +5138,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:27+00:00",
-        "position_lat": 52.0973806134128,
-        "position_long": 5.081642836218035,
         "distance": 2748.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -6085,8 +5149,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:28+00:00",
-        "position_lat": 52.09738396617399,
-        "position_long": 5.081571170947654,
         "distance": 2754.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -6098,8 +5160,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:29+00:00",
-        "position_lat": 52.0973806134128,
-        "position_long": 5.081514509283586,
         "distance": 2759.0,
         "enhanced_altitude": -24.0,
         "altitude": -24.0,
@@ -6111,8 +5171,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:30+00:00",
-        "position_lat": 52.0973822897934,
-        "position_long": 5.081437898690454,
         "distance": 2764.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -6124,8 +5182,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:31+00:00",
-        "position_lat": 52.097392264257934,
-        "position_long": 5.081359527897697,
         "distance": 2769.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -6137,8 +5193,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:32+00:00",
-        "position_lat": 52.097398885961276,
-        "position_long": 5.081284509866128,
         "distance": 2775.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -6150,8 +5204,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:33+00:00",
-        "position_lat": 52.09740726786424,
-        "position_long": 5.081197840989433,
         "distance": 2780.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -6163,8 +5215,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:34+00:00",
-        "position_lat": 52.09740559148365,
-        "position_long": 5.0811278520996455,
         "distance": 2785.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -6176,8 +5226,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:35+00:00",
-        "position_lat": 52.09740223872247,
-        "position_long": 5.081062892351639,
         "distance": 2791.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -6189,8 +5237,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:36+00:00",
-        "position_lat": 52.09738396617399,
-        "position_long": 5.081006230687572,
         "distance": 2796.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -6202,8 +5248,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:37+00:00",
-        "position_lat": 52.09738555873555,
-        "position_long": 5.080941187120535,
         "distance": 2801.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -6215,8 +5259,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:38+00:00",
-        "position_lat": 52.09738723511615,
-        "position_long": 5.080869521850154,
         "distance": 2806.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -6228,8 +5270,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:39+00:00",
-        "position_lat": 52.09738723511615,
-        "position_long": 5.080797856579773,
         "distance": 2811.0,
         "enhanced_altitude": -23.0,
         "altitude": -23.0,
@@ -6241,8 +5281,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:40+00:00",
-        "position_lat": 52.09739561701912,
-        "position_long": 5.080722838548204,
         "distance": 2816.0,
         "enhanced_altitude": -22.0,
         "altitude": -22.0,
@@ -6254,8 +5292,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:41+00:00",
-        "position_lat": 52.09740056234187,
-        "position_long": 5.08068118049045,
         "distance": 2821.0,
         "enhanced_altitude": -22.0,
         "altitude": -22.0,
@@ -6267,8 +5303,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:42+00:00",
-        "position_lat": 52.09740056234187,
-        "position_long": 5.080649496897229,
         "distance": 2827.0,
         "enhanced_altitude": -22.0,
         "altitude": -22.0,
@@ -6280,8 +5314,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:43+00:00",
-        "position_lat": 52.09740391510306,
-        "position_long": 5.080607838839475,
         "distance": 2831.0,
         "enhanced_altitude": -22.0,
         "altitude": -22.0,
@@ -6293,8 +5325,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:44+00:00",
-        "position_lat": 52.09741556594818,
-        "position_long": 5.080532904626936,
         "distance": 2835.0,
         "enhanced_altitude": -22.0,
         "altitude": -22.0,
@@ -6306,8 +5336,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:45+00:00",
-        "position_lat": 52.09742562423175,
-        "position_long": 5.080446235750241,
         "distance": 2839.0,
         "enhanced_altitude": -22.0,
         "altitude": -22.0,
@@ -6319,8 +5347,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:46+00:00",
-        "position_lat": 52.09743727507687,
-        "position_long": 5.080366188576892,
         "distance": 2845.0,
         "enhanced_altitude": -21.0,
         "altitude": -21.0,
@@ -6332,8 +5358,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:47+00:00",
-        "position_lat": 52.09744222039962,
-        "position_long": 5.080309526912823,
         "distance": 2850.0,
         "enhanced_altitude": -21.0,
         "altitude": -21.0,
@@ -6345,8 +5369,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:48+00:00",
-        "position_lat": 52.097452278683186,
-        "position_long": 5.080261163332695,
         "distance": 2855.0,
         "enhanced_altitude": -21.0,
         "altitude": -21.0,
@@ -6358,8 +5380,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:49+00:00",
-        "position_lat": 52.097455631444376,
-        "position_long": 5.080204501668628,
         "distance": 2859.0,
         "enhanced_altitude": -21.0,
         "altitude": -21.0,
@@ -6371,8 +5391,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:50+00:00",
-        "position_lat": 52.097455631444376,
-        "position_long": 5.080141218301215,
         "distance": 2862.0,
         "enhanced_altitude": -21.0,
         "altitude": -21.0,
@@ -6384,8 +5402,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:51+00:00",
-        "position_lat": 52.09744062783806,
-        "position_long": 5.0800812038759595,
         "distance": 2866.0,
         "enhanced_altitude": -21.0,
         "altitude": -21.0,
@@ -6397,8 +5413,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:52+00:00",
-        "position_lat": 52.09741388956759,
-        "position_long": 5.080041222198799,
         "distance": 2871.0,
         "enhanced_altitude": -21.0,
         "altitude": -21.0,
@@ -6410,8 +5424,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:53+00:00",
-        "position_lat": 52.09738891149674,
-        "position_long": 5.079979531392951,
         "distance": 2875.0,
         "enhanced_altitude": -21.0,
         "altitude": -21.0,
@@ -6423,8 +5435,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:54+00:00",
-        "position_lat": 52.0973822897934,
-        "position_long": 5.0799112188837565,
         "distance": 2878.0,
         "enhanced_altitude": -21.0,
         "altitude": -21.0,
@@ -6436,8 +5446,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:55+00:00",
-        "position_lat": 52.09737726065162,
-        "position_long": 5.079822873626468,
         "distance": 2883.0,
         "enhanced_altitude": -20.0,
         "altitude": -20.0,
@@ -6449,8 +5457,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:56+00:00",
-        "position_lat": 52.09737893703221,
-        "position_long": 5.079744502833712,
         "distance": 2887.0,
         "enhanced_altitude": -20.0,
         "altitude": -20.0,
@@ -6462,8 +5468,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:57+00:00",
-        "position_lat": 52.09737223150984,
-        "position_long": 5.079652888634265,
         "distance": 2892.0,
         "enhanced_altitude": -20.0,
         "altitude": -20.0,
@@ -6475,8 +5479,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:58+00:00",
-        "position_lat": 52.09738555873555,
-        "position_long": 5.079546187009475,
         "distance": 2897.0,
         "enhanced_altitude": -20.0,
         "altitude": -20.0,
@@ -6488,8 +5490,6 @@
     },
     {
         "timestamp": "2022-06-20 06:19:59+00:00",
-        "position_lat": 52.09740056234187,
-        "position_long": 5.079449543668248,
         "distance": 2903.0,
         "enhanced_altitude": -20.0,
         "altitude": -20.0,
@@ -6501,8 +5501,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:00+00:00",
-        "position_lat": 52.09741724232878,
-        "position_long": 5.079344518424051,
         "distance": 2908.0,
         "enhanced_altitude": -20.0,
         "altitude": -20.0,
@@ -6514,8 +5512,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:01+00:00",
-        "position_lat": 52.09741891870937,
-        "position_long": 5.0792394931798555,
         "distance": 2914.0,
         "enhanced_altitude": -20.0,
         "altitude": -20.0,
@@ -6527,8 +5523,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:02+00:00",
-        "position_lat": 52.097428893173905,
-        "position_long": 5.07913949707744,
         "distance": 2920.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -6540,8 +5534,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:03+00:00",
-        "position_lat": 52.09744062783806,
-        "position_long": 5.079037824594431,
         "distance": 2926.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -6553,8 +5545,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:04+00:00",
-        "position_lat": 52.097455631444376,
-        "position_long": 5.078932883169265,
         "distance": 2933.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -6566,8 +5556,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:05+00:00",
-        "position_lat": 52.09746392952831,
-        "position_long": 5.0788362398280364,
         "distance": 2939.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -6579,8 +5567,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:06+00:00",
-        "position_lat": 52.097482285895815,
-        "position_long": 5.078736159906592,
         "distance": 2946.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -6592,8 +5578,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:07+00:00",
-        "position_lat": 52.09749896588272,
-        "position_long": 5.078636163804177,
         "distance": 2952.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -6605,8 +5589,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:08+00:00",
-        "position_lat": 52.097513885670004,
-        "position_long": 5.078546225985324,
         "distance": 2958.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -6618,8 +5600,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:09+00:00",
-        "position_lat": 52.097515562050596,
-        "position_long": 5.078467855192568,
         "distance": 2964.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -6631,8 +5611,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:10+00:00",
-        "position_lat": 52.09752562033416,
-        "position_long": 5.078392837160999,
         "distance": 2970.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -6644,8 +5622,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:11+00:00",
-        "position_lat": 52.09752888927632,
-        "position_long": 5.078304491903711,
         "distance": 2976.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -6657,8 +5633,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:12+00:00",
-        "position_lat": 52.09754389288263,
-        "position_long": 5.078221175788203,
         "distance": 2981.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -6670,8 +5644,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:13+00:00",
-        "position_lat": 52.09755722010835,
-        "position_long": 5.078132830530914,
         "distance": 2987.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -6683,8 +5655,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:14+00:00",
-        "position_lat": 52.09756392563073,
-        "position_long": 5.078052867176594,
         "distance": 2992.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -6696,8 +5666,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:15+00:00",
-        "position_lat": 52.09758228199823,
-        "position_long": 5.077972903822274,
         "distance": 2997.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -6709,8 +5677,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:16+00:00",
-        "position_lat": 52.09759058008217,
-        "position_long": 5.07790450749405,
         "distance": 3002.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -6722,8 +5688,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:17+00:00",
-        "position_lat": 52.097605583688484,
-        "position_long": 5.077822867759136,
         "distance": 3007.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -6735,8 +5699,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:18+00:00",
-        "position_lat": 52.09761228921086,
-        "position_long": 5.077754555249942,
         "distance": 3012.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -6748,8 +5710,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:19+00:00",
-        "position_lat": 52.09762226367539,
-        "position_long": 5.0776712391344345,
         "distance": 3018.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -6761,8 +5721,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:20+00:00",
-        "position_lat": 52.09763223813992,
-        "position_long": 5.077589515580491,
         "distance": 3023.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -6774,8 +5732,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:21+00:00",
-        "position_lat": 52.09764229642349,
-        "position_long": 5.077519526690703,
         "distance": 3028.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6787,8 +5743,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:22+00:00",
-        "position_lat": 52.09765227088802,
-        "position_long": 5.077447861420322,
         "distance": 3033.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6800,8 +5754,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:23+00:00",
-        "position_lat": 52.097663921733144,
-        "position_long": 5.07738952337566,
         "distance": 3038.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6813,8 +5765,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:24+00:00",
-        "position_lat": 52.09767724895886,
-        "position_long": 5.077306207260153,
         "distance": 3043.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6826,8 +5776,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:25+00:00",
-        "position_lat": 52.097695605326365,
-        "position_long": 5.0772245675252385,
         "distance": 3048.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6839,8 +5787,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:26+00:00",
-        "position_lat": 52.0977055797909,
-        "position_long": 5.077154494816422,
         "distance": 3053.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6852,8 +5798,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:27+00:00",
-        "position_lat": 52.097700550649115,
-        "position_long": 5.077082829546041,
         "distance": 3058.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6865,8 +5809,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:28+00:00",
-        "position_lat": 52.09770893255208,
-        "position_long": 5.077006218952907,
         "distance": 3063.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6878,8 +5820,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:29+00:00",
-        "position_lat": 52.09771228531327,
-        "position_long": 5.076916197315025,
         "distance": 3068.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6891,8 +5831,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:30+00:00",
-        "position_lat": 52.09771555425543,
-        "position_long": 5.076831204818924,
         "distance": 3074.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6904,8 +5842,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:31+00:00",
-        "position_lat": 52.09771396169386,
-        "position_long": 5.076742859561635,
         "distance": 3080.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6917,8 +5853,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:32+00:00",
-        "position_lat": 52.09772896530018,
-        "position_long": 5.076657867065533,
         "distance": 3086.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6930,8 +5864,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:33+00:00",
-        "position_lat": 52.09773726338412,
-        "position_long": 5.0765644926664635,
         "distance": 3091.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6943,8 +5875,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:34+00:00",
-        "position_lat": 52.09774891422924,
-        "position_long": 5.076491234834518,
         "distance": 3097.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6956,8 +5886,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:35+00:00",
-        "position_lat": 52.097753943371025,
-        "position_long": 5.076397860435448,
         "distance": 3103.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6969,8 +5897,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:36+00:00",
-        "position_lat": 52.09775561975162,
-        "position_long": 5.076297864333033,
         "distance": 3109.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6982,8 +5908,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:37+00:00",
-        "position_lat": 52.09776727059675,
-        "position_long": 5.0761811882437105,
         "distance": 3115.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -6995,8 +5919,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:38+00:00",
-        "position_lat": 52.097780597822464,
-        "position_long": 5.0760828685218895,
         "distance": 3122.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7008,8 +5930,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:39+00:00",
-        "position_lat": 52.09779727780937,
-        "position_long": 5.075972897954942,
         "distance": 3129.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7021,8 +5941,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:40+00:00",
-        "position_lat": 52.09780063057056,
-        "position_long": 5.075862843568964,
         "distance": 3135.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7034,8 +5952,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:41+00:00",
-        "position_lat": 52.09781555035784,
-        "position_long": 5.075746167479641,
         "distance": 3143.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7047,8 +5963,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:42+00:00",
-        "position_lat": 52.097823932260816,
-        "position_long": 5.075641226054475,
         "distance": 3150.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7060,8 +5974,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:43+00:00",
-        "position_lat": 52.09783055396416,
-        "position_long": 5.075536200810278,
         "distance": 3157.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7073,8 +5985,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:44+00:00",
-        "position_lat": 52.097838935867124,
-        "position_long": 5.075432851946676,
         "distance": 3164.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7086,8 +5996,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:45+00:00",
-        "position_lat": 52.097842288628314,
-        "position_long": 5.0753362086054485,
         "distance": 3172.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7099,8 +6007,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:46+00:00",
-        "position_lat": 52.097843965008906,
-        "position_long": 5.075222885277313,
         "distance": 3179.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7112,8 +6018,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:47+00:00",
-        "position_lat": 52.097842288628314,
-        "position_long": 5.075119536413711,
         "distance": 3186.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7125,8 +6029,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:48+00:00",
-        "position_lat": 52.097848910331656,
-        "position_long": 5.075014511169514,
         "distance": 3193.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7138,8 +6040,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:49+00:00",
-        "position_lat": 52.09784555757047,
-        "position_long": 5.074917867828287,
         "distance": 3200.0,
         "enhanced_altitude": -17.0,
         "altitude": -17.0,
@@ -7151,8 +6051,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:50+00:00",
-        "position_lat": 52.097843965008906,
-        "position_long": 5.074827846190404,
         "distance": 3207.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7164,8 +6062,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:51+00:00",
-        "position_lat": 52.09785561585404,
-        "position_long": 5.074721228384644,
         "distance": 3214.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7177,8 +6073,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:52+00:00",
-        "position_lat": 52.09785888479619,
-        "position_long": 5.074621232282229,
         "distance": 3221.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7190,8 +6084,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:53+00:00",
-        "position_lat": 52.09786894307975,
-        "position_long": 5.074514530657439,
         "distance": 3227.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7203,8 +6095,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:54+00:00",
-        "position_lat": 52.097882270305476,
-        "position_long": 5.07441285817443,
         "distance": 3234.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7216,8 +6106,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:55+00:00",
-        "position_lat": 52.09789056838941,
-        "position_long": 5.07430624036867,
         "distance": 3242.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7229,8 +6117,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:56+00:00",
-        "position_lat": 52.0978939211506,
-        "position_long": 5.0741978623632855,
         "distance": 3249.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7242,8 +6128,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:57+00:00",
-        "position_lat": 52.09789895029238,
-        "position_long": 5.07409283711909,
         "distance": 3256.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7255,8 +6139,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:58+00:00",
-        "position_lat": 52.09789727391179,
-        "position_long": 5.073996193777862,
         "distance": 3263.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7268,8 +6150,6 @@
     },
     {
         "timestamp": "2022-06-20 06:20:59+00:00",
-        "position_lat": 52.09789895029238,
-        "position_long": 5.073894521294853,
         "distance": 3270.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7281,8 +6161,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:00+00:00",
-        "position_lat": 52.097908924756915,
-        "position_long": 5.073796201573032,
         "distance": 3278.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7294,8 +6172,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:01+00:00",
-        "position_lat": 52.0979122775181,
-        "position_long": 5.073706179935149,
         "distance": 3285.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7307,8 +6183,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:02+00:00",
-        "position_lat": 52.097917222840856,
-        "position_long": 5.073607860213328,
         "distance": 3292.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7320,8 +6194,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:03+00:00",
-        "position_lat": 52.09792560474382,
-        "position_long": 5.073512893252694,
         "distance": 3298.0,
         "enhanced_altitude": -18.0,
         "altitude": -18.0,
@@ -7333,8 +6205,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:04+00:00",
-        "position_lat": 52.09793222644717,
-        "position_long": 5.07341784247303,
         "distance": 3305.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7346,8 +6216,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:05+00:00",
-        "position_lat": 52.097943961111326,
-        "position_long": 5.073326228273584,
         "distance": 3312.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7359,8 +6227,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:06+00:00",
-        "position_lat": 52.09795561195645,
-        "position_long": 5.073246181100234,
         "distance": 3318.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7372,8 +6238,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:07+00:00",
-        "position_lat": 52.097967262801575,
-        "position_long": 5.0731628649847265,
         "distance": 3325.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7385,8 +6249,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:08+00:00",
-        "position_lat": 52.09797229194336,
-        "position_long": 5.073081225249812,
         "distance": 3332.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7398,8 +6260,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:09+00:00",
-        "position_lat": 52.097973884504924,
-        "position_long": 5.072989527231336,
         "distance": 3338.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7411,8 +6271,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:10+00:00",
-        "position_lat": 52.09798226640789,
-        "position_long": 5.072887854748327,
         "distance": 3345.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7424,8 +6282,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:11+00:00",
-        "position_lat": 52.09798729554967,
-        "position_long": 5.072784505884725,
         "distance": 3352.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7437,8 +6293,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:12+00:00",
-        "position_lat": 52.09798888811123,
-        "position_long": 5.072706218910998,
         "distance": 3358.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7450,8 +6304,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:13+00:00",
-        "position_lat": 52.09799224087242,
-        "position_long": 5.072632877260023,
         "distance": 3365.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7463,8 +6315,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:14+00:00",
-        "position_lat": 52.097998946394796,
-        "position_long": 5.072564564750829,
         "distance": 3371.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7476,8 +6326,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:15+00:00",
-        "position_lat": 52.097998946394796,
-        "position_long": 5.072504550325574,
         "distance": 3376.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7489,8 +6337,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:16+00:00",
-        "position_lat": 52.09798888811123,
-        "position_long": 5.072446212280913,
         "distance": 3381.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7502,8 +6348,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:17+00:00",
-        "position_lat": 52.097973884504924,
-        "position_long": 5.072399525081377,
         "distance": 3386.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7515,8 +6359,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:18+00:00",
-        "position_lat": 52.09794890643408,
-        "position_long": 5.072357867023624,
         "distance": 3391.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7528,8 +6370,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:19+00:00",
-        "position_lat": 52.09792225198263,
-        "position_long": 5.072307827062901,
         "distance": 3395.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7541,8 +6381,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:20+00:00",
-        "position_lat": 52.097882270305476,
-        "position_long": 5.07224957283727,
         "distance": 3399.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7554,8 +6392,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:21+00:00",
-        "position_lat": 52.09785226309285,
-        "position_long": 5.072202885637735,
         "distance": 3404.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7567,8 +6403,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:22+00:00",
-        "position_lat": 52.0978089286545,
-        "position_long": 5.072161227579981,
         "distance": 3409.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7580,8 +6414,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:23+00:00",
-        "position_lat": 52.09777556868068,
-        "position_long": 5.072112863999853,
         "distance": 3414.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7593,8 +6425,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:24+00:00",
-        "position_lat": 52.0977406161453,
-        "position_long": 5.072061231477566,
         "distance": 3419.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7606,8 +6436,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:25+00:00",
-        "position_lat": 52.09771396169386,
-        "position_long": 5.07200951513625,
         "distance": 3424.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7619,8 +6447,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:26+00:00",
-        "position_lat": 52.09768395448124,
-        "position_long": 5.071967857078496,
         "distance": 3429.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7632,8 +6458,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:27+00:00",
-        "position_lat": 52.0976389436623,
-        "position_long": 5.071917900936803,
         "distance": 3435.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7645,8 +6469,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:28+00:00",
-        "position_lat": 52.097607260069076,
-        "position_long": 5.071866184595487,
         "distance": 3440.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7658,8 +6480,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:29+00:00",
-        "position_lat": 52.09757892923704,
-        "position_long": 5.071831232060108,
         "distance": 3446.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7671,8 +6491,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:30+00:00",
-        "position_lat": 52.09756224925013,
-        "position_long": 5.071804493789639,
         "distance": 3451.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7684,8 +6502,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:31+00:00",
-        "position_lat": 52.09752394395357,
-        "position_long": 5.071746239564007,
         "distance": 3456.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7697,8 +6513,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:32+00:00",
-        "position_lat": 52.097478933134624,
-        "position_long": 5.07168949408091,
         "distance": 3460.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7710,8 +6524,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:33+00:00",
-        "position_lat": 52.097450602302594,
-        "position_long": 5.071606177965402,
         "distance": 3465.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7723,8 +6535,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:34+00:00",
-        "position_lat": 52.09743895145747,
-        "position_long": 5.071532836314427,
         "distance": 3471.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7736,8 +6546,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:35+00:00",
-        "position_lat": 52.09740894424484,
-        "position_long": 5.071457902101888,
         "distance": 3477.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7749,8 +6557,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:36+00:00",
-        "position_lat": 52.09738396617399,
-        "position_long": 5.071382884070319,
         "distance": 3482.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7762,8 +6568,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:37+00:00",
-        "position_lat": 52.097362257045305,
-        "position_long": 5.071324546025658,
         "distance": 3488.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7775,8 +6579,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:38+00:00",
-        "position_lat": 52.0973455770584,
-        "position_long": 5.071249527994089,
         "distance": 3493.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7788,8 +6590,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:39+00:00",
-        "position_lat": 52.097323951748734,
-        "position_long": 5.071196219091209,
         "distance": 3499.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7801,8 +6601,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:40+00:00",
-        "position_lat": 52.097305595381236,
-        "position_long": 5.071114495537265,
         "distance": 3504.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7814,8 +6612,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:41+00:00",
-        "position_lat": 52.09729059177492,
-        "position_long": 5.071029503041164,
         "distance": 3509.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7827,8 +6623,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:42+00:00",
-        "position_lat": 52.097273911788015,
-        "position_long": 5.070967896054345,
         "distance": 3515.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7840,8 +6634,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:43+00:00",
-        "position_lat": 52.09725396285895,
-        "position_long": 5.070887848880995,
         "distance": 3520.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7853,8 +6645,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:44+00:00",
-        "position_lat": 52.09723057734967,
-        "position_long": 5.070826158075146,
         "distance": 3526.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7866,8 +6656,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:45+00:00",
-        "position_lat": 52.09722227926573,
-        "position_long": 5.070756169185358,
         "distance": 3532.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7879,8 +6667,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:46+00:00",
-        "position_lat": 52.097210628420605,
-        "position_long": 5.070681234972819,
         "distance": 3537.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7892,8 +6678,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:47+00:00",
-        "position_lat": 52.0971922720531,
-        "position_long": 5.070604540560657,
         "distance": 3543.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7905,8 +6689,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:48+00:00",
-        "position_lat": 52.097180621207976,
-        "position_long": 5.070537904432057,
         "distance": 3549.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7918,8 +6700,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:49+00:00",
-        "position_lat": 52.0971555593181,
-        "position_long": 5.070466239161676,
         "distance": 3554.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7931,8 +6711,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:50+00:00",
-        "position_lat": 52.097125552105474,
-        "position_long": 5.070386191988326,
         "distance": 3560.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7944,8 +6722,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:51+00:00",
-        "position_lat": 52.09709562871188,
-        "position_long": 5.070319555859726,
         "distance": 3566.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7957,8 +6733,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:52+00:00",
-        "position_lat": 52.097057239596275,
-        "position_long": 5.070266163137815,
         "distance": 3572.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7970,8 +6744,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:53+00:00",
-        "position_lat": 52.097028908764244,
-        "position_long": 5.070191228925276,
         "distance": 3577.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7983,8 +6755,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:54+00:00",
-        "position_lat": 52.0970039306934,
-        "position_long": 5.070117887274302,
         "distance": 3583.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -7996,8 +6766,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:55+00:00",
-        "position_lat": 52.09698222156471,
-        "position_long": 5.070036163720358,
         "distance": 3589.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8009,8 +6777,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:56+00:00",
-        "position_lat": 52.09695724349386,
-        "position_long": 5.06996617483057,
         "distance": 3595.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8022,8 +6788,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:57+00:00",
-        "position_lat": 52.09693058904242,
-        "position_long": 5.069892833179595,
         "distance": 3602.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8035,8 +6799,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:58+00:00",
-        "position_lat": 52.09691558543611,
-        "position_long": 5.069822844289807,
         "distance": 3607.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8048,8 +6810,6 @@
     },
     {
         "timestamp": "2022-06-20 06:21:59+00:00",
-        "position_lat": 52.09688893098467,
-        "position_long": 5.0697612373029886,
         "distance": 3613.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8061,8 +6821,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:00+00:00",
-        "position_lat": 52.09687225099776,
-        "position_long": 5.069696193735952,
         "distance": 3618.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8074,8 +6832,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:01+00:00",
-        "position_lat": 52.09686060015263,
-        "position_long": 5.069637855691291,
         "distance": 3623.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8087,8 +6843,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:02+00:00",
-        "position_lat": 52.09686060015263,
-        "position_long": 5.069587899549599,
         "distance": 3628.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8100,8 +6854,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:03+00:00",
-        "position_lat": 52.09686562929441,
-        "position_long": 5.069522855982562,
         "distance": 3632.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8113,8 +6865,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:04+00:00",
-        "position_lat": 52.09688725460408,
-        "position_long": 5.069487903447183,
         "distance": 3637.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8126,8 +6876,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:05+00:00",
-        "position_lat": 52.09691558543611,
-        "position_long": 5.069462841557307,
         "distance": 3641.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8139,8 +6887,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:06+00:00",
-        "position_lat": 52.096943916268145,
-        "position_long": 5.069436187105867,
         "distance": 3645.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8152,8 +6898,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:07+00:00",
-        "position_lat": 52.09697727624196,
-        "position_long": 5.06940617989324,
         "distance": 3649.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8165,8 +6909,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:08+00:00",
-        "position_lat": 52.097002254312805,
-        "position_long": 5.069376172680612,
         "distance": 3654.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8178,8 +6920,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:09+00:00",
-        "position_lat": 52.097025556003054,
-        "position_long": 5.069351194609766,
         "distance": 3658.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8191,8 +6931,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:10+00:00",
-        "position_lat": 52.097052294273524,
-        "position_long": 5.069331161861671,
         "distance": 3662.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8204,8 +6942,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:11+00:00",
-        "position_lat": 52.09707391958319,
-        "position_long": 5.069311212932606,
         "distance": 3665.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8217,8 +6953,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:12+00:00",
-        "position_lat": 52.09707391958319,
-        "position_long": 5.069279529339385,
         "distance": 3668.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8230,8 +6964,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:13+00:00",
-        "position_lat": 52.09707224320259,
-        "position_long": 5.069269554874852,
         "distance": 3671.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8243,8 +6975,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:14+00:00",
-        "position_lat": 52.09706394511865,
-        "position_long": 5.069257904029725,
         "distance": 3673.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8256,8 +6986,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:15+00:00",
-        "position_lat": 52.097057239596275,
-        "position_long": 5.0692311657592555,
         "distance": 3675.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8269,8 +6997,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:16+00:00",
-        "position_lat": 52.09704894151234,
-        "position_long": 5.0692078640690035,
         "distance": 3676.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8282,8 +7008,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:17+00:00",
-        "position_lat": 52.09703729066721,
-        "position_long": 5.069177856856376,
         "distance": 3678.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8295,8 +7019,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:18+00:00",
-        "position_lat": 52.09701893429971,
-        "position_long": 5.069142904320997,
         "distance": 3680.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8308,8 +7030,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:19+00:00",
-        "position_lat": 52.09701222877734,
-        "position_long": 5.069111220727775,
         "distance": 3682.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8321,8 +7041,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:20+00:00",
-        "position_lat": 52.097002254312805,
-        "position_long": 5.069072831612179,
         "distance": 3685.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8334,8 +7052,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:21+00:00",
-        "position_lat": 52.096990603467674,
-        "position_long": 5.069027904612268,
         "distance": 3688.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8347,8 +7063,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:22+00:00",
-        "position_lat": 52.09697895262255,
-        "position_long": 5.068989515496671,
         "distance": 3691.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8360,8 +7074,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:23+00:00",
-        "position_lat": 52.096968894338985,
-        "position_long": 5.068949533819512,
         "distance": 3694.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8373,8 +7085,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:24+00:00",
-        "position_lat": 52.096963949016235,
-        "position_long": 5.068901170239383,
         "distance": 3697.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8386,8 +7096,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:25+00:00",
-        "position_lat": 52.096965625396834,
-        "position_long": 5.068866217704004,
         "distance": 3700.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8399,8 +7107,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:26+00:00",
-        "position_lat": 52.096972247100176,
-        "position_long": 5.0688478613365024,
         "distance": 3704.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8412,8 +7118,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:27+00:00",
-        "position_lat": 52.096975599861366,
-        "position_long": 5.068831181349595,
         "distance": 3706.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8425,8 +7129,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:28+00:00",
-        "position_lat": 52.096975599861366,
-        "position_long": 5.068819530504469,
         "distance": 3708.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8438,8 +7140,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:29+00:00",
-        "position_lat": 52.09698062900314,
-        "position_long": 5.068817854123875,
         "distance": 3709.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8451,8 +7151,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:32+00:00",
-        "position_lat": 52.097002254312805,
-        "position_long": 5.06879790519481,
         "distance": 3710.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8464,8 +7162,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:33+00:00",
-        "position_lat": 52.09701725791912,
-        "position_long": 5.068789523291842,
         "distance": 3712.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8477,8 +7173,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:34+00:00",
-        "position_lat": 52.09702723238365,
-        "position_long": 5.068777872446716,
         "distance": 3714.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8490,8 +7184,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:35+00:00",
-        "position_lat": 52.09703729066721,
-        "position_long": 5.068767897982182,
         "distance": 3715.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8503,8 +7195,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:36+00:00",
-        "position_lat": 52.09704894151234,
-        "position_long": 5.068756163318026,
         "distance": 3717.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8516,8 +7206,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:37+00:00",
-        "position_lat": 52.09705891597687,
-        "position_long": 5.068746188853494,
         "distance": 3719.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8529,8 +7217,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:38+00:00",
-        "position_lat": 52.09706729787984,
-        "position_long": 5.068736214388961,
         "distance": 3720.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8542,8 +7228,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:39+00:00",
-        "position_lat": 52.09707224320259,
-        "position_long": 5.068721210782647,
         "distance": 3722.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8555,8 +7239,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:40+00:00",
-        "position_lat": 52.09708389404772,
-        "position_long": 5.06870453079574,
         "distance": 3723.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8568,8 +7250,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:41+00:00",
-        "position_lat": 52.09709562871188,
-        "position_long": 5.068696232711801,
         "distance": 3724.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8581,8 +7261,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:42+00:00",
-        "position_lat": 52.09710392679581,
-        "position_long": 5.068684498047645,
         "distance": 3726.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8594,8 +7272,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:43+00:00",
-        "position_lat": 52.09711390126034,
-        "position_long": 5.068669494441331,
         "distance": 3727.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8607,8 +7283,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:44+00:00",
-        "position_lat": 52.097125552105474,
-        "position_long": 5.06866454911858,
         "distance": 3728.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8620,8 +7294,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:45+00:00",
-        "position_lat": 52.097145584853564,
-        "position_long": 5.068656167215612,
         "distance": 3730.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8633,8 +7305,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:46+00:00",
-        "position_lat": 52.09716226484047,
-        "position_long": 5.068656167215612,
         "distance": 3732.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8646,8 +7316,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:47+00:00",
-        "position_lat": 52.0971739156856,
-        "position_long": 5.068649545512266,
         "distance": 3733.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8659,8 +7327,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:48+00:00",
-        "position_lat": 52.09718229758857,
-        "position_long": 5.0686545746540475,
         "distance": 3735.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8672,8 +7338,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:49+00:00",
-        "position_lat": 52.0971739156856,
-        "position_long": 5.06865122189286,
         "distance": 3737.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8685,8 +7349,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:50+00:00",
-        "position_lat": 52.0971922720531,
-        "position_long": 5.068656167215612,
         "distance": 3739.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8698,8 +7360,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:51+00:00",
-        "position_lat": 52.097207275659414,
-        "position_long": 5.068656167215612,
         "distance": 3740.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8711,8 +7371,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:52+00:00",
-        "position_lat": 52.09722395564632,
-        "position_long": 5.068659519976799,
         "distance": 3742.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8724,8 +7382,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:53+00:00",
-        "position_lat": 52.097242228194794,
-        "position_long": 5.068652898273454,
         "distance": 3743.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8737,8 +7393,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:54+00:00",
-        "position_lat": 52.09725396285895,
-        "position_long": 5.068656167215612,
         "distance": 3745.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8750,8 +7404,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:55+00:00",
-        "position_lat": 52.097265613704074,
-        "position_long": 5.068656167215612,
         "distance": 3746.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8763,8 +7415,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:56+00:00",
-        "position_lat": 52.0972789409298,
-        "position_long": 5.06866454911858,
         "distance": 3748.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8776,8 +7426,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:57+00:00",
-        "position_lat": 52.09729226815551,
-        "position_long": 5.068671170821926,
         "distance": 3749.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8789,8 +7437,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:58+00:00",
-        "position_lat": 52.097295620916704,
-        "position_long": 5.068669494441331,
         "distance": 3751.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8802,8 +7448,6 @@
     },
     {
         "timestamp": "2022-06-20 06:22:59+00:00",
-        "position_lat": 52.097295620916704,
-        "position_long": 5.068672847202519,
         "distance": 3752.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8815,8 +7459,6 @@
     },
     {
         "timestamp": "2022-06-20 06:23:00+00:00",
-        "position_lat": 52.097302242620046,
-        "position_long": 5.068676199963706,
         "distance": 3753.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,
@@ -8828,8 +7470,6 @@
     },
     {
         "timestamp": "2022-06-20 06:23:17+00:00",
-        "position_lat": 52.097332249832675,
-        "position_long": 5.0686662254991734,
         "distance": 3754.0,
         "enhanced_altitude": -19.0,
         "altitude": -19.0,

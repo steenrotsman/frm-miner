@@ -18,7 +18,7 @@ UNITS = 100
 TS_LEN = 10000
 MOTIF_LEN = 500
 NOISE_LEVELS = [0.1, 0.3, 0.5, 0.7, 0.9]
-INJECT = 75
+INJECT = [100, 75]
 
 # Parameters
 MINSUP = 0.3
@@ -29,7 +29,7 @@ MAX_OVERLAP = 0.8
 LOCAL = True
 K = 3
 
-np.random.seed(123)
+np.random.seed(0)
 
 
 def main():
@@ -38,28 +38,23 @@ def main():
     plot_motif(motif, NOISE_LEVELS)
     plot_example(noise[:5], motif, 0.5)
 
-    motifs = []
-    overlaps = []
-    consensus_motifs = []
-    for noise_level in NOISE_LEVELS:
-        # Put noisy motif into data
-        data, locations = get_data(noise, motif, noise_level, INJECT)
+    for inject in INJECT:
+        motifs = []
+        consensus_motifs = []
+        for noise_level in NOISE_LEVELS:
+            # Put noisy motif into data
+            data, locations = get_data(noise, motif, noise_level, inject)
 
-        # Mine motifs of variable length
-        mm = Miner(data, MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
-        top_motifs = mm.mine_motifs()
-        motifs.append(top_motifs)
+            # Mine motifs of variable length
+            mm = Miner(data, MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
+            top_motifs = mm.mine_motifs()
+            motifs.append(top_motifs)
 
-        # Find if occurrences of top_motifs correspond to actual locations
-        overlap = get_overlap(top_motifs, locations)
-        overlaps.append(overlap)
+            # consensus_motifs.append(ostinato(data, MOTIF_LEN))
 
-        consensus_motifs.append(ostinato(data, MOTIF_LEN))
-
-    fig, axs = plt.subplots(nrows=len(motifs[0]), layout='compressed', ncols=len(NOISE_LEVELS), sharey='all', sharex='all')
-    plot_motifs(fig, chain.from_iterable(axs.T), chain.from_iterable(motifs), ALPHABET, MOTIF_LEN)
-    print(np.array(overlaps).T)
-    plot_ostinato(consensus_motifs)
+        fig, axs = plt.subplots(nrows=len(motifs[0]), layout='compressed', ncols=len(NOISE_LEVELS), sharey='all', sharex='all')
+        plot_motifs(fig, chain.from_iterable(axs.T), chain.from_iterable(motifs), ALPHABET, MOTIF_LEN)
+        # plot_ostinato(consensus_motifs)
 
 
 def get_motif(length):
@@ -91,29 +86,6 @@ def get_data(noise, motif, noise_level, inject):
         data.append(row)
 
     return data, locations
-
-
-def get_overlap(top_motifs, locations):
-    overlap = []
-    for motif in top_motifs:
-        success = 0
-        for i, (start, end) in motif.match_indexes.items():
-            true_start = locations[i]
-            true_end = locations[i] + MOTIF_LEN
-
-            # Check if match doesn't completely fall outside of range
-            if true_start < 0 or start > true_end or end < true_start:
-                continue
-
-            if start < true_start:
-                success += end - true_start > true_start - start
-            elif end > true_end:
-                success += end - true_end < true_end - start
-            else:
-                success += True
-        overlap.append(success / len(motif.match_indexes))
-
-    return overlap
 
 
 def plot_motif(motif, noise_levels):
