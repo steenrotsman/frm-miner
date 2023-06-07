@@ -46,8 +46,8 @@ def main():
             data, locations = get_data(noise, motif, noise_level, inject)
 
             # Mine motifs of variable length
-            mm = Miner(data, MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
-            top_motifs = mm.mine_motifs()
+            mm = Miner(MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
+            top_motifs = mm.mine_motifs(data)
             motifs.append(top_motifs)
 
             consensus_motifs.append(ostinato(data, MOTIF_LEN))
