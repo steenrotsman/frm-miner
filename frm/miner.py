@@ -13,8 +13,6 @@ class Miner:
     
     Parameters
     ----------
-    timeseries : list
-        List of lists with akm database of time series.
     minsup : float
         Fraction of time series a motif should occur in.
     seglen : int
@@ -36,12 +34,9 @@ class Miner:
     
     Attributes
     ----------
-    sequences : list
-        Collection of time series discretised to sequences.
     motifs : list
         Constructed motifs ordered by the distances to their occurrences.
     """
-
     def __init__(
             self,
             minsup: float,
@@ -62,21 +57,37 @@ class Miner:
         self.k = k
         self.maximal = maximal
 
-        self.sequences = None
         self.motifs = None
 
     def mine_motifs(self, ts):
-        """Perform all steps in motif mining pipeline."""
-        st = standardise(ts, self.local)
-        ds = sax(st, self.seglen, self.alphabet)
-        self.mine_patterns(ds)
-        self.map_patterns(ts)
+        """Perform all steps in motif mining pipeline.
+
+        Parameters
+        ----------
+        ts : list
+            Database of time series.
+
+        Returns
+        -------
+        res: list
+            frequent motifs.
+        """
+        standardised = standardise(ts, self.local)
+        discretised = sax(standardised, self.seglen, self.alphabet)
+        self.mine_patterns(discretised)
+        self.map_patterns(standardised)
         self.sort_patterns()
 
         return self.motifs if not self.k else self.motifs[:self.k]
 
     def mine_patterns(self, ds):
-        """Find frequent patterns in the sequences."""
+        """Find frequent patterns in the sequences.
+
+        Parameters
+        ----------
+        sequences : list
+            Collection of time series discretised to sequences.
+        """
         # Find frequent and maximal patterns in the sequences
         pm = PatternMiner(self.minsup, self.min_len, self.max_overlap)
         pm.mine(ds)
@@ -99,7 +110,21 @@ class Miner:
         self.motifs.sort(key=lambda motif: motif.rmse)
 
     def get_occurrences(self, motif, ts):
-        """Get the occurrences of one motif in the time series."""
+        """Get the occurrences of one motif in the time series.
+
+        Parameters
+        ----------
+        motif : Motif
+            Motif object to find occurrences from.
+        ts : list
+            Time series to find occurrences in.
+
+        Returns
+        -------
+        occurrences : dict
+            Dictionary with time series indexes as keys and matching
+            subsequences as values.
+        """
         motif_len = len(motif.pattern) * self.seglen
 
         occurrences = {}

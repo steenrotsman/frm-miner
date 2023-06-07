@@ -26,8 +26,8 @@ def main():
     records = get_records(JSON_DIR, PARSE_TIMESTAMP)
     field = get_fields(records, FIELD)
 
-    miner = Miner(field, MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
-    motifs = miner.mine_motifs()
+    miner = Miner(MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
+    motifs = miner.mine_motifs(field)
 
     fig, axs = plt.subplots(ncols=4, layout='compressed')
     plot_motifs(fig, axs, motifs, ALPHABET)

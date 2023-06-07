@@ -12,8 +12,6 @@ class PatternMiner:
 
     Parameters
     ----------
-    sequences : list
-        Collection of sequences with distinct values.
     minsup : float
         The minimum support for a pattern.
     
@@ -45,17 +43,20 @@ class PatternMiner:
         # self.patterns[k] contains a list of patterns of length k
         self._patterns = [[], []]
 
-    def mine(self, ds):
+    def mine(self, sequences):
         """Mine sequence motifs.
 
         Starting with patterns of length 1 (1-patterns), candidates are
         generated and checked for sufficient support. Then, k-patterns
         are generated based on (k-1)-patterns.
+
+        sequences : list
+            Collection of sequences with discrete values.
         """
-        self._min_freq = len(ds) * self.minsup
+        self._min_freq = len(sequences) * self.minsup
 
         # Mine 1-patterns separately from longer patterns
-        self.mine_1_patterns(ds)
+        self.mine_1_patterns(sequences)
 
         # If there were no frequent k-patterns, there can be no 
         # frequent (k+1)-patterns; stop
@@ -68,7 +69,7 @@ class PatternMiner:
 
                 # Find candidate in sequences parent occurs in
                 for seq, indexes in self.frequent[candidate[:-1]].indexes.items():
-                    sequence = ds[seq]
+                    sequence = sequences[seq]
                     for index in indexes:
                         if sequence[index : index+self._k] == candidate:
                             self.frequent[candidate].record_index(seq, index)
@@ -182,13 +183,16 @@ class PatternMiner:
         patterns = self._patterns[self._k - 1]
         return [p1 + p2[-1] for p1 in patterns for p2 in patterns if p1[1:] == p2[:-1]]
     
-    def mine_1_patterns(self, ds):
+    def mine_1_patterns(self, sequences):
         """Mine frequent 1-patterns.
         
         One scan is made over the sequences to map 1-pattern indexes.
+
+        sequences : list
+            Collection of sequences with discrete values.
         """
         # Divide sequences into indexes
-        for i, sequence in enumerate(ds):
+        for i, sequence in enumerate(sequences):
             for j, item in enumerate(sequence):
                 if item not in self.frequent:
                     self.frequent[item] = Motif(item)
