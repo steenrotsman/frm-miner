@@ -44,7 +44,6 @@ class Miner:
 
     def __init__(
             self,
-            timeseries: list,
             minsup: float,
             seglen: int,
             alphabet: int,
@@ -54,7 +53,6 @@ class Miner:
             k: int = 0,
             maximal: bool = False
     ):
-        self.timeseries = timeseries
         self.minsup = minsup
         self.seglen = seglen
         self.alphabet = alphabet
@@ -67,54 +65,40 @@ class Miner:
         self.sequences = None
         self.motifs = None
 
-    def mine_motifs(self):
+    def mine_motifs(self, ts):
         """Perform all steps in motif mining pipeline."""
-        self.standardise()
-        self.discretise()
-        self.mine_patterns()
-        self.map_patterns()
+        st = standardise(ts, self.local)
+        ds = sax(st, self.seglen, self.alphabet)
+        self.mine_patterns(ds)
+        self.map_patterns(ts)
         self.sort_patterns()
 
         return self.motifs if not self.k else self.motifs[:self.k]
 
-    def standardise(self):
-        """Standardize time series to """
-        self.timeseries = standardise(self.timeseries, self.local)
-
-    def discretise(self):
-        """Discretise time series to sequences."""
-        self.sequences = sax(self.timeseries, self.seglen, self.alphabet)
-
-    def mine_patterns(self):
+    def mine_patterns(self, ds):
         """Find frequent patterns in the sequences."""
         # Find frequent and maximal patterns in the sequences
-        pm = PatternMiner(self.sequences, self.minsup)
-        pm.mine()
-        pm.remove_redundant(self.min_len, self.max_overlap)
+        pm = PatternMiner(self.minsup, self.min_len, self.max_overlap)
+        pm.mine(ds)
 
         # Get indexes of frequent or maximal patterns
         if self.maximal:
-            self.motifs = pm.maximal.values()
+            self.motifs = list(pm.maximal.values())
         else:
-            self.motifs = pm.frequent.values()
+            self.motifs = list(pm.frequent.values())
 
-    def map_patterns(self):
+    def map_patterns(self, ts):
         """Map patterns back to motifs."""
-        self.motifs = [self.map(motif) for motif in self.motifs]
+        for motif in self.motifs:
+            motif.occurrences = self.get_occurrences(motif, ts)
+            motif.map()
+            motif.match_indexes = {k: [s * self.seglen, e * self.seglen] for k, (s, e) in motif.match_indexes.items()}
 
     def sort_patterns(self):
         """Sort patterns on their root mean squared error of representative and occurrences."""
         self.motifs.sort(key=lambda motif: motif.rmse)
 
-    def map(self, motif):
-        """Fill motif attributes."""
-        motif.occurrences = self.get_occurrences(motif)
-        motif.map()
-        motif.match_indexes = {k: [s * self.seglen, e * self.seglen] for k, (s, e) in motif.match_indexes.items()}
-
-        return motif
-
-    def get_occurrences(self, motif):
+    def get_occurrences(self, motif, ts):
         """Get the occurrences of one motif in the time series."""
         motif_len = len(motif.pattern) * self.seglen
 
@@ -124,12 +108,12 @@ class Miner:
             for index in indexes:
                 start = index * self.seglen
                 end = start + motif_len
-                occurrence = self.timeseries[i][start: end]
+                occurrence = ts[i][start: end]
 
                 # Ensure motif occurrences are indeed all the same length
                 if too_short := motif_len - len(occurrence):
                     start -= too_short
-                    occurrence = self.timeseries[i][start: end]
+                    occurrence = ts[i][start: end]
 
                 occ.append(occurrence)
 

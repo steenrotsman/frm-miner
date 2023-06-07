@@ -6,13 +6,13 @@ from test_data import seq, rseq
 
 class TestPatternMiner(unittest.TestCase):
     def test_lcs(self):
-        pm = PatternMiner([])
+        pm = PatternMiner()
 
         self.assertEqual(pm.lcs('bbbbbbbbbb', 'bbbcbbb', 10, 7), 6)
 
     def test_mine(self):
-        pm = PatternMiner(seq)
-        pm.mine()
+        pm = PatternMiner(min_len=1, max_overlap=1.1)
+        pm.mine(seq)
 
         expected = [
             'a', 'aa', 'ab',
@@ -23,8 +23,8 @@ class TestPatternMiner(unittest.TestCase):
         self.assertListEqual(sorted(pm.frequent.keys()), expected)
     
     def test_rag_mine(self):
-        pm = PatternMiner(rseq)
-        pm.mine()
+        pm = PatternMiner(min_len=1, max_overlap=1.1)
+        pm.mine(rseq)
 
         expected = ['a', 'b']
         

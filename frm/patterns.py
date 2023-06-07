@@ -26,14 +26,18 @@ class PatternMiner:
     """
     def __init__(
             self,
-            sequences: list,
-            minsup: float = 0.5):
-        self.sequences = sequences
+            minsup: float = 0.5,
+            min_len: int = 3,
+            max_overlap: float = 0.9):
+        self.minsup = minsup
+        self.min_len = min_len
+        self.max_overlap = max_overlap
+
         self.frequent = {}
         self.maximal = {}
 
         # Frequency is easier to check than support
-        self._min_freq = len(sequences) * minsup
+        self._min_freq = 0
 
         # Keep track of length we're currently mining
         self._k = 2
@@ -41,15 +45,17 @@ class PatternMiner:
         # self.patterns[k] contains a list of patterns of length k
         self._patterns = [[], []]
 
-    def mine(self):
+    def mine(self, ds):
         """Mine sequence motifs.
 
         Starting with patterns of length 1 (1-patterns), candidates are
         generated and checked for sufficient support. Then, k-patterns
         are generated based on (k-1)-patterns.
         """
+        self._min_freq = len(ds) * self.minsup
+
         # Mine 1-patterns separately from longer patterns
-        self.mine_1_patterns()
+        self.mine_1_patterns(ds)
 
         # If there were no frequent k-patterns, there can be no 
         # frequent (k+1)-patterns; stop
@@ -62,7 +68,7 @@ class PatternMiner:
 
                 # Find candidate in sequences parent occurs in
                 for seq, indexes in self.frequent[candidate[:-1]].indexes.items():
-                    sequence = self.sequences[seq]
+                    sequence = ds[seq]
                     for index in indexes:
                         if sequence[index : index+self._k] == candidate:
                             self.frequent[candidate].record_index(seq, index)
@@ -71,8 +77,10 @@ class PatternMiner:
                 self.prune_infrequent(candidate)
 
             self._k += 1
+
+        self.remove_redundant()
     
-    def remove_redundant(self, min_len: int = 3, o: float = 0.9):
+    def remove_redundant(self):
         """Remove redundant patterns.
         
         Not all frequent patterns that comply with the minimum support
@@ -95,10 +103,10 @@ class PatternMiner:
             pruned.
         """
         # Prune from frequent patterns
-        self.frequent = {k: v for k, v in self.frequent.items() if len(k) >= min_len}
+        self.frequent = {k: v for k, v in self.frequent.items() if len(k) >= self.min_len}
         
         # Prune from maximal patterns
-        self.maximal = {k: v for k, v in self.maximal.items() if len(k) >= min_len}
+        self.maximal = {k: v for k, v in self.maximal.items() if len(k) >= self.min_len}
 
         # Prune patterns for which x% is overlapping from frequent
         patterns = list(self.frequent)
@@ -115,7 +123,7 @@ class PatternMiner:
                     continue
 
                 # Check if shorter pattern consists mostly of lcs
-                if self.lcs(p1, p2, n, m) / m >= o:
+                if self.lcs(p1, p2, n, m) / m >= self.max_overlap:
                     self.frequent.pop(p2, 0)
                     pruned.append(p2)
 
@@ -174,13 +182,13 @@ class PatternMiner:
         patterns = self._patterns[self._k - 1]
         return [p1 + p2[-1] for p1 in patterns for p2 in patterns if p1[1:] == p2[:-1]]
     
-    def mine_1_patterns(self):
+    def mine_1_patterns(self, ds):
         """Mine frequent 1-patterns.
         
         One scan is made over the sequences to map 1-pattern indexes.
         """
         # Divide sequences into indexes
-        for i, sequence in enumerate(self.sequences):
+        for i, sequence in enumerate(ds):
             for j, item in enumerate(sequence):
                 if item not in self.frequent:
                     self.frequent[item] = Motif(item)
