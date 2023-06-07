@@ -12,7 +12,15 @@ class Motif:
         self.matches = []
         self.match_indexes = {}
         self.rmse = 0.0
-    
+
+    def __repr__(self):
+        return f"Motif('{self.pattern}')"
+
+    def __eq__(self, other):
+        if type(other) != type(self):
+            return False
+        return other.pattern == self.pattern
+
     def record_index(self, i, j):
         """Record starting index of pattern in sequence i at position j."""
         self.indexes[i].append(j)
