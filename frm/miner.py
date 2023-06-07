@@ -108,14 +108,12 @@ class Miner:
             for index in indexes:
                 start = index * self.seglen
                 end = start + motif_len
-                occurrence = ts[i][start: end]
 
-                # Ensure motif occurrences are indeed all the same length
-                if too_short := motif_len - len(occurrence):
+                # Ensure motif occurrences are all the same length
+                if too_short := max(0, end - len(ts[i])):
                     start -= too_short
-                    occurrence = ts[i][start: end]
 
-                occ.append(occurrence)
+                occ.append(ts[i][start: end])
 
             occurrences[i] = occ
 
