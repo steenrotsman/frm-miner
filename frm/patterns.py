@@ -124,7 +124,7 @@ class PatternMiner:
                     continue
 
                 # Check if shorter pattern consists mostly of lcs
-                if self.lcs(p1, p2, n, m) / m >= self.max_overlap:
+                if self.lcs(p1, p2, n, m) / m > self.max_overlap:
                     self.frequent.pop(p2, 0)
                     pruned.append(p2)
 
