@@ -1,5 +1,6 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=42", "pybind11>=2.10.0"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "frm-miner"
@@ -14,6 +15,7 @@ license = {text = "MIT"}
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "License :: OSI Approved :: MIT License",
+    "Programming Language :: C++",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",

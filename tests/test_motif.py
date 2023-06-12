@@ -1,6 +1,6 @@
 import unittest
 
-from frm.motif import Motif
+from frm._frm_py.motif import Motif
 
 
 class TestMotif(unittest.TestCase):

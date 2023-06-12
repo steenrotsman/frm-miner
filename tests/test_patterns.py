@@ -1,6 +1,6 @@
 import unittest
 
-from frm.patterns import PatternMiner
+from frm._frm_py.patterns import PatternMiner
 from test_data import seq, rseq
 
 

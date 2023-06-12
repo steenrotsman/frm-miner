@@ -5,7 +5,7 @@ Defines common functions for plotting results from the experiments
 import matplotlib
 import matplotlib.pyplot as plt
 
-from frm.preprocessing import breakpoints
+from frm._frm_py.preprocessing import breakpoints
 
 WIDTH = 0.0138 * 347.12354
 HEIGHT = WIDTH / 4

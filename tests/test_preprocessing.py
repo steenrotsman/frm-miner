@@ -1,6 +1,6 @@
 import unittest
 
-from frm.preprocessing import sax, standardise
+from frm._frm_py.preprocessing import sax, standardise
 from test_data import ts, rag, seq, rseq
 
 # Round precision for float comparisons

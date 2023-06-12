@@ -12,8 +12,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2 as cv
 
-from frm.miner import Miner
-from frm.preprocessing import standardise
+from frm._frm_py.miner import Miner
+from frm._frm_py.preprocessing import standardise
 from plot import remove_spines, COLORS, WIDTH
 
 IMG_DIR = 'mpeg7'

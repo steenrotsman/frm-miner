@@ -18,7 +18,7 @@ import stumpy
 import yfinance as yf
 from tqdm import tqdm
 
-from frm.miner import Miner
+from frm._frm_py.miner import Miner
 
 FILE = 'benchmark.csv'
 FOLDER = 'UCRArchive_2018'

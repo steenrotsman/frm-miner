@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import stumpy
 
-from frm.miner import Miner
+from frm._frm_py.miner import Miner
 from plot import plot_motifs, remove_spines
 
 # Simulation settings
