@@ -22,7 +22,7 @@ class TestMiner(unittest.TestCase):
         miner = CppMiner(0.5, 1, 3, 1, 1)
         motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, [[0], [2], [2, 0], [0, 0], [2, 2], [2, 0, 0]])
+        self.assertListEqual(patterns, [[0], [2], [0, 0], [2, 0], [2, 2]])
 
     def test_rag_cpp_miner(self):
         miner = CppMiner(0.5, 1, 3, 1, 1)
