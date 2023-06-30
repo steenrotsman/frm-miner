@@ -10,22 +10,32 @@ class TestMiner(unittest.TestCase):
         miner = PyMiner(0.5, 1, 3, 1, 1)
         motifs = miner.mine_motifs(ts)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, ['a', 'aa', 'c', 'ca', 'cc'])
+        self.assertListEqual(patterns, ['aa', 'a', 'ca', 'cc', 'c'])
 
     def test_rag_py_miner(self):
         miner = PyMiner(0.5, 1, 3, 1, 1)
         motifs = miner.mine_motifs(rag)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, ['a', 'c', 'ac'])
+        self.assertListEqual(patterns, ['ac', 'a', 'c'])
 
     def test_frm_cpp_miner(self):
         miner = CppMiner(0.5, 1, 3, 1, 1)
         motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, [[0], [2], [0, 0], [2, 0], [2, 2]])
+        self.assertListEqual(patterns, [[0, 0], [0], [2, 0], [2, 2], [2]])
 
     def test_rag_cpp_miner(self):
         miner = CppMiner(0.5, 1, 3, 1, 1)
         motifs = miner.mine(rag)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, [[0], [0, 2], [2]])
+        self.assertListEqual(patterns, [[0, 2], [0], [2]])
+
+    def test_equal_miners(self):
+        py_miner = PyMiner(0.5, 1, 3, 1, 1)
+        py_motifs = py_miner.mine_motifs(ts)
+
+        cpp_miner = CppMiner(0.5, 1, 3, 1, 1)
+        cpp_motifs = cpp_miner.mine(ts)
+
+        for py_motif, cpp_motif in zip(py_motifs, cpp_motifs):
+            self.assertAlmostEqual(py_motif.naed, cpp_motif.naed)
