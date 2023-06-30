@@ -14,7 +14,8 @@
 class PatternMiner {
 private:
     double minsup;
-    long min_len;
+    int min_len;
+    int max_len;
     double max_overlap;
     std::map<Pattern, Motif> frequent;
     double min_freq;
@@ -28,7 +29,7 @@ private:
     void remove_redundant();
     std::vector<Pattern> remove_short();
 public:
-    PatternMiner(double minsup, long min_len, double max_overlap);
+    PatternMiner(double minsup, int min_len, int max_len, double max_overlap);
     void mine(const DiscreteDB& sequences);
     std::map<Pattern, Motif> get_frequent() { return frequent; };
 };

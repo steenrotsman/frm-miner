@@ -11,7 +11,7 @@ class TestPatternMiner(unittest.TestCase):
         self.assertEqual(pm.lcs('bbbbbbbbbb', 'bbbcbbb', 10, 7), 6)
 
     def test_mine(self):
-        pm = PatternMiner(0.5, 1, 1)
+        pm = PatternMiner(min_len=1, max_len=0, max_overlap=1)
         pm.mine(seq)
 
         expected = ['a', 'aa', 'c', 'ca', 'cc']

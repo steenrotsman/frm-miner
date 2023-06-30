@@ -24,9 +24,11 @@ class PatternMiner:
             self,
             minsup: float = 0.5,
             min_len: int = 3,
+            max_len: int = 0,
             max_overlap: float = 0.9):
         self.minsup = minsup
         self.min_len = min_len
+        self.max_len = max_len
         self.max_overlap = max_overlap
 
         self.frequent = {}
@@ -57,7 +59,7 @@ class PatternMiner:
 
         # If there were no frequent k-patterns, there can be no 
         # frequent (k+1)-patterns; stop
-        while self._patterns[self._k - 1]:
+        while self._patterns[self._k - 1] and (not self.max_len or self._k <= self.max_len):
             self._patterns.append([])
 
             for candidate in self.get_candidates():

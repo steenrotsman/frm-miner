@@ -11,7 +11,7 @@
 #include "patterns.h"
 #include "motif.h"
 
-Miner::Miner(double minsup, int seglen, int alphabet, int min_len, double max_overlap, int k) : minsup(minsup), seglen(seglen), alphabet(alphabet), min_len(min_len), max_overlap(max_overlap), k(k){}
+Miner::Miner(double minsup, int seglen, int alphabet, int min_len, int max_len, double max_overlap, int k) : minsup(minsup), seglen(seglen), alphabet(alphabet), min_len(min_len), max_len(max_len), max_overlap(max_overlap), k(k){}
 
 std::vector<Motif> Miner::mine(TimeSeriesDB& timeseries)
 {
@@ -31,7 +31,7 @@ std::vector<Motif> Miner::mine(TimeSeriesDB& timeseries)
 
 void Miner::mine_patterns(const DiscreteDB& sequences)
 {
-    PatternMiner pm { minsup, min_len, max_overlap };
+    PatternMiner pm { minsup, min_len, max_len, max_overlap };
     pm.mine(sequences);
     for (auto& [pattern, motif] : pm.get_frequent()) {
         motifs.push_back(motif);

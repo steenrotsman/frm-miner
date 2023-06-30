@@ -21,6 +21,9 @@ class Miner:
         Alphabet size for discretisation.
     min_len : int
         Minimal pattern length.
+    max_len : int
+        Maximal pattern length.
+        If 0, limit is infinity.
     max_overlap: float
         Maximal fraction of patterns contained in longer patters.
     k : int, optional
@@ -41,6 +44,7 @@ class Miner:
             seglen: int,
             alphabet: int,
             min_len: int = 3,
+            max_len: int = 0,
             max_overlap: float = 0.9,
             k: int = 0,
     ):
@@ -48,6 +52,7 @@ class Miner:
         self.seglen = seglen
         self.alphabet = alphabet
         self.min_len = min_len
+        self.max_len = max_len
         self.max_overlap = max_overlap
         self.k = k
 
@@ -82,7 +87,7 @@ class Miner:
         sequences : list
             Collection of time series discretised to sequences.
         """
-        pm = PatternMiner(self.minsup, self.min_len, self.max_overlap)
+        pm = PatternMiner(self.minsup, self.min_len, self.max_len, self.max_overlap)
         pm.mine(ds)
         self.motifs = list(pm.frequent.values())
 

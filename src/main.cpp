@@ -24,7 +24,7 @@ PYBIND11_MODULE(_frm_cpp, m) {
         ;
 
     py::class_<Miner>(m, "Miner")
-        .def(py::init<double, int, int, int, double, int>(), py::arg("minsup"), py::arg("seglen"), py::arg("alphabet"), py::arg("min_len") = 3, py::arg("max_overlap") = 0.9, py::arg("k")=0)
+        .def(py::init<double, int, int, int, int, double, int>(), py::arg("minsup"), py::arg("seglen"), py::arg("alphabet"), py::arg("min_len")=3, py::arg("max_len")=0, py::arg("max_overlap")=0.9, py::arg("k")=0)
         .def("mine", &Miner::mine)
         .def_property("motifs", &Miner::get_motifs, nullptr)
         ;

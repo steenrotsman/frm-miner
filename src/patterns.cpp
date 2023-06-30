@@ -9,7 +9,7 @@
 #include "motif.h"
 #include "typing.h"
 
-PatternMiner::PatternMiner(double minsup, long min_len, double max_overlap) : minsup(minsup), min_len(min_len),
+PatternMiner::PatternMiner(double minsup, int min_len, int max_len, double max_overlap) : minsup(minsup), min_len(min_len), max_len(max_len),
                                                                               max_overlap(max_overlap), min_freq(0.0),
                                                                               k(2), patterns({{}, {}}){}
 
@@ -22,7 +22,7 @@ void PatternMiner::mine(const DiscreteDB& sequences)
     mine_1_patterns(sequences);
 
     // If there were no frequent k-patterns, there can be no frequent (k+1)-patterns; stop
-    for (k = 2; !patterns[k - 1].empty(); k++) {
+    for (k = 2; (!patterns[k - 1].empty() and ((not max_len or k <= max_len))); k++) {
         patterns.emplace_back();
 
         // Generate candidate k-patterns from frequent (k-1)-patterns, find their occurrences and remove infrequent candidates
