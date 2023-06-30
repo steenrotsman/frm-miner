@@ -4,7 +4,6 @@
 #include <map>
 #include <vector>
 #include <algorithm>
-#include <iostream>
 
 #include "typing.h"
 #include "miner.h"
@@ -26,11 +25,11 @@ std::vector<Motif> Miner::mine(TimeSeriesDB& timeseries)
         return motifs;
     } else {
         // Return k motifs or less if motifs size is less than k
-        return std::vector<Motif>(motifs.begin(), motifs.begin() + std::min(k, static_cast<int>(motifs.size())));
+        return std::vector<Motif>{motifs.begin(), motifs.begin() + std::min(k, static_cast<int>(motifs.size()))};
     }
 }
 
-void Miner::mine_patterns(DiscreteDB& sequences)
+void Miner::mine_patterns(const DiscreteDB& sequences)
 {
     PatternMiner pm { minsup, min_len, max_overlap };
     pm.mine(sequences);
@@ -39,7 +38,7 @@ void Miner::mine_patterns(DiscreteDB& sequences)
     }
 }
 
-void Miner::map_patterns(TimeSeriesDB& timeseries)
+void Miner::map_patterns(const TimeSeriesDB& timeseries)
 {
     for (auto& motif : motifs) {
         motif.map(timeseries, seglen);

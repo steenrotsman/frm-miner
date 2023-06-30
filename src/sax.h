@@ -9,9 +9,9 @@
 
 #include "typing.h"
 
-DiscreteDB sax(TimeSeriesDB & ts, int seglen, int alphabet);
+DiscreteDB sax(const TimeSeriesDB & ts, int seglen, int alphabet);
 int get_discrete_value(int alphabet, double segmean);
-void znorm(std::vector<std::vector<double>>& ts);
+void znorm(TimeSeriesDB& ts);
 
 
 #endif //FRM_C_SAX_H

@@ -2,12 +2,12 @@
 // Created by stijn on 6/8/23.
 //
 #include "sax.h"
+#include "typing.h"
 #include <vector>
 #include <numeric>
-#include <algorithm>
 #include <cmath>
 
-std::vector<std::vector<int>> sax(std::vector<std::vector<double>>& ts, int seglen, int alphabet)
+DiscreteDB sax(const TimeSeriesDB& ts, const int seglen, const int alphabet)
 {
     std::vector<std::vector<int>> discrete(ts.size());
     for (size_t i { 0 }; i < ts.size(); i++) {
@@ -24,7 +24,7 @@ std::vector<std::vector<int>> sax(std::vector<std::vector<double>>& ts, int segl
     return discrete;
 }
 
-std::vector<std::vector<double>> breakpoints {
+const std::vector<std::vector<double>> breakpoints {
         {}, {},
         {0},
         {-0.43, 0.43},

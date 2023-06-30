@@ -13,7 +13,7 @@ PatternMiner::PatternMiner(double minsup, long min_len, double max_overlap) : mi
                                                                               max_overlap(max_overlap), min_freq(0.0),
                                                                               k(2), patterns({{}, {}}){}
 
-void PatternMiner::mine(DiscreteDB& sequences)
+void PatternMiner::mine(const DiscreteDB& sequences)
 {
     // Frequency is easier to check than support
     min_freq = static_cast<double>(sequences.size()) * minsup;
@@ -38,7 +38,7 @@ void PatternMiner::mine(DiscreteDB& sequences)
     remove_redundant();
 }
 
-void PatternMiner::mine_1_patterns(DiscreteDB& sequences)
+void PatternMiner::mine_1_patterns(const DiscreteDB& sequences)
 {
     // Scan database once to record indexes of 1-patterns
     for (size_t i = 0; i < sequences.size(); i++) {
@@ -91,7 +91,7 @@ std::vector<Pattern> PatternMiner::get_candidates()
     return candidates;
 }
 
-void PatternMiner::find_candidate(Pattern candidate, DiscreteDB& sequences)
+void PatternMiner::find_candidate(const Pattern& candidate, const DiscreteDB& sequences)
 {
     // Find candidate via its first parent
     Pattern parent(candidate.begin(), candidate.end() - 1);

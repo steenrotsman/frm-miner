@@ -21,15 +21,15 @@ private:
     int k;
     std::vector<std::vector<Pattern>> patterns;
 
-    void mine_1_patterns(DiscreteDB& sequences);
+    void mine_1_patterns(const DiscreteDB& sequences);
     void prune_infrequent(const Pattern& pattern);
     std::vector<Pattern> get_candidates();
-    void find_candidate(Pattern candidate, DiscreteDB& sequences);
+    void find_candidate(const Pattern& candidate, const DiscreteDB& sequences);
     void remove_redundant();
     std::vector<Pattern> remove_short();
 public:
     PatternMiner(double minsup, long min_len, double max_overlap);
-    void mine(DiscreteDB& sequences);
+    void mine(const DiscreteDB& sequences);
     std::map<Pattern, Motif> get_frequent() { return frequent; };
 };
 

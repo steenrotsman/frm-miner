@@ -20,8 +20,8 @@ private:
     int k;
     std::vector<Motif> motifs;
 
-    void mine_patterns(DiscreteDB& sequences);
-    void map_patterns(TimeSeriesDB& timeseries);
+    void mine_patterns(const DiscreteDB& sequences);
+    void map_patterns(const TimeSeriesDB& timeseries);
     void sort_patterns();
 public:
     Miner(double minsup, int seglen, int alphabet, int min_len=3, double max_overlap=0.9, int k=0);

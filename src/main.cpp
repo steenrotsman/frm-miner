@@ -12,6 +12,7 @@ PYBIND11_MODULE(_frm_cpp, m) {
     py::class_<Motif>(m, "Motif")
         .def_property("pattern", &Motif::get_pattern, nullptr)
         .def_property("indexes", &Motif::get_indexes, nullptr)
+        .def_property("average_occurrences", &Motif::get_average_occurrences, nullptr)
         .def_property("representative", &Motif::get_representative, nullptr)
         .def_property("best_matches", &Motif::get_best_matches, nullptr)
         .def_property("naed", &Motif::get_naed, nullptr)

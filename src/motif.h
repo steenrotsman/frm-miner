@@ -21,9 +21,9 @@ private:
     std::unordered_map<int, int> best_matches;
     double naed;
 
-    void set_average_occurrences(TimeSeriesDB& timeseries);
+    void set_average_occurrences(const TimeSeriesDB& timeseries);
     void set_representative();
-    void set_best_matches_and_rmse(TimeSeriesDB &timeseries);
+    void set_best_matches_and_rmse(const TimeSeriesDB &timeseries);
 public:
     explicit Motif(Pattern pattern);
 
@@ -31,11 +31,12 @@ public:
 
     Pattern get_pattern() { return pattern; };
     std::unordered_map<int, std::vector<int>> get_indexes() { return indexes; };
+    std::unordered_map<int, std::vector<double>> get_average_occurrences() { return average_occurrences; };
     std::vector<double> get_representative() { return representative; };
     std::unordered_map<int, int> get_best_matches() { return best_matches; };
     double get_naed() const { return naed; };
 
-    void map(TimeSeriesDB& timeseries, int seglen);
+    void map(const TimeSeriesDB& timeseries, int seglen);
 };
 
 #endif //FRM_C_MOTIF_H

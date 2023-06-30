@@ -17,7 +17,7 @@ void Motif::record_index(int seq, int idx_in_seq)
     indexes[seq].push_back(idx_in_seq);
 }
 
-void Motif::map(TimeSeriesDB& timeseries, int seglen)
+void Motif::map(const TimeSeriesDB& timeseries, const int seglen)
 {
     length = static_cast<int>(pattern.size()) * seglen;
     representative.resize(length);
@@ -27,7 +27,7 @@ void Motif::map(TimeSeriesDB& timeseries, int seglen)
     set_best_matches_and_rmse(timeseries);
 }
 
-void Motif::set_average_occurrences(TimeSeriesDB &timeseries)
+void Motif::set_average_occurrences(const TimeSeriesDB &timeseries)
 {
     for (auto& [ ts, idx ] : indexes) {
         average_occurrences[ts] = std::vector<double>(length);
@@ -49,7 +49,7 @@ void Motif::set_representative()
     }
 }
 
-void Motif::set_best_matches_and_rmse(TimeSeriesDB &timeseries)
+void Motif::set_best_matches_and_rmse(const TimeSeriesDB &timeseries)
 {
     for (auto& [ts, idx] : indexes) {
         double min_dist {100.0};
