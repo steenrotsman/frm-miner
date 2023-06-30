@@ -2,8 +2,10 @@
 
 This module defines two time series preprocessing functions for standardisation and SAX representation.
 """
-import itertools
 from typing import Union
+
+from scipy.stats import zscore
+from numpy import nan_to_num
 
 # https://stackoverflow.com/a/60617044
 numeric = Union[int, float]
@@ -43,7 +45,7 @@ def get_sax(series: list[numeric], seglen: int, a: int) -> str:
     return sax_representation
 
 
-def standardise(timeseries: list[list], local: bool = True) -> list[list[numeric]]:
+def standardise(timeseries: list[list]):
     """Standardise time series.
 
     Standardises data to have a mean of zero and a standard deviation of one.
@@ -52,38 +54,16 @@ def standardise(timeseries: list[list], local: bool = True) -> list[list[numeric
     ----------
     timeseries
         Database of time series to standardise.
-    local : bool
-        Use the local (True) or global (False) mean and standard deviation for standardisation.
 
     Returns
     -------
     standardised
         Database of standardised time series.
     """
-    if local:
-        standardised = []
-        for series in timeseries:
-            n = len(series)
-            mean = sum(series) / n
-            standardised.append(get_standardised(series, mean, get_std(series, mean, n)))
-    else:
-        flat_ts = list(itertools.chain.from_iterable(timeseries))
-        n = len(flat_ts)
-        global_mean = sum(flat_ts) / n
-        global_std = get_std(flat_ts, global_mean, n)
-        standardised = [get_standardised(series, global_mean, global_std) for series in timeseries]
-
-    return standardised
-
-
-def get_standardised(series: list[numeric], m: float, std: float) -> list[float]:
-    """Perform standardisation on one time series."""
-    return [(x - m) / std for x in series]
-
-
-def get_std(series: list[numeric], mean: float, n: int) -> float:
-    """Calculate the standard deviation of a list given its mean and length."""
-    return (sum((x - mean) ** 2 for x in series) / n) ** 0.5
+    try:
+        return nan_to_num(zscore(timeseries, axis=1))
+    except ValueError:
+        return [nan_to_num(zscore(ts)) for ts in timeseries]
 
 
 # Defined in Lin, Keogh, Linardi, & Chiu (2003). A Symbolic Representation of Time Series,

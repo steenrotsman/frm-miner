@@ -23,8 +23,6 @@ class Miner:
         Minimal pattern length.
     max_overlap: float
         Maximal fraction of patterns contained in longer patters.
-    local : bool
-        Use the local (True) or global (False) mean and standard deviation for standardisation.
     k : int, optional
         Number of motifs to return.
         If 0, all motifs are returned.
@@ -42,20 +40,16 @@ class Miner:
             minsup: float,
             seglen: int,
             alphabet: int,
-            min_len: int,
-            max_overlap: float,
-            local: bool = True,
+            min_len: int = 3,
+            max_overlap: float = 0.9,
             k: int = 0,
-            maximal: bool = False
     ):
         self.minsup = minsup
         self.seglen = seglen
         self.alphabet = alphabet
         self.min_len = min_len
         self.max_overlap = max_overlap
-        self.local = local
         self.k = k
-        self.maximal = maximal
 
         self.motifs = None
 
@@ -72,7 +66,7 @@ class Miner:
         res: list
             frequent motifs.
         """
-        standardised = standardise(ts, self.local)
+        standardised = standardise(ts)
         discretised = sax(standardised, self.seglen, self.alphabet)
         self.mine_patterns(discretised)
         self.map_patterns(standardised)
@@ -88,15 +82,9 @@ class Miner:
         sequences : list
             Collection of time series discretised to sequences.
         """
-        # Find frequent and maximal patterns in the sequences
         pm = PatternMiner(self.minsup, self.min_len, self.max_overlap)
         pm.mine(ds)
-
-        # Get indexes of frequent or maximal patterns
-        if self.maximal:
-            self.motifs = list(pm.maximal.values())
-        else:
-            self.motifs = list(pm.frequent.values())
+        self.motifs = list(pm.frequent.values())
 
     def map_patterns(self, ts):
         """Map patterns back to motifs."""

@@ -19,8 +19,6 @@ class PatternMiner:
     ----------
     frequent : dict
         Dictionary of frequent motifs with string patterns as keys and Motif objects as values.
-    maximal : dict
-        Same as indexes but drops patterns contained in another pattern.
     """
     def __init__(
             self,
@@ -32,7 +30,6 @@ class PatternMiner:
         self.max_overlap = max_overlap
 
         self.frequent = {}
-        self.maximal = {}
 
         # Frequency is easier to check than support
         self._min_freq = 0
@@ -105,9 +102,10 @@ class PatternMiner:
         """
         # Prune from frequent patterns
         self.frequent = {k: v for k, v in self.frequent.items() if len(k) >= self.min_len}
-        
-        # Prune from maximal patterns
-        self.maximal = {k: v for k, v in self.maximal.items() if len(k) >= self.min_len}
+
+        # If max_overlap == 1, no overlap is too high
+        if self.max_overlap == 1:
+            return
 
         # Prune patterns for which x% is overlapping from frequent
         patterns = list(self.frequent)
@@ -207,8 +205,6 @@ class PatternMiner:
         
         - Prunes patterns with a too low support;
         - Adds frequent patterns to list of frequent patterns
-        - Adds frequent patterns to maximal pattern indexes
-        - Removes frequent pattern parents from maximal pattern indexes
 
         Parameters
         ----------
@@ -221,10 +217,3 @@ class PatternMiner:
         else:
             # Add to list of frequent k-patterns
             self._patterns[len(pattern)].append(pattern)
-
-            # Add to maximal patterns
-            self.maximal[pattern] = self.frequent[pattern]
-
-            # The patterns joined to create a pattern cannot be maximal patterns
-            self.maximal.pop(pattern[:-1], 0)
-            self.maximal.pop(pattern[1:], 0)
