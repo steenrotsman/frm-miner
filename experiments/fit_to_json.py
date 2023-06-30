@@ -1,5 +1,5 @@
 import json
-from os import listdir
+from os import listdir, remove
 from os.path import join
 
 import fitdecode
@@ -12,42 +12,38 @@ MIN_ACTIVITY_LEN = 300
 
 
 def main():
-    records = get_records(FIT_DIR)
-    write_records(records)
+    for file in listdir(FIT_DIR):
+        fn = join(JSON_DIR, file[:19]) + '.json'
+        length = 0
+        with open(fn, 'w') as fp:
+            fp.write('[\n')
+            with fitdecode.FitReader(join(FIT_DIR, file)) as fit:
+                for frame in fit:
+                    if frame.frame_type == fitdecode.FIT_FRAME_DATA and frame.name == 'record':
+                        length += 1
+                        rec = get_rec(frame)
+                        if length > 1:
+                            fp.write(',\n')
+                        json.dump(rec, fp, indent=4)
+            fp.write('\n]')
+        if length < MIN_ACTIVITY_LEN:
+            remove(fn)
 
 
-def get_records(directory):
-    """Read records from FIT files into a list of dictionaries."""
-    records = []
-    for file in listdir(directory):
-        record = []
+def get_rec(frame):
+    rec = {}
+    for f in frame.fields:
+        # Don't keep coordinates for privacy
+        if f.name in ['position_lat', 'position_long']:
+            continue
 
-        with fitdecode.FitReader(join(directory, file)) as fit:
-            for frame in fit:
-                # Only keep frame data, no personal or metadata
-                if frame.frame_type == fitdecode.FIT_FRAME_DATA and frame.name == 'record':
-                    rec = {}
-                    for f in frame.fields:
-                        # Don't keep coordinates for privacy
-                        if f.name in ['position_lat', 'position_long']:
-                            continue
+        # JSON can't hold data with timestamp type; convert to str
+        if f.name == 'timestamp':
+            rec[f.name] = str(f.value)
+        else:
+            rec[f.name] = f.value
 
-                        # JSON can't hold data with timestamp type; convert to str
-                        if f.name == 'timestamp':
-                            rec[f.name] = str(f.value)
-                        else:
-                            rec[f.name] = f.value
-                    record.append(rec)
-            records.append(record)
-
-    return list(filter(lambda rec: len(rec) > MIN_ACTIVITY_LEN, records))
-
-
-def write_records(records):
-    """Write records to JSON files."""
-    for record in records:
-        with open(join(JSON_DIR, record[0]['timestamp']) + '.json', 'w') as fp:
-            json.dump(record, fp, indent=4)
+    return rec
 
 
 if __name__ == '__main__':

@@ -132,6 +132,7 @@ dmypy.json
 
 # Data
 *.csv
+*.mat
 /experiments/UCRArchive_2018/
 /experiments/mpeg7/
 /experiments/fit

@@ -51,9 +51,9 @@ def main():
             benchmark_mm(data, name, fp, seen[name])
             benchmark_ostinato(data, name, fp, seen[name])
 
-        name = 'Stocks'
-        benchmark_mm(get_stocks(), name, fp, seen[name])
-        benchmark_ostinato([np.array(stock, dtype=np.float64) for stock in get_stocks()], name, fp, seen[name])
+        # name = 'Stocks'
+        # benchmark_mm(get_stocks(), name, fp, seen[name])
+        # benchmark_ostinato([np.array(stock, dtype=np.float64) for stock in get_stocks()], name, fp, seen[name])
 
 
 def get_data():

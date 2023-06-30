@@ -2,13 +2,15 @@
 
 Defines common functions for plotting results from the experiments
 """
+from os.path import join
+
 import matplotlib
 import matplotlib.pyplot as plt
 
 from frm._frm_py.preprocessing import breakpoints
 
-WIDTH = 0.0138 * 347.12354
-HEIGHT = WIDTH / 4
+WIDTH = 0.0138 * 347.12354 / 2
+HEIGHT = WIDTH / 2
 params = {
     'axes.labelsize': 6,
     'font.size': 6,
@@ -17,16 +19,15 @@ params = {
     'ytick.labelsize': 6,
     'text.usetex': False,
     'font.family': 'serif',
-    'figure.figsize': [WIDTH, HEIGHT]
+    'figure.figsize': [WIDTH, HEIGHT],
+    'savefig.dpi': 1200
 }
 matplotlib.rcParams.update(params)
 
 COLORS = ['maroon', 'steelblue', 'olive', 'salmon', 'teal', 'seagreen', 'purple', 'goldenrod', 'orange', 'tomato']
 
 
-def plot_motifs(fig, flat_axs, motifs, alphabet, length=0):
-    fig.set_dpi(1200)
-
+def plot_motifs(fig, flat_axs, motifs, alphabet, length=0, fn=''):
     for motif, ax in zip(motifs, flat_axs):
         # If length is not supplied, use length of the motif
         limit = len(motif.representative) if not length else length
@@ -45,7 +46,9 @@ def plot_motifs(fig, flat_axs, motifs, alphabet, length=0):
         # Aesthetics
         ax.set(ylim=(-3, 3), xticks=[0, limit], yticks=[])
         remove_spines(ax)
-    plt.show()
+    if fn:
+        plt.savefig(join('figs', fn))
+        plt.close()
 
 
 def remove_spines(ax):
