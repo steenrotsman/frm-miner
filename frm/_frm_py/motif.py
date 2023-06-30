@@ -11,7 +11,7 @@ class Motif:
         self.representative = None
         self.matches = []
         self.match_indexes = {}
-        self.rmse = 0.0
+        self.naed = 0.0
 
     def __repr__(self):
         return f"Motif('{self.pattern}')"
@@ -26,21 +26,21 @@ class Motif:
         self.indexes[i].append(j)
     
     def map(self):
-        """Map representative, matches, and rmse using occurrences."""
+        """Map representative, matches, and naed using occurrences."""
         self.representative = np.mean([np.mean(o, 0) for o in self.occurrences.values()], 0)
 
         for seq, occurrences in self.occurrences.items():
             best_match = None
             best_match_index = []
-            min_rmse = 100
+            min_naed = 100
             for i, occurrence in enumerate(occurrences):
-                rmse = np.mean((occurrence - self.representative) ** 2) ** 0.5
-                if rmse < min_rmse:
+                naed = np.sum((occurrence - self.representative) ** 2) ** 0.5
+                if naed < min_naed:
                     best_match = occurrence
-                    min_rmse = rmse
+                    min_naed = naed
                     idx = self.indexes[seq][i]
                     best_match_index = [idx, idx + len(self.pattern)]
-            self.rmse += min_rmse
+            self.naed += min_naed
             self.matches.append(best_match)
             self.match_indexes[seq] = best_match_index
-        self.rmse /= len(self.match_indexes)
+        self.naed /= len(self.match_indexes) * len(self.representative)

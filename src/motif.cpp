@@ -10,7 +10,7 @@
 #include "motif.h"
 #include "typing.h"
 
-Motif::Motif(Pattern pattern) : pattern(std::move(pattern)), length(0), rmse(0.0) {}
+Motif::Motif(Pattern pattern) : pattern(std::move(pattern)), length(0), naed(0.0) {}
 
 void Motif::record_index(int seq, int idx_in_seq)
 {
@@ -33,7 +33,7 @@ void Motif::set_average_occurrences(TimeSeriesDB &timeseries)
         average_occurrences[ts] = std::vector<double>(length);
         for (auto id : idx) {
             for (int i { 0 }; i < length; i++) {
-                average_occurrences[ts][i] += timeseries[ts][id+i] / static_cast<double>(indexes.size());
+                average_occurrences[ts][i] += timeseries[ts][id+i] / static_cast<double>(idx.size());
             }
         }
     }
@@ -52,7 +52,7 @@ void Motif::set_representative()
 void Motif::set_best_matches_and_rmse(TimeSeriesDB &timeseries)
 {
     for (auto& [ts, idx] : indexes) {
-        double min_dist {1000.0};
+        double min_dist {100.0};
         int best_match {};
         double distance {};
 
@@ -63,6 +63,7 @@ void Motif::set_best_matches_and_rmse(TimeSeriesDB &timeseries)
             for (int i { 0 }; i < length; i++) {
                 distance += pow(timeseries[ts][id+i] - representative[i], 2);
             }
+            distance = sqrt(distance);
 
             // Update bsf distance
             if (distance < min_dist) {
@@ -71,7 +72,8 @@ void Motif::set_best_matches_and_rmse(TimeSeriesDB &timeseries)
             }
         }
 
-        rmse += distance / static_cast<double>(indexes.size());
+        naed += min_dist;
         best_matches[ts] = best_match;
     }
+    naed /= static_cast<double>(indexes.size()) * static_cast<double>(length);
 }

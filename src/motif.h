@@ -19,7 +19,7 @@ private:
     std::unordered_map<int, std::vector<double>> average_occurrences;
     std::vector<double> representative;
     std::unordered_map<int, int> best_matches;
-    double rmse;
+    double naed;
 
     void set_average_occurrences(TimeSeriesDB& timeseries);
     void set_representative();
@@ -33,7 +33,7 @@ public:
     std::unordered_map<int, std::vector<int>> get_indexes() { return indexes; };
     std::vector<double> get_representative() { return representative; };
     std::unordered_map<int, int> get_best_matches() { return best_matches; };
-    double get_rmse() const { return rmse; };
+    double get_naed() const { return naed; };
 
     void map(TimeSeriesDB& timeseries, int seglen);
 };

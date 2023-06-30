@@ -48,8 +48,8 @@ void Miner::map_patterns(TimeSeriesDB& timeseries)
 
 void Miner::sort_patterns()
 {
-    // Sort the motifs in increasing order based on rmse attribute
+    // Sort the motifs in increasing order based on naed attribute
     std::sort(motifs.begin(), motifs.end(), [](Motif& m1, Motif& m2) {
-        return m1.get_rmse() < m2.get_rmse();
+        return m1.get_naed() < m2.get_naed();
     });
 }

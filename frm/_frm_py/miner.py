@@ -107,7 +107,7 @@ class Miner:
 
     def sort_patterns(self):
         """Sort patterns on their root mean squared error of representative and occurrences."""
-        self.motifs.sort(key=lambda motif: motif.rmse)
+        self.motifs.sort(key=lambda motif: motif.naed)
 
     def get_occurrences(self, motif, ts):
         """Get the occurrences of one motif in the time series.

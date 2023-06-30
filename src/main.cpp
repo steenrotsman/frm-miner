@@ -14,7 +14,7 @@ PYBIND11_MODULE(_frm_cpp, m) {
         .def_property("indexes", &Motif::get_indexes, nullptr)
         .def_property("representative", &Motif::get_representative, nullptr)
         .def_property("best_matches", &Motif::get_best_matches, nullptr)
-        .def_property("rmse", &Motif::get_rmse, nullptr)
+        .def_property("naed", &Motif::get_naed, nullptr)
         .def("__repr__", [](Motif &m){
             std::string s;
             for (auto i : m.get_pattern())
