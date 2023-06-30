@@ -6,6 +6,7 @@
 #include <vector>
 #include <numeric>
 #include <cmath>
+#include <algorithm>
 
 DiscreteDB sax(const TimeSeriesDB& ts, const int seglen, const int alphabet)
 {

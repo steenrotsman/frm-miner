@@ -97,6 +97,12 @@ void PatternMiner::find_candidate(const Pattern& candidate, const DiscreteDB& se
     Pattern parent(candidate.begin(), candidate.end() - 1);
     for (auto& [seq, indexes] : frequent.at(parent).get_indexes()) {
         for (auto index : indexes) {
+            // If index + length is larger than sequence size, candidate can never be present at index
+            // Omitting this check leads to a bug if start of next sequence would complete the pattern
+            if (index + k > sequences[seq].size()) {
+                continue;
+            }
+
             Pattern possible_match(sequences[seq].begin() + index, sequences[seq].begin() + index + k);
             if (possible_match == candidate) {
                 frequent.at(candidate).record_index(seq, index);
