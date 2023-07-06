@@ -8,10 +8,13 @@ class Motif:
         self.pattern = pattern
         self.indexes = defaultdict(list)
         self.occurrences = {}
+        self.average_occurrences = {}
         self.representative = None
         self.matches = []
         self.match_indexes = {}
         self.naed = 0.0
+        self.length = 0
+        self._seglen = 0
 
     def __repr__(self):
         return f"Motif('{self.pattern}')"
@@ -25,22 +28,45 @@ class Motif:
         """Record starting index of pattern in sequence i at position j."""
         self.indexes[i].append(j)
     
-    def map(self):
+    def map(self, ts, seglen):
         """Map representative, matches, and naed using occurrences."""
-        self.representative = np.mean([np.mean(o, 0) for o in self.occurrences.values()], 0)
+        self._seglen = seglen
+        self.length = len(self.pattern) * seglen
+        self.set_average_occurrences(ts)
+        self.set_representative()
+        self.set_best_matches_and_naed(ts)
 
-        for seq, occurrences in self.occurrences.items():
-            best_match = None
-            best_match_index = []
+    def set_average_occurrences(self, ts):
+        for i, indexes in self.indexes.items():
+            occurrences = []
+            for index in indexes:
+                occurrence = self.get_occurrence(ts[i], index)
+                occurrences.append(occurrence)
+            self.average_occurrences[i] = np.mean(occurrences, axis=0)
+
+    def get_occurrence(self, ts, index):
+        start = index * self._seglen
+        end = start + self.length
+
+        # Ensure motif occurrences are all the same length
+        if too_short := max(0, end - len(ts)):
+            start -= too_short
+        return ts[start: end]
+
+    def set_representative(self):
+        self.representative = np.mean([ao for ao in self.average_occurrences.values()], axis=0)
+
+    def set_best_matches_and_naed(self, ts):
+        for i, indexes in self.indexes.items():
+            best_match = 0
             min_naed = 10 ** 6
-            for i, occurrence in enumerate(occurrences):
+
+            for index in indexes:
+                occurrence = self.get_occurrence(ts[i], index)
                 naed = np.sum((occurrence - self.representative) ** 2) ** 0.5
                 if naed < min_naed:
-                    best_match = occurrence
                     min_naed = naed
-                    idx = self.indexes[seq][i]
-                    best_match_index = [idx, idx + len(self.pattern)]
+                    best_match = index
             self.naed += min_naed
-            self.matches.append(best_match)
-            self.match_indexes[seq] = best_match_index
-        self.naed /= len(self.match_indexes) * len(self.representative)
+            self.match_indexes[i] = best_match * self._seglen
+        self.naed /= (len(self.indexes)) * (self.length)

@@ -94,45 +94,9 @@ class Miner:
     def map_patterns(self, ts):
         """Map patterns back to motifs."""
         for motif in self.motifs:
-            motif.occurrences = self.get_occurrences(motif, ts)
-            motif.map()
-            motif.match_indexes = {k: [s * self.seglen, e * self.seglen] for k, (s, e) in motif.match_indexes.items()}
+            motif.map(ts, self.seglen)
 
     def sort_patterns(self):
         """Sort patterns on their root mean squared error of representative and occurrences."""
         self.motifs.sort(key=lambda motif: motif.naed)
 
-    def get_occurrences(self, motif, ts):
-        """Get the occurrences of one motif in the time series.
-
-        Parameters
-        ----------
-        motif : Motif
-            Motif object to find occurrences from.
-        ts : list
-            Time series to find occurrences in.
-
-        Returns
-        -------
-        occurrences : dict
-            Dictionary with time series indexes as keys and matching
-            subsequences as values.
-        """
-        motif_len = len(motif.pattern) * self.seglen
-
-        occurrences = {}
-        for i, indexes in motif.indexes.items():
-            occ = []
-            for index in indexes:
-                start = index * self.seglen
-                end = start + motif_len
-
-                # Ensure motif occurrences are all the same length
-                if too_short := max(0, end - len(ts[i])):
-                    start -= too_short
-
-                occ.append(ts[i][start: end])
-
-            occurrences[i] = occ
-
-        return occurrences
