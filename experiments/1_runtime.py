@@ -27,6 +27,7 @@ PARTITIONS = ['TRAIN', 'TEST']
 MINSUP = 0.3
 SEGLEN = 1
 ALPHABET = 5
+MAX_LEN = 100
 
 
 def main():
@@ -35,26 +36,24 @@ def main():
         seen = [row.split(',')[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
-    for miner in [benchmark_py_miner, benchmark_ostinato]:
-        with Pool(8) as p:
-            p.starmap(benchmark, [(miner, name, seen) for name in FILES])
+    MINERS = [benchmark_ostinato]
+    with Pool(8) as p:
+        p.starmap(benchmark, [(m, n) for m in MINERS for n in FILES if [m.__name__, n] not in seen])
 
 
-def benchmark(miner, name, seen):
-    # Skip harder data sets for now
-    if [miner.__name__, name] not in seen and name not in ['StarLightCurves', 'EthanolLevel', 'HandOutlines']:
-        print(f'{miner.__name__}: {name}...')
-        data = get_data(name)
-        start = perf_counter()
-        miner(data)
-        end = perf_counter()
-        with open(FILE, 'a') as fp:
-            fp.write(f'{miner.__name__},{name},{end-start}\n')
-        print(f'{miner.__name__}: {name} done!')
+def benchmark(miner, name):
+    print(f'{miner.__name__}: {name}...')
+    data = get_data(name)
+    start = perf_counter()
+    miner(data)
+    end = perf_counter()
+    with open(FILE, 'a') as fp:
+        fp.write(f'{miner.__name__},{name},{end-start}\n')
+    print(f'{miner.__name__}: {name} done!')
 
 
 def benchmark_py_miner(data):
-    py_miner = PyMiner(MINSUP, SEGLEN, ALPHABET)
+    py_miner = PyMiner(MINSUP, SEGLEN, ALPHABET, max_len=MAX_LEN)
     py_miner.mine(data)
 
 
