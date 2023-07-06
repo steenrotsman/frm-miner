@@ -25,7 +25,7 @@ def main():
     fig, axss = plt.subplots(nrows=len(MAX_OVERLAP), ncols=K, layout='compressed')
     for max_overlap, axs in zip(MAX_OVERLAP, axss):
         miner = Miner(MINSUP, SEGLEN, ALPHABET, max_overlap=max_overlap, k=K)
-        motifs = miner.mine_motifs(field)
+        motifs = miner.mine(field)
         plot_motifs(fig, axs, motifs, ALPHABET)
     plt.savefig(join('figs', '5 bike motifs'))
 

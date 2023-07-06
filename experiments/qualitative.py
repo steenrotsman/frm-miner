@@ -48,7 +48,7 @@ def temp(name):
 
     # Mine motifs
     miner = Miner(MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
-    motifs = miner.mine_motifs(ts)
+    motifs = miner.mine(ts)
 
     return ts, contours, motifs
 
@@ -175,7 +175,7 @@ def plot_motifs(motifs, i, x, y, ax):
 def plot_pipeline(ts, length):
     D = np.array(standardise([t[:length] for t in ts[:5]]))
     mm = Miner(0.6, int(length/16), 4, 3, 0.8)
-    mm.mine_motifs(D)
+    mm.mine(D)
 
     fig, axs = plt.subplots(ncols=5, layout='compressed')
     fig.set_dpi(1200)

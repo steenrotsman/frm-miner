@@ -17,7 +17,7 @@ def main():
     fig, axss = plt.subplots(3, 3)
     for seglen, axs in zip(SEGLEN, axss):
         miner = Miner(MINSUP, seglen, ALPHABET)
-        motifs = miner.mine_motifs(data)
+        motifs = miner.mine(data)
         print(len(motifs))
         # plot_motifs(fig, axs, motifs, ALPHABET)
     plt.show()

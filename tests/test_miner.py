@@ -8,13 +8,13 @@ from test_data import ts, rag
 class TestMiner(unittest.TestCase):
     def test_frm_py_miner(self):
         miner = PyMiner(0.5, 1, 3, 1, 0, 1)
-        motifs = miner.mine_motifs(ts)
+        motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
         self.assertListEqual(patterns, ['aa', 'a', 'ca', 'cc', 'c'])
 
     def test_rag_py_miner(self):
         miner = PyMiner(0.5, 1, 3, 1, 0, 1)
-        motifs = miner.mine_motifs(rag)
+        motifs = miner.mine(rag)
         patterns = [m.pattern for m in motifs]
         self.assertListEqual(patterns, ['a', 'c', 'ac'])
 
@@ -22,17 +22,17 @@ class TestMiner(unittest.TestCase):
         miner = CppMiner(0.5, 1, 3, 1, 0, 1)
         motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, [[0, 0], [0], [2, 0], [2, 2], [2]])
+        self.assertListEqual(patterns, ['aa', 'a', 'ca', 'cc', 'c'])
 
     def test_rag_cpp_miner(self):
         miner = CppMiner(0.5, 1, 3, 1, 0, 1)
         motifs = miner.mine(rag)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, [[0], [2], [0, 2]])
+        self.assertListEqual(patterns, ['a', 'c', 'ac'])
 
     def test_equal_miners(self):
         py_miner = PyMiner(0.5, 1, 3, 1, 0, 1)
-        py_motifs = py_miner.mine_motifs(ts)
+        py_motifs = py_miner.mine(ts)
 
         cpp_miner = CppMiner(0.5, 1, 3, 1, 0, 1)
         cpp_motifs = cpp_miner.mine(ts)
@@ -42,7 +42,7 @@ class TestMiner(unittest.TestCase):
 
     def test_equal_rag_miners(self):
         py_miner = PyMiner(0.5, 1, 3, 1, 0, 1)
-        py_motifs = py_miner.mine_motifs(rag)
+        py_motifs = py_miner.mine(rag)
 
         cpp_miner = CppMiner(0.5, 1, 3, 1, 0, 1)
         cpp_motifs = cpp_miner.mine(rag)
@@ -52,7 +52,7 @@ class TestMiner(unittest.TestCase):
 
     def test_max_len_py_miner(self):
         miner = PyMiner(0.5, 1, 3, 1, 1, 1)
-        motifs = miner.mine_motifs(ts)
+        motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
         self.assertListEqual(patterns, ['a', 'c'])
 
@@ -60,4 +60,4 @@ class TestMiner(unittest.TestCase):
         miner = CppMiner(0.5, 1, 3, 1, 1, 1)
         motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, [[0], [2]])
+        self.assertListEqual(patterns, ['a', 'c'])

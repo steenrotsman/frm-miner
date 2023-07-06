@@ -35,25 +35,27 @@ def plot_data(data):
     remove_spines(axs[1])
 
     plt.savefig(f'figs/6 insect data')
+    plt.close()
 
 
 def plot_motif(data):
-    fig, ax = plt.subplots(layout='constrained')
-
     # Mine frequent motifs in differenced data
     diff = [np.diff(row) for row in data]
-    miner = Miner(0.75, 10, 9, k=1, min_len=80, max_overlap=1)
-    motifs = miner.mine_motifs(diff)
+    for alphabet in [7, 8, 9, 10]:
+        fig, ax = plt.subplots(layout='constrained')
+        miner = Miner(0.75, 30, alphabet, k=1)
+        motifs = miner.mine(diff)
 
-    for i, motif in enumerate(motifs):
-        # Apply frequent motif indexes to z-normalised data
-        representative = np.mean([zscore(data[ts][idxs[0] : idxs[1]]) for ts, idxs in motif.match_indexes.items()], axis=0)
-        ax.plot(representative, color='b', lw=0.5)
-        for ts, idxs in motif.match_indexes.items():
-            ax.plot(zscore(data[ts][idxs[0] : idxs[1]]), color='k', lw=0.1)
-        ax.set(ylim=(-3, 3), xticks=[0, len(representative)], yticks=[])
-        remove_spines(ax)
-    plt.savefig(f'figs/6 insect motif')
+        for i, motif in enumerate(motifs):
+            # Apply frequent motif indexes to z-normalised data
+            representative = np.mean([zscore(data[ts][idxs[0] : idxs[1]]) for ts, idxs in motif.match_indexes.items()], axis=0)
+            ax.plot(representative, color='b', lw=0.5)
+            for ts, idxs in motif.match_indexes.items():
+                ax.plot(zscore(data[ts][idxs[0] : idxs[1]]), color='k', lw=0.1)
+            ax.set(ylim=(-3, 3), xticks=[0, len(representative)], yticks=[])
+            remove_spines(ax)
+        plt.savefig(f'figs/6 insect motif {alphabet}')
+        plt.close()
 
 
 if __name__ == '__main__':

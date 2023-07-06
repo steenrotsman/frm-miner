@@ -78,7 +78,7 @@ def benchmark_mm(data, name, fp, seen):
 
         start = perf_counter()
         mm = Miner(minsup, s, a, l, o)
-        mm.mine_motifs(data)
+        mm.mine(data)
         end = perf_counter()
 
         fp.write(f'{name},{combination},{end-start}\n')
