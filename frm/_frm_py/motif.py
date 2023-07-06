@@ -32,7 +32,7 @@ class Motif:
         for seq, occurrences in self.occurrences.items():
             best_match = None
             best_match_index = []
-            min_naed = 100
+            min_naed = 10 ** 6
             for i, occurrence in enumerate(occurrences):
                 naed = np.sum((occurrence - self.representative) ** 2) ** 0.5
                 if naed < min_naed:
