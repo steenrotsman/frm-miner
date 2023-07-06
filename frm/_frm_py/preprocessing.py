@@ -69,6 +69,7 @@ def standardise(timeseries: list[list]):
 # Defined in Lin, Keogh, Linardi, & Chiu (2003). A Symbolic Representation of Time Series,
 # with Implications for Streaming Algorithms. Table 3.
 breakpoints = {
+    2: {0: 'a'},
     3: {-0.43: 'a', 0.43: 'b'},
     4: {-0.67: 'a', 0: 'b', 0.67: 'c'},
     5: {-0.84: 'a', -0.25: 'b', 0.25: 'c', 0.84: 'd'},

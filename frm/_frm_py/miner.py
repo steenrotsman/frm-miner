@@ -58,7 +58,7 @@ class Miner:
 
         self.motifs = None
 
-    def mine_motifs(self, ts):
+    def mine(self, ts):
         """Perform all steps in motif mining pipeline.
 
         Parameters

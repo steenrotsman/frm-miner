@@ -55,7 +55,7 @@ def benchmark(miner, name, seen):
 
 def benchmark_py_miner(data):
     py_miner = PyMiner(MINSUP, SEGLEN, ALPHABET)
-    py_miner.mine_motifs(data)
+    py_miner.mine(data)
 
 
 def benchmark_cpp_miner(data):

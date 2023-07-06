@@ -8,8 +8,8 @@
 #include <vector>
 #include <string>
 
-using Pattern = std::vector<int>;
-using DiscreteDB = std::vector<std::vector<int>>;
+using Pattern = std::vector<char>;
+using DiscreteDB = std::vector<std::vector<char>>;
 using TimeSeriesDB = std::vector<std::vector<double>>;
 
 #endif //FRM_C_TYPING_H

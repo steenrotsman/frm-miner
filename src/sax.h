@@ -10,7 +10,7 @@
 #include "typing.h"
 
 DiscreteDB sax(const TimeSeriesDB & ts, int seglen, int alphabet);
-int get_discrete_value(int alphabet, double segmean);
+char get_discrete_value(int alphabet, double segmean);
 void znorm(TimeSeriesDB& ts);
 
 

@@ -10,7 +10,12 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(_frm_cpp, m) {
     py::class_<Motif>(m, "Motif")
-        .def_property("pattern", &Motif::get_pattern, nullptr)
+        .def_property("pattern", [](Motif &m){
+            std::string s;
+            for (auto c : m.get_pattern())
+                s += c;
+            return s;
+        }, nullptr)
         .def_property("indexes", &Motif::get_indexes, nullptr)
         .def_property("average_occurrences", &Motif::get_average_occurrences, nullptr)
         .def_property("representative", &Motif::get_representative, nullptr)
@@ -18,9 +23,10 @@ PYBIND11_MODULE(_frm_cpp, m) {
         .def_property("naed", &Motif::get_naed, nullptr)
         .def("__repr__", [](Motif &m){
             std::string s;
-            for (auto i : m.get_pattern())
-                s += (s.empty() ? "" : ",") + std::to_string(i);
-            return "Motif(" + s + ")"; })
+            for (auto c : m.get_pattern())
+                s += c;
+            return "Motif('" + s + "')";
+        })
         ;
 
     py::class_<Miner>(m, "Miner")

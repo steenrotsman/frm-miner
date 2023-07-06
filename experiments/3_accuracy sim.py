@@ -43,7 +43,7 @@ def main():
 
             # Mine motifs of variable length
             mm = Miner(MINSUP, SEGLEN, ALPHABET, k=K)
-            top_motifs = mm.mine_motifs(data)
+            top_motifs = mm.mine(data)
             motifs.append(top_motifs)
 
             # Find consensus motif

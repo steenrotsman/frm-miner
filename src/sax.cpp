@@ -1,23 +1,25 @@
 //
 // Created by stijn on 6/8/23.
 //
-#include "sax.h"
-#include "typing.h"
 #include <vector>
 #include <numeric>
 #include <cmath>
 #include <algorithm>
 
+#include "typing.h"
+#include "sax.h"
+#include <iostream>
 DiscreteDB sax(const TimeSeriesDB& ts, const int seglen, const int alphabet)
 {
-    std::vector<std::vector<int>> discrete(ts.size());
-    for (size_t i { 0 }; i < ts.size(); i++) {
+    DiscreteDB discrete(ts.size());
+    for (int i { 0 }; i < ts.size(); i++) {
         auto rowlen { ceil(static_cast<double>(ts[i].size()) / static_cast<double>(seglen)) };
-        std::vector<int> row(static_cast<int>(rowlen));
+        std::vector<char> row(static_cast<int>(rowlen));
 
-        for (size_t j { 0 }; j < rowlen; j++) {
-            double segsum { std::accumulate(&ts[i][j*seglen], &ts[i][j*seglen+1], 0.0) };
-            double segmean { segsum / seglen };
+        for (int j { 0 }; j < rowlen; j++) {
+            auto start = ts[i].begin() + j * seglen;
+            auto end = start + seglen;
+            double segmean = std::accumulate(start, end, 0.0) /  seglen;
             row[j] = get_discrete_value(alphabet, segmean);
         }
         discrete[i] = row;
@@ -38,9 +40,9 @@ const std::vector<std::vector<double>> breakpoints {
         {-1.28, -0.84, -0.52, -0.25, 0, 0.25, 0.52, 0.84, 1.28}
 };
 
-int get_discrete_value(int alphabet, double segmean)
+char get_discrete_value(int alphabet, double segmean)
 {
-    int x { 0 };
+    char x { 'a' };
     for (auto& breakpoint : breakpoints[alphabet]) {
         if (segmean > breakpoint) {
             x++;
@@ -61,9 +63,12 @@ void znorm(std::vector<std::vector<double>>& ts)
             return x - mean;
         });
 
-        // Calculate stdev
-        double sq_sum { std::inner_product(series.begin(), series.end(), series.begin(), 0.0) };
-        double stdev { std::sqrt(sq_sum / static_cast<double>(series.size())) };
+        // Calculate stdev - because the mean is 0, the average of series is the average deviation
+        double stdev { };
+        for (auto val : series) {
+            stdev += val * val;
+        }
+        stdev = sqrt(stdev / static_cast<double>(series.size()));
 
         // Divide by stdev
         std::transform(series.begin(), series.end(), series.begin(), [stdev](double x) {
