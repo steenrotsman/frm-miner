@@ -1,4 +1,5 @@
 from collections import defaultdict
+from warnings import catch_warnings, simplefilter
 
 import numpy as np
 
@@ -42,7 +43,9 @@ class Motif:
             for index in indexes:
                 occurrence = self.get_occurrence(ts[i], index)
                 occurrences.append(occurrence)
-            self.average_occurrences[i] = np.mean(occurrences, axis=0)
+            with catch_warnings():
+                simplefilter("ignore")
+                self.average_occurrences[i] = np.nanmean(occurrences, axis=0)
 
     def get_occurrence(self, ts, index):
         start = index * self._seglen
@@ -50,11 +53,11 @@ class Motif:
 
         # Ensure motif occurrences are all the same length
         if too_short := max(0, end - len(ts)):
-            start -= too_short
-        return ts[start: end]
+            return np.hstack((ts[start : end], np.array(too_short * [np.nan])))
+        return ts[start : end]
 
     def set_representative(self):
-        self.representative = np.mean([ao for ao in self.average_occurrences.values()], axis=0)
+        self.representative = np.nanmean([ao for ao in self.average_occurrences.values()], axis=0)
 
     def set_best_matches_and_naed(self, ts):
         for i, indexes in self.indexes.items():
@@ -63,7 +66,7 @@ class Motif:
 
             for index in indexes:
                 occurrence = self.get_occurrence(ts[i], index)
-                naed = np.sum((occurrence - self.representative) ** 2) ** 0.5
+                naed = np.nansum((occurrence - self.representative) ** 2) ** 0.5
                 if naed < min_naed:
                     min_naed = naed
                     best_match = index
