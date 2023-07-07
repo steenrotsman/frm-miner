@@ -27,14 +27,14 @@ matplotlib.rcParams.update(params)
 COLORS = ['maroon', 'steelblue', 'olive', 'salmon', 'teal', 'seagreen', 'purple', 'goldenrod', 'orange', 'tomato']
 
 
-def plot_motifs(fig, flat_axs, motifs, alphabet, length=0, fn=''):
+def plot_motifs(fig, flat_axs, data, motifs, alphabet, length=0, fn=''):
     for motif, ax in zip(motifs, flat_axs):
         # If length is not supplied, use length of the motif
         limit = len(motif.representative) if not length else length
 
         # Plot matches of the representative motif
-        for match in motif.matches:
-            ax.plot(match, 'k', lw=0.1)
+        for seq, index in motif.match_indexes.items():
+            ax.plot(data[seq][index : index+motif.length], 'k', lw=0.1)
 
         # Plot representative motif
         ax.plot(motif.representative, 'b', lw=1)

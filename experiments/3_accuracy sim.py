@@ -10,15 +10,17 @@ from os.path import join
 import numpy as np
 import matplotlib.pyplot as plt
 import stumpy
+from scipy.stats import zscore
 
 from frm._frm_py.miner import Miner
+from frm._frm_py.preprocessing import breakpoints
 from plot import plot_motifs, remove_spines
 
 # Simulation settings
 UNITS = 100
 TS_LEN = 10000
 MOTIF_LEN = 500
-NOISE_LEVELS = [0.1, 0.5, 0.9]
+NOISE_LEVELS = [0.3, 0.5, 0.7]
 INJECT = [100, 75]
 
 # Parameters
@@ -35,22 +37,23 @@ def main():
     motif = get_motif(MOTIF_LEN)
 
     for inject in INJECT:
-        motifs = []
+        fig, axss = plt.subplots(nrows=K, ncols=len(NOISE_LEVELS), layout='compressed', sharey='all', sharex='all')
         consensus_motifs = []
-        for noise_level in NOISE_LEVELS:
+        for noise_level, axs in zip(NOISE_LEVELS, axss.T):
             # Put noisy motif into data
             data, locations = get_data(noise, motif, noise_level, inject)
 
             # Mine motifs of variable length
             mm = Miner(MINSUP, SEGLEN, ALPHABET, k=K)
-            top_motifs = mm.mine(data)
-            motifs.append(top_motifs)
+            motifs = mm.mine(data)
 
             # Find consensus motif
             consensus_motifs.append(ostinato(data, MOTIF_LEN))
 
-        fig, axs = plt.subplots(nrows=len(motifs[0]), layout='compressed', ncols=len(NOISE_LEVELS), sharey='all', sharex='all')
-        plot_motifs(fig, chain.from_iterable(axs.T), chain.from_iterable(motifs), ALPHABET, MOTIF_LEN, fn=f'3 accuracy {inject}')
+            plot_motifs(fig, axs, zscore(data, axis=1), motifs, ALPHABET, MOTIF_LEN)
+
+        plt.savefig(join('figs', f'3 accuracy {inject}'))
+        plt.close()
         plot_ostinato(consensus_motifs, inject)
 
 
