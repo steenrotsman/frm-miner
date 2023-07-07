@@ -38,8 +38,6 @@ def main():
     # Benchmark different miners using multiprocessing
     MINERS = [benchmark_py_miner, benchmark_ostinato]
     with Pool(1) as p:
-        settings = [(m, n) for m in MINERS for n in FILES if [m.__name__, n] not in seen]
-        benchmark(*settings[0])
         p.starmap(benchmark, [(m, n) for m in MINERS for n in FILES if [m.__name__, n] not in seen])
 
 
