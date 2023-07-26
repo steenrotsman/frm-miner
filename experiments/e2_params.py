@@ -4,7 +4,7 @@ from multiprocessing import Pool
 
 from frm._frm_py.miner import Miner
 
-from stocks import get_stocks
+from e2_stocks import get_stocks
 
 FILE = 'e2_params.csv'
 

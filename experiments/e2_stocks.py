@@ -1,104 +1,12 @@
-"""
-This module provides a runtime comparison of FRM-Miner and Ostinato.
-
-Data sets are supplied by the UCR archive as two .tsv files, a train set and a test set.
-The train and test files are joined into one data set, for which the baseline is then mined
-
-To replicate this experiment, add a copy of UCRArchive_2018 from https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/
-Results are saved to the file runtime.csv and benchmark.R gives code to analyse the results.
-"""
 import pickle
-from os.path import join
-from itertools import product
-from time import perf_counter
-from collections import defaultdict
 
-import numpy as np
-import stumpy
-import yfinance as yf
 from tqdm import tqdm
-
-from frm._frm_py.miner import Miner
-
-FILE = 'benchmark.csv'
-FOLDER = 'UCRArchive_2018'
-FILES = ['Mallat', 'OliveOil', 'ToeSegmentation1', 'InlineSkate', 'FaceAll']
-ITER = 10
-PARTITIONS = ['TRAIN', 'TEST']
-
-# Parameters for FRM-Miner
-MINSUP = [0.3, 0.5, 0.7, 0.9]
-SEGLEN = [4, 8, 16]
-ALPHABET = [5, 7, 9]
-MIN_LEN = [3]
-MAX_OVERLAP = [0.7, 0.8, 0.9]
-
-# Parameters for baseline algorithms
-LENGTH = [25, 50, 100]
-
-
-def main():
-    # Get already calculated combinations from file
-    seen = defaultdict(list)
-    with open(FILE) as fp:
-        for row in fp.readlines():
-            fields = row.split(',')
-            seen[fields[0]].append(fields[1])
-
-    # Calculate and save run times to file
-    with open(FILE, 'a') as fp:
-        for name, data in get_data():
-            benchmark_mm(data, name, fp, seen[name])
-            benchmark_ostinato(data, name, fp, seen[name])
-
-        # name = 'Stocks'
-        # benchmark_mm(get_stocks(), name, fp, seen[name])
-        # benchmark_ostinato([np.array(stock, dtype=np.float64) for stock in get_stocks()], name, fp, seen[name])
-
-
-def get_data():
-    for fn in FILES:
-        data = []
-        for part in PARTITIONS:
-            with open(join(FOLDER, fn, f'{fn}_{part}.tsv')) as f:
-                for row in f:
-                    # Split data on tabs
-                    data.append(row.strip('\n').split('\t')[1:])
-
-        # Parse data to floats
-        data = [[float(x) for x in row] for row in data]
-
-        yield fn, data
-
-
-def benchmark_mm(data, name, fp, seen):
-    for i, minsup, s, a, l, o in tqdm(list(product(range(ITER), MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP))):
-        if (combination := f'mm_{minsup}_{s}_{a}_{l}_{o}_{i}') in seen:
-            continue
-
-        start = perf_counter()
-        mm = Miner(minsup, s, a, l, o)
-        mm.mine(data)
-        end = perf_counter()
-
-        fp.write(f'{name},{combination},{end-start}\n')
-
-
-def benchmark_ostinato(data, name, fp, seen):
-    for i, m in tqdm(list(product(range(ITER), LENGTH))):
-        if (combination := f'ostinato_{m}_{i}') in seen:
-            continue
-
-        start = perf_counter()
-        stumpy.ostinato(data, m)
-        end = perf_counter()
-
-        fp.write(f'{name},{combination},{end-start}\n')
+import yfinance as yf
 
 
 def get_stocks():
     try:
-        with open('stocks.pkl', 'rb') as fp:
+        with open('e2_stocks.pkl', 'rb') as fp:
             volumes = pickle.load(fp)
     except FileNotFoundError:
         # https://stockanalysis.com/stocks/
@@ -570,11 +478,7 @@ def get_stocks():
 
         volumes = [[v for v in volume if v] for volume in volumes if volume and len(volume) >= 100]
 
-        with open('experiments/stocks.pkl', 'wb') as fp:
+        with open('experiments/e2_stocks.pkl', 'wb') as fp:
             pickle.dump(volumes, fp)
 
     return volumes
-
-
-if __name__ == '__main__':
-    main()
