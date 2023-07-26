@@ -12,7 +12,7 @@ class Motif:
         self.average_occurrences = {}
         self.representative = None
         self.matches = []
-        self.match_indexes = {}
+        self.best_matches = {}
         self.naed = 0.0
         self.length = 0
         self._seglen = 0
@@ -71,5 +71,5 @@ class Motif:
                     min_naed = naed
                     best_match = index
             self.naed += min_naed
-            self.match_indexes[i] = best_match * self._seglen
+            self.best_matches[i] = best_match * self._seglen
         self.naed /= (len(self.indexes)) * (self.length)
