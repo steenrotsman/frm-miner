@@ -34,6 +34,7 @@ public:
     std::unordered_map<int, std::vector<double>> get_average_occurrences() { return average_occurrences; };
     std::vector<double> get_representative() { return representative; };
     std::unordered_map<int, int> get_best_matches() { return best_matches; };
+    int get_length() { return length; };
     double get_naed() const { return naed; };
 
     void map(const TimeSeriesDB& timeseries, int seglen);
