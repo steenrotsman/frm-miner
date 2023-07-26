@@ -5,7 +5,7 @@ __version__ = "0.0.1"
 
 ext_modules = [
     Pybind11Extension("_frm_cpp",
-        ["src/main.cpp", "src/miner.cpp", "src/motif.cpp", "src/patterns.cpp", "src/sax.cpp"],
+        ["src/bind.cpp", "src/miner.cpp", "src/motif.cpp", "src/patterns.cpp", "src/sax.cpp"],
         define_macros = [('VERSION_INFO', __version__)],
         ),
 ]
