@@ -1,3 +1,6 @@
+import numpy as np
+from scipy.stats import zscore
+
 ts = [
     [0, 1, 2, 2, 1, 0],
     [0, 0, 1, 1, 0, 0],
@@ -56,3 +59,6 @@ rseq_2 = [
     'ac',
     'bb',
 ]
+
+np.random.seed(0)
+data = [zscore(np.random.random(np.random.randint(10, 1000))).tolist() for _ in range(100)]

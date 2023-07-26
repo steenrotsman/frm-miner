@@ -8,10 +8,8 @@ class Motif:
     def __init__(self, pattern):
         self.pattern = pattern
         self.indexes = defaultdict(list)
-        self.occurrences = {}
         self.average_occurrences = {}
         self.representative = None
-        self.matches = []
         self.best_matches = {}
         self.naed = 0.0
         self.length = 0

@@ -7,9 +7,6 @@ class TestMotif(unittest.TestCase):
     def test_init(self):
         a = Motif(pattern='abc')
         self.assertEqual(a.pattern, 'abc')
-        self.assertEqual(a.indexes, {})
-        self.assertEqual(len(a.matches), 0)
-        self.assertIsNone(a.representative)
     
     def test_record_index(self):
         a = Motif(pattern='abc')

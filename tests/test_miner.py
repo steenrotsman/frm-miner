@@ -2,7 +2,7 @@ import unittest
 
 from frm import Miner as CppMiner
 from frm._frm_py.miner import Miner as PyMiner
-from test_data import ts, rag
+from test_data import ts, rag, data
 
 
 class TestMiner(unittest.TestCase):
@@ -61,3 +61,15 @@ class TestMiner(unittest.TestCase):
         motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
         self.assertListEqual(patterns, ['a', 'c'])
+
+    def test_equal_long(self):
+        seglen, alphabet = 2, 4
+        py = PyMiner(0.5, seglen, alphabet)
+        cpp = CppMiner(0.5, seglen, alphabet)
+
+        py.mine(data)
+        cpp.mine(data)
+
+        for p, c in zip(py.motifs, cpp.motifs):
+            self.assertEqual(p.pattern, c.pattern)
+            self.assertAlmostEqual(p.naed, c.naed)

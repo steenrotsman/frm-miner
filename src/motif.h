@@ -14,6 +14,7 @@
 class Motif {
 private:
     Pattern pattern;
+    int _seglen;
     int length;
     std::unordered_map<int, std::vector<int>> indexes;
     std::unordered_map<int, std::vector<double>> average_occurrences;
@@ -21,9 +22,10 @@ private:
     std::unordered_map<int, int> best_matches;
     double naed;
 
+    std::vector<double> get_occurrence(const std::vector<double>& ts, int index) const;
     void set_average_occurrences(const TimeSeriesDB& timeseries);
     void set_representative();
-    void set_best_matches_and_rmse(const TimeSeriesDB &timeseries);
+    void set_best_matches_and_naed(const TimeSeriesDB &timeseries);
 public:
     explicit Motif(Pattern pattern);
 
@@ -34,7 +36,7 @@ public:
     std::unordered_map<int, std::vector<double>> get_average_occurrences() { return average_occurrences; };
     std::vector<double> get_representative() { return representative; };
     std::unordered_map<int, int> get_best_matches() { return best_matches; };
-    int get_length() { return length; };
+    int get_length() const { return length; };
     double get_naed() const { return naed; };
 
     void map(const TimeSeriesDB& timeseries, int seglen);

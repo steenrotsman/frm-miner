@@ -5,8 +5,7 @@ from os.path import join
 import matplotlib.pyplot as plt
 from scipy.stats import zscore
 
-from frm._frm_py.miner import Miner as PyMiner
-from frm import Miner as CppMiner
+from frm import Miner
 from plot import plot_motifs
 
 JSON_DIR = 'bike'
@@ -17,21 +16,19 @@ MINSUP = 0.3
 SEGLEN = 10
 ALPHABET = 5
 MAX_OVERLAP = [0.9, 0.7]
-K = 0
+K = 4
 
 
 def main():
     records = get_records(JSON_DIR)
     field = get_fields(records, FIELD)
 
-    fig, axss = plt.subplots(nrows=len(MAX_OVERLAP), ncols=1, layout='compressed')
+    fig, axss = plt.subplots(nrows=len(MAX_OVERLAP), ncols=K, layout='compressed')
     for max_overlap, axs in zip(MAX_OVERLAP, axss):
-        py_miner = PyMiner(MINSUP, SEGLEN, ALPHABET, max_overlap=max_overlap, k=K)
-        cp_miner = CppMiner(MINSUP, SEGLEN, ALPHABET, max_overlap=max_overlap, k=K)
+        miner = Miner(MINSUP, SEGLEN, ALPHABET, max_overlap=max_overlap, k=K)
 
-        py_motifs = py_miner.mine(field)
-        cp_motifs = cp_miner.mine(field)
-        plot_motifs(fig, axs, [zscore(ts) for ts in field], py_motifs, ALPHABET)
+        motifs = miner.mine(field)
+        plot_motifs(fig, axs, [zscore(ts) for ts in field], motifs, ALPHABET)
     plt.savefig(join('figs', '5 bike motifs.eps'))
 
 

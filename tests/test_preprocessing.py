@@ -1,6 +1,7 @@
 import unittest
 
 from frm._frm_py.preprocessing import sax, standardise
+
 from test_data import ts, norm, rag, seq_1, seq_2, rseq_1, rseq_2
 
 
@@ -25,4 +26,3 @@ class TestPreprocessing(unittest.TestCase):
     def test_rag_sax_seglen_2(self):
         got = sax(standardise(rag), 2, 3)
         self.assertEqual(rseq_2, got)
-

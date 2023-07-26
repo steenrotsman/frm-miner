@@ -13,18 +13,24 @@ DiscreteDB sax(const TimeSeriesDB& ts, const int seglen, const int alphabet)
 {
     DiscreteDB discrete(ts.size());
     for (int i { 0 }; i < ts.size(); i++) {
-        auto rowlen { ceil(static_cast<double>(ts[i].size()) / static_cast<double>(seglen)) };
-        std::vector<char> row(static_cast<int>(rowlen));
-
-        for (int j { 0 }; j < rowlen; j++) {
-            auto start = ts[i].begin() + j * seglen;
-            auto end = start + seglen;
-            double segmean = std::accumulate(start, end, 0.0) /  seglen;
-            row[j] = get_discrete_value(alphabet, segmean);
-        }
-        discrete[i] = row;
+        discrete[i] = get_row(ts[i], seglen, alphabet);
     }
     return discrete;
+}
+
+std::vector<char> get_row(std::vector<double> ts_row, int seglen, int alphabet)
+{
+    auto rowlen { ceil(static_cast<double>(ts_row.size()) / static_cast<double>(seglen)) };
+    std::vector<char> row(static_cast<int>(rowlen));
+
+    for (int j { 0 }; j < rowlen; j++) {
+        auto start = ts_row.begin() + j * seglen;
+        auto end = start + std::min(seglen, static_cast<int>(ts_row.end() - start));
+        double segmean = std::accumulate(start, end, 0.0) /  seglen;
+        row[j] = get_discrete_value(alphabet, segmean);
+    }
+
+    return row;
 }
 
 const std::vector<std::vector<double>> breakpoints {
