@@ -20,7 +20,7 @@ params = {
     'text.usetex': False,
     'font.family': 'serif',
     'figure.figsize': [WIDTH, HEIGHT],
-    'savefig.dpi': 1200
+    'savefig.dpi': 2400
 }
 matplotlib.rcParams.update(params)
 
@@ -33,7 +33,7 @@ def plot_motifs(fig, flat_axs, data, motifs, alphabet, length=0, fn=''):
         limit = len(motif.representative) if not length else length
 
         # Plot matches of the representative motif
-        for seq, index in motif.match_indexes.items():
+        for seq, index in motif.best_matches.items():
             ax.plot(data[seq][index : index+motif.length], 'k', lw=0.1)
 
         # Plot representative motif
@@ -47,12 +47,13 @@ def plot_motifs(fig, flat_axs, data, motifs, alphabet, length=0, fn=''):
         ax.set(ylim=(-3, 3), xticks=[0, limit], yticks=[])
         remove_spines(ax)
     if fn:
-        plt.savefig(join('figs', fn))
+        plt.savefig(join('figs', f'{fn}.eps'))
         plt.close()
 
 
-def remove_spines(ax):
-    ax.axes.get_yaxis().set_visible(False)
-    ax.spines['left'].set_visible(False)
+def remove_spines(ax, remove_y=True):
+    if remove_y:
+        ax.axes.get_yaxis().set_visible(False)
+        ax.spines['left'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
