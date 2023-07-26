@@ -2,16 +2,23 @@ import numpy as np
 from scipy.io import loadmat
 from scipy.stats import zscore
 import matplotlib.pyplot as plt
+from itertools import product
+from os import listdir
+from multiprocessing import Pool
 
 from frm._frm_py.miner import Miner
 from ostinato import ostinato
 from plot import remove_spines, COLORS
 
+MINSUP = [1, 0.5]
+SEGLEN = 50
+ALPHABET = 4
+
+
 
 def main():
-    insect = loadmat('6_insectAllData.mat')
+    insect = loadmat('e6_insectAllData.mat')
     data = [np.reshape(insect[f'd{i}{i}'], (-1)) for i in range(1, 5)]
-
     plot_data(data)
     plot_motif(data)
 
@@ -34,28 +41,29 @@ def plot_data(data):
     axs[1].plot(data[ts_index][ss_index:ss_index+800], color='k', lw=0.3)
     remove_spines(axs[1])
 
-    plt.savefig(f'figs/6 insect data')
+    plt.savefig(f'figs/6 insect data.eps')
     plt.close()
 
 
 def plot_motif(data):
-    # Mine frequent motifs in differenced data
+    fig, axs = plt.subplots(ncols=2, layout='constrained')
     diff = [np.diff(row) for row in data]
-    for alphabet in [7, 8, 9, 10]:
-        fig, ax = plt.subplots(layout='constrained')
-        miner = Miner(0.75, 30, alphabet, k=1)
-        motifs = miner.mine(diff)
 
-        for i, motif in enumerate(motifs):
-            # Apply frequent motif indexes to z-normalised data
-            representative = np.mean([zscore(data[ts][idxs[0] : idxs[1]]) for ts, idxs in motif.match_indexes.items()], axis=0)
-            ax.plot(representative, color='b', lw=0.5)
-            for ts, idxs in motif.match_indexes.items():
-                ax.plot(zscore(data[ts][idxs[0] : idxs[1]]), color='k', lw=0.1)
-            ax.set(ylim=(-3, 3), xticks=[0, len(representative)], yticks=[])
-            remove_spines(ax)
-        plt.savefig(f'figs/6 insect motif {alphabet}')
-        plt.close()
+    for minsup, ax in zip(MINSUP, axs):
+        # Mine frequent motifs in differenced data
+        miner = Miner(minsup, SEGLEN, ALPHABET, k=1)
+        motifs = miner.mine(diff)
+        motif = motifs[0]
+
+        # Apply frequent motif indexes to z-normalised data
+        representative = np.mean([zscore(data[ts][idx : idx+motif.length]) for ts, idx in motif.best_matches.items()], axis=0)
+        ax.plot(representative, color='b', lw=0.5)
+        for ts, idx in motif.best_matches.items():
+            ax.plot(zscore(data[ts][idx : idx+motif.length]), color='k', lw=0.1)
+        ax.set(ylim=(-3, 3), xticks=[0, len(representative)], yticks=[])
+        remove_spines(ax)
+    plt.savefig(f'figs/6 insect motifs.eps')
+    plt.close()
 
 
 if __name__ == '__main__':

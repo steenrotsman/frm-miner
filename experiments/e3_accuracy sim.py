@@ -52,7 +52,7 @@ def main():
 
             plot_motifs(fig, axs, zscore(data, axis=1), motifs, ALPHABET, MOTIF_LEN)
 
-        plt.savefig(join('figs', f'3 accuracy {inject}'))
+        plt.savefig(join('figs', f'3 accuracy {inject}.eps'))
         plt.close()
         plot_ostinato(consensus_motifs, inject)
 
@@ -116,7 +116,7 @@ def plot_ostinato(consensus_motifs, inject):
         ax.set(ylim=(-3, 3), xticks=[0, len(motif)], yticks=[])
         remove_spines(ax)
 
-    plt.savefig(join('figs', f'3 accuracy {inject} ostinato'))
+    plt.savefig(join('figs', f'3 accuracy {inject} ostinato.eps'))
 
 
 if __name__ == '__main__':

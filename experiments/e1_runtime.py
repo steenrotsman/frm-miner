@@ -18,7 +18,7 @@ from frm import Miner as CppMiner
 from ostinato import ostinato
 from frm._frm_py.miner import Miner as PyMiner
 
-FILE = '1_runtime.csv'
+FILE = 'e1_runtime.csv'
 FOLDER = 'UCRArchive_2018'
 FILES = listdir(FOLDER)
 PARTITIONS = ['TRAIN', 'TEST']
@@ -36,8 +36,8 @@ def main():
         seen = [row.split(',')[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
-    MINERS = [benchmark_py_miner, benchmark_ostinato]
-    with Pool(1) as p:
+    MINERS = [benchmark_py_miner, benchmark_cpp_miner]
+    with Pool(processes=1, maxtasksperchild=1) as p:
         p.starmap(benchmark, [(m, n) for m in MINERS for n in FILES if [m.__name__, n] not in seen])
 
 
@@ -58,8 +58,8 @@ def benchmark_py_miner(data):
 
 
 def benchmark_cpp_miner(data):
-    cpp_miner = CppMiner(MINSUP, SEGLEN, ALPHABET)
-    cpp_miner.mine_motifs(data)
+    cpp_miner = CppMiner(MINSUP, SEGLEN, ALPHABET, max_len=MAX_LEN)
+    cpp_miner.mine(data)
 
 
 def benchmark_stumpy(data):

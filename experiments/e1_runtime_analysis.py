@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-FILE = '1_runtime.csv'
+FILE = 'e1_runtime.csv'
 
 runtimes = defaultdict(float)
 with open(FILE) as fp:

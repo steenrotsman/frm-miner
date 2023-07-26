@@ -13,25 +13,25 @@ import matplotlib.pyplot as plt
 import cv2 as cv
 
 from frm._frm_py.miner import Miner
-from frm._frm_py.preprocessing import standardise
+from frm._frm_py.preprocessing import standardise, sax
 from plot import remove_spines, COLORS, WIDTH
 
 IMG_DIR = 'mpeg7'
 NAMES = ['bird', 'fly']
 SAMPLE = True
 
-MINSUP = 0.5
+MINSUP = 0.3
 SEGLEN = 4
 ALPHABET = 4
-MIN_LEN = 5
-MAX_OVERLAP = 0.8
-LOCAL = True
+MIN_LEN = 3
+MAX_LEN = 0
+MAX_OVERLAP = 0.75
 K = 10
 
 
 def main():
-    ts_bird, contours_bird, motifs_bird = temp(NAMES[0])
-    ts_fly, contours_fly, motifs_fly = temp(NAMES[1])
+    ts_bird, contours_bird, motifs_bird = mine(NAMES[0])
+    ts_fly, contours_fly, motifs_fly = mine(NAMES[1])
 
     # Plot motifs
     plot_contours(motifs_fly, contours_fly)
@@ -41,16 +41,91 @@ def main():
     plot_pipeline(ts_bird, 256)
 
 
-def temp(name):
+def mine(name):
     # Load data
     files = [join(IMG_DIR, f'{name}-{i + 1}.gif') for i in range(20)]
     ts, contours = get_all_ts(files)
 
     # Mine motifs
-    miner = Miner(MINSUP, SEGLEN, ALPHABET, MIN_LEN, MAX_OVERLAP, LOCAL, K)
+    miner = Miner(MINSUP, SEGLEN, ALPHABET, min_len=MIN_LEN, max_len=MAX_LEN, max_overlap=MAX_OVERLAP, k=K)
     motifs = miner.mine(ts)
 
     return ts, contours, motifs
+
+
+def plot_ts(motifs, contours, ts):
+    """Plot the time series with motifs that occur in them."""
+    for i, (contour, t) in enumerate(zip(contours, ts)):
+        fig, axd = plt.subplot_mosaic([['ts', 'contour']], figsize=(WIDTH, WIDTH/3), gridspec_kw={'width_ratios': [3, 1]}, layout='constrained')
+
+        # Plot motifs in ts
+        axd['ts'].plot(t, 'k', lw=0.5)
+        axd['ts'].set(xticks=[0, len(t)], yticks=[])
+        remove_spines(axd['ts'])
+        plot_motifs(motifs, i, list(range(len(t))), t, axd['ts'])
+
+        # Plot motifs in corresponding figure
+        plot_contour(motifs, contour, i, axd['contour'])
+        plt.savefig(join('figs', '0 ts.eps'))
+        plt.close()
+        return
+
+
+def plot_contours(motifs, contours):
+    """Plot the images with motifs that occur in them."""
+    fig, axs = plt.subplots(ncols=5, nrows=4, figsize=(WIDTH, WIDTH/5*4), layout='constrained')
+
+    for (i, contour), ax in zip(enumerate(contours), itertools.chain.from_iterable(axs)):
+        plot_contour(motifs, contour, i, ax)
+
+    plt.savefig(join('figs', '0 motifs.eps'))
+
+
+def plot_pipeline(ts, length):
+    minsup = 0.6
+    seglen = int(length / 16)
+    alphabet = 4
+    data = standardise([t[:length] for t in ts[:7]])
+    mm = Miner(minsup, seglen, alphabet)
+    mm.mine(data)
+
+    fig, axs = plt.subplots(ncols=5, figsize=(WIDTH*2, WIDTH/2), layout='compressed')
+    fig.align_labels()
+
+    # Time series database
+    axs[0].plot(data.T, lw=0.5)
+    axs[0].set(ylim=(-3, 3), xticks=[0, length], yticks=[], xlabel='Time series database')
+    remove_spines(axs[0])
+
+    # Sequence database
+    for s, y in zip(sax(data, seglen, alphabet), range(7, -1, -1)):
+        axs[1].text(0, y / 10, s, fontsize=6)
+    axs[1].set(xticks=[], yticks=[], xlabel='Sequence database')
+    remove_spines(axs[1])
+
+    # Sequence motifs
+    for motif, y, color in zip(mm.motifs, range(7, -1, -1), COLORS):
+        axs[2].text(0.3, y / 10 + 0.025, motif.pattern, fontsize=6, color=color)
+    axs[2].set(xticks=[], yticks=[], xlabel='Sequence motifs')
+    remove_spines(axs[2])
+
+    # Occurrences and representative motif
+    for i, ts in enumerate(data):
+        axs[3].plot(ts, 'k', lw=0.25)
+        for motif, color in zip(mm.motifs, COLORS):
+            if i in motif.best_matches:
+                start = motif.best_matches[i]
+                end = start + motif.length
+                axs[3].plot(list(range(start, end)), ts[start:end], color, lw=0.5)
+
+            axs[4].plot(motif.representative, color, lw=0.5)
+
+    axs[3].set(ylim=(-3, 3), xticks=[0, length], yticks=[], xlabel='Occurrences')
+    axs[4].set(ylim=(-3, 3), xticks=[0, length/2], yticks=[], xlabel='Representative motifs')
+    remove_spines(axs[3])
+    remove_spines(axs[4])
+
+    plt.savefig(join('figs', '0 pipeline.eps'))
 
 
 def get_all_ts(files: list):
@@ -118,35 +193,6 @@ def sample(ts, length=512):
     return res
 
 
-def plot_ts(motifs, contours, ts):
-    """Plot the time series with motifs that occur in them."""
-    for i, (contour, t) in enumerate(zip(contours, ts)):
-        fig, axd = plt.subplot_mosaic([['ts', 'contour']], gridspec_kw={'width_ratios': [4, 1]}, layout='constrained')
-        fig.set_dpi(1200)
-
-        # Plot motifs in ts
-        axd['ts'].plot(t, 'k', lw=0.5)
-        axd['ts'].set(xticks=[0, len(t)], yticks=[])
-        remove_spines(axd['ts'])
-        plot_motifs(motifs, i, list(range(len(t))), t, axd['ts'])
-
-        # Plot motifs in corresponding figure
-        plot_contour(motifs, contour, i, axd['contour'])
-        plt.show()
-        return
-
-
-def plot_contours(motifs, contours):
-    """Plot the images with motifs that occur in them."""
-    fig, axs = plt.subplots(ncols=5, nrows=4, figsize=(WIDTH, WIDTH/5*4), layout='constrained')
-    fig.set_dpi(1200)
-
-    for (i, contour), ax in zip(enumerate(contours), itertools.chain.from_iterable(axs)):
-        plot_contour(motifs, contour, i, ax)
-
-    plt.show()
-
-
 def plot_contour(motifs, contour, i, ax):
     x, y = contour_to_xy(contour)
     ax.set(xticks=[], yticks=[], ylim=[1, 0])
@@ -167,53 +213,10 @@ def contour_to_xy(contour):
 def plot_motifs(motifs, i, x, y, ax):
     """Plot all motifs occurring in a unit."""
     for motif, color in zip(motifs, COLORS):
-        if m := motif.match_indexes.get(i, False):
-            start, end = m
+        if m := motif.best_matches.get(i, False):
+            start = m
+            end = start + motif.length
             ax.plot(x[start : end], y[start : end], color, lw=1.5)
-
-
-def plot_pipeline(ts, length):
-    D = np.array(standardise([t[:length] for t in ts[:5]]))
-    mm = Miner(0.6, int(length/16), 4, 3, 0.8)
-    mm.mine(D)
-
-    fig, axs = plt.subplots(ncols=5, layout='compressed')
-    fig.set_dpi(1200)
-    fig.align_labels()
-
-    # Time series database
-    axs[0].plot(D.T, lw=0.5)
-    axs[0].set(ylim=(-3, 3), xticks=[0, length], yticks=[], xlabel='Time series database')
-    remove_spines(axs[0])
-
-    # Sequence database
-    for s, y in zip(mm.sequences, range(7, -1, -1)):
-        axs[1].text(0, y / 10, s, fontsize=6)
-    axs[1].set(xticks=[], yticks=[], xlabel='Sequence database')
-    remove_spines(axs[1])
-
-    # Sequence motifs
-    for motif, y, color in zip(mm.motifs, range(7, -1, -1), COLORS):
-        axs[2].text(0.3, y / 10 + 0.025, motif.pattern, fontsize=6, color=color)
-    axs[2].set(xticks=[], yticks=[], xlabel='Sequence motifs')
-    remove_spines(axs[2])
-
-    # Occurrences and representative motif
-    for i, ts in enumerate(D):
-        axs[3].plot(ts, 'k', lw=0.25)
-        for motif, color in zip(mm.motifs, COLORS):
-            if i in motif.match_indexes:
-                start, end = motif.match_indexes[i]
-                axs[3].plot(list(range(start, end)), ts[start:end], color, lw=0.5)
-
-            axs[4].plot(motif.representative, color, lw=0.5)
-
-    axs[3].set(ylim=(-3, 3), xticks=[0, length], yticks=[], xlabel='Occurrences')
-    axs[4].set(ylim=(-3, 3), xticks=[0, length/2], yticks=[], xlabel='Representative motifs')
-    remove_spines(axs[3])
-    remove_spines(axs[4])
-
-    plt.show()
 
 
 if __name__ == '__main__':

@@ -6,7 +6,7 @@ from frm._frm_py.miner import Miner
 
 from stocks import get_stocks
 
-FILE = '2_params.csv'
+FILE = 'e2_params.csv'
 
 
 # Parameter ranges for FRM-Miner
