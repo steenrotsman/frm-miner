@@ -14,7 +14,7 @@ def main():
     with open(FILE) as fp:
         for row in fp.readlines():
             experiment, name, runtime = tuple(row.split(','))
-            if 'py' not in experiment:
+            if 'cpp' not in experiment:
                 continue
             runtime = float(runtime)
             data = get_data(name)
@@ -46,8 +46,8 @@ def main():
     remove_spines(axs[1], False)
 
     # Set the x-axis and y-axis labels
-    axs[0].set_yticks([0.01, 10000])
-    axs[1].set_yticks([0.01, 10000])
+    # axs[0].set_yticks([0.01, 10000])
+    # axs[1].set_yticks([0.01, 10000])
     axs[0].set_ylabel('Run Time (seconds)', labelpad=0).set_y(-0.75)
     axs[1].set_xlabel('Size')
 

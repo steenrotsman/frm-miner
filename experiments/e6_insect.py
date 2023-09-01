@@ -2,12 +2,9 @@ import numpy as np
 from scipy.io import loadmat
 from scipy.stats import zscore
 import matplotlib.pyplot as plt
-from itertools import product
-from os import listdir
-from multiprocessing import Pool
+from stumpy import ostinato
 
-from frm._frm_py.miner import Miner
-from ostinato import ostinato
+from frm import Miner
 from plot import remove_spines, COLORS
 
 MINSUP = [1, 0.5]
@@ -35,18 +32,18 @@ def plot_data(data):
     bsf_rad, ts_index, ss_index = ((8.070564764776059+1.059678327857585e-12j), 2, 96423)
 
     # Aesthetics
-    axs[0].set(xticks=[0, 120000], yticks=[])
-    remove_spines(axs[0])
-    axs[1].set(xticks=[0, 800], yticks=[])
-    axs[1].plot(data[ts_index][ss_index:ss_index+800], color='k', lw=0.3)
-    remove_spines(axs[1])
+    axs[0].set(xticks=[0, 120000])
+    remove_spines(axs[0], remove_y=False)
+    axs[1].set(xticks=[0, 800])
+    axs[1].plot(zscore(data[ts_index][ss_index:ss_index+800]), color='k', lw=0.3)
+    remove_spines(axs[1], remove_y=False)
 
     plt.savefig(f'figs/6 insect data.eps')
     plt.close()
 
 
 def plot_motif(data):
-    fig, axs = plt.subplots(ncols=2, layout='constrained')
+    fig, axs = plt.subplots(ncols=2, layout='constrained', sharey='all')
     diff = [np.diff(row) for row in data]
 
     for minsup, ax in zip(MINSUP, axs):
@@ -60,8 +57,8 @@ def plot_motif(data):
         ax.plot(representative, color='b', lw=0.5)
         for ts, idx in motif.best_matches.items():
             ax.plot(zscore(data[ts][idx : idx+motif.length]), color='k', lw=0.1)
-        ax.set(ylim=(-3, 3), xticks=[0, len(representative)], yticks=[])
-        remove_spines(ax)
+        ax.set(ylim=(-3, 3), xticks=[0, len(representative)])
+        remove_spines(ax, remove_y=False)
     plt.savefig(f'figs/6 insect motifs.eps')
     plt.close()
 

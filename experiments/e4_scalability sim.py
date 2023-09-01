@@ -1,13 +1,12 @@
 from time import perf_counter
-from itertools import product, starmap
+from itertools import product
 from multiprocessing import Pool
-from math import log10
 from statistics import fmean
 from collections import defaultdict
 
 import numpy as np
 import matplotlib.pyplot as plt
-from frm._frm_py.miner import Miner
+from frm import Miner
 from plot import remove_spines, COLORS
 
 FILE = 'e4_scalability sim.csv'
@@ -16,8 +15,8 @@ MINSUP = 0.3
 SEGLEN = 10
 ALPHABET = 5
 
-LENGTHS = [10 ** (i+1) for i in range(1, 5)]
-ROWS = [10 ** (i+1) for i in range(1, 5)]
+LENGTHS = [10 ** i for i in range(1, 5)]
+ROWS = [10 ** i for i in range(1, 5)]
 INJECT = 40
 ITER = 10
 
@@ -29,8 +28,8 @@ def main():
             length, rows, i= tuple(row.split(',')[:3])
             seen.append((int(length), int(rows), int(i)))
 
-    # with Pool(1, maxtasksperchild=1) as p:
-    #     p.starmap(simulation, [x for x in product(LENGTHS, ROWS, range(ITER)) if x not in seen and x[0]*x[1] < 10**9])
+    with Pool(1, maxtasksperchild=1) as p:
+        p.starmap(simulation, [x for x in product(LENGTHS, ROWS, range(ITER)) if x not in seen])
 
     length_runtimes = defaultdict(list)
     row_runtimes = defaultdict(list)

@@ -1,13 +1,7 @@
-"""Plot utility.
-
-Defines common functions for plotting results from the experiments
-"""
 from os.path import join
 
 import matplotlib
 import matplotlib.pyplot as plt
-
-from frm._frm_py.preprocessing import breakpoints
 
 WIDTH = 0.0138 * 347.12354 / 2
 HEIGHT = WIDTH / 2
@@ -27,7 +21,7 @@ matplotlib.rcParams.update(params)
 COLORS = ['maroon', 'steelblue', 'olive', 'salmon', 'teal', 'seagreen', 'purple', 'goldenrod', 'orange', 'tomato']
 
 
-def plot_motifs(fig, flat_axs, data, motifs, alphabet, length=0, fn=''):
+def plot_motifs(flat_axs, data, motifs, length=0, fn=''):
     for motif, ax in zip(motifs, flat_axs):
         # If length is not supplied, use length of the motif
         limit = len(motif.representative) if not length else length
@@ -39,13 +33,9 @@ def plot_motifs(fig, flat_axs, data, motifs, alphabet, length=0, fn=''):
         # Plot representative motif
         ax.plot(motif.representative, 'b', lw=1)
 
-        # Plot gridlines corresponding to the SAX breakpoints
-        if alphabet:
-            ax.hlines(list(breakpoints[alphabet].keys()), 0, limit, 'k', lw=0.3)
-
         # Aesthetics
-        ax.set(ylim=(-3, 3), xticks=[0, limit], yticks=[])
-        remove_spines(ax)
+        ax.set(xticks=[0, limit])
+        remove_spines(ax, remove_y=False)
     if fn:
         plt.savefig(join('figs', f'{fn}.eps'))
         plt.close()

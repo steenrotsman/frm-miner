@@ -1,10 +1,3 @@
-"""
-This module provides a quantitative experiment that injects different motifs into random data to check retrieval.
-
-A random noise time series database is generated, into which constructed motifs are injected.
-The proposed algorithm is then run and the motifs it finds are plotted.
-"""
-from itertools import chain
 from os.path import join
 
 import numpy as np
@@ -12,8 +5,7 @@ import matplotlib.pyplot as plt
 import stumpy
 from scipy.stats import zscore
 
-from frm._frm_py.miner import Miner
-from frm._frm_py.preprocessing import breakpoints
+from frm import Miner
 from plot import plot_motifs, remove_spines
 
 # Simulation settings
@@ -51,6 +43,8 @@ def main():
             consensus_motifs.append(ostinato(data, MOTIF_LEN))
 
             plot_motifs(fig, axs, zscore(data, axis=1), motifs, ALPHABET, MOTIF_LEN)
+            axs[0].set_yticks([-2.5, 2.5])
+            axs[2].set_xlabel(noise_level)
 
         plt.savefig(join('figs', f'3 accuracy {inject}.eps'))
         plt.close()
@@ -109,12 +103,13 @@ def ostinato(data, m, i=[0]):
 
 
 def plot_ostinato(consensus_motifs, inject):
-    fig, axs = plt.subplots(ncols=len(consensus_motifs), layout='compressed')
+    fig, axs = plt.subplots(ncols=len(consensus_motifs), sharex='all', sharey='all', layout='compressed')
 
-    for motif, ax in zip(consensus_motifs, axs):
+    for motif, ax, noise_level in zip(consensus_motifs, axs, NOISE_LEVELS):
         ax.plot(motif, 'k', lw=0.5)
-        ax.set(ylim=(-3, 3), xticks=[0, len(motif)], yticks=[])
-        remove_spines(ax)
+        ax.set(ylim=(-3, 3), xticks=[0, len(motif)], yticks=[-2.5, 2.5])
+        ax.set_xlabel(noise_level)
+        remove_spines(ax, remove_y=False)
 
     plt.savefig(join('figs', f'3 accuracy {inject} ostinato.eps'))
 

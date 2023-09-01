@@ -1,11 +1,9 @@
 """
-This module provides a runtime comparison of FRM-Miner and Ostinato.
+To replicate this experiment, add a copy of UCRArchive_2018 from https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/
+Results are saved to the file e1_runtime.csv.
 
 Data sets are supplied by the UCR archive as two .tsv files, a train set and a test set.
-The train and test files are joined into one data set, for which the baseline is then mined
-
-To replicate this experiment, add a copy of UCRArchive_2018 from https://www.cs.ucr.edu/%7Eeamonn/time_series_data_2018/
-Results are saved to the file runtime.csv and benchmark.R gives code to analyse the results.
+The train and test files are joined into one data set, one which the algorithms are applied.
 """
 from os import listdir
 from os.path import join
@@ -15,8 +13,8 @@ from multiprocessing import Pool
 import stumpy
 
 from frm import Miner as CppMiner
-from ostinato import ostinato
 from frm._frm_py.miner import Miner as PyMiner
+from ostinato import ostinato
 
 FILE = 'e1_runtime.csv'
 FOLDER = 'UCRArchive_2018'
@@ -27,7 +25,6 @@ PARTITIONS = ['TRAIN', 'TEST']
 MINSUP = 0.3
 SEGLEN = 1
 ALPHABET = 5
-MAX_LEN = 50
 
 
 def main():
@@ -53,22 +50,22 @@ def benchmark(miner, name):
 
 
 def benchmark_py_miner(data):
-    py_miner = PyMiner(MINSUP, SEGLEN, ALPHABET, max_len=MAX_LEN)
+    py_miner = PyMiner(MINSUP, SEGLEN, ALPHABET)
     py_miner.mine(data)
 
 
 def benchmark_cpp_miner(data):
-    cpp_miner = CppMiner(MINSUP, SEGLEN, ALPHABET, max_len=MAX_LEN)
+    cpp_miner = CppMiner(MINSUP, SEGLEN, ALPHABET)
     cpp_miner.mine(data)
 
 
 def benchmark_stumpy(data):
-    length = max(map(len, data)) // 10
+    length = max(max(map(len, data)) // 10, 3)
     stumpy.ostinato(data, length)
 
 
 def benchmark_ostinato(data):
-    length = max(map(len, data)) // 10
+    length = max(max(map(len, data)) // 10, 3)
     ostinato(data, length)
 
 

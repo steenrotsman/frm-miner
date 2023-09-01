@@ -13,9 +13,9 @@ FIELD = 'speed'
 
 # Miner parameters
 MINSUP = 0.3
-SEGLEN = 10
+SEGLEN = 15
 ALPHABET = 5
-MAX_OVERLAP = [0.9, 0.7]
+MAX_OVERLAP = [0.9]
 K = 4
 
 
@@ -23,8 +23,8 @@ def main():
     records = get_records(JSON_DIR)
     field = get_fields(records, FIELD)
 
-    fig, axss = plt.subplots(nrows=len(MAX_OVERLAP), ncols=K, layout='compressed')
-    for max_overlap, axs in zip(MAX_OVERLAP, axss):
+    fig, axss = plt.subplots(nrows=len(MAX_OVERLAP), ncols=K, sharey='all', layout='compressed')
+    for max_overlap, axs in zip(MAX_OVERLAP, [axss]):
         miner = Miner(MINSUP, SEGLEN, ALPHABET, max_overlap=max_overlap, k=K)
 
         motifs = miner.mine(field)
@@ -33,7 +33,6 @@ def main():
 
 
 def get_records(directory):
-    """Get records from JSON files and optionally convert timestamp to datetime."""
     records = []
     for file in listdir(directory):
         with open(join(directory, file)) as fp:
