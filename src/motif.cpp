@@ -32,19 +32,18 @@ std::vector<double> Motif::get_occurrence(const std::vector<double>& ts, int ind
 {
     int start = index * _seglen;
     int end = start + length;
-
-    // Ensure motif occurrences are all the same length
-    int too_short { };
-    if (end > ts.size()) {
-        too_short = end - static_cast<int>(ts.size());
-    }
     std::vector<double> occurrence;
     occurrence.reserve(length);
 
+    // Check if the time series is too short to fit the entire occurrence
+    int too_short { std::max(0, end - static_cast<int>(ts.size())) };
+
+    // Fill the occurrence with items from the time series
     for (int i = start; i < end - too_short; i++) {
         occurrence.push_back(ts[i]);
     }
 
+    // If the time series is too short, make the rest of the occurrence NaNs
     for (int i = 0; i < too_short; i++) {
         occurrence.push_back(std::nan(""));
     }
@@ -139,7 +138,6 @@ void Motif::set_best_matches_and_naed(const TimeSeriesDB& timeseries)
                     valid_values_count++;
                 }
             }
-
             dist = sqrt(dist);
 
             // Update min_naed and best_match
