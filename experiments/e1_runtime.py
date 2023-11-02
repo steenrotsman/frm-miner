@@ -33,9 +33,10 @@ def main():
         seen = [row.split(',')[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
-    MINERS = [benchmark_py_miner, benchmark_cpp_miner]
-    with Pool(processes=1, maxtasksperchild=1) as p:
-        p.starmap(benchmark, [(m, n) for m in MINERS for n in FILES if [m.__name__, n] not in seen])
+    MINERS = [benchmark_stumpy, benchmark_py_miner, benchmark_cpp_miner, benchmark_ostinato]
+    with Pool(processes=16, maxtasksperchild=1) as p:
+        unseen = [(m, n) for m in MINERS for n in FILES if [m.__name__, n] not in seen]
+        p.starmap(benchmark, unseen)
 
 
 def benchmark(miner, name):
