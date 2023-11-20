@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "frm-miner"
-version = "0.0.6"
+version = "0.0.7"
 authors = [
     {name = "Stijn J. Rotman", email = "s.j.rotman@uvt.nl"},
 ]
@@ -15,7 +15,6 @@ license = {text = "MIT"}
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: C++",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -26,7 +25,6 @@ dependencies = [
     "numpy",
     "scipy",
 ]
-optional-dependencies = {'test'= ['pytest']}
 
 [tool.setuptools.packages.find]
-include = ["frm*", "src*"]
+include = ["frm*"]

@@ -14,8 +14,16 @@ It is easiest to install FRM-Miner via pip:
 pip install frm-miner
 ```
 
-A C++ compiler is needed for this.
-The C++ implementation can then be imported with `from frm import Miner`, the pure Python version can be imported with `from frm._frm_py.miner import Miner`.
+This installs the pure Python version, which can be imported with `from frm import Miner`.
+
+
+Alternatively, if you want to install the C++ version, clone this directory and change to it.
+Rename the file `_setup.py` to `setup.py`, then run
+```bash
+pip install .
+```
+A C++ compiler is needed for this, as well as a Python installation that includes the Python.h header files.
+After installation, the C++ implementation can be imported with `from frm import Miner` and the pure Python version can be imported with `from frm._frm_py import Miner`.
 
 # Example
 You will probably get more meaningful results than this if you use your own data (collection of univariate time series, time series do not have to be equal length).
