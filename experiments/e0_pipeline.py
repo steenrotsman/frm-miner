@@ -73,6 +73,7 @@ def plot_pipeline(ts, length, n):
     remove_spines(axs[4])
 
     plt.savefig(join('figs', '0 pipeline.eps'))
+    plt.savefig(join('figs', '0 pipeline.png'))
 
 
 def get_all_ts(files: list):
