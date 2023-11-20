@@ -7,7 +7,14 @@ Frequent Representative Motif Miner (FRM-Miner): Efficiently Mining Frequent Rep
 This repository contains the implementation of FRM-Miner as a Python package. By default, the C++ version is built and installed, but a pure Python implementation is provided as well.
 
 # Installation
-Running `pip install .` from this folder compiles and installs FRM-Miner (a C++ compiler is needed for this) with dependencies.
+
+It is easiest to install FRM-Miner via pip:
+
+```bash
+pip install frm-miner
+```
+
+A C++ compiler is needed for this.
 The C++ implementation can then be imported with `from frm import Miner`, the pure Python version can be imported with `from frm._frm_py.miner import Miner`.
 
 # Example

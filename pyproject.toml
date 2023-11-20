@@ -26,6 +26,7 @@ dependencies = [
     "numpy",
     "scipy",
 ]
+optional-dependencies = {'test'= ['pytest']}
 
 [tool.setuptools.packages.find]
 include = ["frm*"]
