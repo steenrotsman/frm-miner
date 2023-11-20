@@ -4,6 +4,8 @@
 #include <string>
 #include "motif.h"
 #include "miner.h"
+#include "patterns.h"
+#include "sax.h"
 
 namespace py = pybind11;
 
@@ -34,4 +36,12 @@ PYBIND11_MODULE(_frm_cpp, m) {
         .def("mine", &Miner::mine)
         .def_property("motifs", &Miner::get_motifs, nullptr)
         ;
+
+    py::class_<PatternMiner>(m, "PatternMiner")
+        .def(py::init<double, int, int, double>(), py::arg("minsup"), py::arg("min_len")=3, py::arg("max_len")=0, py::arg("max_overlap")=0.9)
+        .def("mine", &PatternMiner::mine)
+        .def_property("frequent", &PatternMiner::get_frequent, nullptr)
+        ;
+
+    m.def("sax", &sax, py::arg("ts"), py::arg("seglen"), py::arg("alphabet"));
 }
