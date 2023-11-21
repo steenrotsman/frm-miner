@@ -6,6 +6,7 @@ be filtered for length and ranked using different strategies.
 """
 from .preprocessing import standardise, sax
 from .patterns import PatternMiner
+from .motif import Motif
 
 
 class Miner:
@@ -89,7 +90,15 @@ class Miner:
         """
         pm = PatternMiner(self.minsup, self.min_len, self.max_len, self.max_overlap)
         pm.mine(ds)
-        self.motifs = list(pm.frequent.values())
+
+        # Construct motifs from frequent patterns
+        self.motifs = [Motif(p) for p in pm.frequent]
+
+        # Find motif occurrences in sequences
+        for motif in self.motifs:
+            for seq, sequence in enumerate(ds):
+                for index in findall(motif.pattern, sequence):
+                    motif.record_index(seq, index)
 
     def map_patterns(self, ts):
         """Map patterns back to motifs."""
@@ -100,3 +109,20 @@ class Miner:
         """Sort patterns on their root mean squared error of representative and occurrences."""
         self.motifs.sort(key=lambda motif: motif.naed)
 
+
+def findall(p, s):
+    """Yields all the positions of pattern p in sequence s.
+
+    Copied from https://stackoverflow.com/a/34445090.
+
+    Parameters
+    ----------
+    p : string
+        Pattern to find in sequence.
+    s : string
+        Sequence to find pattern in.
+    """
+    i = s.find(p)
+    while i != -1:
+        yield i
+        i = s.find(p, i+1)

@@ -16,7 +16,7 @@ class TestPatternMiner(unittest.TestCase):
 
         expected = ['a', 'aa', 'c', 'ca', 'cc']
         
-        self.assertListEqual(expected, sorted(pm.frequent.keys()))
+        self.assertListEqual(expected, sorted(pm.frequent))
     
     def test_rag_mine(self):
         pm = PatternMiner(min_len=1, max_overlap=1.1)
@@ -24,4 +24,4 @@ class TestPatternMiner(unittest.TestCase):
 
         expected = ['a', 'ab', 'abc', 'b', 'bc', 'c']
         
-        self.assertListEqual(expected, sorted(pm.frequent.keys()))
+        self.assertListEqual(expected, sorted(pm.frequent))
