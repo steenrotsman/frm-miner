@@ -11,7 +11,7 @@
 
 PatternMiner::PatternMiner(double minsup, int min_len, int max_len, double max_overlap) : minsup(minsup), min_len(min_len), max_len(max_len),
                                                                               max_overlap(max_overlap), min_freq(0.0),
-                                                                              k(2), patterns({{}, {}}){}
+                                                                              k(2), k_motifs(), k_1_motifs(){}
 
 void PatternMiner::mine(const DiscreteDB& sequences)
 {
@@ -22,16 +22,20 @@ void PatternMiner::mine(const DiscreteDB& sequences)
     mine_1_patterns(sequences);
 
     // If there were no frequent k-patterns, there can be no frequent (k+1)-patterns; stop
-    for (k = 2; (!patterns[k - 1].empty() and ((not max_len or k <= max_len))); k++) {
-        patterns.emplace_back();
-
+    for (k = 2; (!k_1_motifs.empty() and ((not max_len or k <= max_len))); k++) {
         // Generate candidate k-patterns from frequent (k-1)-patterns, find their occurrences and remove infrequent candidates
         for (auto& candidate : get_candidates()) {
             Motif motif { candidate };
-            frequent.insert(std::make_pair(candidate, motif));
-            find_candidate(candidate, sequences);
-            prune_infrequent(candidate);
+            find_occurrences(candidate, sequences, motif);
+
+            // Add frequent patterns to frequent vector
+            if (static_cast<double>(motif.get_indexes().size()) >= min_freq) {
+                k_motifs.insert(std::pair(candidate, motif));
+                frequent.push_back(candidate);
+            }
         }
+        k_1_motifs = k_motifs;
+        k_motifs.clear();
     }
 
     // Remove patterns that are too short or overlap too much with a longer pattern
@@ -44,41 +48,26 @@ void PatternMiner::mine_1_patterns(const DiscreteDB& sequences)
     for (size_t i = 0; i < sequences.size(); i++) {
         for (size_t j = 0; j < sequences[i].size(); j++) {
             Pattern item = {sequences[i][j]};
-            if (frequent.count(item) == 0) {
-                frequent.insert(std::pair(item, Motif(item)));
+            if (k_1_motifs.count(item) == 0) {
+                k_1_motifs.insert(std::pair(item, Motif(item)));
             }
-            frequent.at(item).record_index(i, j);
+            k_1_motifs.at(item).record_index(i, j);
         }
     }
 
-
-    // Copy keys of frequent to not alter the map in the loop
-    std::vector<Pattern> candidates;
-    for (const auto& pair : frequent) {
-        candidates.push_back(pair.first);
-    }
-
-    // Prune infrequent patterns
-    for (auto& candidate : candidates) {
-        prune_infrequent(candidate);
-    }
-}
-
-void PatternMiner::prune_infrequent(const Pattern& pattern)
-{
-    if (static_cast<double>(frequent.at(pattern).get_indexes().size()) < min_freq) {
-            frequent.erase(pattern);
-    } else {
-        patterns[pattern.size()].push_back(pattern);
+    // Add frequent patterns to frequent vector
+    for (auto& [pattern, motif] : k_1_motifs) {
+        if (static_cast<double>(motif.get_indexes().size()) >= min_freq) {
+            frequent.push_back(pattern);
+        }
     }
 }
 
 std::vector<Pattern> PatternMiner::get_candidates()
 {
-    const std::vector<Pattern>& prev_patterns { patterns[k - 1] };
     std::vector<Pattern> candidates { };
-    for (auto& p1 : prev_patterns) {
-        for (auto& p2 : prev_patterns) {
+    for (auto& [p1, m1] : k_1_motifs) {
+        for (auto& [p2, m2] : k_1_motifs) {
             // Check if p1[1:] == p2[:-1]
             if (std::equal(p1.begin()+1, p1.end(), p2.begin(), p2.end()-1)) {
                 // Construct candidate by combing p1 and p2
@@ -91,11 +80,11 @@ std::vector<Pattern> PatternMiner::get_candidates()
     return candidates;
 }
 
-void PatternMiner::find_candidate(const Pattern& candidate, const DiscreteDB& sequences)
+void PatternMiner::find_occurrences(const Pattern& candidate, const DiscreteDB& sequences, Motif& motif)
 {
     // Find candidate via its first parent
     Pattern parent(candidate.begin(), candidate.end() - 1);
-    for (auto& [seq, indexes] : frequent.at(parent).get_indexes()) {
+    for (auto& [seq, indexes] : k_1_motifs.at(parent).get_indexes()) {
         for (auto index : indexes) {
             // If index + length is larger than sequence size, candidate can never be present at index
             // Omitting this check leads to a bug if start of next sequence would complete the pattern
@@ -105,7 +94,7 @@ void PatternMiner::find_candidate(const Pattern& candidate, const DiscreteDB& se
 
             Pattern possible_match(sequences[seq].begin() + index, sequences[seq].begin() + index + k);
             if (possible_match == candidate) {
-                frequent.at(candidate).record_index(seq, index);
+                motif.record_index(seq, index);
             }
         }
     }
@@ -113,44 +102,52 @@ void PatternMiner::find_candidate(const Pattern& candidate, const DiscreteDB& se
 
 void PatternMiner::remove_redundant()
 {
-    auto flat_patterns { remove_short() };
+    // Remove patterns that are too short
+    frequent.erase(
+            std::remove_if(
+                    frequent.begin(),
+                    frequent.end(),
+                    [this](const std::vector<char>& v) {
+                        return v.size() < min_len;
+                    }
+            ),
+            frequent.end()
+    );
 
+    // If max_overlap == 1, no overlap is too high
+    if (max_overlap == 1) {
+        return;
+    }
+
+    // Create a copy of frequent to edit frequent in the loops
+    std::vector<Pattern> patterns = frequent;
+
+    // Sort the copy in decreasing order of vector lengths
+    std::sort(patterns.begin(), patterns.end(),
+              [](const std::vector<char>& a, const std::vector<char>& b) {
+                  return a.size() > b.size();
+              });
+
+    // Remove patterns for which more than max_overlap% is overlapping from frequent
     std::vector<Pattern> removed;
-    for (const auto& p1 : flat_patterns) {
+    for (const auto& p1 : patterns) {
         // Check if p1 was not already removed
         if (is_p_in_vec(p1, removed)) {
             continue;
         }
-        for (const auto& p2 : flat_patterns) {
-            if (p2.size() > p1.size() or p1 == p2 or is_p_in_vec(p2, removed)) {
+        for (const auto& p2 : patterns) {
+            if (p2.size() >= p1.size() or is_p_in_vec(p2, removed)) {
                 continue;
             }
 
             // Check if shorter patterns overlaps too much with larger pattern
             if (lcs(p1, p2) / static_cast<double>(p2.size()) > max_overlap) {
-                frequent.erase(p2);
+                auto pos = std::find(frequent.begin(), frequent.end(), p2);
+                frequent.erase(pos);
                 removed.push_back(p2);
             }
         }
     }
-}
-
-std::vector<Pattern> PatternMiner::remove_short()
-{
-    // Flatten patterns in increasing length, don't add too short patterns
-    std::vector<Pattern> flat_patterns;
-    for (int i { k-2 }; i > 0; i--) {
-        for (const auto& pattern : patterns[i]) {
-            if (i < min_len) {
-                // Remove too short patterns
-                frequent.erase(pattern);
-            } else {
-                // Flatten vector of long enough patterns
-                flat_patterns.push_back(pattern);
-            }
-        }
-    }
-    return flat_patterns;
 }
 
 bool is_p_in_vec(const Pattern& p, const std::vector<Pattern>& vec)

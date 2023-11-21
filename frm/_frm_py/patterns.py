@@ -114,7 +114,7 @@ class PatternMiner:
 
         # Prune patterns for which x% is overlapping from frequent
         patterns = self.frequent
-        patterns.sort(key=lambda x: (len(x), x), reverse=True)
+        patterns.sort(key=len, reverse=True)
         pruned = []
         
         for p1 in patterns:
@@ -123,7 +123,7 @@ class PatternMiner:
             for p2 in patterns:
                 n, m = len(p1), len(p2)
                 # Only check unseen patterns and pairs
-                if m > n or p1 == p2 or p2 in pruned:
+                if m >= n or p2 in pruned:
                     continue
 
                 # Check if shorter pattern consists mostly of lcs

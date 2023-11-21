@@ -17,21 +17,20 @@ private:
     int min_len;
     int max_len;
     double max_overlap;
-    std::map<Pattern, Motif> frequent;
+    std::vector<Pattern> frequent;
     double min_freq;
     int k;
-    std::vector<std::vector<Pattern>> patterns;
+    std::map<Pattern, Motif> k_motifs;
+    std::map<Pattern, Motif> k_1_motifs;
 
     void mine_1_patterns(const DiscreteDB& sequences);
-    void prune_infrequent(const Pattern& pattern);
     std::vector<Pattern> get_candidates();
-    void find_candidate(const Pattern& candidate, const DiscreteDB& sequences);
+    void find_occurrences(const Pattern& candidate, const DiscreteDB& sequences, Motif& motif);
     void remove_redundant();
-    std::vector<Pattern> remove_short();
 public:
     PatternMiner(double minsup, int min_len, int max_len, double max_overlap);
     void mine(const DiscreteDB& sequences);
-    std::map<Pattern, Motif> get_frequent() { return frequent; };
+    std::vector<Pattern> get_frequent() { return frequent; };
 };
 
 bool is_p_in_vec(const Pattern& p, const std::vector<Pattern>& vec);
