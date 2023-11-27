@@ -23,9 +23,9 @@ private:
     std::vector<std::vector<Pattern>> patterns;
 
     void mine_1_patterns(const DiscreteDB& sequences);
-    void prune_infrequent(const Pattern& pattern);
+    void prune_infrequent(const Pattern& pattern, std::vector<std::pair<int, int>>& remove);
     std::vector<Pattern> get_candidates();
-    void find_candidate(const Pattern& candidate, const DiscreteDB& sequences);
+    void find_candidate(const Pattern& candidate, const DiscreteDB& sequences, std::vector<std::pair<int, int>>& remove);
     void remove_redundant();
     std::vector<Pattern> remove_short();
 public:

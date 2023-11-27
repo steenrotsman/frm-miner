@@ -65,6 +65,7 @@ class PatternMiner:
             for candidate in self.get_candidates():
                 # Count candidate occurrences
                 self.frequent[candidate] = Motif(candidate)
+                remove = []
 
                 # Find candidate in sequences parent occurs in
                 for seq, indexes in self.frequent[candidate[:-1]].indexes.items():
@@ -72,9 +73,10 @@ class PatternMiner:
                     for index in indexes:
                         if sequence[index : index+self._k] == candidate:
                             self.frequent[candidate].record_index(seq, index)
+                            remove.append((seq, index))
                 
                 # Check if candidate complies with minimum support
-                self.prune_infrequent(candidate)
+                self.prune_infrequent(candidate, remove)
 
             self._k += 1
 
@@ -111,7 +113,7 @@ class PatternMiner:
 
         # Prune patterns for which x% is overlapping from frequent
         patterns = list(self.frequent)
-        patterns.sort(key=lambda x: (len(x), x), reverse=True)
+        patterns.sort(key=len, reverse=True)
         pruned = []
         
         for p1 in patterns:
@@ -120,7 +122,7 @@ class PatternMiner:
             for p2 in patterns:
                 n, m = len(p1), len(p2)
                 # Only check unseen patterns and pairs
-                if m > n or p1 == p2 or p2 in pruned:
+                if m >= n or p2 in pruned:
                     continue
 
                 # Check if shorter pattern consists mostly of lcs
@@ -202,7 +204,7 @@ class PatternMiner:
         for a in list(self.frequent.keys()):
             self.prune_infrequent(a)
     
-    def prune_infrequent(self, pattern: str):
+    def prune_infrequent(self, pattern: str, remove: list[tuple[int, int]] = []):
         """Prune infrequent patterns.
         
         - Prunes patterns with a too low support;
@@ -212,6 +214,8 @@ class PatternMiner:
         ----------
         pattern : str
             The pattern that should be processed.
+        remove : list[tuple[int, int]]
+            List of indexes to be removed from parent of pattern if pattern is frequent.
         """
         if len(self.frequent[pattern].indexes) < self._min_freq:
             # Delete indexes of this infrequent pattern
@@ -219,3 +223,12 @@ class PatternMiner:
         else:
             # Add to list of frequent k-patterns
             self._patterns[len(pattern)].append(pattern)
+
+            # Remove candidate indexes from parent
+            for seq, index in remove:
+                self.frequent[pattern[:-1]].remove_index(seq, index)
+
+            # Check if pattern has a parent with indices
+            if remove:
+                # Add candidate to parent's children
+                self.frequent[pattern[:-1]].children.append(self.frequent[pattern])

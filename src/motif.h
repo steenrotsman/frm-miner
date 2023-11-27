@@ -17,6 +17,7 @@ private:
     int _seglen;
     int length;
     std::unordered_map<int, std::vector<int>> indexes;
+    std::vector<Motif> children;
     std::unordered_map<int, std::vector<double>> average_occurrences;
     std::vector<double> representative;
     std::unordered_map<int, int> best_matches;
@@ -30,9 +31,13 @@ public:
     explicit Motif(Pattern pattern);
 
     void record_index(int seq, int idx_in_seq);
+    void remove_index(int seq, int idx_in_seq);
 
     Pattern get_pattern() { return pattern; };
     std::unordered_map<int, std::vector<int>> get_indexes() { return indexes; };
+    std::unordered_map<int, std::vector<int>> get_all_indexes() const;
+    std::vector<Motif> get_children() { return children; };
+    void add_child(const Motif& child);
     std::unordered_map<int, std::vector<double>> get_average_occurrences() { return average_occurrences; };
     std::vector<double> get_representative() { return representative; };
     std::unordered_map<int, int> get_best_matches() { return best_matches; };
