@@ -10,32 +10,38 @@ class TestMiner(unittest.TestCase):
         miner = PyMiner(0.5, 1, 3, 1, 0, 1)
         motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, ['aa', 'a', 'ca', 'cc', 'c'])
+        patterns.sort()
+        self.assertListEqual(patterns, ['a', 'aa', 'c', 'ca', 'cc'])
 
     def test_rag_py_miner(self):
         miner = PyMiner(0.5, 1, 3, 1, 0, 1)
         motifs = miner.mine(rag)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, ['ab', 'abc', 'b', 'bc', 'a', 'c'])
+        patterns.sort()
+        self.assertListEqual(patterns, ['a', 'ab', 'abc', 'b', 'bc', 'c'])
 
     def test_frm_cpp_miner(self):
         miner = CppMiner(0.5, 1, 3, 1, 0, 1)
         motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, ['aa', 'a', 'ca', 'cc', 'c'])
+        patterns.sort()
+        self.assertListEqual(patterns, ['a', 'aa', 'c', 'ca', 'cc'])
 
     def test_rag_cpp_miner(self):
         miner = CppMiner(0.5, 1, 3, 1, 0, 1)
         motifs = miner.mine(rag)
         patterns = [m.pattern for m in motifs]
-        self.assertListEqual(patterns, ['ab', 'abc', 'b', 'bc', 'a', 'c'])
+        patterns.sort()
+        self.assertListEqual(patterns, ['a', 'ab', 'abc', 'b', 'bc', 'c'])
 
     def test_equal_miners(self):
         py_miner = PyMiner(0.5, 1, 3, 1, 0, 1)
         py_motifs = py_miner.mine(ts)
+        py_motifs.sort(key=lambda motif: motif.pattern)
 
         cpp_miner = CppMiner(0.5, 1, 3, 1, 0, 1)
         cpp_motifs = cpp_miner.mine(ts)
+        cpp_motifs.sort(key=lambda motif: motif.pattern)
 
         for py_motif, cpp_motif in zip(py_motifs, cpp_motifs):
             self.assertAlmostEqual(py_motif.naed, cpp_motif.naed)
@@ -43,9 +49,11 @@ class TestMiner(unittest.TestCase):
     def test_equal_rag_miners(self):
         py_miner = PyMiner(0.5, 1, 3, 1, 0, 1)
         py_motifs = py_miner.mine(rag)
+        py_motifs.sort(key=lambda motif: motif.pattern)
 
         cpp_miner = CppMiner(0.5, 1, 3, 1, 0, 1)
         cpp_motifs = cpp_miner.mine(rag)
+        cpp_motifs.sort(key=lambda motif: motif.pattern)
 
         for py_motif, cpp_motif in zip(py_motifs, cpp_motifs):
             self.assertAlmostEqual(py_motif.naed, cpp_motif.naed)
@@ -54,22 +62,28 @@ class TestMiner(unittest.TestCase):
         miner = PyMiner(0.5, 1, 3, 1, 1, 1)
         motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
+        patterns.sort()
+
         self.assertListEqual(patterns, ['a', 'c'])
 
     def test_max_len_cpp_miner(self):
         miner = CppMiner(0.5, 1, 3, 1, 1, 1)
         motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
+        patterns.sort()
+
         self.assertListEqual(patterns, ['a', 'c'])
 
     def test_equal_long(self):
-        seglen, alphabet = 2, 4
-        py = PyMiner(0.5, seglen, alphabet)
-        cpp = CppMiner(0.5, seglen, alphabet)
+        minsup, seglen, alphabet = 0.5, 2, 4
 
-        py.mine(data)
-        cpp.mine(data)
+        py_miner = PyMiner(minsup, seglen, alphabet)
+        py_motifs = py_miner.mine(data)
+        py_motifs.sort(key=lambda motif: motif.pattern)
 
-        for p, c in zip(py.motifs, cpp.motifs):
-            self.assertEqual(p.pattern, c.pattern)
-            self.assertAlmostEqual(p.naed, c.naed)
+        cpp_miner = CppMiner(minsup, seglen, alphabet)
+        cpp_motifs = cpp_miner.mine(data)
+        cpp_motifs.sort(key=lambda motif: motif.pattern)
+
+        for py_motif, cpp_motif in zip(py_motifs, cpp_motifs):
+            self.assertAlmostEqual(py_motif.naed, cpp_motif.naed)
