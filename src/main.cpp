@@ -28,9 +28,21 @@ int main()
         {0, 1, 0, 1, 0, 1},
     };
 
-//    Miner miner {0.5, 2, 3};
-//    miner.mine(data);
+    TimeSeriesDB rag = {
+        {1, 2},
+        {3, 4, 5},
+        {6, 7, 8, 9},
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9, 0},
+    };
 
-    Miner miner {0.5, 1, 3, 1, 0, 1};
-    miner.mine(small);
+    Miner miner {0.5, 2, 3};
+    miner.mine(data);
+
+    Miner smallMiner {0.5, 1, 3, 1, 0, 1};
+    smallMiner.mine(small);
+
+    Miner ragMiner {0.5, 1, 3, 1, 0, 1};
+    ragMiner.mine(rag);
 }

@@ -37,7 +37,7 @@ std::unordered_map<int, std::vector<int>> Motif::get_all_indexes() const
 
     // Fill all_indexes with all_indexes from each child recursively
     for (const auto& child : children) {
-        auto child_indexes = child.get_all_indexes();
+        auto child_indexes = child->get_all_indexes();
 
         for (const auto& [seq, idx] : child_indexes) {
             for (const auto& i : idx) {
@@ -49,9 +49,14 @@ std::unordered_map<int, std::vector<int>> Motif::get_all_indexes() const
     return all_indexes;
 }
 
-void Motif::add_child(const Motif& child)
+void Motif::add_child(Motif* child)
 {
-    children.emplace_back(child);
+    children.push_back(child);
+}
+
+void Motif::remove_child(Motif *child)
+{
+    children.erase(std::remove(children.begin(), children.end(), child), children.end());
 }
 
 void Motif::map(const TimeSeriesDB& timeseries, const int seglen)

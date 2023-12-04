@@ -5,7 +5,6 @@
 #include <vector>
 #include <algorithm>
 
-#include "typing.h"
 #include "miner.h"
 #include "sax.h"
 #include "patterns.h"
@@ -13,7 +12,7 @@
 
 Miner::Miner(double minsup, int seglen, int alphabet, int min_len, int max_len, double max_overlap, int k) : minsup(minsup), seglen(seglen), alphabet(alphabet), min_len(min_len), max_len(max_len), max_overlap(max_overlap), k(k){}
 
-std::vector<Motif> Miner::mine(TimeSeriesDB& timeseries)
+std::vector<Motif*> Miner::mine(TimeSeriesDB& timeseries)
 {
     znorm(timeseries);
     DiscreteDB sequences { sax(timeseries, seglen, alphabet) };
@@ -25,7 +24,7 @@ std::vector<Motif> Miner::mine(TimeSeriesDB& timeseries)
         return motifs;
     } else {
         // Return k motifs or less if motifs size is less than k
-        return std::vector<Motif>{motifs.begin(), motifs.begin() + std::min(k, static_cast<int>(motifs.size()))};
+        return std::vector<Motif*>{motifs.begin(), motifs.begin() + std::min(k, static_cast<int>(motifs.size()))};
     }
 }
 
@@ -41,14 +40,14 @@ void Miner::mine_patterns(const DiscreteDB& sequences)
 void Miner::map_patterns(const TimeSeriesDB& timeseries)
 {
     for (auto& motif : motifs) {
-        motif.map(timeseries, seglen);
+        motif->map(timeseries, seglen);
     }
 }
 
 void Miner::sort_patterns()
 {
     // Sort the motifs in increasing order based on naed attribute
-    std::sort(motifs.begin(), motifs.end(), [](Motif& m1, Motif& m2) {
-        return m1.get_naed() < m2.get_naed();
+    std::sort(motifs.begin(), motifs.end(), [](Motif* m1, Motif* m2) {
+        return m1->get_naed() < m2->get_naed();
     });
 }

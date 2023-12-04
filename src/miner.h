@@ -19,15 +19,15 @@ private:
     int max_len;
     double max_overlap;
     int k;
-    std::vector<Motif> motifs;
+    std::vector<Motif*> motifs;
 
     void mine_patterns(const DiscreteDB& sequences);
     void map_patterns(const TimeSeriesDB& timeseries);
     void sort_patterns();
 public:
     Miner(double minsup, int seglen, int alphabet, int min_len=3, int max_len=0, double max_overlap=0.9, int k=0);
-    std::vector<Motif> mine(TimeSeriesDB& timeseries);
-    std::vector<Motif> get_motifs() { return motifs; };
+    std::vector<Motif*> mine(TimeSeriesDB& timeseries);
+    std::vector<Motif*> get_motifs() { return motifs; };
 };
 
 

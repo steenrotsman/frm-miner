@@ -30,9 +30,9 @@ void PatternMiner::mine(const DiscreteDB& sequences)
 
         // Generate candidate k-patterns from frequent (k-1)-patterns, find their occurrences and remove infrequent candidates
         for (auto& candidate : get_candidates()) {
-            Motif motif { candidate };
             remove = {};
-            frequent.insert(std::make_pair(candidate, motif));
+            auto motif = new Motif(candidate);
+            frequent.insert(std::pair(candidate, motif));
             find_candidate(candidate, sequences, remove);
             prune_infrequent(candidate, remove);
         }
@@ -47,11 +47,15 @@ void PatternMiner::mine_1_patterns(const DiscreteDB& sequences)
     // Scan database once to record indexes of 1-patterns
     for (size_t i = 0; i < sequences.size(); i++) {
         for (size_t j = 0; j < sequences[i].size(); j++) {
-            Pattern item = {sequences[i][j]};
-            if (frequent.count(item) == 0) {
-                frequent.insert(std::pair(item, Motif(item)));
+            Pattern candidate = {sequences[i][j]};
+
+            // Add new patterns to frequent and motifs first
+            auto it = frequent.find(candidate);
+            if (it == frequent.end()) {
+                auto motif = new Motif(candidate);
+                frequent.insert(std::pair(candidate, motif));
             }
-            frequent.at(item).record_index(i, j);
+            frequent.at(candidate)->record_index(i, j);
         }
     }
 
@@ -71,21 +75,32 @@ void PatternMiner::mine_1_patterns(const DiscreteDB& sequences)
 
 void PatternMiner::prune_infrequent(const Pattern& pattern, std::vector<std::pair<int, int>>& remove)
 {
-    if (static_cast<double>(frequent.at(pattern).get_indexes().size()) < min_freq) {
-            frequent.erase(pattern);
+    if (static_cast<double>(frequent.at(pattern)->get_indexes().size()) < min_freq) {
+        // Remove motif and its reference
+        auto it = frequent.find(pattern);
+
+        if (it != frequent.end()) {
+            // Delete the Motif object
+            delete it->second;
+
+            // Erase the entry from the frequent map
+            frequent.erase(it);
+        }
     } else {
+        // Add pattern to patterns for faster mining
         patterns[pattern.size()].push_back(pattern);
 
+        // Organize tree
         if (pattern.size() >= 2) {
             Pattern parent(pattern.begin(), pattern.end() - 1);
 
             // Remove candidate indexes from parent
             for (const auto& [seq, index] : remove) {
-                frequent.at(parent).remove_index(seq, index);
+                frequent.at(parent)->remove_index(seq, index);
             }
 
             // Add candidate to parent's children
-            frequent.at(parent).add_child(frequent.at(pattern));
+            frequent.at(parent)->add_child(frequent.at(pattern));
         }
     }
 }
@@ -112,7 +127,7 @@ void PatternMiner::find_candidate(const Pattern& candidate, const DiscreteDB& se
 {
     // Find candidate via its first parent
     Pattern parent(candidate.begin(), candidate.end() - 1);
-    for (auto& [seq, indexes] : frequent.at(parent).get_indexes()) {
+    for (auto& [seq, indexes] : frequent.at(parent)->get_indexes()) {
         for (auto index : indexes) {
             // If index + length is larger than sequence size, candidate can never be present at index
             // Omitting this check leads to a bug if start of next sequence would complete the pattern
@@ -122,7 +137,7 @@ void PatternMiner::find_candidate(const Pattern& candidate, const DiscreteDB& se
 
             Pattern possible_match(sequences[seq].begin() + index, sequences[seq].begin() + index + k);
             if (possible_match == candidate) {
-                frequent.at(candidate).record_index(seq, index);
+                frequent.at(candidate)->record_index(seq, index);
                 remove.emplace_back(seq, index);
             }
         }
@@ -146,10 +161,46 @@ void PatternMiner::remove_redundant()
 
             // Check if shorter patterns overlaps too much with larger pattern
             if (lcs(p1, p2) / static_cast<double>(p2.size()) > max_overlap) {
-                frequent.erase(p2);
+                remove(p2);
                 removed.push_back(p2);
             }
         }
+    }
+}
+
+void PatternMiner::remove(const Pattern& pattern)
+{
+    Motif* patternMotif { frequent.at(pattern) };
+    Pattern parent(pattern.begin(), pattern.end() - 1);
+
+    auto it = frequent.find(parent);
+    if (it != frequent.end()) {
+        Motif* parentMotif { it->second };
+
+        // Give indexes and children of pattern to parent
+        for (const auto& [seq, indexes] : patternMotif->get_indexes()) {
+            for (const auto index : indexes) {
+                parentMotif->record_index(seq, index);
+            }
+        }
+
+        for (const auto child : patternMotif->get_children()) {
+            parentMotif->add_child(child);
+        }
+
+        // Remove pattern from children of parent
+        parentMotif->remove_child(patternMotif);
+    }
+
+    // Remove motif and its reference
+    it = frequent.find(pattern);
+
+    if (it != frequent.end()) {
+        // Delete the Motif object
+        delete it->second;
+
+        // Erase the entry from the frequent map
+        frequent.erase(it);
     }
 }
 
