@@ -12,7 +12,6 @@ SEGLEN = 50
 ALPHABET = 4
 
 
-
 def main():
     insect = loadmat('e6_insectAllData.mat')
     data = [np.reshape(insect[f'd{i}{i}'], (-1)) for i in range(1, 5)]
@@ -34,8 +33,8 @@ def plot_data(data):
     # Aesthetics
     axs[0].set(xticks=[0, 120000])
     remove_spines(axs[0], remove_y=False)
-    axs[1].set(xticks=[0, 800])
     axs[1].plot(zscore(data[ts_index][ss_index:ss_index+800]), color='k', lw=0.3)
+    axs[1].set(ylim=(-3, 3), xticks=[0, 800], yticks=[-2, 0, 2])
     remove_spines(axs[1], remove_y=False)
 
     plt.savefig(f'figs/6 insect data.eps')

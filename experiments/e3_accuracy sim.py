@@ -42,11 +42,12 @@ def main():
             # Find consensus motif
             consensus_motifs.append(ostinato(data, MOTIF_LEN))
 
-            plot_motifs(fig, axs, zscore(data, axis=1), motifs, ALPHABET, MOTIF_LEN)
+            plot_motifs(axs, zscore(data, axis=1), motifs, MOTIF_LEN)
             axs[0].set_yticks([-2.5, 2.5])
             axs[2].set_xlabel(noise_level)
 
         plt.savefig(join('figs', f'3 accuracy {inject}.eps'))
+        plt.savefig(join('figs', f'3 accuracy {inject}.png'))
         plt.close()
         plot_ostinato(consensus_motifs, inject)
 
@@ -112,6 +113,7 @@ def plot_ostinato(consensus_motifs, inject):
         remove_spines(ax, remove_y=False)
 
     plt.savefig(join('figs', f'3 accuracy {inject} ostinato.eps'))
+    plt.savefig(join('figs', f'3 accuracy {inject} ostinato.png'))
 
 
 if __name__ == '__main__':
