@@ -3,6 +3,7 @@ This module finds patterns in the outlines of images from the MPEG-7 data set.
 The data set is freely available from https://dabi.temple.edu/external/shape/MPEG7/dataset.html
 """
 from os.path import join
+from itertools import chain
 
 from PIL import Image
 import numpy as np
@@ -10,70 +11,112 @@ import matplotlib.pyplot as plt
 import cv2 as cv
 
 from frm._frm_py.miner import Miner
-from frm._frm_py.preprocessing import standardise, sax
+from frm._frm_py.preprocessing import standardise, sax, breakpoints
 from plot import remove_spines, COLORS, WIDTH
 
 IMG_DIR = 'mpeg7'
 NAME = 'cattle'
 SAMPLE = True
 ALPHABET = 5
+LENGTH = 256
 
 
 def main():
     # Load data
-    files = [join(IMG_DIR, f'{NAME}-{i + 1}.gif') for i in range(20)]
+    files = [join(IMG_DIR, f'{NAME}-{i + 1}.gif') for i in range(3)]
     ts, contours = get_all_ts(files)
 
-    # Plot pipeline
-    plot_pipeline(ts, 256, 3)
-
-
-def plot_pipeline(ts, length, n):
-    minsup = (n-1) / n
-    seglen = int(length / 16)
-    alphabet = ALPHABET
-    data = standardise([t[:length] for t in ts[:n]])
-    mm = Miner(minsup, seglen, alphabet)
-    mm.mine(data)
-
+    plot = Pipeline(2/3, 16, ALPHABET, LENGTH)
     fig, axs = plt.subplots(ncols=5, figsize=(WIDTH*2, WIDTH/2), layout='compressed')
-    fig.align_labels()
+    plot.plot(fig, axs, ts, 'pipeline', [plot.timeseries, plot.sequences, plot.sequence_motifs, plot.occurrences, plot.representative_motifs])
 
-    # Time series database
-    axs[0].plot(data.T, lw=0.5)
-    axs[0].set(ylim=(-3, 3), xticks=[0, length], yticks=[], xlabel='Time series database')
-    remove_spines(axs[0])
+    plot = Pipeline(2/3, 32, ALPHABET, LENGTH)
+    fig, axs = plt.subplots(ncols=3, figsize=(WIDTH*2, WIDTH/2), layout='compressed')
+    plot.plot(fig, axs, [ts[0]], 'sax', [plot.timeseries, plot.sax, plot.sequences])
 
-    # Sequence database
-    for s, y in zip(sax(data, seglen, alphabet), range(7, -1, -1)):
-        axs[1].text(0, y / 10, s, fontsize=6)
-    axs[1].set(xticks=[], yticks=[], xlabel='Sequence database')
-    remove_spines(axs[1])
+    plot = Pipeline(2/3, 16, ALPHABET, LENGTH)
+    fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH*2, WIDTH), layout='compressed')
+    plot.plot(fig, chain.from_iterable(axs), ts, 'long', [plot.timeseries, plot.sax, plot.sequences, plot.sequence_motifs, plot.occurrences, plot.representative_motifs])
 
-    # Sequence motifs
-    for motif, y, color in zip(mm.motifs, range(7, -1, -1), COLORS):
-        axs[2].text(0.3, y / 10 + 0.025, motif.pattern, fontsize=6, color=color)
-    axs[2].set(xticks=[], yticks=[], xlabel='Sequence motifs')
-    remove_spines(axs[2])
 
-    # Occurrences and representative motif
-    for i, ts in enumerate(data):
-        axs[3].plot(ts, 'k', lw=0.25)
-        for motif, color in zip(mm.motifs, COLORS):
-            if i in motif.best_matches:
-                start = motif.best_matches[i]
-                end = start + motif.length
-                axs[3].plot(list(range(start, end)), ts[start:end], color, lw=0.5)
+class Pipeline:
+    def __init__(self, minsup, seglen, alphabet, length):
+        self.minsup = minsup
+        self.seglen = seglen
+        self.alphabet = alphabet
 
-            axs[4].plot(motif.representative, color, lw=0.5)
+        self.length = length
 
-    axs[3].set(ylim=(-3, 3), xticks=[0, length], yticks=[], xlabel='Occurrences')
-    axs[4].set(ylim=(-3, 3), xticks=[0, length], yticks=[], xlabel='Representative motifs')
-    remove_spines(axs[3])
-    remove_spines(axs[4])
+        self.mm = Miner(minsup, seglen, alphabet)
 
-    plt.savefig(join('figs', '0 pipeline.eps'))
-    plt.savefig(join('figs', '0 pipeline.png'))
+        self.data = None
+
+    def plot(self, fig, axs, data, name, steps):
+        fig.align_labels()
+
+        self.data = standardise([row[:self.length] for row in data])
+        self.mm.mine(self.data)
+
+        for ax, step in zip(axs, steps):
+            step(ax)
+            remove_spines(ax)
+
+        plt.savefig(join('figs', f'0 {name}.eps'))
+        plt.savefig(join('figs', f'0 {name}.png'))
+        plt.close()
+
+    def timeseries(self, ax):
+        ax.plot(self.data.T, lw=0.5)
+        ax.set(ylim=(-3, 3), xticks=[0, self.length-1], yticks=[], xlabel='Time series database')
+
+    def sax(self, ax):
+        for b in breakpoints[self.alphabet].keys():
+            ax.axhline(y=b, color='lightgrey', lw=0.5)
+
+        ax.plot(self.data[0], lw=0.5)
+        sequence = sax([self.data[0]], self.seglen, self.alphabet)[0]
+        for i in range(0, len(self.data[0]), self.seglen):
+            start_idx = i
+            end_idx = i + self.seglen
+            x_values = np.arange(start_idx, end_idx)
+            y_value = np.mean(self.data[0][start_idx:end_idx])
+            ax.plot(x_values, np.full_like(x_values, y_value, dtype=y_value.dtype), color='black', lw=0.5)
+
+            middle_idx = (start_idx + end_idx) // 2
+            ax.text(middle_idx, y_value - 0.25, sequence[i // self.seglen], size='small', ha='center', va='center', color='black')
+
+        ax.set(ylim=(-3, 3), xticks=[0, self.length-1], yticks=[], xlabel='SAX')
+
+    def sequences(self, ax):
+        for s, y in zip(sax(self.data, self.seglen, self.alphabet), range(7, -1, -1)):
+            ax.text(0.5, y / 10, s, fontsize=6, ha='center', va='center')
+        ax.set(xticks=[], yticks=[], xlabel='Sequence database')
+
+    def sequence_motifs(self, ax):
+        for motif, y, color in zip(self.mm.motifs, range(7, -1, -1), COLORS):
+            ax.text(0.3, y / 10 + 0.025, motif.pattern, fontsize=6, color=color)
+        ax.set(xticks=[], yticks=[], xlabel='Sequence motifs')
+
+    def occurrences(self, ax):
+        for i, ts in enumerate(self.data):
+            ax.plot(ts, 'k', lw=0.25)
+            for motif, color in zip(self.mm.motifs, COLORS):
+                if i in motif.best_matches:
+                    start = motif.best_matches[i]
+                    end = start + motif.length
+                    ax.plot(list(range(start, end)), ts[start:end], color, lw=0.5)
+
+        ax.set(ylim=(-3, 3), xticks=[0, self.length-1], yticks=[], xlabel='Occurrences')
+
+    def representative_motifs(self, ax):
+        for motif, color in zip(self.mm.motifs, COLORS):
+            ax.plot(motif.representative, color, lw=0.5)
+
+        ax.set(ylim=(-3, 3), xticks=[0, self.length-1], yticks=[], xlabel='Representative motifs')
+
+    def empty(self, ax):
+        ax.text(0.5, 0.5, '...')
+        ax.set(xticks=[], yticks=[])
 
 
 def get_all_ts(files: list):
@@ -128,17 +171,17 @@ def get_ts(center, contour):
     return ts
 
 
-def sample(ts, length=512):
-    step = len(ts)/length
+def sample(ts, sample=512, cutoff=256):
+    step = len(ts) / sample
     res = []
     # Bresenham interpolation
     a = 0
     while a < len(ts):
-        if len(res) == length:
+        if len(res) == sample:
             break
         res.append(ts[int(a)])
         a = a + step
-    return res
+    return res[:cutoff]
 
 
 def plot_contour(motifs, contour, i, ax):
