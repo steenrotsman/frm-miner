@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <cmath>
+#include <algorithm>
 
 #include "motif.h"
 #include "typing.h"
@@ -15,6 +16,47 @@ Motif::Motif(Pattern pattern) : pattern(std::move(pattern)), _seglen(), length(0
 void Motif::record_index(int seq, int idx_in_seq)
 {
     indexes[seq].push_back(idx_in_seq);
+}
+
+void Motif::remove_index(int seq, int idx_in_seq) {
+    std::vector<int>& idx = indexes.at(seq);
+
+    // Remove position idx_in_seq from starting indexes of pattern in sequence seq
+    idx.erase(std::remove(idx.begin(), idx.end(), idx_in_seq), idx.end());
+
+    // If idx_in_seq was the only starting index of pattern in sequence seq, remove seq from indexes
+    if (idx.empty()) {
+        indexes.erase(indexes.find(seq));
+    }
+}
+
+std::unordered_map<int, std::vector<int>> Motif::get_all_indexes() const
+{
+    // Copy indexes to all_indexes
+    std::unordered_map<int, std::vector<int>> all_indexes { indexes };
+
+    // Fill all_indexes with all_indexes from each child recursively
+    for (const auto& child : children) {
+        auto child_indexes = child->get_all_indexes();
+
+        for (const auto& [seq, idx] : child_indexes) {
+            for (const auto& i : idx) {
+                all_indexes[seq].push_back(i);
+            }
+        }
+    }
+
+    return all_indexes;
+}
+
+void Motif::add_child(Motif* child)
+{
+    children.push_back(child);
+}
+
+void Motif::remove_child(Motif *child)
+{
+    children.erase(std::remove(children.begin(), children.end(), child), children.end());
 }
 
 void Motif::map(const TimeSeriesDB& timeseries, const int seglen)
@@ -53,7 +95,7 @@ std::vector<double> Motif::get_occurrence(const std::vector<double>& ts, int ind
 
 void Motif::set_average_occurrences(const TimeSeriesDB &timeseries)
 {
-    for (const auto& [ ts, idx ] : indexes) {
+    for (const auto& [ ts, idx ] : get_all_indexes()) {
         std::vector<std::vector<double>> occurrences;
 
         for (int id : idx) {
@@ -121,7 +163,7 @@ void Motif::set_representative()
 
 void Motif::set_best_matches_and_naed(const TimeSeriesDB& timeseries)
 {
-    for (const auto& [ts, idx] : indexes) {
+    for (const auto& [ts, idx] : get_all_indexes()) {
         int best_match = 0;
         double min_naed = 1.0e6;
 
@@ -151,5 +193,5 @@ void Motif::set_best_matches_and_naed(const TimeSeriesDB& timeseries)
         best_matches[ts] = best_match * _seglen;
     }
 
-    naed /= static_cast<double>(indexes.size()) * static_cast<double>(length);
+    naed /= static_cast<double>(get_all_indexes().size()) * static_cast<double>(length);
 }

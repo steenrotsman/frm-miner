@@ -18,6 +18,8 @@ PYBIND11_MODULE(_frm_cpp, m) {
             return s;
         }, nullptr)
         .def_property("indexes", &Motif::get_indexes, nullptr)
+        .def("get_all_indexes", &Motif::get_all_indexes)
+        .def_property("children", &Motif::get_children, nullptr)
         .def_property("average_occurrences", &Motif::get_average_occurrences, nullptr)
         .def_property("representative", &Motif::get_representative, nullptr)
         .def_property("best_matches", &Motif::get_best_matches, nullptr)

@@ -4,8 +4,6 @@ This module defines the PatternMiner class, a class that takes a collection of
 sequences and mines frequent and maximal patterns from it. The patterns
 can be filtered to have a certain minimum length.
 """
-from copy import copy
-
 from .motif import Motif
 
 
@@ -33,7 +31,7 @@ class PatternMiner:
         self.max_len = max_len
         self.max_overlap = max_overlap
 
-        self.frequent = []
+        self.frequent = {}
 
         # Frequency is easier to check than support
         self._min_freq = 0
@@ -41,8 +39,8 @@ class PatternMiner:
         # Keep track of length we're currently mining
         self._k = 2
 
-        self._k_motifs = {}
-        self._k_1_motifs = {}
+        # self.patterns[k] contains a list of patterns of length k
+        self._patterns = [[], []]
 
     def mine(self, sequences):
         """Mine sequence motifs.
@@ -61,26 +59,27 @@ class PatternMiner:
 
         # If there were no frequent k-patterns, there can be no 
         # frequent (k+1)-patterns; stop
-        while self._k_1_motifs and (not self.max_len or self._k <= self.max_len):
+        while self._patterns[self._k - 1] and (not self.max_len or self._k <= self.max_len):
+            self._patterns.append([])
+
             for candidate in self.get_candidates():
                 # Count candidate occurrences
-                motif = Motif(candidate)
+                self.frequent[candidate] = Motif(candidate)
+                remove = []
 
                 # Find candidate in sequences parent occurs in
-                for seq, indexes in self._k_1_motifs[candidate[:-1]].indexes.items():
+                for seq, indexes in self.frequent[candidate[:-1]].indexes.items():
                     sequence = sequences[seq]
                     for index in indexes:
                         if sequence[index : index+self._k] == candidate:
-                            motif.record_index(seq, index)
+                            self.frequent[candidate].record_index(seq, index)
+                            remove.append((seq, index))
                 
                 # Check if candidate complies with minimum support
-                if len(motif.indexes) >= self._min_freq:
-                    self._k_motifs[candidate] = motif
-                    self.frequent.append(candidate)
+                self.prune_infrequent(candidate, remove)
 
             self._k += 1
-            self._k_1_motifs = self._k_motifs
-            self._k_motifs = {}
+
         self.remove_redundant()
     
     def remove_redundant(self):
@@ -106,14 +105,14 @@ class PatternMiner:
             pruned.
         """
         # Prune from frequent patterns
-        self.frequent = [p for p in self.frequent if len(p) >= self.min_len]
+        self.frequent = {k: v for k, v in self.frequent.items() if len(k) >= self.min_len}
 
         # If max_overlap == 1, no overlap is too high
         if self.max_overlap == 1:
             return
 
         # Prune patterns for which x% is overlapping from frequent
-        patterns = self.frequent
+        patterns = list(self.frequent)
         patterns.sort(key=len, reverse=True)
         pruned = []
         
@@ -128,7 +127,7 @@ class PatternMiner:
 
                 # Check if shorter pattern consists mostly of lcs
                 if self.lcs(p1, p2, n, m) / m > self.max_overlap:
-                    self.frequent.remove(p2)
+                    self.frequent.pop(p2, 0)
                     pruned.append(p2)
 
     def lcs(self, p1: str, p2: str, n: int, m: int) -> int:
@@ -183,8 +182,8 @@ class PatternMiner:
         candidates : list[str]
             Set of candidate patterns that have a length of k.
         """
-        patterns = list(self._k_1_motifs.keys())
-        return [p1 + p2[-1] for p1 in self._k_1_motifs for p2 in patterns if p1[1:] == p2[:-1]]
+        patterns = self._patterns[self._k - 1]
+        return [p1 + p2[-1] for p1 in patterns for p2 in patterns if p1[1:] == p2[:-1]]
     
     def mine_1_patterns(self, sequences):
         """Mine frequent 1-patterns.
@@ -197,12 +196,39 @@ class PatternMiner:
         # Divide sequences into indexes
         for i, sequence in enumerate(sequences):
             for j, item in enumerate(sequence):
-                if item not in self._k_1_motifs:
-                    self._k_1_motifs[item] = Motif(item)
-                self._k_1_motifs[item].record_index(i, j)
+                if item not in self.frequent:
+                    self.frequent[item] = Motif(item)
+                self.frequent[item].record_index(i, j)
 
-        # Add frequent patterns to self.frequent
-        for motif in list(self._k_1_motifs.values()):
-            if len(motif.indexes) >= self._min_freq:
-                # Technically, it would be most efficient to else erase from self._k_1_motifs
-                self.frequent.append(motif.pattern)
+        # Prune infrequent patterns
+        for a in list(self.frequent.keys()):
+            self.prune_infrequent(a)
+    
+    def prune_infrequent(self, pattern: str, remove: list[tuple[int, int]] = []):
+        """Prune infrequent patterns.
+        
+        - Prunes patterns with a too low support;
+        - Adds frequent patterns to list of frequent patterns
+
+        Parameters
+        ----------
+        pattern : str
+            The pattern that should be processed.
+        remove : list[tuple[int, int]]
+            List of indexes to be removed from parent of pattern if pattern is frequent.
+        """
+        if len(self.frequent[pattern].indexes) < self._min_freq:
+            # Delete indexes of this infrequent pattern
+            self.frequent.pop(pattern)
+        else:
+            # Add to list of frequent k-patterns
+            self._patterns[len(pattern)].append(pattern)
+
+            # Remove candidate indexes from parent
+            for seq, index in remove:
+                self.frequent[pattern[:-1]].remove_index(seq, index)
+
+            # Check if pattern has a parent with indices
+            if remove:
+                # Add candidate to parent's children
+                self.frequent[pattern[:-1]].children.append(self.frequent[pattern])
