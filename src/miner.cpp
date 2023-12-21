@@ -9,7 +9,6 @@
 #include "sax.h"
 #include "patterns.h"
 #include "motif.h"
-#include <iostream>
 
 Miner::Miner(double minsup, int seglen, int alphabet, int min_len, int max_len, double max_overlap, int k) : minsup(minsup), seglen(seglen), alphabet(alphabet), min_len(min_len), max_len(max_len), max_overlap(max_overlap), k(k){}
 
@@ -33,25 +32,7 @@ void Miner::mine_patterns(const DiscreteDB& sequences)
 {
     PatternMiner pm { minsup, min_len, max_len, max_overlap };
     pm.mine(sequences);
-
-    for (auto& pattern : pm.get_frequent()) {
-        Motif motif { pattern };
-
-        // Find motif occurrences in sequences
-        for (size_t i = 0; i < sequences.size(); i++) {
-            auto& sequence = sequences[i];
-
-            if (sequence.size() < pattern.size()) {
-                continue;
-            }
-
-            for (size_t j = 0; j <= sequence.size() - pattern.size(); j++) {
-                if (std::equal(pattern.begin(), pattern.end(), sequence.begin() + j)) {
-                    motif.record_index(i, j);
-                }
-            }
-        }
-
+    for (auto& [pattern, motif] : pm.get_frequent()) {
         motifs.push_back(motif);
     }
 }
