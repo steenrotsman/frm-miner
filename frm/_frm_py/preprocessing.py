@@ -22,23 +22,25 @@ def sax(timeseries, seglen, alphabet):
     -------
     List with a collection of discrete sequences from the time series.
     """
-    return [get_sax(series, seglen, alphabet) for series in timeseries]
+    breakpoints = get_breakpoints(alphabet)
+    return [get_sax(series, seglen, breakpoints) for series in timeseries]
 
 
 def get_sax(series, seglen, breakpoints):
     """Get SAX representation of one time series."""
-    segments = [sum(series[i:i + seglen]) / seglen for i in range(0, len(series), seglen)]
-    for i, seg in enumerate(segments):
-        for b, c in breakpoints[a].items():
-            if seg <= b:
-                segments[i] = c
-                break
-        else:
-            segments[i] = chr(ord(c) + 1)
+    # No paa step necessary when seglen=1
+    if seglen == 1:
+        paa = series
+    else:
+        # Append the mean of the last segment to the series until len(series) % seglen == 0
+        if too_short := (len(series) % seglen):
+            series = np.append(series, [np.mean(series[-too_short:])] * (seglen - too_short))
 
-    sax_representation = ''.join(segments)
-    return sax_representation
+        segments = series.reshape((-1, seglen))
+        paa = np.mean(segments, axis=1)
 
+    discretised = np.digitize(paa, breakpoints) + ord('a')
+    return ''.join(chr(x) for x in discretised)
 
 
 def standardise(timeseries):

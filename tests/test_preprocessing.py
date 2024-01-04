@@ -1,8 +1,9 @@
 import unittest
 
 from frm._frm_py.preprocessing import sax, standardise
+from frm import sax as cpp_sax
 
-from test_data import ts, norm, rag, seq_1, seq_2, rseq_1, rseq_2
+from test_data import ts, norm, rag, seq_1, seq_2, rseq_1, rseq_2, data
 
 
 class TestPreprocessing(unittest.TestCase):
@@ -21,8 +22,15 @@ class TestPreprocessing(unittest.TestCase):
 
     def test_sax_seglen_2(self):
         got = sax(standardise(ts), 2, 3)
+        cpp = cpp_sax(standardise(ts), 2, 3)
         self.assertEqual(seq_2, got)
 
     def test_rag_sax_seglen_2(self):
         got = sax(standardise(rag), 2, 3)
         self.assertEqual(rseq_2, got)
+
+    def test_equal_sax(self):
+        got_py = sax(standardise(data), 10, 5)
+        got_cpp = cpp_sax(standardise(data), 10, 5)
+        got_cpp = [''.join(x) for x in got_cpp]
+        self.assertListEqual(got_py, got_cpp)
