@@ -7,11 +7,8 @@ from typing import Union
 from scipy.stats import zscore
 from numpy import nan_to_num
 
-# https://stackoverflow.com/a/60617044
-numeric = Union[int, float]
 
-
-def sax(timeseries: list[list[numeric]], seglen: int, alphabet: int) -> list[str]:
+def sax(timeseries, seglen, alphabet):
     """Symbolic Aggregate approXimation.
     
     Parameters
@@ -30,7 +27,7 @@ def sax(timeseries: list[list[numeric]], seglen: int, alphabet: int) -> list[str
     return [get_sax(series, seglen, alphabet) for series in timeseries]
 
 
-def get_sax(series: list[numeric], seglen: int, a: int) -> str:
+def get_sax(series, seglen, breakpoints):
     """Get SAX representation of one time series."""
     segments = [sum(series[i:i + seglen]) / seglen for i in range(0, len(series), seglen)]
     for i, seg in enumerate(segments):
@@ -45,7 +42,8 @@ def get_sax(series: list[numeric], seglen: int, a: int) -> str:
     return sax_representation
 
 
-def standardise(timeseries: list[list]):
+
+def standardise(timeseries):
     """Standardise time series.
 
     Standardises data to have a mean of zero and a standard deviation of one.
