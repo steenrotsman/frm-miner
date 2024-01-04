@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import cv2 as cv
 
 from frm._frm_py.miner import Miner
-from frm._frm_py.preprocessing import standardise, sax, breakpoints
+from frm._frm_py.preprocessing import standardise, sax, get_breakpoints
 from plot import remove_spines, COLORS, WIDTH
 
 IMG_DIR = 'mpeg7'
@@ -70,7 +70,7 @@ class Pipeline:
         ax.set(ylim=(-3, 3), xticks=[0, self.length-1], yticks=[], xlabel='Time series database')
 
     def sax(self, ax):
-        for b in breakpoints[self.alphabet].keys():
+        for b in get_breakpoints(self.alphabet):
             ax.axhline(y=b, color='lightgrey', lw=0.5)
 
         ax.plot(self.data[0], lw=0.5)

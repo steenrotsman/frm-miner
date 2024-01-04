@@ -2,10 +2,8 @@
 
 This module defines two time series preprocessing functions for standardisation and SAX representation.
 """
-from typing import Union
-
-from scipy.stats import zscore
-from numpy import nan_to_num
+import numpy as np
+from scipy.stats import zscore, norm
 
 
 def sax(timeseries, seglen, alphabet):
@@ -59,21 +57,10 @@ def standardise(timeseries):
         Database of standardised time series.
     """
     try:
-        return nan_to_num(zscore(timeseries, axis=1))
+        return np.nan_to_num(zscore(timeseries, axis=1))
     except ValueError:
-        return [nan_to_num(zscore(ts)) for ts in timeseries]
+        return [np.nan_to_num(zscore(ts)) for ts in timeseries]
 
 
-# Defined in Lin, Keogh, Linardi, & Chiu (2003). A Symbolic Representation of Time Series,
-# with Implications for Streaming Algorithms. Table 3.
-breakpoints = {
-    2: {0: 'a'},
-    3: {-0.43: 'a', 0.43: 'b'},
-    4: {-0.67: 'a', 0: 'b', 0.67: 'c'},
-    5: {-0.84: 'a', -0.25: 'b', 0.25: 'c', 0.84: 'd'},
-    6: {-0.97: 'a', -0.43: 'b', 0: 'c', 0.43: 'd', 0.97: 'e'},
-    7: {-1.07: 'a', -0.57: 'b', -0.18: 'c', 0.18: 'd', 0.57: 'e', 1.07: 'f'},
-    8: {-1.15: 'a', -0.67: 'b', -0.32: 'c', 0: 'd', 0.32: 'e', 0.67: 'f', 1.15: 'g'},
-    9: {-1.22: 'a', -0.76: 'b', -0.43: 'c', -0.14: 'd', 0.14: 'e', 0.43: 'f', 0.76: 'g', 1.22: 'h'},
-    10: {-1.28: 'a', -0.84: 'b', -0.52: 'c', -0.25: 'd', 0: 'e', 0.25: 'f', 0.52: 'g', 0.84: 'h', 1.28: 'i'},
-}
+def get_breakpoints(a):
+    return norm.ppf(np.arange(1, a) / a, loc=0)
