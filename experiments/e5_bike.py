@@ -15,7 +15,6 @@ FIELD = 'speed'
 MINSUP = 0.3
 SEGLEN = 15
 ALPHABET = 5
-MAX_OVERLAP = [0.9]
 K = 4
 
 
@@ -23,13 +22,10 @@ def main():
     records = get_records(JSON_DIR)
     field = get_fields(records, FIELD)
 
-    fig, axss = plt.subplots(nrows=len(MAX_OVERLAP), ncols=K, sharey='all', layout='compressed')
-    for max_overlap, axs in zip(MAX_OVERLAP, [axss]):
-        miner = Miner(MINSUP, SEGLEN, ALPHABET, max_overlap=max_overlap, k=K)
-
-        motifs = miner.mine(field)
-        plot_motifs(fig, axs, [zscore(ts) for ts in field], motifs, ALPHABET)
-    plt.savefig(join('figs', '5 bike motifs.eps'))
+    fig, axs = plt.subplots(ncols=K, sharey='all', layout='compressed')
+    miner = Miner(MINSUP, SEGLEN, ALPHABET, k=K)
+    motifs = miner.mine(field)
+    plot_motifs(axs, [zscore(ts) for ts in field], motifs, ALPHABET, '5 bike motifs')
 
 
 def get_records(directory):
