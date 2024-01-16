@@ -30,4 +30,4 @@ dependencies = [
 include = ["frm*"]
 
 [tool.cibuildwheel]
-test-command = "pytest {package}/tests"
+test-command = "python -m unittest"
