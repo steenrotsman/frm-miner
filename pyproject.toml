@@ -33,6 +33,6 @@ test = ["pytest"]
 include = ["frm*"]
 
 [tool.cibuildwheel]
-test-requires = "pytest"
 test-command = "pytest {project}/tests"
+test-extras = ["test"]
 test-skip = ["*universal2:arm64"]
