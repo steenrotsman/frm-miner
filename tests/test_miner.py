@@ -2,8 +2,7 @@ import unittest
 
 from frm import Miner as CppMiner
 from frm._frm_py.miner import Miner as PyMiner
-
-from .data import ts, rag, data
+from test_data import ts, rag, data
 
 
 class TestMiner(unittest.TestCase):

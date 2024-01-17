@@ -2,7 +2,7 @@ import unittest
 
 from frm._frm_py.preprocessing import sax, standardise
 
-from .data import ts, norm, rag, seq_1, seq_2, rseq_1, rseq_2
+from test_data import ts, norm, rag, seq_1, seq_2, rseq_1, rseq_2
 
 
 class TestPreprocessing(unittest.TestCase):

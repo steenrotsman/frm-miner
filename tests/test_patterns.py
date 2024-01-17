@@ -1,8 +1,7 @@
 import unittest
 
 from frm._frm_py.patterns import PatternMiner
-
-from .data import seq_1, rseq_1
+from test_data import seq_1, rseq_1
 
 
 class TestPatternMiner(unittest.TestCase):
