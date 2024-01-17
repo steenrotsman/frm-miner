@@ -59,9 +59,9 @@ def standardise(timeseries):
         Database of standardised time series.
     """
     try:
-        return np.nan_to_num(zscore(timeseries, axis=1))
+        return np.nan_to_num((timeseries - np.mean(timeseries, axis=1, keepdims=True)) / np.std(timeseries, axis=1, keepdims=True))
     except ValueError:
-        return [np.nan_to_num(zscore(ts)) for ts in timeseries]
+        return [np.nan_to_num((ts - np.nanmean(ts)) / np.nanstd(ts)) for ts in timeseries]
 
 
 def get_breakpoints(a):

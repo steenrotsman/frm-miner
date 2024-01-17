@@ -142,6 +142,3 @@ dmypy.json
 .idea
 /experiments/.Rhistory
 /experiments/.RData
-
-# Installation from source
-setup.py

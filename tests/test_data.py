@@ -1,5 +1,4 @@
 import numpy as np
-from scipy.stats import zscore
 
 ts = [
     [0, 1, 2, 2, 1, 0],
@@ -61,4 +60,4 @@ rseq_2 = [
 ]
 
 np.random.seed(0)
-data = [zscore(np.random.random(np.random.randint(10, 1000))).tolist() for _ in range(100)]
+data = [np.random.random(np.random.randint(10, 1000)).tolist() for _ in range(100)]
