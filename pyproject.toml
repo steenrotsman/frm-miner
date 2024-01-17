@@ -31,8 +31,3 @@ test = ["pytest"]
 
 [tool.setuptools.packages.find]
 include = ["frm*"]
-
-[tool.cibuildwheel]
-test-command = "pytest {project}/tests"
-test-extras = ["test"]
-test-skip = ["*universal2:arm64"]
