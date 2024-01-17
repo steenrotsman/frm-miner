@@ -4,9 +4,7 @@ This module defines two time series preprocessing functions for standardisation 
 """
 from typing import Union
 
-from scipy.stats import zscore
-from numpy import nan_to_num
-
+import numpy as np
 # https://stackoverflow.com/a/60617044
 numeric = Union[int, float]
 
@@ -61,9 +59,9 @@ def standardise(timeseries: list[list]):
         Database of standardised time series.
     """
     try:
-        return nan_to_num(zscore(timeseries, axis=1))
+        return np.nan_to_num((timeseries - np.mean(timeseries, axis=1, keepdims=True)) / np.std(timeseries, axis=1, keepdims=True))
     except ValueError:
-        return [nan_to_num(zscore(ts)) for ts in timeseries]
+        return [np.nan_to_num((ts - np.nanmean(ts)) / np.nanstd(ts)) for ts in timeseries]
 
 
 # Defined in Lin, Keogh, Linardi, & Chiu (2003). A Symbolic Representation of Time Series,
