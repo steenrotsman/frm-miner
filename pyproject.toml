@@ -26,8 +26,28 @@ dependencies = [
     "scipy",
 ]
 
+[project.optional-dependencies]
+test = ["pytest"]
+
 [tool.setuptools.packages.find]
 include = ["frm*"]
 
 [tool.cibuildwheel]
-test-command = "pytest {package}/tests"
+test-command = "pytest {project}/tests"
+test-extras = ["test"]
+test-skip = ["*universal2:arm64"]
+
+[tool.cibuildwheel.linux]
+archs = ["auto", "aarch64"]
+before-build = "rm -rf {project}/build"
+
+[tool.cibuildwheel.macos]
+before-build = "rm -rf {project}/build"
+
+# Use delvewheel on windows
+[tool.cibuildwheel.windows]
+before-build = [
+    "pip install delvewheel",
+    "if exist build rmdir /s /q build",
+]
+repair-wheel-command = "delvewheel repair -w {dest_dir} {wheel}"
