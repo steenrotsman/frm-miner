@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "frm-miner"
-version = "0.0.7"
+version = "0.0.8"
 authors = [
     {name = "Stijn J. Rotman", email = "s.j.rotman@uvt.nl"},
 ]

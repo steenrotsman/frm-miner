@@ -1,7 +1,7 @@
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup
 
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 
 ext_modules = [
     Pybind11Extension("_frm_cpp",
