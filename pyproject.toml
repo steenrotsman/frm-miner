@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "frm-miner"
-version = "0.0.7"
+version = "0.0.8"
 authors = [
     {name = "Stijn J. Rotman", email = "s.j.rotman@uvt.nl"},
 ]
@@ -34,4 +34,5 @@ include = ["frm*"]
 [tool.cibuildwheel]
 test-command = "pytest {project}/tests"
 test-extras = ["test"]
+skip = ["pp*", "*-musllinux_aarch64"]
 test-skip = ["*universal2:arm64"]
