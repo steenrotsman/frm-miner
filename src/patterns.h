@@ -7,6 +7,7 @@
 
 #include <map>
 #include <vector>
+#include <set>
 
 #include "typing.h"
 #include "motif.h"
@@ -21,6 +22,7 @@ private:
     double min_freq;
     int k;
     std::vector<std::vector<Pattern>> patterns;
+    std::set<Pattern> remove;
 
     void mine_1_patterns(const DiscreteDB& sequences);
     void prune_infrequent(const Pattern& pattern);

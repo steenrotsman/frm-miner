@@ -39,8 +39,11 @@ class PatternMiner:
         # Keep track of length we're currently mining
         self._k = 2
 
-        # self.patterns[k] contains a list of patterns of length k
+        # self.patterns contains the patterns of length k-1 and of length k
         self._patterns = [[], []]
+
+        # Parents should be removed if their children are frequent
+        self._remove = set()
 
     def mine(self, sequences):
         """Mine sequence motifs.
@@ -59,8 +62,9 @@ class PatternMiner:
 
         # If there were no frequent k-patterns, there can be no 
         # frequent (k+1)-patterns; stop
-        while self._patterns[self._k - 1] and (not self.max_len or self._k <= self.max_len):
-            self._patterns.append([])
+        while self._patterns[1] and (not self.max_len or self._k <= self.max_len):
+            self._patterns = [self._patterns[1], []]
+            self._remove = set()
 
             for candidate in self.get_candidates():
                 # Count candidate occurrences
@@ -75,6 +79,10 @@ class PatternMiner:
                 
                 # Check if candidate complies with minimum support
                 self.prune_infrequent(candidate)
+
+            # Prune patterns with frequent children
+            for pattern in self._remove:
+                self.frequent.pop(pattern)
 
             self._k += 1
 
@@ -104,10 +112,6 @@ class PatternMiner:
         """
         # Prune from frequent patterns
         self.frequent = {k: v for k, v in self.frequent.items() if len(k) >= self.min_len}
-
-        # If max_overlap == 1, no overlap is too high
-        if self.max_overlap == 1:
-            return
 
         # Prune patterns for which x% is overlapping from frequent
         patterns = list(self.frequent)
@@ -180,7 +184,7 @@ class PatternMiner:
         candidates : list[str]
             Set of candidate patterns that have a length of k.
         """
-        patterns = self._patterns[self._k - 1]
+        patterns = self._patterns[0]
         return [p1 + p2[-1] for p1 in patterns for p2 in patterns if p1[1:] == p2[:-1]]
     
     def mine_1_patterns(self, sequences):
@@ -218,4 +222,7 @@ class PatternMiner:
             self.frequent.pop(pattern)
         else:
             # Add to list of frequent k-patterns
-            self._patterns[len(pattern)].append(pattern)
+            self._patterns[1].append(pattern)
+
+            # Parents should be removed
+            self._remove |= {pattern[1:], pattern[:-1]}

@@ -24,6 +24,7 @@ void PatternMiner::mine(const DiscreteDB& sequences)
     // If there were no frequent k-patterns, there can be no frequent (k+1)-patterns; stop
     for (k = 2; (!patterns[k - 1].empty() and ((not max_len or k <= max_len))); k++) {
         patterns.emplace_back();
+        remove = {};
 
         // Generate candidate k-patterns from frequent (k-1)-patterns, find their occurrences and remove infrequent candidates
         for (auto& candidate : get_candidates()) {
@@ -31,6 +32,11 @@ void PatternMiner::mine(const DiscreteDB& sequences)
             frequent.insert(std::make_pair(candidate, motif));
             find_candidate(candidate, sequences);
             prune_infrequent(candidate);
+        }
+
+        // Remove parent motifs for which a child is frequent
+        for (const Pattern& parent : remove) {
+            frequent.erase(parent);
         }
     }
 
@@ -70,6 +76,8 @@ void PatternMiner::prune_infrequent(const Pattern& pattern)
             frequent.erase(pattern);
     } else {
         patterns[pattern.size()].push_back(pattern);
+        remove.insert({pattern.begin() + 1, pattern.end()});
+        remove.insert({pattern.begin(), pattern.end() - 1});
     }
 }
 
