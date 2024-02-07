@@ -2,13 +2,14 @@
 
 This module defines two time series preprocessing functions for standardisation and SAX representation.
 """
+
 import numpy as np
-from scipy.stats import zscore, norm
+from scipy.stats import norm, zscore
 
 
 def sax(timeseries, seglen, alphabet):
     """Symbolic Aggregate approXimation.
-    
+
     Parameters
     ----------
     timeseries : list
@@ -17,7 +18,7 @@ def sax(timeseries, seglen, alphabet):
         Segment length for PAA, factor by which discrete representation is shorter than time series.
     alphabet : int
         Alphabet size; number of discrete elements the time series are to be binned into.
-    
+
     Returns
     -------
     List with a collection of discrete sequences from the time series.
@@ -32,9 +33,9 @@ def get_sax(series, seglen, breakpoints):
     if seglen == 1:
         paa = series
     else:
-        # Append the mean of the last segment to the series until len(series) % seglen == 0
         if too_short := (len(series) % seglen):
-            series = np.append(series, [np.mean(series[-too_short:])] * (seglen - too_short))
+            append = [np.mean(series[-too_short:])] * (seglen - too_short)
+            series = np.append(series, append)
 
         segments = series.reshape((-1, seglen))
         paa = np.mean(segments, axis=1)
@@ -59,9 +60,9 @@ def standardise(timeseries):
         Database of standardised time series.
     """
     try:
-        return np.nan_to_num((timeseries - np.mean(timeseries, axis=1, keepdims=True)) / np.std(timeseries, axis=1, keepdims=True))
+        return np.nan_to_num(zscore(timeseries, axis=1))
     except ValueError:
-        return [np.nan_to_num((ts - np.nanmean(ts)) / np.nanstd(ts)) for ts in timeseries]
+        return [np.nan_to_num(zscore(ts)) for ts in timeseries]
 
 
 def get_breakpoints(a):

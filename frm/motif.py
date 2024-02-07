@@ -26,7 +26,7 @@ class Motif:
     def record_index(self, i, j):
         """Record starting index of pattern in sequence i at position j."""
         self.indexes[i].append(j)
-    
+
     def map(self, ts, seglen):
         """Map representative, matches, and naed using occurrences."""
         self._seglen = seglen
@@ -51,16 +51,18 @@ class Motif:
 
         # Ensure motif occurrences are all the same length
         if too_short := max(0, end - len(ts)):
-            return np.hstack((ts[start : end], np.array(too_short * [np.nan])))
-        return ts[start : end]
+            return np.hstack((ts[start:end], np.array(too_short * [np.nan])))
+        return ts[start:end]
 
     def set_representative(self):
-        self.representative = np.nanmean([ao for ao in self.average_occurrences.values()], axis=0)
+        self.representative = np.nanmean(
+            [ao for ao in self.average_occurrences.values()], axis=0
+        )
 
     def set_best_matches_and_naed(self, ts):
         for i, indexes in self.indexes.items():
             best_match = 0
-            min_naed = 10 ** 6
+            min_naed = 10**6
 
             for index in indexes:
                 occurrence = self.get_occurrence(ts[i], index)
