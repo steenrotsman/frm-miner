@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 from scipy.stats import zscore
 
 from frm import Miner
-from plot import plot_motifs
+
+from .plot import plot_motifs
 
 JSON_DIR = 'bike'
 FIELD = 'speed'

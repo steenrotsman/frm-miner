@@ -2,17 +2,19 @@
 This module finds patterns in the outlines of images from the MPEG-7 data set.
 The data set is freely available from https://dabi.temple.edu/external/shape/MPEG7/dataset.html
 """
-from os.path import join
+
 from itertools import chain
+from os.path import join
 
-from PIL import Image
-import numpy as np
-import matplotlib.pyplot as plt
 import cv2 as cv
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
 
-from frm._frm_py.miner import Miner
-from frm._frm_py.preprocessing import standardise, sax, get_breakpoints
-from plot import remove_spines, COLORS, WIDTH
+from frm import Miner
+from frm.preprocessing import get_breakpoints, sax, standardise
+
+from .plot import COLORS, WIDTH, remove_spines
 
 IMG_DIR = 'mpeg7'
 NAME = 'cattle'
@@ -26,17 +28,48 @@ def main():
     files = [join(IMG_DIR, f'{NAME}-{i + 1}.gif') for i in range(3)]
     ts, contours = get_all_ts(files)
 
-    plot = Pipeline(2/3, 16, ALPHABET, LENGTH)
-    fig, axs = plt.subplots(ncols=5, figsize=(WIDTH*2, WIDTH/2), layout='compressed')
-    plot.plot(fig, axs, ts, 'pipeline', [plot.timeseries, plot.sequences, plot.sequence_motifs, plot.occurrences, plot.representative_motifs])
+    plot = Pipeline(2 / 3, 16, ALPHABET, LENGTH)
+    fig, axs = plt.subplots(
+        ncols=5, figsize=(WIDTH * 2, WIDTH / 2), layout='compressed'
+    )
+    plot.plot(
+        fig,
+        axs,
+        ts,
+        'pipeline',
+        [
+            plot.timeseries,
+            plot.sequences,
+            plot.sequence_motifs,
+            plot.occurrences,
+            plot.representative_motifs,
+        ],
+    )
 
-    plot = Pipeline(2/3, 32, ALPHABET, LENGTH)
-    fig, axs = plt.subplots(ncols=3, figsize=(WIDTH*2, WIDTH/2), layout='compressed')
+    plot = Pipeline(2 / 3, 32, ALPHABET, LENGTH)
+    fig, axs = plt.subplots(
+        ncols=3, figsize=(WIDTH * 2, WIDTH / 2), layout='compressed'
+    )
     plot.plot(fig, axs, [ts[0]], 'sax', [plot.timeseries, plot.sax, plot.sequences])
 
-    plot = Pipeline(2/3, 16, ALPHABET, LENGTH)
-    fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH*2, WIDTH), layout='compressed')
-    plot.plot(fig, chain.from_iterable(axs), ts, 'long', [plot.timeseries, plot.sax, plot.sequences, plot.sequence_motifs, plot.occurrences, plot.representative_motifs])
+    plot = Pipeline(2 / 3, 16, ALPHABET, LENGTH)
+    fig, axs = plt.subplots(
+        nrows=2, ncols=3, figsize=(WIDTH * 2, WIDTH), layout='compressed'
+    )
+    plot.plot(
+        fig,
+        chain.from_iterable(axs),
+        ts,
+        'long',
+        [
+            plot.timeseries,
+            plot.sax,
+            plot.sequences,
+            plot.sequence_motifs,
+            plot.occurrences,
+            plot.representative_motifs,
+        ],
+    )
 
 
 class Pipeline:
@@ -54,7 +87,7 @@ class Pipeline:
     def plot(self, fig, axs, data, name, steps):
         fig.align_labels()
 
-        self.data = standardise([row[:self.length] for row in data])
+        self.data = standardise([row[: self.length] for row in data])
         self.mm.mine(self.data)
 
         for ax, step in zip(axs, steps):
@@ -67,7 +100,12 @@ class Pipeline:
 
     def timeseries(self, ax):
         ax.plot(self.data.T, lw=0.5)
-        ax.set(ylim=(-3, 3), xticks=[0, self.length-1], yticks=[], xlabel='Time series database')
+        ax.set(
+            ylim=(-3, 3),
+            xticks=[0, self.length - 1],
+            yticks=[],
+            xlabel='Time series database',
+        )
 
     def sax(self, ax):
         for b in get_breakpoints(self.alphabet):
@@ -80,12 +118,25 @@ class Pipeline:
             end_idx = i + self.seglen
             x_values = np.arange(start_idx, end_idx)
             y_value = np.mean(self.data[0][start_idx:end_idx])
-            ax.plot(x_values, np.full_like(x_values, y_value, dtype=y_value.dtype), color='black', lw=0.5)
+            ax.plot(
+                x_values,
+                np.full_like(x_values, y_value, dtype=y_value.dtype),
+                color='black',
+                lw=0.5,
+            )
 
             middle_idx = (start_idx + end_idx) // 2
-            ax.text(middle_idx, y_value - 0.25, sequence[i // self.seglen], size='small', ha='center', va='center', color='black')
+            ax.text(
+                middle_idx,
+                y_value - 0.25,
+                sequence[i // self.seglen],
+                size='small',
+                ha='center',
+                va='center',
+                color='black',
+            )
 
-        ax.set(ylim=(-3, 3), xticks=[0, self.length-1], yticks=[], xlabel='SAX')
+        ax.set(ylim=(-3, 3), xticks=[0, self.length - 1], yticks=[], xlabel='SAX')
 
     def sequences(self, ax):
         for s, y in zip(sax(self.data, self.seglen, self.alphabet), range(7, -1, -1)):
@@ -106,13 +157,20 @@ class Pipeline:
                     end = start + motif.length
                     ax.plot(list(range(start, end)), ts[start:end], color, lw=0.5)
 
-        ax.set(ylim=(-3, 3), xticks=[0, self.length-1], yticks=[], xlabel='Occurrences')
+        ax.set(
+            ylim=(-3, 3), xticks=[0, self.length - 1], yticks=[], xlabel='Occurrences'
+        )
 
     def representative_motifs(self, ax):
         for motif, color in zip(self.mm.motifs, COLORS):
             ax.plot(motif.representative, color, lw=0.5)
 
-        ax.set(ylim=(-3, 3), xticks=[0, self.length-1], yticks=[], xlabel='Representative motifs')
+        ax.set(
+            ylim=(-3, 3),
+            xticks=[0, self.length - 1],
+            yticks=[],
+            xlabel='Representative motifs',
+        )
 
     def empty(self, ax):
         ax.text(0.5, 0.5, '...')
@@ -207,7 +265,7 @@ def plot_motifs(motifs, i, x, y, ax):
         if m := motif.best_matches.get(i, False):
             start = m
             end = start + motif.length
-            ax.plot(x[start : end], y[start : end], color, lw=1.5)
+            ax.plot(x[start:end], y[start:end], color, lw=1.5)
 
 
 if __name__ == '__main__':

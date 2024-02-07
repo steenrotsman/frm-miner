@@ -2,6 +2,8 @@ import warnings
 
 import numpy as np
 import pyscamp as mp
+
+
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
     from mass_ts import mass2 as mass
@@ -19,7 +21,7 @@ def ostinato(ts, m):
                 break
             for i, _ in enumerate(ts):
                 if i not in (j, h):
-                    radius = max(radius, min(mass(ts[i], ts[j][q:q+m])).real)
+                    radius = max(radius, min(mass(ts[i], ts[j][q : q + m])).real)
                     if radius >= bsf_rad:
                         break
             if radius < bsf_rad:
@@ -42,11 +44,13 @@ def k_of_p_ostinato(ts, m, k):
 
             for i, _ in enumerate(ts):
                 if i not in (j, h):
-                    rad = min(mass(ts[i], ts[j][q:q+m])).real
+                    rad = min(mass(ts[i], ts[j][q : q + m])).real
                     if rad > radius:
                         outliers[i] = rad
-                        if len(outliers) > n-k:
-                            smallest_outlier_index, smallest_outlier_radius = min(outliers.items(), key=lambda x: x[1])
+                        if len(outliers) > n - k:
+                            smallest_outlier_index, smallest_outlier_radius = min(
+                                outliers.items(), key=lambda x: x[1]
+                            )
                             radius = smallest_outlier_radius
                             outliers.pop(smallest_outlier_index)
                             if radius > bsf_rad:

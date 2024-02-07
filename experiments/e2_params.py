@@ -1,10 +1,10 @@
-from time import perf_counter
 from itertools import product
 from multiprocessing import Pool
+from time import perf_counter
 
 from frm import Miner
 
-from e2_stocks import get_stocks
+from .e2_stocks import get_stocks
 
 FILE = 'e2_params.csv'
 
@@ -26,7 +26,11 @@ def main():
             seen.append((float(m), int(s), int(a)))
 
     with Pool(2) as p:
-        settings = [setting for setting in product(MINSUP, SEGLEN, ALPHABET) if setting not in seen]
+        settings = [
+            setting
+            for setting in product(MINSUP, SEGLEN, ALPHABET)
+            if setting not in seen
+        ]
         p.starmap(mine, settings)
 
 

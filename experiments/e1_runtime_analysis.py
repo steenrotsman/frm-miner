@@ -3,7 +3,7 @@ from os.path import join
 
 import matplotlib.pyplot as plt
 
-from plot import WIDTH
+from .plot import WIDTH
 
 FILE = 'e1_runtime.csv'
 SIZE = 0.3
@@ -35,10 +35,14 @@ plt.xscale('log')
 plt.yscale('log')
 
 # Create lists of the dictionaries, sorted on dataset name, to ensure runtimes for the same datasets are compared
-method_1_runtimes = [x[1] for x in sorted(method_1_runtimes.items()) if x[0] in method_2_runtimes]
+method_1_runtimes = [
+    x[1] for x in sorted(method_1_runtimes.items()) if x[0] in method_2_runtimes
+]
 method_2_runtimes = [x[1] for x in sorted(method_2_runtimes.items())]
 
-plt.scatter(method_2_runtimes, method_1_runtimes, s=SIZE, color='k', label='UCR data set')
+plt.scatter(
+    method_2_runtimes, method_1_runtimes, s=SIZE, color='k', label='UCR data set'
+)
 
 # Add lines for equality, 10x less, and 100x less runtime
 plt.plot([0.05, 250000], [0.05, 250000], 'k', lw=SIZE, label='Equality')
@@ -52,6 +56,6 @@ plt.xlabel(METHOD_1[10:])
 plt.ylabel(METHOD_2[10:])
 plt.legend()
 
-plt.savefig(join('figs', f'1 runtime.eps'))
-plt.savefig(join('figs', f'1 runtime.png'))
+plt.savefig(join('figs', '1 runtime.eps'))
+plt.savefig(join('figs', '1 runtime.png'))
 plt.close()

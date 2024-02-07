@@ -1,12 +1,13 @@
 from os.path import join
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import stumpy
 from scipy.stats import zscore
 
 from frm import Miner
-from plot import plot_motifs, remove_spines
+
+from .plot import plot_motifs, remove_spines
 
 # Simulation settings
 UNITS = 100
@@ -29,7 +30,13 @@ def main():
     motif = get_motif(MOTIF_LEN)
 
     for inject in INJECT:
-        fig, axss = plt.subplots(nrows=K, ncols=len(NOISE_LEVELS), layout='compressed', sharey='all', sharex='all')
+        fig, axss = plt.subplots(
+            nrows=K,
+            ncols=len(NOISE_LEVELS),
+            layout='compressed',
+            sharey='all',
+            sharex='all',
+        )
         consensus_motifs = []
         for noise_level, axs in zip(NOISE_LEVELS, axss.T):
             # Put noisy motif into data
@@ -86,12 +93,16 @@ def get_data(noise, motif, noise_level, inject):
 def ostinato(data, m, i=[0]):
     # Pre-computed points, comment out until line 129 to calculate consensus motifs again
     points = [
-        (58, 3998), (59, 4032), (40, 8878),
-        (42, 2178), (74, 8804), (92, 6033),
+        (58, 3998),
+        (59, 4032),
+        (40, 8878),
+        (42, 2178),
+        (74, 8804),
+        (92, 6033),
     ]
 
     idx, subidx = points[i[0]]
-    consensus_motif = data[idx][subidx : subidx+m]
+    consensus_motif = data[idx][subidx : subidx + m]
 
     # Terrible hack
     i[0] = i[0] + 1
@@ -100,11 +111,13 @@ def ostinato(data, m, i=[0]):
     # Warning: takes long
     radius, idx, subidx = stumpy.ostinato(data, m)
     print(idx, subidx)
-    return data[idx][subidx : subidx+m]
+    return data[idx][subidx : subidx + m]
 
 
 def plot_ostinato(consensus_motifs, inject):
-    fig, axs = plt.subplots(ncols=len(consensus_motifs), sharex='all', sharey='all', layout='compressed')
+    fig, axs = plt.subplots(
+        ncols=len(consensus_motifs), sharex='all', sharey='all', layout='compressed'
+    )
 
     for motif, ax, noise_level in zip(consensus_motifs, axs, NOISE_LEVELS):
         ax.plot(motif, 'k', lw=0.5)

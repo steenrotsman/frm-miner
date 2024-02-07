@@ -1,9 +1,11 @@
-from statistics import fmean
 from collections import defaultdict
+from os.path import join
+from statistics import fmean
 
 import matplotlib.pyplot as plt
-from plot import remove_spines, COLORS
-from e1_runtime import get_data, FILE
+
+from .e1_runtime import FILE, get_data
+from .plot import COLORS, remove_spines
 
 
 def main():
@@ -23,18 +25,36 @@ def main():
 
             length_runtimes[length].append(runtime)
             row_runtimes[rows].append(runtime)
-            total_runtimes[rows*length].append(runtime)
+            total_runtimes[rows * length].append(runtime)
 
     length_runtimes = {size: fmean(x) for size, x in length_runtimes.items()}
     row_runtimes = {size: fmean(x) for size, x in row_runtimes.items()}
     total_runtimes = {size: fmean(x) for size, x in total_runtimes.items()}
 
-    fig, axs = plt.subplots(nrows=2,sharey='all', layout='constrained')
+    fig, axs = plt.subplots(nrows=2, sharey='all', layout='constrained')
 
     # Plot the lines for number of rows, row length, and total data size
-    axs[0].scatter(list(row_runtimes.keys()), list(row_runtimes.values()), s=1, color=COLORS[0], label='Number of Rows')
-    axs[0].scatter(list(length_runtimes.keys()), list(length_runtimes.values()), s=1, color=COLORS[1], label='Row Length')
-    axs[1].scatter(list(total_runtimes.keys()), list(total_runtimes.values()), s=1, color=COLORS[3], label='Total Length')
+    axs[0].scatter(
+        list(row_runtimes.keys()),
+        list(row_runtimes.values()),
+        s=1,
+        color=COLORS[0],
+        label='Number of Rows',
+    )
+    axs[0].scatter(
+        list(length_runtimes.keys()),
+        list(length_runtimes.values()),
+        s=1,
+        color=COLORS[1],
+        label='Row Length',
+    )
+    axs[1].scatter(
+        list(total_runtimes.keys()),
+        list(total_runtimes.values()),
+        s=1,
+        color=COLORS[3],
+        label='Total Length',
+    )
 
     # Set the x-axis and y-axis scales to logarithmic
     axs[0].set_xscale('log')
@@ -52,7 +72,7 @@ def main():
     axs[1].set_xlabel('Size')
 
     # Show the plot
-    plt.savefig(f'figs/4 scalability ucr.eps')
+    plt.savefig(join('figs', '4 scalability ucr.eps'))
 
 
 if __name__ == '__main__':

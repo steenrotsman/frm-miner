@@ -1,10 +1,11 @@
-from statistics import fmean
 from math import log10 as log
+from os.path import join
+from statistics import fmean
 
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 
-from plot import remove_spines, COLORS
+from .plot import COLORS, remove_spines
 
 FILE = 'e2_params.csv'
 
@@ -50,16 +51,45 @@ a_n = [int(round(fmean(x), 0)) for x in a_n]
 
 rcParams['font.size'] = 3
 fig, axs = plt.subplots(ncols=3, layout='constrained', sharey='all')
-for results, ax, xlabel, xticks in zip([(m_r, m_n), (s_r, s_n), (a_r, a_n)], axs, ['minsup', 'seglen', 'alphabet'], [MINSUP, SEGLEN, ALPHABET]):
-    bar_positions1 = [x - BAR_WIDTH/2 for x in range(len(xticks))]
-    bar_positions2 = [x + BAR_WIDTH/2 for x in range(len(xticks))]
+for results, ax, xlabel, xticks in zip(
+    [(m_r, m_n), (s_r, s_n), (a_r, a_n)],
+    axs,
+    ['minsup', 'seglen', 'alphabet'],
+    [MINSUP, SEGLEN, ALPHABET],
+):
+    bar_positions1 = [x - BAR_WIDTH / 2 for x in range(len(xticks))]
+    bar_positions2 = [x + BAR_WIDTH / 2 for x in range(len(xticks))]
 
-    ax.bar(bar_positions1, [log(x) for x in results[0]], BAR_WIDTH, color=COLORS[0], label='Runtime (seconds)')
-    ax.bar(bar_positions2, [log(x) for x in results[1]], BAR_WIDTH, color=COLORS[1], label='n motifs')
+    ax.bar(
+        bar_positions1,
+        [log(x) for x in results[0]],
+        BAR_WIDTH,
+        color=COLORS[0],
+        label='Runtime (seconds)',
+    )
+    ax.bar(
+        bar_positions2,
+        [log(x) for x in results[1]],
+        BAR_WIDTH,
+        color=COLORS[1],
+        label='n motifs',
+    )
 
     for i in range(len(xticks)):
-        ax.text(bar_positions1[i], log(results[0][i]), str(results[0][i]), ha='center', va='bottom')
-        ax.text(bar_positions2[i], log(results[1][i]), str(results[1][i]), ha='center', va='bottom')
+        ax.text(
+            bar_positions1[i],
+            log(results[0][i]),
+            str(results[0][i]),
+            ha='center',
+            va='bottom',
+        )
+        ax.text(
+            bar_positions2[i],
+            log(results[1][i]),
+            str(results[1][i]),
+            ha='center',
+            va='bottom',
+        )
 
     # Set the x-axis ticks
     ax.set_xticks(list(range(len(xticks))))
@@ -67,5 +97,5 @@ for results, ax, xlabel, xticks in zip([(m_r, m_n), (s_r, s_n), (a_r, a_n)], axs
 
     remove_spines(ax)
 
-plt.savefig(f'figs/2 params.eps')
+plt.savefig(join('figs', '2 params.eps'))
 plt.close()

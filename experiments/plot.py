@@ -14,11 +14,22 @@ params = {
     'text.usetex': False,
     'font.family': 'serif',
     'figure.figsize': [WIDTH, HEIGHT],
-    'savefig.dpi': 2400
+    'savefig.dpi': 2400,
 }
 matplotlib.rcParams.update(params)
 
-COLORS = ['maroon', 'steelblue', 'olive', 'salmon', 'teal', 'seagreen', 'purple', 'goldenrod', 'orange', 'tomato']
+COLORS = [
+    'maroon',
+    'steelblue',
+    'olive',
+    'salmon',
+    'teal',
+    'seagreen',
+    'purple',
+    'goldenrod',
+    'orange',
+    'tomato',
+]
 
 
 def plot_motifs(flat_axs, data, motifs, length=0, fn=''):
@@ -28,7 +39,7 @@ def plot_motifs(flat_axs, data, motifs, length=0, fn=''):
 
         # Plot matches of the representative motif
         for seq, index in motif.best_matches.items():
-            ax.plot(data[seq][index : index+motif.length], 'k', lw=0.1)
+            ax.plot(data[seq][index : index + motif.length], 'k', lw=0.1)
 
         # Plot representative motif
         ax.plot(motif.representative, 'b', lw=1)

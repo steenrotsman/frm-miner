@@ -19,7 +19,10 @@ def main():
             fp.write('[\n')
             with fitdecode.FitReader(join(FIT_DIR, file)) as fit:
                 for frame in fit:
-                    if frame.frame_type == fitdecode.FIT_FRAME_DATA and frame.name == 'record':
+                    if (
+                        frame.frame_type == fitdecode.FIT_FRAME_DATA
+                        and frame.name == 'record'
+                    ):
                         length += 1
                         rec = get_rec(frame)
                         if length > 1:

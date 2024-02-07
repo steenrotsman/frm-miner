@@ -1,13 +1,15 @@
-from time import perf_counter
+from collections import defaultdict
 from itertools import product
 from multiprocessing import Pool
 from statistics import fmean
-from collections import defaultdict
+from time import perf_counter
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 from frm import Miner
-from plot import remove_spines, COLORS
+
+from .plot import COLORS, remove_spines
 
 FILE = 'e4_scalability sim.csv'
 
@@ -15,8 +17,8 @@ MINSUP = 0.3
 SEGLEN = 10
 ALPHABET = 5
 
-LENGTHS = [10 ** i for i in range(1, 5)]
-ROWS = [10 ** i for i in range(1, 5)]
+LENGTHS = [10**i for i in range(1, 5)]
+ROWS = [10**i for i in range(1, 5)]
 INJECT = 40
 ITER = 10
 
@@ -25,11 +27,14 @@ def main():
     with open(FILE) as fp:
         seen = []
         for row in fp.readlines():
-            length, rows, i= tuple(row.split(',')[:3])
+            length, rows, i = tuple(row.split(',')[:3])
             seen.append((int(length), int(rows), int(i)))
 
     with Pool(1, maxtasksperchild=1) as p:
-        p.starmap(simulation, [x for x in product(LENGTHS, ROWS, range(ITER)) if x not in seen])
+        p.starmap(
+            simulation,
+            [x for x in product(LENGTHS, ROWS, range(ITER)) if x not in seen],
+        )
 
     length_runtimes = defaultdict(list)
     row_runtimes = defaultdict(list)
@@ -41,18 +46,36 @@ def main():
             length, rows, runtime = int(length), int(rows), float(runtime)
             length_runtimes[length].append(runtime)
             row_runtimes[rows].append(runtime)
-            total_runtimes[rows*length].append(runtime)
+            total_runtimes[rows * length].append(runtime)
 
     length_runtimes = {size: fmean(x) for size, x in length_runtimes.items()}
     row_runtimes = {size: fmean(x) for size, x in row_runtimes.items()}
     total_runtimes = {size: fmean(x) for size, x in total_runtimes.items()}
 
-    fig, axs = plt.subplots(nrows=2,sharey='all', layout='constrained')
+    fig, axs = plt.subplots(nrows=2, sharey='all', layout='constrained')
 
     # Plot the lines for number of rows, row length, and total data size
-    axs[0].plot(list(row_runtimes.keys()), list(row_runtimes.values()), '.-', color=COLORS[0], label='Number of Rows')
-    axs[0].plot(list(length_runtimes.keys()), list(length_runtimes.values()), '.-', color=COLORS[1], label='Row Length')
-    axs[1].plot(list(total_runtimes.keys()), list(total_runtimes.values()), '.-', color=COLORS[3], label='Total Length')
+    axs[0].plot(
+        list(row_runtimes.keys()),
+        list(row_runtimes.values()),
+        '.-',
+        color=COLORS[0],
+        label='Number of Rows',
+    )
+    axs[0].plot(
+        list(length_runtimes.keys()),
+        list(length_runtimes.values()),
+        '.-',
+        color=COLORS[1],
+        label='Row Length',
+    )
+    axs[1].plot(
+        list(total_runtimes.keys()),
+        list(total_runtimes.values()),
+        '.-',
+        color=COLORS[3],
+        label='Total Length',
+    )
 
     # Set the x-axis and y-axis scales to logarithmic
     axs[0].set_xscale('log')
@@ -70,7 +93,7 @@ def main():
     axs[1].set_xlabel('Size')
 
     # Show the plot
-    plt.savefig(f'figs/4 scalability sim.eps')
+    plt.savefig('figs/4 scalability sim.eps')
 
 
 def simulation(length, rows, iter):
@@ -78,11 +101,11 @@ def simulation(length, rows, iter):
     data = np.random.random((rows, length))
 
     motif = np.random.random(length // 10)
-    inject = np.random.randint(1, length - length//10, rows)
+    inject = np.random.randint(1, length - length // 10, rows)
     inject *= np.random.randint(0, 100, rows) < INJECT
     for i, idx in enumerate(inject):
         if i:
-            data[i][idx : idx + length//10] = motif
+            data[i][idx : idx + length // 10] = motif
 
     # Mine motifs in data
     start = perf_counter()
