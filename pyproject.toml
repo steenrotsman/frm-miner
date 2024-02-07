@@ -24,11 +24,23 @@ classifiers = [
 ]
 dependencies = [
     "numpy",
-    "sktime",
+    "scipy",
 ]
 
 [project.optional-dependencies]
 test = ["pytest"]
+experiments = [
+    "matplotlib",
+    "opencv-python",
+    "pillow",
+    "stumpy",
+    "setuptools",
+    "pyscamp",
+    "mass-ts",
+    "tqdm",
+    "yfinance",
+    "fitdecode",
+]
 
 [tool.setuptools.packages.find]
 include = ["frm*"]
