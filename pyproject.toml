@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "pybind11>=2.10.0"]
+requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -19,10 +19,12 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Intended Audience :: Science/Research",
 ]
 dependencies = [
     "numpy",
+    "sktime",
 ]
 
 [project.optional-dependencies]

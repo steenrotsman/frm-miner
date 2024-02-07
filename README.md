@@ -4,7 +4,7 @@ Frequent Representative Motif Miner (FRM-Miner): Efficiently Mining Frequent Rep
 
 ![Pipeline of FRM-Miner: A time series database is discretised into a sequence database using SAX. Non-overlapping frequent sequential patterns without gaps are mined, after which their occurrences are mapped back to the time series. The occurrences are then used to construct frequent representative motifs.](pipeline.png)
 
-This repository contains the implementation of FRM-Miner as a Python package. By default, the C++ version is built and installed, but a pure Python implementation is provided as well.
+This repository contains the Python implementation of FRM-Miner. Prior work included a C++ as well. However, the algorithm has become efficient enough to deprecate that version.
 
 # Installation
 
@@ -14,7 +14,6 @@ It is easiest to install FRM-Miner via pip:
 pip install frm-miner
 ```
 
-This installs both the C++ and pure Python versions. The C++ implementation can then be imported with `from frm import Miner` and the pure Python version can be imported with `from frm._frm_py import Miner`.
 
 # Example
 You will probably get more meaningful results than this if you use your own data (collection of univariate time series, time series do not have to be equal length).

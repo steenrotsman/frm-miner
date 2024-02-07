@@ -4,13 +4,14 @@ This module defines the mine_motifs function, which takes a database of
 time series and finds frequent or maximal motifs in it. The motifs can
 be filtered for length and ranked using different strategies.
 """
-from .preprocessing import standardise, sax
+
 from .patterns import PatternMiner
+from .preprocessing import sax, standardise
 
 
 class Miner:
     """Motif miner class.
-    
+
     Parameters
     ----------
     minsup : float
@@ -29,24 +30,22 @@ class Miner:
     k : int, optional
         Number of motifs to return.
         If 0, all motifs are returned.
-    maximal : bool
-        Return only maximal patterns. 
-        If False, returns all frequent motifs.
-    
+
     Attributes
     ----------
     motifs : list
         Constructed motifs ordered by the distances to their occurrences.
     """
+
     def __init__(
-            self,
-            minsup: float,
-            seglen: int,
-            alphabet: int,
-            min_len: int = 3,
-            max_len: int = 0,
-            max_overlap: float = 0.9,
-            k: int = 0,
+        self,
+        minsup: float,
+        seglen: int,
+        alphabet: int,
+        min_len: int = 3,
+        max_len: int = 0,
+        max_overlap: float = 0.9,
+        k: int = 0,
     ):
         self.minsup = minsup
         self.seglen = seglen
@@ -77,7 +76,7 @@ class Miner:
         self.map_patterns(standardised)
         self.sort_patterns()
 
-        return self.motifs if not self.k else self.motifs[:self.k]
+        return self.motifs if not self.k else self.motifs[: self.k]
 
     def mine_patterns(self, ds):
         """Find frequent patterns in the sequences.
@@ -99,4 +98,3 @@ class Miner:
     def sort_patterns(self):
         """Sort patterns on their root mean squared error of representative and occurrences."""
         self.motifs.sort(key=lambda motif: motif.naed)
-
