@@ -25,12 +25,8 @@ def main():
             m, s, a = tuple(row.split(',')[:3])
             seen.append((float(m), int(s), int(a)))
 
-    with Pool(2) as p:
-        settings = [
-            setting
-            for setting in product(MINSUP, SEGLEN, ALPHABET)
-            if setting not in seen
-        ]
+    with Pool(16, maxtasksperchild=1) as p:
+        settings = [s for s in product(MINSUP, SEGLEN, ALPHABET) if s not in seen]
         p.starmap(mine, settings)
 
 
