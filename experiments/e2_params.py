@@ -2,9 +2,9 @@ from itertools import product
 from multiprocessing import Pool
 from time import perf_counter
 
-from frm import Miner
+from e2_stocks import get_stocks
 
-from .e2_stocks import get_stocks
+from frm import Miner
 
 FILE = 'e2_params.csv'
 

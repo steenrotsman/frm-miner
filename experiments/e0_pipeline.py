@@ -10,11 +10,10 @@ import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
+from plot import COLORS, WIDTH, remove_spines
 
 from frm import Miner
 from frm.preprocessing import get_breakpoints, sax, standardise
-
-from .plot import COLORS, WIDTH, remove_spines
 
 IMG_DIR = 'mpeg7'
 NAME = 'cattle'

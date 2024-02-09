@@ -4,8 +4,7 @@ from statistics import fmean
 
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
-
-from .plot import COLORS, remove_spines
+from plot import COLORS, remove_spines
 
 FILE = 'e2_params.csv'
 

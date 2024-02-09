@@ -3,11 +3,10 @@ from os.path import join
 import matplotlib.pyplot as plt
 import numpy as np
 import stumpy
+from plot import plot_motifs, remove_spines
 from scipy.stats import zscore
 
 from frm import Miner
-
-from .plot import plot_motifs, remove_spines
 
 # Simulation settings
 UNITS = 100

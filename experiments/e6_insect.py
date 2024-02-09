@@ -2,13 +2,12 @@ from os.path import join
 
 import matplotlib.pyplot as plt
 import numpy as np
+from plot import COLORS, remove_spines
 from scipy.io import loadmat
 from scipy.stats import zscore
-from stumpy import ostinato
+from stumpy import ostinato  # noqa
 
 from frm import Miner
-
-from .plot import COLORS, remove_spines
 
 MINSUP = [1, 0.5]
 SEGLEN = 50

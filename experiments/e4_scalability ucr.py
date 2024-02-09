@@ -3,9 +3,8 @@ from os.path import join
 from statistics import fmean
 
 import matplotlib.pyplot as plt
-
-from .e1_runtime import FILE, get_data
-from .plot import COLORS, remove_spines
+from e1_runtime import FILE, get_data
+from plot import COLORS, remove_spines
 
 
 def main():

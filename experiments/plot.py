@@ -49,6 +49,7 @@ def plot_motifs(flat_axs, data, motifs, length=0, fn=''):
         remove_spines(ax, remove_y=False)
     if fn:
         plt.savefig(join('figs', f'{fn}.eps'))
+        plt.savefig(join('figs', f'{fn}.png'))
         plt.close()
 
 

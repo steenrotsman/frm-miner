@@ -6,10 +6,9 @@ from time import perf_counter
 
 import matplotlib.pyplot as plt
 import numpy as np
+from plot import COLORS, remove_spines
 
 from frm import Miner
-
-from .plot import COLORS, remove_spines
 
 FILE = 'e4_scalability sim.csv'
 
