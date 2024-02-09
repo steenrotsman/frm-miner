@@ -72,6 +72,7 @@ def main():
 
     # Show the plot
     plt.savefig(join('figs', '4 scalability ucr.eps'))
+    plt.savefig(join('figs', '4 scalability ucr.png'))
 
 
 if __name__ == '__main__':

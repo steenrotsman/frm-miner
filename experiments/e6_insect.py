@@ -44,6 +44,7 @@ def plot_data(data):
     remove_spines(axs[1], remove_y=False)
 
     plt.savefig(join('figs', '6 insect data.eps'))
+    plt.savefig(join('figs', '6 insect data.png'))
     plt.close()
 
 
@@ -71,6 +72,7 @@ def plot_motif(data):
         ax.set(ylim=(-3, 3), xticks=[0, len(representative)])
         remove_spines(ax, remove_y=False)
     plt.savefig(join('figs', '6 insect motifs.eps'))
+    plt.savefig(join('figs', '6 insect motifs.png'))
     plt.close()
 
 

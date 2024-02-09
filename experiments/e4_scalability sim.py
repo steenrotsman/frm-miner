@@ -93,6 +93,7 @@ def main():
 
     # Show the plot
     plt.savefig('figs/4 scalability sim.eps')
+    plt.savefig('figs/4 scalability sim.png')
 
 
 def simulation(length, rows, iter):

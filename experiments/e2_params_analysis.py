@@ -97,4 +97,5 @@ for results, ax, xlabel, xticks in zip(
     remove_spines(ax)
 
 plt.savefig(join('figs', '2 params.eps'))
+plt.savefig(join('figs', '2 params.png'))
 plt.close()
