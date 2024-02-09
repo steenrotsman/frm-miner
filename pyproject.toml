@@ -40,6 +40,7 @@ experiments = [
     "tqdm",
     "yfinance",
     "fitdecode",
+    "memory-profiler",
 ]
 
 [tool.setuptools.packages.find]

@@ -3,7 +3,8 @@ To replicate this experiment, add a copy of UCRArchive_2018 from https://www.cs.
 Results are saved to the file e1_runtime.csv.
 
 Data sets are supplied by the UCR archive as two .tsv files, a train set and a test set.
-The train and test files are joined into one data set, one which the algorithms are applied.
+The train and test files are joined into one data set, on which the algorithms are applied.
+Run time on each data set is recorded.
 """
 
 from multiprocessing import Pool
