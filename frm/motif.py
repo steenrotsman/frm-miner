@@ -11,7 +11,7 @@ class Motif:
         self.average_occurrences = {}
         self.representative = None
         self.best_matches = {}
-        self.naed = 0.0
+        self.distance = 0.0
         self.length = 0
         self._seglen = 0
 
@@ -27,13 +27,13 @@ class Motif:
         """Record starting index of pattern in sequence i at position j."""
         self.indexes[i].append(j)
 
-    def map(self, ts, seglen):
+    def map(self, ts, seglen, p):
         """Map representative, matches, and naed using occurrences."""
         self._seglen = seglen
         self.length = len(self.pattern) * seglen
         self.set_average_occurrences(ts)
         self.set_representative()
-        self.set_best_matches_and_naed(ts)
+        self.set_best_matches_and_distance(ts, p)
 
     def set_average_occurrences(self, ts):
         for i, indexes in self.indexes.items():
@@ -50,26 +50,26 @@ class Motif:
         end = start + self.length
 
         # Ensure motif occurrences are all the same length
-        if too_short := max(0, end - len(ts)):
-            return np.hstack((ts[start:end], np.array(too_short * [np.nan])))
-        return ts[start:end]
+        too_short = max(0, end - len(ts))
+        return np.hstack((ts[start:end], np.array(too_short * [np.nan])))
 
     def set_representative(self):
         self.representative = np.nanmean(
             [ao for ao in self.average_occurrences.values()], axis=0
         )
 
-    def set_best_matches_and_naed(self, ts):
+    def set_best_matches_and_distance(self, ts, p):
         for i, indexes in self.indexes.items():
             best_match = 0
-            min_naed = 10**6
+            min_dist = np.inf
 
             for index in indexes:
                 occurrence = self.get_occurrence(ts[i], index)
-                naed = np.nansum((occurrence - self.representative) ** 2) ** 0.5
-                if naed < min_naed:
-                    min_naed = naed
+                dist = np.linalg.norm(occurrence - self.representative, ord=p)
+
+                if dist < min_dist:
+                    min_dist = dist
                     best_match = index
-            self.naed += min_naed
+            self.distance += min_dist
             self.best_matches[i] = best_match * self._seglen
-        self.naed /= (len(self.indexes)) * (self.length)
+        self.distance /= len(self.indexes) * self.length ** (1 / p)

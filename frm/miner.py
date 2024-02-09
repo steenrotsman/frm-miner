@@ -5,6 +5,8 @@ time series and finds frequent or maximal motifs in it. The motifs can
 be filtered for length and ranked using different strategies.
 """
 
+from operator import attrgetter
+
 from .patterns import PatternMiner
 from .preprocessing import sax, standardise
 
@@ -27,6 +29,8 @@ class Miner:
         If 0, limit is infinity.
     max_overlap: float
         Maximal fraction of patterns contained in longer patters.
+    p : int
+        L norm for distance computation.
     k : int, optional
         Number of motifs to return.
         If 0, all motifs are returned.
@@ -45,6 +49,7 @@ class Miner:
         min_len: int = 3,
         max_len: int = 0,
         max_overlap: float = 0.9,
+        p: int = 1,
         k: int = 0,
     ):
         self.minsup = minsup
@@ -53,6 +58,7 @@ class Miner:
         self.min_len = min_len
         self.max_len = max_len
         self.max_overlap = max_overlap
+        self.p = p
         self.k = k
 
         self.motifs = None
@@ -93,8 +99,8 @@ class Miner:
     def map_patterns(self, ts):
         """Map patterns back to motifs."""
         for motif in self.motifs:
-            motif.map(ts, self.seglen)
+            motif.map(ts, self.seglen, self.p)
 
     def sort_patterns(self):
         """Sort patterns on their root mean squared error of representative and occurrences."""
-        self.motifs.sort(key=lambda motif: motif.naed)
+        self.motifs.sort(key=attrgetter('distance'))
