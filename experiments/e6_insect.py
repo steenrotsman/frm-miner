@@ -2,7 +2,7 @@ from os.path import join
 
 import matplotlib.pyplot as plt
 import numpy as np
-from plot import COLORS, remove_spines
+from plot import remove_spines
 from scipy.io import loadmat
 from scipy.stats import zscore
 from stumpy import ostinato  # noqa
@@ -25,8 +25,8 @@ def plot_data(data):
     fig, axs = plt.subplots(ncols=2, layout='constrained')
 
     # Plot data
-    for row, color in zip(data, COLORS):
-        axs[0].plot(row.T, color=color, lw=0.3)
+    for row in data:
+        axs[0].plot(row.T, lw=0.3)
 
     # Find and plot consensus motif
     # bsf_rad, ts_index, ss_index = ostinato(data, 800)

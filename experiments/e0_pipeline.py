@@ -10,7 +10,7 @@ import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-from plot import COLORS, WIDTH, remove_spines
+from plot import WIDTH, remove_spines
 
 from frm import Miner
 from frm.preprocessing import get_breakpoints, sax, standardise
@@ -143,26 +143,26 @@ class Pipeline:
         ax.set(xticks=[], yticks=[], xlabel='Sequence database')
 
     def sequence_motifs(self, ax):
-        for motif, y, color in zip(self.mm.motifs, range(7, -1, -1), COLORS):
-            ax.text(0.3, y / 10 + 0.025, motif.pattern, fontsize=6, color=color)
+        for motif, y in zip(self.mm.motifs, range(7, -1, -1)):
+            ax.text(0.3, y / 10 + 0.025, motif.pattern, fontsize=6)
         ax.set(xticks=[], yticks=[], xlabel='Sequence motifs')
 
     def occurrences(self, ax):
         for i, ts in enumerate(self.data):
             ax.plot(ts, 'k', lw=0.25)
-            for motif, color in zip(self.mm.motifs, COLORS):
+            for motif in self.mm.motifs:
                 if i in motif.best_matches:
                     start = motif.best_matches[i]
                     end = start + motif.length
-                    ax.plot(list(range(start, end)), ts[start:end], color, lw=0.5)
+                    ax.plot(list(range(start, end)), ts[start:end], lw=0.5)
 
         ax.set(
             ylim=(-3, 3), xticks=[0, self.length - 1], yticks=[], xlabel='Occurrences'
         )
 
     def representative_motifs(self, ax):
-        for motif, color in zip(self.mm.motifs, COLORS):
-            ax.plot(motif.representative, color, lw=0.5)
+        for motif in self.mm.motifs:
+            ax.plot(motif.representative, lw=0.5)
 
         ax.set(
             ylim=(-3, 3),
@@ -260,11 +260,11 @@ def contour_to_xy(contour):
 
 def plot_motifs(motifs, i, x, y, ax):
     """Plot all motifs occurring in a unit."""
-    for motif, color in zip(motifs, COLORS):
+    for motif in zip(motifs):
         if m := motif.best_matches.get(i, False):
             start = m
             end = start + motif.length
-            ax.plot(x[start:end], y[start:end], color, lw=1.5)
+            ax.plot(x[start:end], y[start:end], lw=1.5)
 
 
 if __name__ == '__main__':

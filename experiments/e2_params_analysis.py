@@ -4,7 +4,7 @@ from statistics import fmean
 
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
-from plot import COLORS, remove_spines
+from plot import remove_spines
 
 FILE = 'e2_params.csv'
 
@@ -59,20 +59,8 @@ for results, ax, xlabel, xticks in zip(
     bar_positions1 = [x - BAR_WIDTH / 2 for x in range(len(xticks))]
     bar_positions2 = [x + BAR_WIDTH / 2 for x in range(len(xticks))]
 
-    ax.bar(
-        bar_positions1,
-        [log(x) for x in results[0]],
-        BAR_WIDTH,
-        color=COLORS[0],
-        label='Runtime (seconds)',
-    )
-    ax.bar(
-        bar_positions2,
-        [log(x) for x in results[1]],
-        BAR_WIDTH,
-        color=COLORS[1],
-        label='n motifs',
-    )
+    ax.bar(bar_positions1, [log(x) for x in results[0]], BAR_WIDTH)
+    ax.bar(bar_positions2, [log(x) for x in results[1]], BAR_WIDTH)
 
     for i in range(len(xticks)):
         ax.text(
