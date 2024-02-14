@@ -38,7 +38,7 @@ miner = Miner(MINSUP, SEGLEN, ALPHABET, k=K)
 motifs = miner.mine(data)
 
 # Plot frequent representative motifs
-fig, axs = plt.subplots(ncols=K, sharey='all', layout='compressed')
+fig, axs = plt.subplots(ncols=K, sharey='all', layout='constrained')
 for motif, ax in zip(motifs, axs):
     ax.plot(motif.representative)
 plt.show()

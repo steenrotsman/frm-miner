@@ -49,7 +49,7 @@ s_n = [int(round(fmean(x), 0)) for x in s_n]
 a_n = [int(round(fmean(x), 0)) for x in a_n]
 
 rcParams['font.size'] = 3
-fig, axs = plt.subplots(ncols=3, layout='constrained', sharey='all')
+fig, axs = plt.subplots(ncols=3, sharey='all')
 for results, ax, xlabel, xticks in zip(
     [(m_r, m_n), (s_r, s_n), (a_r, a_n)],
     axs,

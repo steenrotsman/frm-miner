@@ -23,7 +23,7 @@ def main():
     records = get_records(JSON_DIR)
     field = get_fields(records, FIELD)
 
-    fig, axs = plt.subplots(ncols=K, sharey='all', layout='compressed')
+    fig, axs = plt.subplots(ncols=K, sharey='all')
     miner = Miner(MINSUP, SEGLEN, ALPHABET, k=K, p=P)
     motifs = miner.mine(field)
     plot_motifs(axs, [zscore(ts) for ts in field], motifs, fn='5 bike motifs')

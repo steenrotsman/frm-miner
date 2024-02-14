@@ -30,11 +30,7 @@ def main():
 
     for inject in INJECT:
         fig, axss = plt.subplots(
-            nrows=K,
-            ncols=len(NOISE_LEVELS),
-            layout='compressed',
-            sharey='all',
-            sharex='all',
+            nrows=K, ncols=len(NOISE_LEVELS), sharey='all', sharex='all'
         )
         consensus_motifs = []
         for noise_level, axs in zip(NOISE_LEVELS, axss.T):
@@ -114,9 +110,7 @@ def ostinato(data, m, i=[0]):
 
 
 def plot_ostinato(consensus_motifs, inject):
-    fig, axs = plt.subplots(
-        ncols=len(consensus_motifs), sharex='all', sharey='all', layout='compressed'
-    )
+    fig, axs = plt.subplots(ncols=len(consensus_motifs), sharex='all', sharey='all')
 
     for motif, ax, noise_level in zip(consensus_motifs, axs, NOISE_LEVELS):
         ax.plot(motif, 'k', lw=0.5)

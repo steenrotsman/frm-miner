@@ -28,47 +28,19 @@ def main():
     ts, contours = get_all_ts(files)
 
     plot = Pipeline(2 / 3, 16, ALPHABET, LENGTH)
-    fig, axs = plt.subplots(
-        ncols=5, figsize=(WIDTH * 2, WIDTH / 2), layout='compressed'
-    )
-    plot.plot(
-        fig,
-        axs,
-        ts,
-        'pipeline',
-        [
-            plot.timeseries,
-            plot.sequences,
-            plot.sequence_motifs,
-            plot.occurrences,
-            plot.representative_motifs,
-        ],
-    )
+    fig, axs = plt.subplots(ncols=5, figsize=(WIDTH * 2, WIDTH / 2))
+    steps = [plot.D, plot.Ds, plot.sm, plot.occ, plot.rm]
+    plot.plot(fig, axs, ts, 'pipeline', steps)
 
     plot = Pipeline(2 / 3, 32, ALPHABET, LENGTH)
-    fig, axs = plt.subplots(
-        ncols=3, figsize=(WIDTH * 2, WIDTH / 2), layout='compressed'
-    )
-    plot.plot(fig, axs, [ts[0]], 'sax', [plot.timeseries, plot.sax, plot.sequences])
+    fig, axs = plt.subplots(ncols=3, figsize=(WIDTH * 2, WIDTH / 2))
+    steps = [plot.D, plot.sax, plot.Ds]
+    plot.plot(fig, axs, [ts[0]], 'sax', steps)
 
     plot = Pipeline(2 / 3, 16, ALPHABET, LENGTH)
-    fig, axs = plt.subplots(
-        nrows=2, ncols=3, figsize=(WIDTH * 2, WIDTH), layout='compressed'
-    )
-    plot.plot(
-        fig,
-        chain.from_iterable(axs),
-        ts,
-        'long',
-        [
-            plot.timeseries,
-            plot.sax,
-            plot.sequences,
-            plot.sequence_motifs,
-            plot.occurrences,
-            plot.representative_motifs,
-        ],
-    )
+    fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH * 2, WIDTH))
+    steps = [plot.D, plot.sax, plot.Ds, plot.sm, plot.occ, plot.rm]
+    plot.plot(fig, chain.from_iterable(axs), ts, 'long', steps)
 
 
 class Pipeline:
@@ -82,6 +54,8 @@ class Pipeline:
         self.mm = Miner(minsup, seglen, alphabet)
 
         self.data = None
+
+        self.colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 
     def plot(self, fig, axs, data, name, steps):
         fig.align_labels()
@@ -97,14 +71,9 @@ class Pipeline:
         plt.savefig(join('figs', f'0 {name}.png'))
         plt.close()
 
-    def timeseries(self, ax):
+    def D(self, ax):
         ax.plot(self.data.T, lw=0.5)
-        ax.set(
-            ylim=(-3, 3),
-            xticks=[0, self.length - 1],
-            yticks=[],
-            xlabel='Time series database',
-        )
+        self.axset(ax, 'Time series database')
 
     def sax(self, ax):
         for b in get_breakpoints(self.alphabet):
@@ -117,12 +86,8 @@ class Pipeline:
             end_idx = i + self.seglen
             x_values = np.arange(start_idx, end_idx)
             y_value = np.mean(self.data[0][start_idx:end_idx])
-            ax.plot(
-                x_values,
-                np.full_like(x_values, y_value, dtype=y_value.dtype),
-                color='black',
-                lw=0.5,
-            )
+            y_values = np.full_like(x_values, y_value, dtype=y_value.dtype)
+            ax.plot(x_values, y_values, color='black', lw=0.5)
 
             middle_idx = (start_idx + end_idx) // 2
             ax.text(
@@ -135,45 +100,41 @@ class Pipeline:
                 color='black',
             )
 
-        ax.set(ylim=(-3, 3), xticks=[0, self.length - 1], yticks=[], xlabel='SAX')
+        self.axset(ax, 'SAX')
 
-    def sequences(self, ax):
-        for s, y in zip(sax(self.data, self.seglen, self.alphabet), range(7, -1, -1)):
-            ax.text(0.5, y / 10, s, fontsize=6, ha='center', va='center')
+    def Ds(self, ax):
+        sequences = '\n'.join(sax(self.data, self.seglen, self.alphabet))
+        ax.text(0.5, 0.5, sequences, fontsize=6, ha='center', va='center')
         ax.set(xticks=[], yticks=[], xlabel='Sequence database')
 
-    def sequence_motifs(self, ax):
-        for motif, y in zip(self.mm.motifs, range(7, -1, -1)):
-            ax.text(0.3, y / 10 + 0.025, motif.pattern, fontsize=6)
+    def sm(self, ax):
+        for motif, y, color in zip(self.mm.motifs, range(4, -1, -1), self.colors):
+            ax.text(0.5, y / 10 + 0.2, motif.pattern, ha='center', fontsize=6, c=color)
         ax.set(xticks=[], yticks=[], xlabel='Sequence motifs')
 
-    def occurrences(self, ax):
+    def occ(self, ax):
         for i, ts in enumerate(self.data):
             ax.plot(ts, 'k', lw=0.25)
-            for motif in self.mm.motifs:
+            for motif, color in zip(self.mm.motifs, self.colors):
                 if i in motif.best_matches:
                     start = motif.best_matches[i]
                     end = start + motif.length
-                    ax.plot(list(range(start, end)), ts[start:end], lw=0.5)
+                    ax.plot(list(range(start, end)), ts[start:end], c=color, lw=0.5)
 
-        ax.set(
-            ylim=(-3, 3), xticks=[0, self.length - 1], yticks=[], xlabel='Occurrences'
-        )
+        self.axset(ax, 'Occurrences')
 
-    def representative_motifs(self, ax):
+    def rm(self, ax):
         for motif in self.mm.motifs:
             ax.plot(motif.representative, lw=0.5)
 
-        ax.set(
-            ylim=(-3, 3),
-            xticks=[0, self.length - 1],
-            yticks=[],
-            xlabel='Representative motifs',
-        )
+        self.axset(ax, 'Representative motifs')
 
     def empty(self, ax):
         ax.text(0.5, 0.5, '...')
         ax.set(xticks=[], yticks=[])
+
+    def axset(self, ax, xlabel):
+        ax.set(ylim=(-3, 3), xticks=[0, self.length - 1], yticks=[], xlabel=xlabel)
 
 
 def get_all_ts(files: list):

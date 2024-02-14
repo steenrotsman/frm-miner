@@ -56,8 +56,8 @@ def benchmark(miner, name):
 
 
 def benchmark_miner(data):
-    py_miner = Miner(MINSUP, SEGLEN, ALPHABET)
-    py_miner.mine(data)
+    miner = Miner(MINSUP, SEGLEN, ALPHABET)
+    miner.mine(data)
 
 
 def benchmark_stumpy(data):
