@@ -23,7 +23,8 @@ params = {
 matplotlib.rcParams.update(params)
 
 
-def plot_motifs(flat_axs, data, motifs, length=0, fn=''):
+def plot_motifs(flat_axs, data, motifs, length=0, fn='', **axset):
+    xticks = 'xticks' in axset
     for motif, ax in zip(motifs, flat_axs):
         # If length is not supplied, use length of the motif
         limit = len(motif.representative) if not length else length
@@ -36,7 +37,9 @@ def plot_motifs(flat_axs, data, motifs, length=0, fn=''):
         ax.plot(motif.representative, 'b', lw=1)
 
         # Aesthetics
-        ax.set(xticks=[0, limit])
+        if not xticks:
+            axset['xticks'] = [0, limit]
+        ax.set(**axset)
         remove_spines(ax, remove_y=False)
     if fn:
         plt.savefig(join('figs', f'{fn}.eps'))
