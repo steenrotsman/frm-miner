@@ -67,7 +67,6 @@ class Pipeline:
             step(ax)
             remove_spines(ax)
 
-        plt.savefig(join('figs', f'0 {name}.eps'))
         plt.savefig(join('figs', f'0 {name}.png'))
         plt.close()
 

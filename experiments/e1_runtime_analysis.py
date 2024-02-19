@@ -55,6 +55,5 @@ plt.xlabel(X_NAME)
 plt.ylabel(Y_NAME)
 plt.legend()
 
-plt.savefig(join('figs', '1 runtime.eps'))
 plt.savefig(join('figs', '1 runtime.png'))
 plt.close()

@@ -43,7 +43,6 @@ def plot_data(data):
     axs[1].set(ylim=(-3, 3), xticks=[0, 800], yticks=[-2, 0, 2])
     remove_spines(axs[1], remove_y=False)
 
-    plt.savefig(join('figs', '6 insect data.eps'))
     plt.savefig(join('figs', '6 insect data.png'))
     plt.close()
 
@@ -71,7 +70,6 @@ def plot_motif(data):
             ax.plot(zscore(data[ts][idx : idx + motif.length]), color='k', lw=0.1)
         ax.set(ylim=(-3, 3), xticks=[0, len(representative)])
         remove_spines(ax, remove_y=False)
-    plt.savefig(join('figs', '6 insect motifs.eps'))
     plt.savefig(join('figs', '6 insect motifs.png'))
     plt.close()
 

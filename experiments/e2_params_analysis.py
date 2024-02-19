@@ -59,6 +59,5 @@ for (runtime, n_patterns), ax, xlabel, xticks in zip(results, axs, PARAMS, VALUE
 axs[0].set(ylabel='Seconds', yticks=[0, 20, 40])
 twin.set(ylabel='n Patterns', yticks=[0, 200, 400])
 
-plt.savefig(join('figs', '2 params.eps'))
 plt.savefig(join('figs', '2 params.png'))
 plt.close()
