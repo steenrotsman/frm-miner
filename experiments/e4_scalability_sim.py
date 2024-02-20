@@ -120,6 +120,7 @@ def plot_results(lengths, rows, total, name, measure, marker='.', ls='-'):
     axs[0].set_ylabel(measure, labelpad=0).set_y(-0.5)
     axs[1].set_xlabel('Size')
 
+    plt.savefig(join('figs', f'{name} {measure}.eps'))
     plt.savefig(join('figs', f'{name} {measure}.png'))
     plt.close()
 

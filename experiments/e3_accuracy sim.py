@@ -48,6 +48,7 @@ def main():
             axs[0].set_yticks([-2.5, 2.5])
             axs[2].set_xlabel(noise_level)
 
+        plt.savefig(join('figs', f'3 accuracy {inject}.eps'))
         plt.savefig(join('figs', f'3 accuracy {inject}.png'))
         plt.close()
         plot_ostinato(consensus_motifs, inject)
@@ -117,6 +118,7 @@ def plot_ostinato(consensus_motifs, inject):
         ax.set_xlabel(noise_level)
         remove_spines(ax, remove_y=False)
 
+    plt.savefig(join('figs', f'3 accuracy {inject} ostinato.eps'))
     plt.savefig(join('figs', f'3 accuracy {inject} ostinato.png'))
 
 
