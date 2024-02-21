@@ -61,12 +61,12 @@ def benchmark_miner(data):
 
 
 def benchmark_stumpy(data):
-    length = max(max(map(len, data)) // 10, 3)
+    data, length = get_length(data)
     stumpy.ostinato(data, length)
 
 
 def benchmark_ostinato(data):
-    length = max(max(map(len, data)) // 10, 3)
+    data, length = get_length(data)
     ostinato(data, length)
 
 
@@ -81,6 +81,24 @@ def get_data(name):
                 )
 
     return data
+
+
+def get_length(data):
+    # The consensus motif for lengths shorter than 3 is meaningless
+    data = [ts for ts in data if len(ts) >= 3]
+
+    # In principle, the length should be 1/10th of the length of the longest ts
+    lens = list(map(len, data))
+    length = max(lens) // 10
+
+    # If there are very short time series, set the length to half of the shortest
+    if any(l < length for l in lens):
+        length = min(lens) // 2
+
+    # The consensus motif for lengths shorter than 3 is meaningless
+    length = max(length, 3)
+
+    return data, length
 
 
 if __name__ == '__main__':
