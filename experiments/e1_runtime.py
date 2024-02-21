@@ -92,7 +92,7 @@ def get_length(data):
     length = max(lens) // 10
 
     # If there are very short time series, set the length to half of the shortest
-    if any(l < length for l in lens):
+    if any(tslen < length for tslen in lens):
         length = min(lens) // 2
 
     # The consensus motif for lengths shorter than 3 is meaningless
