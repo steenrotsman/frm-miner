@@ -100,29 +100,40 @@ def get_results(file):
 
 
 def plot_results(lengths, rows, total, name, measure, marker='.', ls='-'):
-    fig, axs = plt.subplots(nrows=2, sharey='all', layout='constrained')
+    fig, axs = plt.subplots(ncols=3)
 
     # Plot the lines for number of rows, row length, and total data size
     params = {'marker': marker, 'ls': ls, 'ms': 3, 'lw': 1}
-    axs[0].plot(*zip(*sorted(rows.items())), **params)
-    axs[0].plot(*zip(*sorted(lengths.items())), **params)
-
-    # https://stackoverflow.com/a/63789660
     cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
-    axs[1].plot(*zip(*sorted(total.items())), **params, color=cycle[2])
-
-    # Set the x-axis and y-axis scales to logarithmic
-    for ax in axs:
+    for ax, res, xlabel, color in zip(
+        axs,
+        [rows, lengths, total],
+        ['Time series quantity', 'Time series length', 'Total database size'],
+        cycle,
+    ):
+        data = list(zip(*sorted(res.items())))
+        ax.plot(*data, **params, c=color)
         ax.set_xscale('log')
         ax.set_yscale('log')
+        ax.set_xlabel(xlabel)
         remove_spines(ax, False)
-
-    axs[0].set_ylabel(measure, labelpad=0).set_y(-0.5)
-    axs[1].set_xlabel('Size')
+        yticks = calculate_ticks(data)
+        ax.set_yticks(yticks)
+        ax.tick_params(axis='y', which='minor', left=False)
+    axs[0].set_ylabel(measure)
 
     plt.savefig(join('figs', f'{name} {measure}.eps'))
     plt.savefig(join('figs', f'{name} {measure}.png'))
     plt.close()
+
+
+def calculate_ticks(data):
+    x_data, y_data = data
+    ymin = 10 ** round(np.log10(np.min(y_data)))
+    ymax = 10 ** round(np.log10(np.max(y_data)))
+    yticks = [ymin, ymax]
+
+    return yticks
 
 
 if __name__ == '__main__':

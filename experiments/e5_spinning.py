@@ -10,9 +10,9 @@ FIELD = 'heart_rate'
 # Miner parameters
 MINSUP = 0.3
 SEGLEN = 15
-ALPHABET = 5
+ALPHABET = 4
 P = 1
-K = 3
+K = 4
 
 
 def main():
@@ -25,7 +25,7 @@ def main():
 
     for category, field in data.items():
         fig, axs = plt.subplots(ncols=K, sharey='all')
-        miner = Miner(MINSUP, SEGLEN, ALPHABET, max_overlap=0.9, k=K, p=P)
+        miner = Miner(MINSUP, SEGLEN, ALPHABET, max_overlap=0.8, k=K, p=P)
         motifs = miner.mine(field)
         plot_motifs(
             axs,

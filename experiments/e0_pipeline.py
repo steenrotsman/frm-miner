@@ -10,7 +10,7 @@ import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-from plot import WIDTH, remove_spines
+from plot import HEIGHT, WIDTH, remove_spines
 
 from frm import Miner
 from frm.preprocessing import get_breakpoints, sax, standardise
@@ -28,17 +28,17 @@ def main():
     ts, contours = get_all_ts(files)
 
     plot = Pipeline(2 / 3, 16, ALPHABET, LENGTH)
-    fig, axs = plt.subplots(ncols=5, figsize=(WIDTH * 2, WIDTH / 2))
+    fig, axs = plt.subplots(ncols=5, figsize=(WIDTH, HEIGHT))
     steps = [plot.D, plot.Ds, plot.sm, plot.occ, plot.rm]
     plot.plot(fig, axs, ts, 'pipeline', steps)
 
     plot = Pipeline(2 / 3, 32, ALPHABET, LENGTH)
-    fig, axs = plt.subplots(ncols=3, figsize=(WIDTH * 2, WIDTH / 2))
+    fig, axs = plt.subplots(ncols=3, figsize=(WIDTH, HEIGHT))
     steps = [plot.D, plot.sax, plot.Ds]
     plot.plot(fig, axs, [ts[0]], 'sax', steps)
 
     plot = Pipeline(2 / 3, 16, ALPHABET, LENGTH)
-    fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH * 2, WIDTH))
+    fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH, HEIGHT * 2))
     steps = [plot.D, plot.sax, plot.Ds, plot.sm, plot.occ, plot.rm]
     plot.plot(fig, chain.from_iterable(axs), ts, 'long', steps)
 
@@ -92,9 +92,8 @@ class Pipeline:
             middle_idx = (start_idx + end_idx) // 2
             ax.text(
                 middle_idx,
-                y_value - 0.25,
+                y_value - 0.5,
                 sequence[i // self.seglen],
-                size='small',
                 ha='center',
                 va='center',
                 color='black',
@@ -104,12 +103,12 @@ class Pipeline:
 
     def Ds(self, ax):
         sequences = '\n'.join(sax(self.data, self.seglen, self.alphabet))
-        ax.text(0.5, 0.5, sequences, fontsize=6, ha='center', va='center')
+        ax.text(0.5, 0.5, sequences, ha='center', va='center')
         ax.set(xticks=[], yticks=[], xlabel='Sequence database')
 
     def sm(self, ax):
         for motif, y, color in zip(self.mm.motifs, range(4, -1, -1), self.colors):
-            ax.text(0.5, y / 10 + 0.2, motif.pattern, ha='center', fontsize=6, c=color)
+            ax.text(0.5, y / 5, motif.pattern, ha='center', c=color)
         ax.set(xticks=[], yticks=[], xlabel='Sequence motifs')
 
     def occ(self, ax):

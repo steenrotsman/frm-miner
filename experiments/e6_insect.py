@@ -22,7 +22,7 @@ def main():
 
 
 def plot_data(data):
-    fig, axs = plt.subplots(ncols=2, layout='constrained')
+    fig, axs = plt.subplots(ncols=2)
 
     # Plot data
     for row in data:

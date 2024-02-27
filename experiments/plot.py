@@ -4,21 +4,23 @@ import matplotlib
 import matplotlib.pyplot as plt
 from cycler import cycler
 
-WIDTH = 0.0138 * 347.12354 / 2
-HEIGHT = WIDTH / 2
-colors = cycler(color=['blue', 'darkkhaki', 'chocolate', 'mediumseagreen'])
+WIDTH = 0.0138 * 372
+HEIGHT = WIDTH / 4
+LETTERING_SIZE = 8
+colors = cycler(color=["#1f77b4", "#30c546", "#8b0072", "#efac35"])
 params = {
-    'axes.labelsize': 6,
+    'axes.labelsize': LETTERING_SIZE,
     'axes.prop_cycle': colors,
     'figure.constrained_layout.use': True,
     'figure.figsize': [WIDTH, HEIGHT],
-    'font.family': 'serif',
-    'font.size': 6,
-    'legend.fontsize': 6,
+    'font.family': 'sans-serif',
+    'font.sans-serif': 'Arial',
+    'font.size': LETTERING_SIZE,
+    'legend.fontsize': LETTERING_SIZE,
     'savefig.dpi': 2400,
     'text.usetex': False,
-    'xtick.labelsize': 6,
-    'ytick.labelsize': 6,
+    'xtick.labelsize': LETTERING_SIZE,
+    'ytick.labelsize': LETTERING_SIZE,
 }
 matplotlib.rcParams.update(params)
 

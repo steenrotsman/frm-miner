@@ -2,7 +2,7 @@ from os.path import join
 from statistics import fmean
 
 import matplotlib.pyplot as plt
-from plot import HEIGHT, WIDTH
+import plot  # noqa
 
 FILE = 'e2_params.csv'
 
@@ -46,19 +46,21 @@ results = [
     ([fmean(x) for x in alphabet_runtime], [fmean(x) for x in alphabet_n_patterns]),
 ]
 
-fig, axs = plt.subplots(ncols=3, sharey='all', figsize=(WIDTH * 2, HEIGHT))
+fig, axs = plt.subplots(ncols=3, sharey='all')
 cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
 for (runtime, n_patterns), ax, xlabel, xticks in zip(results, axs, PARAMS, VALUES):
     twin = ax.twinx()
-    ax.plot(xticks, runtime)
-    twin.plot(xticks, n_patterns, c=cycle[1])
+    time = ax.plot(xticks, runtime, label='Time')
+    patterns = twin.plot(xticks, n_patterns, c=cycle[1], label='Patterns')
     ax.set(xlabel=xlabel, xticks=xticks)
     ax.tick_params(axis='x', labelrotation=-90)
     twin.set(yticks=[], ylim=[0, 400])
 
 axs[0].set(ylabel='Seconds', yticks=[0, 20, 40])
 twin.set(ylabel='n Patterns', yticks=[0, 200, 400])
+twin.legend(handles=[time[0], patterns[0]])
 
 plt.savefig(join('figs', '2 params.eps'))
 plt.savefig(join('figs', '2 params.png'))
+plt.close()
 plt.close()
