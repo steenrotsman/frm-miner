@@ -39,9 +39,7 @@ plt.yscale('log')
 x_method_runtimes = [x[1] for x in sorted(x_method_runtimes.items())]
 y_method_runtimes = [x[1] for x in sorted(y_method_runtimes.items())]
 
-plt.scatter(
-    y_method_runtimes, x_method_runtimes, s=SIZE, color='k', label='UCR data set'
-)
+plt.scatter(y_method_runtimes, x_method_runtimes, s=SIZE, color='k', label='Data set')
 
 # Add lines for equality, 10x less, and 100x less runtime
 plt.plot([0.05, 250000], [0.05, 250000], 'k', lw=SIZE, label='Equality')
