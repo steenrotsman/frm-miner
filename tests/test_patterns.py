@@ -12,17 +12,17 @@ class TestPatternMiner(unittest.TestCase):
         self.assertEqual(pm.lcs('bbbbbbbbbb', 'bbbcbbb', 10, 7), 6)
 
     def test_mine(self):
-        pm = PatternMiner(min_len=1)
+        pm = PatternMiner(min_len=1, max_overlap=1)
         pm.mine(seq_1)
 
-        expected = ['aa', 'ca', 'cc']
+        expected = ['a', 'aa', 'c', 'ca', 'cc']
 
         self.assertListEqual(expected, sorted(pm.frequent))
 
     def test_rag_mine(self):
-        pm = PatternMiner(min_len=1)
+        pm = PatternMiner(min_len=1, max_overlap=1)
         pm.mine(rseq_1)
 
-        expected = ['abc']
+        expected = ['a', 'ab', 'abc', 'b', 'bc', 'c']
 
         self.assertListEqual(expected, sorted(pm.frequent))
