@@ -8,6 +8,7 @@ class Motif:
     def __init__(self, pattern):
         self.pattern = pattern
         self.indexes = defaultdict(list)
+        self.children = []
         self.average_occurrences = {}
         self.representative = None
         self.best_matches = {}
@@ -27,6 +28,29 @@ class Motif:
         """Record starting index of pattern in sequence i at position j."""
         self.indexes[i].append(j)
 
+    def remove_index(self, i, j):
+        """Record starting index of pattern in sequence i at position j.
+
+        Removes position j from starting indexes of pattern in sequence i.
+        If j was the only starting index of pattern in sequence i, removes sequence i from indexes.
+        """
+        self.indexes[i].remove(j)
+        if not len(self.indexes[i]):
+            self.indexes.pop(i, 0)
+
+    def get_all_indexes(self):
+        """Get dict of all indexes of motif, including its children."""
+        indexes = defaultdict(list)
+
+        for seq, idx in self.indexes.items():
+            indexes[seq] += idx
+
+        for child in self.children:
+            for seq, idx in child.get_all_indexes().items():
+                indexes[seq] += idx
+
+        return indexes
+
     def map(self, ts, seglen, p):
         """Map representative, matches, and naed using occurrences."""
         self._seglen = seglen
@@ -36,7 +60,7 @@ class Motif:
         self.set_best_matches_and_distance(ts, p)
 
     def set_average_occurrences(self, ts):
-        for i, indexes in self.indexes.items():
+        for i, indexes in self.get_all_indexes().items():
             occurrences = []
             for index in indexes:
                 occurrence = self.get_occurrence(ts[i], index)
@@ -59,7 +83,7 @@ class Motif:
         )
 
     def set_best_matches_and_distance(self, ts, p):
-        for i, indexes in self.indexes.items():
+        for i, indexes in self.get_all_indexes().items():
             best_match = 0
             min_dist = np.inf
 

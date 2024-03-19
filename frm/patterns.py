@@ -42,7 +42,7 @@ class PatternMiner:
         # Keep track of length we're currently mining
         self._k = 2
 
-        # self.patterns contains the patterns of length k-1 and of length k
+        # Keep track of the patterns of length k-1 and length k
         self._patterns = [set(), set()]
 
     def mine(self, sequences):
@@ -81,17 +81,25 @@ class PatternMiner:
     def prune_infrequent(self):
         """Prune infrequent patterns.
 
-        - Check if patterns comply with minsup
-        - Remove patterns that do not comply from self.frequent and self.patterns
-        - Remove parents of patterns that do comply from self.frequent
+        - Prunes patterns with a too low support;
+        - Adds frequent patterns to list of frequent patterns
         """
         for pattern in self._patterns[1].copy():
+            # Check if pattern occurs in enough time series to comply with minsup
             if len(self.frequent[pattern].indexes) < self._min_freq:
                 self.frequent.pop(pattern)
                 self._patterns[1].discard(pattern)
-            else:
-                self.frequent.pop(pattern[1:], 0)
-                self.frequent.pop(pattern[:-1], 0)
+            # Reorder the tree for k > 1 patterns
+            elif len(pattern) > 1:
+                parent = self.frequent[pattern[:-1]]
+
+                # Add candidate to parent's children
+                parent.children.append(self.frequent[pattern])
+
+                # Remove candidate indexes from parents
+                for seq, indexes in self.frequent[pattern].indexes.items():
+                    for index in indexes:
+                        parent.remove_index(seq, index)
 
     def generate_candidates_from_parents(self, sequences):
         """Use frequent k-1 patterns to find k-pattern candidates."""
@@ -117,6 +125,10 @@ class PatternMiner:
         self.frequent = {
             k: v for k, v in self.frequent.items() if len(k) >= self.min_len
         }
+
+        # If max_overlap == 1, no overlap is too high
+        if self.max_overlap == 1:
+            return
 
         # Remove patterns with too much overlap
         patterns = sorted(self.frequent, key=len, reverse=True)
