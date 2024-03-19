@@ -3,16 +3,20 @@ This module finds patterns in the outlines of images from the MPEG-7 data set.
 The data set is freely available from https://dabi.temple.edu/external/shape/MPEG7/dataset.html
 """
 
+import json
 from itertools import chain
 from os.path import join
 
 import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import transforms
 from PIL import Image
 from plot import HEIGHT, WIDTH, remove_spines
 
 from frm import Miner
+from frm.motif import Motif
+from frm.patterns import PatternMiner
 from frm.preprocessing import get_breakpoints, sax, standardise
 
 IMG_DIR = 'mpeg7'
@@ -27,6 +31,7 @@ def main():
     files = [join(IMG_DIR, f'{NAME}-{i + 1}.gif') for i in range(3)]
     ts, contours = get_all_ts(files)
 
+    # Basic pipelines
     plot = Pipeline(2 / 3, 16, ALPHABET, LENGTH)
     fig, axs = plt.subplots(ncols=5, figsize=(WIDTH, HEIGHT))
     steps = [plot.D, plot.Ds, plot.sm, plot.occ, plot.rm]
@@ -41,6 +46,109 @@ def main():
     fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH, HEIGHT * 2))
     steps = [plot.D, plot.sax, plot.Ds, plot.sm, plot.occ, plot.rm]
     plot.plot(fig, chain.from_iterable(axs), ts, 'long', steps)
+
+    # Large pipeline
+    fig = plt.figure(figsize=(WIDTH, WIDTH))
+    gs = fig.add_gridspec(nrows=9, ncols=3)
+
+    ts_axs = [fig.add_subplot(gs[i, 0]) for i in range(3)]
+    sax_axs = [fig.add_subplot(gs[i, 1]) for i in range(3)]
+    seq_ax = fig.add_subplot(gs[:3, 2])
+
+    map_ax = fig.add_subplot(gs[3:6, :2])
+    sms_ax = fig.add_subplot(gs[3:6, 2])
+
+    oc_axs = [fig.add_subplot(gs[i, 0]) for i in range(6, 9)]
+    ao_axs = [fig.add_subplot(gs[i, 1]) for i in range(6, 9)]
+    rm_ax = fig.add_subplot(gs[6:9, 2])
+
+    minsup = 2 / 3
+    alphabet = ALPHABET
+    seglen = 32
+
+    # Time series
+    data = standardise([row[:256] for row in ts])
+    for row, ax in zip(data, ts_axs):
+        ax.plot(row)
+        ax.set(xticks=[])
+        remove_spines(ax)
+    ts_axs[-1].set(xticks=[0, len(row) - 1], xlabel='Time series')
+
+    # SAX
+    for row, ax in zip(data, sax_axs):
+        for b in get_breakpoints(ALPHABET):
+            ax.axhline(y=b, color='lightgrey', lw=0.5)
+
+        ax.plot(row)
+        sequence = sax([row], seglen, alphabet)[0]
+        for i in range(0, len(row), seglen):
+            start_idx = i
+            end_idx = i + seglen
+            x_values = np.arange(start_idx, end_idx)
+            y_value = np.mean(row[start_idx:end_idx])
+            y_values = np.full_like(x_values, y_value, dtype=y_value.dtype)
+            ax.plot(x_values, y_values, color='black', lw=0.5)
+
+            middle_idx = (start_idx + end_idx) // 2
+            ax.text(
+                middle_idx,
+                y_value - 0.7,
+                sequence[i // seglen],
+                ha='center',
+                va='center',
+            )
+            ax.set(xticks=[])
+            remove_spines(ax)
+    sax_axs[-1].set(xticks=[0, len(row) - 1], xlabel='SAX')
+
+    # Sequence database
+    sequences = sax(data, seglen, alphabet)
+    for sequence, y in zip(sequences, [0.5, 0.4, 0.3]):
+        seq_ax.text(0.5, y, sequence, ha='center', va='center')
+    seq_ax.set(xticks=[], xlabel='Sequence database')
+    remove_spines(seq_ax)
+
+    # Index map
+    class MotifEncoder(json.JSONEncoder):
+        def default(self, obj):
+            if isinstance(obj, Motif):
+                return dict(obj.indexes)
+            return super().default(obj)
+
+    pm = PatternMiner(minsup)
+    pm.mine(sax(data, seglen, alphabet))
+    text = json.dumps(pm.frequent, indent=24, cls=MotifEncoder)
+    map_ax.text(0.3, 0.5, text, ha='center', va='center')
+    map_ax.set(xticks=[], xlabel='Index map')
+    remove_spines(map_ax)
+
+    # Sequence motifs
+    motif = list(pm.frequent.values())[0]
+    cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
+    highlight_color = cycle[1]
+    for (i, sequence), y in zip(enumerate(sequences), [0.5, 0.4, 0.3]):
+        for j, char in enumerate(sequence):
+            color = (
+                highlight_color
+                if i in motif.indexes
+                and j
+                in range(motif.indexes[i][0], motif.indexes[i][0] + len(motif.pattern))
+                else 'black'
+            )
+            sms_ax.text(
+                0.335 + j * 0.047, y, char, ha='center', va='center', color=color
+            )
+    sms_ax.set(xticks=[], yticks=[], xlabel='Sequence motif')
+    remove_spines(sms_ax)
+
+    # Occurrences
+
+
+    # Average occurrences
+    
+
+    fig.align_labels()
+    plt.savefig('figs/pipe.png')
 
 
 class Pipeline:

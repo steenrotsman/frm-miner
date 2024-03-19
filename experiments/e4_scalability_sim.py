@@ -7,6 +7,7 @@ from time import perf_counter
 import matplotlib.pyplot as plt
 import numpy as np
 from e1_runtime import benchmark_miner
+from e4_scalability_ucr import get_ucr_results
 from memory_profiler import memory_usage
 from plot import remove_spines
 
@@ -103,24 +104,35 @@ def plot_results(lengths, rows, total, name, measure, marker='.', ls='-'):
     fig, axs = plt.subplots(ncols=3)
 
     # Plot the lines for number of rows, row length, and total data size
-    params = {'marker': marker, 'ls': ls, 'ms': 3, 'lw': 1}
     cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
-    for ax, res, xlabel, color in zip(
-        axs,
-        [rows, lengths, total],
-        ['Time series quantity', 'Time series length', 'Total database size'],
-        cycle,
-    ):
-        data = list(zip(*sorted(res.items())))
-        ax.plot(*data, **params, c=color)
-        ax.set_xscale('log')
-        ax.set_yscale('log')
-        ax.set_xlabel(xlabel)
-        remove_spines(ax, False)
-        yticks = calculate_ticks(data)
-        ax.set_yticks(yticks)
-        ax.tick_params(axis='y', which='minor', left=False)
-    axs[0].set_ylabel(measure)
+    params = {
+        'marker': marker,
+        'ls': ls,
+        'ms': 3,
+        'lw': 1,
+        'c': cycle[0],
+        'label': 'Simulation',
+    }
+    xlabels = ['Time series quantity', 'Time series length', 'Total database size']
+    for i in range(2):
+        for ax, res, xlabel in zip(axs, [rows, lengths, total], xlabels):
+            data = list(zip(*sorted(res.items())))
+            ax.plot(*data, **params)
+            ax.set_xscale('log')
+            ax.set_yscale('log')
+            ax.set_xlabel(xlabel)
+            remove_spines(ax, False)
+            yticks = calculate_ticks(data)
+            ax.set_yticks(yticks)
+            ax.tick_params(axis='y', which='minor', left=False)
+
+        # Update parameters to UCR archive for second round
+        if not i:
+            lengths, rows, total = get_ucr_results(measure)
+        params['ls'] = ''
+        params['c'] = 'k'
+        params['label'] = 'UCR data set'
+        axs[0].set_ylabel(measure)
 
     plt.savefig(join('figs', f'{name} {measure}.eps'))
     plt.savefig(join('figs', f'{name} {measure}.png'))
