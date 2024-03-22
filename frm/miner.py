@@ -48,8 +48,8 @@ class Miner:
         alphabet: int,
         min_len: int = 3,
         max_len: int = 0,
-        max_overlap: float = 0.9,
-        p: int = 1,
+        max_overlap: float = 0.8,
+        p: int = 2,
         k: int = 0,
     ):
         self.minsup = minsup
