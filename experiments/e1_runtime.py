@@ -25,7 +25,7 @@ PARTITIONS = ['TRAIN', 'TEST']
 # Parameters for FRM-Miner
 MINSUP = 0.3
 SEGLEN = 1
-ALPHABET = 5
+ALPHABET = 4
 
 
 def main():
@@ -34,11 +34,7 @@ def main():
         seen = [row.split(',')[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
-    MINERS = [
-        benchmark_miner,
-        benchmark_stumpy,
-        benchmark_ostinato,
-    ]
+    MINERS = [benchmark_miner_2_1, benchmark_miner_2_2, benchmark_stumpy]
     with Pool(processes=16, maxtasksperchild=1) as p:
         unseen = [(m, n) for m in MINERS for n in FILES if [m.__name__, n] not in seen]
         p.starmap(benchmark, unseen)
@@ -55,8 +51,13 @@ def benchmark(miner, name):
     print(f'{miner.__name__}: {name} done!')
 
 
-def benchmark_miner(data):
-    miner = Miner(MINSUP, SEGLEN, ALPHABET)
+def benchmark_miner_2_1(data):
+    miner = Miner(MINSUP, 1, ALPHABET)
+    miner.mine(data)
+
+
+def benchmark_miner_2_2(data):
+    miner = Miner(MINSUP, 2, ALPHABET)
     miner.mine(data)
 
 

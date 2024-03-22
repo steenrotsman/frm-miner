@@ -6,10 +6,10 @@ from plot import WIDTH
 
 FILE = 'e1_runtime.csv'
 SIZE = 3
-X_METHOD = 'benchmark_stumpy'
-Y_METHOD = 'benchmark_py_miner_new'
-X_NAME = 'Ostinato'
-Y_NAME = 'FRM-Miner'
+X_METHOD = 'benchmark_miner_2_2'
+Y_METHOD = 'benchmark_py_miner_1_2'
+X_NAME = 'FRM-Miner 2.0'
+Y_NAME = 'FRM-Miner 1.0'
 
 x_method_runtimes = {}
 y_method_runtimes = {}

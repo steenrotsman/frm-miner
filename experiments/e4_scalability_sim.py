@@ -16,7 +16,7 @@ NAME = '4 scalability sim'
 
 MINSUP = 0.3
 SEGLEN = 10
-ALPHABET = 5
+ALPHABET = 4
 
 LENGTHS = [10**i for i in range(1, 5)]
 ROWS = [10**i for i in range(1, 5)]
