@@ -7,7 +7,7 @@ The train and test files are joined into one data set, on which the algorithms a
 Peak memory use on each data set is recorded.
 """
 
-from e1_runtime import FILES, benchmark_miner_2_1, benchmark_miner_2_2, get_data
+from e1_runtime import FILES, benchmark_miner_2_2, get_data
 from memory_profiler import memory_usage
 
 FILE = 'e1_memory.csv'
@@ -19,7 +19,7 @@ def main():
         seen = [row.split(',')[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
-    MINERS = [benchmark_miner_2_1, benchmark_miner_2_2]
+    MINERS = [benchmark_miner_2_2]
     unseen = [(m, n) for m in MINERS for n in FILES if [m.__name__, n] not in seen]
     for miner, name in unseen:
         benchmark(miner, name)
