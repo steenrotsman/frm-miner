@@ -13,7 +13,7 @@ UNITS = 100
 TS_LEN = 10000
 MOTIF_LEN = 500
 NOISE_LEVELS = [0.3, 0.5, 0.7]
-INJECT = [100, 75]
+INJECT = [75]
 
 # Parameters
 MINSUP = 0.3
