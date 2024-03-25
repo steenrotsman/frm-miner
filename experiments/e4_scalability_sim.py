@@ -6,7 +6,7 @@ from time import perf_counter
 
 import matplotlib.pyplot as plt
 import numpy as np
-from e1_runtime import benchmark_miner
+from e1_runtime import benchmark_miner_2_1
 from e4_scalability_ucr import get_ucr_results
 from memory_profiler import memory_usage
 from plot import remove_spines
@@ -14,10 +14,6 @@ from plot import remove_spines
 TIME_FILE = 'e4_scalability sim.csv'
 SPACE_FILE = 'e4_scalability sim memory.csv'
 NAME = '4 scalability sim'
-
-MINSUP = 0.3
-SEGLEN = 10
-ALPHABET = 4
 
 LENGTHS = [10**i for i in range(1, 5)]
 ROWS = [10**i for i in range(1, 5)]
@@ -56,10 +52,10 @@ def simulation(length, rows, iter, file, measure):
     data = get_data(length, rows)
 
     if measure == 'Bytes':
-        result = memory_usage((benchmark_miner, (data,)), max_usage=True)
+        result = memory_usage((benchmark_miner_2_1, (data,)), max_usage=True)
     else:
         start = perf_counter()
-        benchmark_miner(data)
+        benchmark_miner_2_1(data)
         end = perf_counter()
         result = end - start
 
