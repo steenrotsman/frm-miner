@@ -11,8 +11,7 @@ SEGLEN = [10, 20, 30, 40, 50]
 ALPHABET = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 OMAX = [0.5, 0.6, 0.7, 0.8, 0.9]
 PARAMS = ['minsup', 'seglen', 'alphabet', 'omax']
-VALUES = [MINSUP, SEGLEN, ALPHABET]
-BAR_WIDTH = 0.45
+VALUES = [MINSUP, SEGLEN, ALPHABET, OMAX]
 
 
 minsup_runtime = [[] for _ in MINSUP]
@@ -30,7 +29,7 @@ with open(FILE) as fp:
         m = float(m)
         s = int(s)
         a = int(a)
-        o = int(o)
+        o = float(o)
         r = float(r)
         n = int(n)
 
@@ -59,12 +58,13 @@ for (runtime, n_patterns), ax, xlabel, xticks in zip(results, axs, PARAMS, VALUE
     time = ax.plot(xticks, runtime, 'k', label='Time')
     patterns = twin.plot(xticks, n_patterns, 'k--', label='Patterns')
     ax.set(xlabel=xlabel, xticks=xticks)
-    ax.tick_params(axis='x', labelrotation=-90)
-    twin.set(yticks=[], ylim=[0, 400])
+    twin.set_ylim(0, 100)
+    twin.set_yticks([0, 50, 100], labels="")
 
 axs[0].set(ylabel='Seconds', yticks=[0, 20, 40])
-twin.set(ylabel='n Patterns', yticks=[0, 200, 400])
-twin.legend(handles=[time[0], patterns[0]])
+twin.set(ylabel='n Patterns')
+twin.set_yticks([0, 50, 100], labels=[0, 50, 100])
+fig.legend(handles=[time[0], patterns[0]], loc='outside lower center', ncols=2)
 
 plt.savefig(join('figs', '2 params.eps'))
 plt.savefig(join('figs', '2 params.png'))
