@@ -7,8 +7,10 @@ The train and test files are joined into one data set, on which the algorithms a
 Peak memory use on each data set is recorded.
 """
 
-from e1_runtime import FILES, benchmark_miner_2_2, get_data
-from memory_profiler import memory_usage
+from multiprocessing import Pool
+
+from e1_runtime import FILES, get_data
+from patterns import profile_memory_peak
 
 FILE = 'e1_memory.csv'
 
@@ -19,19 +21,18 @@ def main():
         seen = [row.split(',')[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
-    MINERS = [benchmark_miner_2_2]
-    unseen = [(m, n) for m in MINERS for n in FILES if [m.__name__, n] not in seen]
-    for miner, name in unseen:
-        benchmark(miner, name)
+    unseen = [(frm, n) for frm in (1, 2) for n in FILES if [str(frm), n] not in seen]
+    with Pool(8, maxtasksperchild=1) as p:
+        p.starmap(benchmark, unseen)
 
 
-def benchmark(miner, name):
-    print(f'{miner.__name__}: {name}...')
+def benchmark(frm, name):
+    print(f'FRM-Miner {frm}.0: {name}...')
     data = get_data(name)
-    peak = memory_usage((miner, (data,)), max_usage=True)
+    peak = profile_memory_peak(data, frm) / 1e6
     with open(FILE, 'a') as fp:
-        fp.write(f'{miner.__name__},{name},{peak}\n')
-    print(f'{miner.__name__}: {name} done!')
+        fp.write(f'{frm},{name},{peak}\n')
+    print(f'FRM-Miner {frm}.0: {name} done!')
 
 
 if __name__ == '__main__':
