@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from e1_runtime import benchmark_miner_2_1
 from e4_scalability_ucr import get_ucr_results
-from memory_profiler import memory_usage
+from patterns import profile_memory_peak
 from plot import remove_spines
 
 TIME_FILE = 'e4_scalability sim.csv'
@@ -19,22 +19,24 @@ LENGTHS = [10**i for i in range(1, 5)]
 ROWS = [10**i for i in range(1, 5)]
 INJECT = 40
 ITER = 10
+PLOT = False
 
 RNG = np.random.default_rng(0)
 
 
 def main():
-    experiment(TIME_FILE, 'Seconds')
-    experiment(SPACE_FILE, 'Bytes')
+    experiment(TIME_FILE, 'Seconds', PLOT)
+    experiment(SPACE_FILE, 'Bytes', PLOT)
 
 
-def experiment(file, measure):
+def experiment(file, measure, plot):
     seen = get_seen(file)
     for setting in product(LENGTHS, ROWS, range(ITER)):
         if setting not in seen:
             simulation(*setting, file, measure)
     results = get_results(file)
-    plot_results(*results, NAME, measure)
+    if plot:
+        plot_results(*results, NAME, measure)
 
 
 def get_seen(file):
@@ -52,7 +54,7 @@ def simulation(length, rows, iter, file, measure):
     data = get_data(length, rows)
 
     if measure == 'Bytes':
-        result = memory_usage((benchmark_miner_2_1, (data,)), max_usage=True)
+        result = profile_memory_peak(data, 2, seglen=1) / 1e6
     else:
         start = perf_counter()
         benchmark_miner_2_1(data)
