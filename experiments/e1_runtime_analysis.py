@@ -29,8 +29,8 @@ SETTINGS = [
     ),
     (
         'e1_memory.csv',
-        'benchmark_miner_1_2',
-        'benchmark_miner_2_2',
+        '1',
+        '2',
         'FRM-Miner 1.0',
         'FRM-Miner 2.0',
         3,
