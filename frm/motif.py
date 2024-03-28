@@ -89,7 +89,7 @@ class Motif:
 
             for index in indexes:
                 occurrence = self.get_occurrence(ts[i], index)
-                dist = np.linalg.norm(occurrence - self.representative, ord=p)
+                dist = np.linalg.norm(occurrence - self.representative)
 
                 if dist < min_dist:
                     min_dist = dist

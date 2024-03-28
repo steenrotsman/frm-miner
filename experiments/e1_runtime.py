@@ -25,7 +25,7 @@ PARTITIONS = ['TRAIN', 'TEST']
 # Parameters for FRM-Miner
 MINSUP = 0.3
 SEGLEN = 1
-ALPHABET = 4
+ALPHA = 4
 
 
 def main():
@@ -52,12 +52,12 @@ def benchmark(miner, name):
 
 
 def benchmark_miner_2_1(data):
-    miner = Miner(MINSUP, 1, ALPHABET)
+    miner = Miner(MINSUP, 1, ALPHA)
     miner.mine(data)
 
 
 def benchmark_miner_2_2(data):
-    miner = Miner(MINSUP, 2, ALPHABET)
+    miner = Miner(MINSUP, 2, ALPHA)
     miner.mine(data)
 
 

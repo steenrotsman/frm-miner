@@ -15,8 +15,6 @@ FIELD = 'speed'
 MINSUP = 0.3
 SEGLEN = 15
 ALPHABET = 5
-OMAX = 0.8
-P = 1
 K = 4
 
 
@@ -26,7 +24,7 @@ def main():
     data = [zscore(ts) for ts in field]
 
     fig, axs = plt.subplots(ncols=4, sharey='all', figsize=(WIDTH, HEIGHT))
-    miner = Miner(MINSUP, SEGLEN, ALPHABET, max_overlap=OMAX, k=K, p=P)
+    miner = Miner(MINSUP, SEGLEN, ALPHABET, k=K)
     motifs = miner.mine(field)
     plot_motifs(axs, data, motifs, fn='5 bike motifs', yticks=[-1, 0, 1])
 

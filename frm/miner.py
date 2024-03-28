@@ -20,20 +20,14 @@ class Miner:
         Fraction of time series a motif should occur in.
     seglen : int
         Segment length for Piecewise Aggregate Approximation.
-    alphabet : int
+    alpha : int
         Alphabet size for discretisation.
-    min_len : int
-        Minimal pattern length.
-    max_len : int
-        Maximal pattern length.
-        If 0, limit is infinity.
-    max_overlap: float
+    omax: float
         Maximal fraction of patterns contained in longer patters.
     p : int
-        L norm for distance computation.
+        If 2, ranks motifs on ED (FRM-Miner 2.0). If 1, uses NAED (FRM-Miner 1.0)
     k : int, optional
-        Number of motifs to return.
-        If 0, all motifs are returned.
+        Number of motifs to return. If 0, all motifs are returned.
 
     Attributes
     ----------
@@ -41,23 +35,11 @@ class Miner:
         Constructed motifs ordered by the distances to their occurrences.
     """
 
-    def __init__(
-        self,
-        minsup: float,
-        seglen: int,
-        alphabet: int,
-        min_len: int = 3,
-        max_len: int = 0,
-        max_overlap: float = 0.8,
-        p: int = 2,
-        k: int = 0,
-    ):
+    def __init__(self, minsup, seglen, alpha, omax=0.8, p=2, k=0):
         self.minsup = minsup
         self.seglen = seglen
-        self.alphabet = alphabet
-        self.min_len = min_len
-        self.max_len = max_len
-        self.max_overlap = max_overlap
+        self.alpha = alpha
+        self.omax = omax
         self.p = p
         self.k = k
 
@@ -77,7 +59,7 @@ class Miner:
             frequent motifs.
         """
         standardised = standardise(ts)
-        discretised = sax(standardised, self.seglen, self.alphabet)
+        discretised = sax(standardised, self.seglen, self.alpha)
         self.mine_patterns(discretised)
         self.map_patterns(standardised)
         self.sort_patterns()
@@ -92,7 +74,7 @@ class Miner:
         sequences : list
             Collection of time series discretised to sequences.
         """
-        pm = PatternMiner(self.minsup, self.min_len, self.max_len, self.max_overlap)
+        pm = PatternMiner(self.minsup, self.omax)
         pm.mine(ds)
         self.motifs = list(pm.frequent.values())
 

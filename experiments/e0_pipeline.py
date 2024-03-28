@@ -22,7 +22,7 @@ from frm.preprocessing import get_breakpoints, sax, standardise
 IMG_DIR = 'mpeg7'
 NAME = 'cattle'
 SAMPLE = True
-ALPHABET = 5
+ALPHA = 5
 LENGTH = 256
 
 
@@ -32,17 +32,17 @@ def main():
     ts, contours = get_all_ts(files)
 
     # Basic pipelines
-    plot = Pipeline(2 / 3, 16, ALPHABET, LENGTH)
+    plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
     fig, axs = plt.subplots(ncols=5, figsize=(WIDTH, HEIGHT))
     steps = [plot.D, plot.Ds, plot.sm, plot.occ, plot.rm]
     plot.plot(fig, axs, ts, 'pipeline', steps)
 
-    plot = Pipeline(2 / 3, 32, ALPHABET, LENGTH)
+    plot = Pipeline(2 / 3, 32, ALPHA, LENGTH)
     fig, axs = plt.subplots(ncols=3, figsize=(WIDTH, HEIGHT))
     steps = [plot.D, plot.sax, plot.Ds]
     plot.plot(fig, axs, [ts[0]], 'sax', steps)
 
-    plot = Pipeline(2 / 3, 16, ALPHABET, LENGTH)
+    plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
     fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH, HEIGHT * 2))
     steps = [plot.D, plot.sax, plot.Ds, plot.sm, plot.occ, plot.rm]
     plot.plot(fig, chain.from_iterable(axs), ts, 'long', steps)
@@ -63,7 +63,7 @@ def main():
     rm_ax = fig.add_subplot(gs[6:9, 2])
 
     minsup = 2 / 3
-    alphabet = ALPHABET
+    alpha = ALPHA
     seglen = 32
 
     # Time series
@@ -76,11 +76,11 @@ def main():
 
     # SAX
     for row, ax in zip(data, sax_axs):
-        for b in get_breakpoints(ALPHABET):
+        for b in get_breakpoints(ALPHA):
             ax.axhline(y=b, color='lightgrey', lw=0.5)
 
         ax.plot(row)
-        sequence = sax([row], seglen, alphabet)[0]
+        sequence = sax([row], seglen, alpha)[0]
         for i in range(0, len(row), seglen):
             start_idx = i
             end_idx = i + seglen
@@ -102,7 +102,7 @@ def main():
     sax_axs[-1].set(xticks=[0, len(row) - 1], xlabel='SAX')
 
     # Sequence database
-    sequences = sax(data, seglen, alphabet)
+    sequences = sax(data, seglen, alpha)
     for sequence, y in zip(sequences, [0.5, 0.4, 0.3]):
         seq_ax.text(0.5, y, sequence, ha='center', va='center')
     seq_ax.set(xticks=[], xlabel='Sequence database')
@@ -116,7 +116,7 @@ def main():
             return super().default(obj)
 
     pm = PatternMiner(minsup)
-    pm.mine(sax(data, seglen, alphabet))
+    pm.mine(sax(data, seglen, alpha))
     text = json.dumps(pm.frequent, indent=24, cls=MotifEncoder)
     map_ax.text(0.3, 0.5, text, ha='center', va='center')
     map_ax.set(xticks=[], xlabel='Index map')
@@ -143,23 +143,21 @@ def main():
 
     # Occurrences
 
-
     # Average occurrences
-    
 
     fig.align_labels()
     plt.savefig('figs/pipe.png')
 
 
 class Pipeline:
-    def __init__(self, minsup, seglen, alphabet, length):
+    def __init__(self, minsup, seglen, alpha, length):
         self.minsup = minsup
         self.seglen = seglen
-        self.alphabet = alphabet
+        self.alpha = alpha
 
         self.length = length
 
-        self.mm = Miner(minsup, seglen, alphabet)
+        self.mm = Miner(minsup, seglen, alpha)
 
         self.data = None
 
@@ -184,11 +182,11 @@ class Pipeline:
         self.axset(ax, 'Time series database')
 
     def sax(self, ax):
-        for b in get_breakpoints(self.alphabet):
+        for b in get_breakpoints(self.alpha):
             ax.axhline(y=b, color='lightgrey', lw=0.5)
 
         ax.plot(self.data[0], lw=0.5)
-        sequence = sax([self.data[0]], self.seglen, self.alphabet)[0]
+        sequence = sax([self.data[0]], self.seglen, self.alpha)[0]
         for i in range(0, len(self.data[0]), self.seglen):
             start_idx = i
             end_idx = i + self.seglen
@@ -210,7 +208,7 @@ class Pipeline:
         self.axset(ax, 'SAX')
 
     def Ds(self, ax):
-        sequences = '\n'.join(sax(self.data, self.seglen, self.alphabet))
+        sequences = '\n'.join(sax(self.data, self.seglen, self.alpha))
         ax.text(0.5, 0.5, sequences, ha='center', va='center')
         ax.set(xticks=[], yticks=[], xlabel='Sequence database')
 

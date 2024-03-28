@@ -7,7 +7,7 @@ from frm import Miner
 
 class TestMiner(unittest.TestCase):
     def test_frm_miner(self):
-        miner = Miner(0.5, 1, 3, min_len=1)
+        miner = Miner(0.5, 1, 3)
         motifs = miner.mine(ts)
         patterns = [m.pattern for m in motifs]
         self.assertListEqual(patterns, ['aa', 'ca', 'cc'])
@@ -17,11 +17,3 @@ class TestMiner(unittest.TestCase):
         motifs = miner.mine(rag)
         patterns = [m.pattern for m in motifs]
         self.assertListEqual(patterns, ['abc'])
-
-    def test_max_len_miner(self):
-        miner = Miner(0.5, 1, 3, 1, 1)
-        motifs = miner.mine(ts)
-        patterns = [m.pattern for m in motifs]
-        patterns.sort()
-
-        self.assertListEqual(patterns, ['a', 'c'])

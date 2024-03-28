@@ -54,7 +54,7 @@ def plot_motif(data):
 
     for minsup, ax in zip(MINSUP, axs):
         # Mine frequent motifs in differenced data
-        miner = Miner(minsup, SEGLEN, ALPHABET, max_overlap=0.8, k=1)
+        miner = Miner(minsup, SEGLEN, ALPHABET)
         motifs = miner.mine(diff)
         motif = motifs[0]
 

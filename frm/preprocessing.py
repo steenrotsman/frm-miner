@@ -7,7 +7,7 @@ import numpy as np
 from scipy.stats import norm, zscore
 
 
-def sax(timeseries, seglen, alphabet):
+def sax(timeseries, seglen, alpha):
     """Symbolic Aggregate approXimation.
 
     Parameters
@@ -16,14 +16,14 @@ def sax(timeseries, seglen, alphabet):
         List of lists containing normalised time series to dicretise.
     seglen : int
         Segment length for PAA, factor by which discrete representation is shorter than time series.
-    alphabet : int
+    alpha : int
         Alphabet size; number of discrete elements the time series are to be binned into.
 
     Returns
     -------
     List with a collection of discrete sequences from the time series.
     """
-    breakpoints = get_breakpoints(alphabet)
+    breakpoints = get_breakpoints(alpha)
     return [get_sax(series, seglen, breakpoints) for series in timeseries]
 
 
