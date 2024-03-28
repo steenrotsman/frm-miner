@@ -26,7 +26,7 @@ from frm import Miner
 # Set hyperparameters
 MINSUP = 0.3
 SEGLEN = 5
-ALPHABET = 5
+ALPHA = 4
 K = 4
 
 # Generate 10 random time series with 100 observations each
@@ -34,7 +34,7 @@ rng = np.random.default_rng()
 data = [rng.standard_normal(100) for _ in range(10)]
 
 # Mine frequent representative motifs
-miner = Miner(MINSUP, SEGLEN, ALPHABET, k=K)
+miner = Miner(MINSUP, SEGLEN, ALPHA, k=K)
 motifs = miner.mine(data)
 
 # Plot frequent representative motifs

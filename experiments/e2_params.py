@@ -12,7 +12,7 @@ FILE = 'e2_params.csv'
 # Parameter ranges for FRM-Miner
 MINSUP = [0.1, 0.3, 0.5, 0.7, 0.9]
 SEGLEN = [10, 20, 30, 40, 50]
-ALPHABET = [2, 3, 4, 5, 6, 7, 8, 9, 10]
+ALPHA = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 OMAX = [0.5, 0.6, 0.7, 0.8, 0.9]
 N = 5
 
@@ -27,13 +27,10 @@ def main():
             i, m, s, a, o = row.split(',')[:5]
             seen.append((int(i), float(m), int(s), int(a), float(o)))
 
+    settings = product(range(N), MINSUP, SEGLEN, ALPHA, OMAX)
+    unseen = [setting for setting in settings if setting not in seen]
     with Pool(8, maxtasksperchild=1) as p:
-        settings = [
-            s
-            for s in product(range(N), MINSUP, SEGLEN, ALPHABET, OMAX)
-            if s not in seen
-        ]
-        p.starmap(mine, settings)
+        p.starmap(mine, unseen)
 
 
 def mine(i, minsup, seglen, alpha, omax):

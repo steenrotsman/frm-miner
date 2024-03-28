@@ -15,6 +15,8 @@ class PatternMiner:
     ----------
     minsup : float
         The minimum support for a pattern.
+    omax : float
+        The maximum overlap with longer patterns to not be considered redundant.
 
     Attributes
     ----------
@@ -22,17 +24,9 @@ class PatternMiner:
         Dictionary of frequent motifs with string patterns as keys and Motif objects as values.
     """
 
-    def __init__(
-        self,
-        minsup: float = 0.5,
-        min_len: int = 3,
-        max_len: int = 0,
-        max_overlap: float = 0.9,
-    ):
+    def __init__(self, minsup, omax=0.8):
         self.minsup = minsup
-        self.min_len = min_len
-        self.max_len = max_len
-        self.max_overlap = max_overlap
+        self.omax = omax
 
         self.frequent = {}
 
@@ -61,7 +55,7 @@ class PatternMiner:
         self.mine_1_patterns(sequences)
 
         # If there were no frequent k-patterns, there can be no frequent (k+1)-patterns
-        while self._patterns[1] and (not self.max_len or self._k <= self.max_len):
+        while self._patterns[1]:
             self._patterns = [self._patterns[1], set()]
             self.generate_candidates_from_parents(sequences)
             self.prune_infrequent()
@@ -121,13 +115,8 @@ class PatternMiner:
 
     def remove_redundant(self):
         """Remove redundant patterns."""
-        # Remove too short patterns
-        self.frequent = {
-            k: v for k, v in self.frequent.items() if len(k) >= self.min_len
-        }
-
-        # If max_overlap == 1, no overlap is too high
-        if self.max_overlap == 1:
+        # If max_overlap >= 1, no overlap is too high
+        if self.omax >= 1:
             return
 
         # Remove patterns with too much overlap
@@ -144,7 +133,7 @@ class PatternMiner:
                     continue
 
                 # Check if shorter pattern consists mostly of lcs
-                if self.lcs(p1, p2, n, m) / m > self.max_overlap:
+                if self.lcs(p1, p2, n, m) / m > self.omax:
                     self.frequent.pop(p2, 0)
                     pruned.add(p2)
 

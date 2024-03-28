@@ -18,7 +18,7 @@ INJECT = [75]
 # Parameters
 MINSUP = 0.3
 SEGLEN = 30
-ALPHABET = 4
+ALPHA = 4
 K = 3
 
 np.random.seed(0)
@@ -38,7 +38,7 @@ def main():
             data, locations = get_data(noise, motif, noise_level, inject)
 
             # Mine motifs of variable length
-            mm = Miner(MINSUP, SEGLEN, ALPHABET, k=K)
+            mm = Miner(MINSUP, SEGLEN, ALPHA, k=K)
             motifs = mm.mine(data)
 
             # Find consensus motif
