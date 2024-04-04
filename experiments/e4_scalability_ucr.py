@@ -14,17 +14,16 @@ def get_ucr_results(measure):
 
     with open(file) as fp:
         for row in fp.readlines():
-            experiment, name, runtime = tuple(row.split(','))
-            if 'benchmark_miner' not in experiment:
-                continue
-            runtime = float(runtime)
-            data = get_data(name)
-            length = fmean(map(len, data))
-            row = len(data)
+            experiment, name, result = tuple(row.split(','))
+            if experiment in ['benchmark_miner_2_2', '2']:
+                result = float(result)
+                data = get_data(name)
+                length = fmean(map(len, data))
+                row = len(data)
 
-            lengths[length].append(runtime)
-            rows[row].append(runtime)
-            total[row * length].append(runtime)
+                lengths[length].append(result)
+                rows[row].append(result)
+                total[row * length].append(result)
 
     lengths = {size: fmean(x) for size, x in lengths.items()}
     rows = {size: fmean(x) for size, x in rows.items()}
