@@ -6,34 +6,35 @@ from time import perf_counter
 
 import matplotlib.pyplot as plt
 import numpy as np
-from e1_runtime import benchmark_miner_2_1
+from e1_runtime import benchmark_miner_2_2
 from e4_scalability_ucr import get_ucr_results
 from patterns import profile_memory_peak
 from plot import remove_spines
 
 TIME_FILE = 'e4_scalability sim.csv'
 SPACE_FILE = 'e4_scalability sim memory.csv'
-NAME = '4 scalability sim'
+NAME = '4 scalability'
 
-LENGTHS = [10**i for i in range(1, 5)]
-ROWS = [10**i for i in range(1, 5)]
-INJECT = 40
+LENGTHS = [10**i for i in range(2, 5)]
+ROWS = [10**i for i in range(2, 5)]
+INJECT = 50
 ITER = 10
-PLOT = False
+PLOT = True
 
 RNG = np.random.default_rng(0)
 
 
 def main():
     experiment(TIME_FILE, 'Seconds', PLOT)
-    experiment(SPACE_FILE, 'Bytes', PLOT)
+    experiment(SPACE_FILE, 'Megabytes', PLOT)
 
 
 def experiment(file, measure, plot):
     seen = get_seen(file)
     for setting in product(LENGTHS, ROWS, range(ITER)):
-        if setting not in seen:
-            simulation(*setting, file, measure)
+        if setting[2] < 10 or (setting[0] * setting[1] < 1e6 and measure == 'Seconds'):
+            if setting not in seen:
+                simulation(*setting, file, measure)
     results = get_results(file)
     if plot:
         plot_results(*results, NAME, measure)
@@ -53,11 +54,11 @@ def simulation(length, rows, iter, file, measure):
     print(f'{name}...')
     data = get_data(length, rows)
 
-    if measure == 'Bytes':
-        result = profile_memory_peak(data, 2, seglen=1) / 1e6
+    if measure == 'Megabytes':
+        result = profile_memory_peak(data, 2) / 1e6
     else:
         start = perf_counter()
-        benchmark_miner_2_1(data)
+        benchmark_miner_2_2(data)
         end = perf_counter()
         result = end - start
 
@@ -102,15 +103,7 @@ def plot_results(lengths, rows, total, name, measure, marker='.', ls='-'):
     fig, axs = plt.subplots(ncols=3)
 
     # Plot the lines for number of rows, row length, and total data size
-    cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
-    params = {
-        'marker': marker,
-        'ls': ls,
-        'ms': 3,
-        'lw': 1,
-        'c': cycle[0],
-        'label': 'Simulation',
-    }
+    params = {'marker': marker, 'ls': ls, 'ms': 3, 'lw': 1, 'label': 'Simulation'}
     xlabels = ['Time series quantity', 'Time series length', 'Total database size']
     for i in range(2):
         for ax, res, xlabel in zip(axs, [rows, lengths, total], xlabels):
@@ -131,6 +124,8 @@ def plot_results(lengths, rows, total, name, measure, marker='.', ls='-'):
         params['c'] = 'k'
         params['label'] = 'UCR data set'
         axs[0].set_ylabel(measure)
+
+    axs[2].set_xticks([1e4, 1e6, 1e8])
 
     plt.savefig(join('figs', f'{name} {measure}.eps'))
     plt.savefig(join('figs', f'{name} {measure}.png'))
