@@ -12,90 +12,77 @@ from frm import Miner
 UNITS = 100
 TS_LEN = 10000
 MOTIF_LEN = 500
-NOISE_LEVELS = [0.3, 0.5, 0.7]
-INJECT = [75]
+NOISE_LEVELS = [0.2, 0.4, 0.6, 0.8]
+INJECT = 75
 
 # Parameters
 MINSUP = 0.3
-SEGLEN = 30
+SEGLEN = 25
 ALPHA = 4
 K = 3
 
-np.random.seed(0)
+RNG = np.random.default_rng(0)
 
 
 def main():
-    noise = np.random.normal(size=(UNITS, TS_LEN - MOTIF_LEN))
-    motif = get_motif(MOTIF_LEN)
+    data = get_data(UNITS, TS_LEN, MOTIF_LEN, INJECT, NOISE_LEVELS)
 
-    for inject in INJECT:
-        fig, axss = plt.subplots(
-            nrows=K, ncols=len(NOISE_LEVELS), sharey='all', sharex='all'
-        )
-        consensus_motifs = []
+    # FRM-Miner 1.0 and 2.0
+    for p in (1, 2):
+        fig, axss = plt.subplots(K, len(NOISE_LEVELS), sharex='all', sharey='all')
         for noise_level, axs in zip(NOISE_LEVELS, axss.T):
-            # Put noisy motif into data
-            data, locations = get_data(noise, motif, noise_level, inject)
+            rows = data[noise_level]
 
-            # Mine motifs of variable length
-            mm = Miner(MINSUP, SEGLEN, ALPHA, k=K)
-            motifs = mm.mine(data)
-
-            # Find consensus motif
-            consensus_motifs.append(ostinato(data, MOTIF_LEN))
-
-            plot_motifs(axs, zscore(data, axis=1), motifs, MOTIF_LEN)
+            mm = Miner(MINSUP, SEGLEN, ALPHA, k=K, p=p)
+            motifs = mm.mine(rows)
+            plot_motifs(axs, zscore(rows, axis=1), motifs, MOTIF_LEN)
             axs[0].set_yticks([-2.5, 2.5])
             axs[2].set_xlabel(noise_level)
 
-        plt.savefig(join('figs', f'3 accuracy {inject}.eps'))
-        plt.savefig(join('figs', f'3 accuracy {inject}.png'))
+        plt.savefig(join('figs', f'3 accuracy {p}.eps'))
+        plt.savefig(join('figs', f'3 accuracy {p}.png'))
         plt.close()
-        plot_ostinato(consensus_motifs, inject)
+
+    # Ostinato
+    consensus_motifs = [ostinato(data[n], MOTIF_LEN) for n in NOISE_LEVELS]
+    plot_ostinato(consensus_motifs, INJECT)
 
 
-def get_motif(length):
-    steps = np.linspace(0, np.pi, length)
-    waves = np.sin(3 * steps) + np.sin(4 * steps)
+def get_data(units, ts_len, motif_len, inject, noise_levels):
+    data = {}
 
-    return waves
+    for noise_level in noise_levels:
+        # Generate noise and motif
+        noise = RNG.normal(size=(units, ts_len - motif_len))
+        steps = np.linspace(0, np.pi, motif_len)
+        motif = np.sin(3 * steps) + np.sin(4 * steps)
 
+        # Randomly select locations where to inject noisy motif
+        locations = RNG.integers(0, noise.shape[1], size=len(noise))
+        locations[inject:] = -1
+        RNG.shuffle(locations)
 
-def get_data(noise, motif, noise_level, inject):
-    data = []
-    motif_len = len(motif)
+        # Embed motifs in noise
+        rows = []
+        for row, loc in zip(noise, locations):
+            if loc == -1:
+                # Add extra random noise to row
+                row = np.hstack((row, RNG.normal(size=motif_len)))
+            else:
+                # Add noisy motif to row
+                noisy_motif = motif + RNG.normal(scale=noise_level, size=motif_len)
+                row = np.hstack((row[:loc], noisy_motif, row[loc:]))
+            rows.append(row)
 
-    # Randomly select locations where to inject noisy motif
-    locations = np.random.randint(0, noise.shape[1], size=len(noise))
-    locations[inject:] = -1
-    np.random.shuffle(locations)
+        # Add data to simulation data
+        data[noise_level] = np.array(rows)
 
-    for row, loc in zip(noise, locations):
-        if loc == -1:
-            # Add extra random noise to row
-            row = np.hstack((row, np.random.normal(size=len(motif))))
-        else:
-            # Add noisy motif to row
-            noisy_motif = motif + np.random.normal(scale=noise_level, size=motif_len)
-            row = np.hstack((row[:loc], noisy_motif, row[loc:]))
-
-        # Add row to simulation data
-        data.append(row)
-
-    return data, locations
+    return data
 
 
 def ostinato(data, m, i=[0]):
-    # Pre-computed points, comment out until line 129 to calculate consensus motifs again
-    points = [
-        (58, 3998),
-        (59, 4032),
-        (40, 8878),
-        (42, 2178),
-        (74, 8804),
-        (92, 6033),
-    ]
-
+    # Pre-computed points, comment out until first return to calculate consensus motifs
+    points = [(36, 8799), (91, 7012), (4, 3063), (81, 4829)]
     idx, subidx = points[i[0]]
     consensus_motif = data[idx][subidx : subidx + m]
 
@@ -118,8 +105,8 @@ def plot_ostinato(consensus_motifs, inject):
         ax.set_xlabel(noise_level)
         remove_spines(ax, remove_y=False)
 
-    plt.savefig(join('figs', f'3 accuracy {inject} ostinato.eps'))
-    plt.savefig(join('figs', f'3 accuracy {inject} ostinato.png'))
+    plt.savefig(join('figs', '3 accuracy ostinato.eps'))
+    plt.savefig(join('figs', '3 accuracy ostinato.png'))
 
 
 if __name__ == '__main__':
