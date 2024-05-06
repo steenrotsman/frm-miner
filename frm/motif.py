@@ -96,4 +96,4 @@ class Motif:
                     best_match = index
             self.distance += min_dist
             self.best_matches[i] = best_match * self._seglen
-        self.distance /= len(self.indexes) * self.length ** (1 / p)
+        self.distance /= len(self.get_all_indexes()) * self.length ** (1 / p)
