@@ -126,6 +126,7 @@ def plot_results(lengths, rows, total, name, measure, marker='.', ls='-'):
         axs[0].set_ylabel(measure)
 
     axs[2].set_xticks([1e4, 1e6, 1e8])
+    plt.minorticks_on()
 
     plt.savefig(join('figs', f'{name} {measure}.eps'))
     plt.savefig(join('figs', f'{name} {measure}.png'))

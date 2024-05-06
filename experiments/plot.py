@@ -7,10 +7,10 @@ from cycler import cycler
 WIDTH = 0.0138 * 372
 HEIGHT = WIDTH / 4
 LETTERING_SIZE = 8
-colors = cycler(color=["#1f77b4", "#30c546", "#8b0072", "#efac35"])
+colors = ["#1f77b4", "#30c546", "#8b0072", "#efac35"]
 params = {
     'axes.labelsize': LETTERING_SIZE,
-    'axes.prop_cycle': colors,
+    'axes.prop_cycle': cycler(color=colors),
     'figure.constrained_layout.use': True,
     'figure.figsize': [WIDTH, HEIGHT],
     'font.family': 'sans-serif',

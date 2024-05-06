@@ -4,15 +4,16 @@ The data set is freely available from https://dabi.temple.edu/external/shape/MPE
 """
 
 import json
-from itertools import chain
+from itertools import chain, cycle
 from os.path import join
 
 import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib import transforms
+from matplotlib import text, transforms
+from matplotlib.gridspec import GridSpec
 from PIL import Image
-from plot import HEIGHT, WIDTH, remove_spines
+from plot import HEIGHT, WIDTH, colors, remove_spines
 
 from frm import Miner
 from frm.motif import Motif
@@ -48,19 +49,38 @@ def main():
     plot.plot(fig, chain.from_iterable(axs), ts, 'long', steps)
 
     # Large pipeline
+    # fig = plt.figure(figsize=(WIDTH, WIDTH))
+    # gs = fig.add_gridspec(nrows=9, ncols=3, figure=fig)
+
+    # ts_axs = [fig.add_subplot(gs[i, 0]) for i in range(3)]
+    # sax_axs = [fig.add_subplot(gs[i, 1]) for i in range(3)]
+    # seq_ax = fig.add_subplot(gs[:3, 2])
+
+    # sms_ax = fig.add_subplot(gs[3:6, 0])
+    # red_ax = fig.add_subplot(gs[3:6, 1])
+    # occ_ax = fig.add_subplot(gs[3:6, 2])
+
+    # oc_axs = [fig.add_subplot(gs[i, 0]) for i in range(6, 9)]
+    # ao_axs = [fig.add_subplot(gs[i, 1]) for i in range(6, 9)]
+    # rm_ax = fig.add_subplot(gs[6:9, 2])
+
     fig = plt.figure(figsize=(WIDTH, WIDTH))
-    gs = fig.add_gridspec(nrows=9, ncols=3)
+    axd = {}
+    outer_grid = fig.add_gridspec(3, 3, wspace=1, hspace=1)
+    inner_grids = []
+    inner_grids.append(outer_grid[0, 0].subgridspec(3, 1, hspace=0))
+    inner_grids.append(outer_grid[0, 1].subgridspec(3, 1, hspace=0))
+    inner_grids.append(outer_grid[0, 2].subgridspec(1, 1))
+    inner_grids.append(outer_grid[1, 0].subgridspec(1, 1))
+    inner_grids.append(outer_grid[1, 1].subgridspec(1, 1))
+    inner_grids.append(outer_grid[1, 2].subgridspec(1, 1))
+    inner_grids.append(outer_grid[2, 0].subgridspec(3, 1, hspace=0))
+    inner_grids.append(outer_grid[2, 1].subgridspec(3, 1, hspace=0))
+    inner_grids.append(outer_grid[2, 2].subgridspec(1, 1))
 
-    ts_axs = [fig.add_subplot(gs[i, 0]) for i in range(3)]
-    sax_axs = [fig.add_subplot(gs[i, 1]) for i in range(3)]
-    seq_ax = fig.add_subplot(gs[:3, 2])
-
-    map_ax = fig.add_subplot(gs[3:6, :2])
-    sms_ax = fig.add_subplot(gs[3:6, 2])
-
-    oc_axs = [fig.add_subplot(gs[i, 0]) for i in range(6, 9)]
-    ao_axs = [fig.add_subplot(gs[i, 1]) for i in range(6, 9)]
-    rm_ax = fig.add_subplot(gs[6:9, 2])
+    keys = ['ts', 'sax', 'seq', 'sms', 'red', 'seq_occ', 'ts_occ', 'ao', 'rm']
+    for gs, key in zip(inner_grids, keys):
+        axd[key] = gs.subplots()
 
     minsup = 2 / 3
     alpha = ALPHA
@@ -68,14 +88,14 @@ def main():
 
     # Time series
     data = standardise([row[:256] for row in ts])
-    for row, ax in zip(data, ts_axs):
+    for row, ax in zip(data, axd['ts']):
         ax.plot(row)
         ax.set(xticks=[])
         remove_spines(ax)
-    ts_axs[-1].set(xticks=[0, len(row) - 1], xlabel='Time series')
+    axd['ts'][-1].set(xticks=[0, len(row) - 1], xlabel='Time series')
 
     # SAX
-    for row, ax in zip(data, sax_axs):
+    for row, ax in zip(data, axd['sax']):
         for b in get_breakpoints(ALPHA):
             ax.axhline(y=b, color='lightgrey', lw=0.5)
 
@@ -92,61 +112,109 @@ def main():
             middle_idx = (start_idx + end_idx) // 2
             ax.text(
                 middle_idx,
-                y_value - 0.7,
+                y_value + 0.7,
                 sequence[i // seglen],
                 ha='center',
                 va='center',
             )
             ax.set(xticks=[])
             remove_spines(ax)
-    sax_axs[-1].set(xticks=[0, len(row) - 1], xlabel='SAX')
+    axd['sax'][-1].set(xticks=[0, len(row) - 1], xlabel='SAX')
 
     # Sequence database
     sequences = sax(data, seglen, alpha)
-    for sequence, y in zip(sequences, [0.5, 0.4, 0.3]):
-        seq_ax.text(0.5, y, sequence, ha='center', va='center')
-    seq_ax.set(xticks=[], xlabel='Sequence database')
-    remove_spines(seq_ax)
-
-    # Index map
-    class MotifEncoder(json.JSONEncoder):
-        def default(self, obj):
-            if isinstance(obj, Motif):
-                return dict(obj.indexes)
-            return super().default(obj)
-
-    pm = PatternMiner(minsup)
-    pm.mine(sax(data, seglen, alpha))
-    text = json.dumps(pm.frequent, indent=24, cls=MotifEncoder)
-    map_ax.text(0.3, 0.5, text, ha='center', va='center')
-    map_ax.set(xticks=[], xlabel='Index map')
-    remove_spines(map_ax)
+    for sequence, y in zip(sequences, [0.7, 0.6, 0.5]):
+        axd['seq'].text(0.5, y, sequence, ha='center', va='center')
+    axd['seq'].set(xticks=[])  # , xlabel='Sequence database')
+    label = text.Text(0.5, 0, 'Sequence database', ha='center', va='center')
+    label.set_transform(
+        transforms.offset_copy(
+            axd['seq'].transAxes, axd['seq'].figure, x=5, y=0, units='points'
+        )
+    )
+    label.set_clip_on(False)
+    axd['seq'].add_artist(label)
+    remove_spines(axd['seq'])
 
     # Sequence motifs
-    motif = list(pm.frequent.values())[0]
-    cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
-    highlight_color = cycle[1]
-    for (i, sequence), y in zip(enumerate(sequences), [0.5, 0.4, 0.3]):
+    pm = PatternMiner(minsup, omax=1)
+    pm.mine(sax(data, seglen, alpha))
+    coords = [(x, y) for x in (0.25, 0.5, 0.75) for y in range(9, 0, -1)]
+    for pattern, (x, y) in zip(pm.frequent, coords):
+        axd['sms'].text(x, y / 10, pattern, ha='center', va='center')
+    axd['sms'].set(xticks=[], xlabel='Sequence motifs (minsup=2/3)')
+    remove_spines(axd['sms'])
+
+    # Redundancy elimination
+    pm.omax = 0.8
+    pm.remove_redundant()
+    for pattern, y, c in zip(pm.frequent, (0.6, 0.4), ('k', colors[1])):
+        axd['red'].text(0.5, y, pattern, ha='center', va='center', color=c)
+    axd['red'].set(xticks=[], xlabel='Redundancy elimination')
+    remove_spines(axd['red'])
+
+    # Sequence motif occurrences
+    motif = list(pm.frequent.values())[1]
+    for (i, sequence), y in zip(enumerate(sequences), [0.6, 0.5, 0.4]):
         for j, char in enumerate(sequence):
             color = (
-                highlight_color
+                colors[1]
                 if i in motif.indexes
                 and j
                 in range(motif.indexes[i][0], motif.indexes[i][0] + len(motif.pattern))
                 else 'black'
             )
-            sms_ax.text(
-                0.335 + j * 0.047, y, char, ha='center', va='center', color=color
+            axd['seq_occ'].text(
+                0.335 + j * 0.04, y, char, ha='center', va='center', color=color
             )
-    sms_ax.set(xticks=[], yticks=[], xlabel='Sequence motif')
-    remove_spines(sms_ax)
+    axd['seq_occ'].set(xticks=[], yticks=[], xlabel='Sequence occurrences')
+    remove_spines(axd['seq_occ'])
 
-    # Occurrences
+    # Time series occurrences
+    for i, (row, ax) in enumerate(zip(data, axd['ts_occ'])):
+        if i in motif.indexes:
+            start = motif.indexes[i][0] * seglen
+            end = start + len(motif.pattern) * seglen
+            ax.plot(range(start), row[:start], color=colors[0])
+            ax.plot(range(start, end), row[start:end], color=colors[1])
+            ax.plot(range(end, len(row)), row[end:], color=colors[0])
+        else:
+            ax.plot(row)
+        ax.set(xticks=[])
+        remove_spines(ax)
+    axd['ts_occ'][-1].set(xticks=[0, len(row) - 1], xlabel='Time series occurrences')
 
     # Average occurrences
+    for i, (row, ax) in enumerate(zip(data, axd['ao'])):
+        if i in motif.indexes:
+            start = motif.indexes[i][0] * seglen
+            end = start + len(motif.pattern) * seglen
+            ax.plot(row[start:end], color=colors[1])
+        else:
+            ax.text(0.5, 0.5, 'No occurrences', ha='center', va='center')
+        ax.set(xticks=[])
+        remove_spines(ax)
+    axd['ao'][-1].set(
+        xticks=[0, len(motif.pattern) * seglen - 1], xlabel='Average occurrences'
+    )
 
-    fig.align_labels()
+    # Representative motif
+    occurrences = []
+    for i, row in enumerate(data):
+        if i in motif.indexes:
+            start = motif.indexes[i][0] * seglen
+            end = start + len(motif.pattern) * seglen
+            occurrences.append(row[start:end])
+    rm = np.mean(occurrences, axis=0)
+    axd['rm'].plot(rm, color=colors[1])
+    axd['rm'].set(
+        xticks=[0, len(motif.pattern) * seglen - 1], xlabel='Representative motif'
+    )
+    remove_spines(axd['rm'])
+
+    axd['seq'].spines['bottom'].set_position(('axes', 0.1933))
     plt.savefig('figs/pipe.png')
+    plt.savefig('figs/pipe.eps')
 
 
 class Pipeline:
@@ -198,7 +266,7 @@ class Pipeline:
             middle_idx = (start_idx + end_idx) // 2
             ax.text(
                 middle_idx,
-                y_value - 0.5,
+                y_value + 0.5,
                 sequence[i // self.seglen],
                 ha='center',
                 va='center',

@@ -10,7 +10,7 @@ MINSUP = [0.1, 0.3, 0.5, 0.7, 0.9]
 SEGLEN = [10, 20, 30, 40, 50]
 ALPHA = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 OMAX = [0.5, 0.6, 0.7, 0.8, 0.9]
-PARAMS = ['minsup', 'seglen', 'alpha', 'omax']
+PARAMS = ['minsup', 'seglen', 'α', 'omax']
 VALUES = [MINSUP, SEGLEN, ALPHA, OMAX]
 
 

@@ -15,16 +15,16 @@ SETTINGS = [
         'benchmark_miner_2_2',
         'FRM-Miner 1.0',
         'FRM-Miner 2.0',
-        3,
+        2,
         'frm runtime',
     ),
     (
         'e1_runtime.csv',
         'benchmark_stumpy',
-        'benchmark_miner_2_1',
+        'benchmark_miner_2_2',
         'Ostinato',
         'FRM-Miner',
-        4,
+        5,
         'ostinato runtime',
     ),
     (
@@ -33,7 +33,7 @@ SETTINGS = [
         '2',
         'FRM-Miner 1.0',
         'FRM-Miner 2.0',
-        3,
+        2,
         'frm memory',
     ),
 ]
@@ -83,12 +83,14 @@ def plot_results(runtimes, x_method, y_method, x_name, y_name, lines, fn):
     start = 1.5 * lim[0]
     end = 0.7 * lim[1]
 
-    for i, line in enumerate(['k', 'k--', 'k:', 'k-.'][:lines]):
+    styles = ['solid', 'dashed', 'dotted', 'dashdot', (0, (3, 1, 1, 1, 1, 1))][:lines]
+    for i, style in enumerate(styles):
         factor = 10**i
-        label = f'{factor}x Difference'
+        label = f'{factor:,}x Difference'
         if not i:
             label = 'Equality'
-        plt.plot([start * factor, end], [start, end / factor], line, label=label)
+        params = {'color': 'black', 'linestyle': style, 'label': label}
+        plt.plot([start * factor, end], [start, end / factor], **params)
 
     # Aesthetics
     plt.xlim(lim)
