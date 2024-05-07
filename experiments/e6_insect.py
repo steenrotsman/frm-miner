@@ -66,7 +66,7 @@ def plot_motif(data):
             ],
             axis=0,
         )
-        ax.plot(representative, color='b', lw=0.5)
+        ax.plot(representative, color='b', lw=1)
         for ts, idx in motif.best_matches.items():
             ax.plot(zscore(data[ts][idx : idx + motif.length]), color='k', lw=0.1)
         ax.set(ylim=(-3, 3), xticks=[0, len(representative)])

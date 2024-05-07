@@ -49,24 +49,13 @@ def main():
     plot.plot(fig, chain.from_iterable(axs), ts, 'long', steps)
 
     # Large pipeline
-    # fig = plt.figure(figsize=(WIDTH, WIDTH))
-    # gs = fig.add_gridspec(nrows=9, ncols=3, figure=fig)
+    large_pipe(ts)
 
-    # ts_axs = [fig.add_subplot(gs[i, 0]) for i in range(3)]
-    # sax_axs = [fig.add_subplot(gs[i, 1]) for i in range(3)]
-    # seq_ax = fig.add_subplot(gs[:3, 2])
 
-    # sms_ax = fig.add_subplot(gs[3:6, 0])
-    # red_ax = fig.add_subplot(gs[3:6, 1])
-    # occ_ax = fig.add_subplot(gs[3:6, 2])
-
-    # oc_axs = [fig.add_subplot(gs[i, 0]) for i in range(6, 9)]
-    # ao_axs = [fig.add_subplot(gs[i, 1]) for i in range(6, 9)]
-    # rm_ax = fig.add_subplot(gs[6:9, 2])
-
-    fig = plt.figure(figsize=(WIDTH, WIDTH))
+def large_pipe(ts):
+    fig = plt.figure(figsize=(WIDTH, WIDTH * 1.2), layout='none')
     axd = {}
-    outer_grid = fig.add_gridspec(3, 3, wspace=1, hspace=1)
+    outer_grid = fig.add_gridspec(3, 3, wspace=0.1, hspace=0.5)
     inner_grids = []
     inner_grids.append(outer_grid[0, 0].subgridspec(3, 1, hspace=0))
     inner_grids.append(outer_grid[0, 1].subgridspec(3, 1, hspace=0))
@@ -125,8 +114,8 @@ def main():
     sequences = sax(data, seglen, alpha)
     for sequence, y in zip(sequences, [0.7, 0.6, 0.5]):
         axd['seq'].text(0.5, y, sequence, ha='center', va='center')
-    axd['seq'].set(xticks=[])  # , xlabel='Sequence database')
-    label = text.Text(0.5, 0, 'Sequence database', ha='center', va='center')
+    axd['seq'].set(xticks=[])  #  , xlabel='Sequence database')
+    label = text.Text(0.5, -0.18, 'Sequence database', ha='center', va='center')
     label.set_transform(
         transforms.offset_copy(
             axd['seq'].transAxes, axd['seq'].figure, x=5, y=0, units='points'
@@ -139,10 +128,10 @@ def main():
     # Sequence motifs
     pm = PatternMiner(minsup, omax=1)
     pm.mine(sax(data, seglen, alpha))
-    coords = [(x, y) for x in (0.25, 0.5, 0.75) for y in range(9, 0, -1)]
+    coords = [(x, y) for x in (0.2, 0.45, 0.75) for y in range(9, 0, -1)]
     for pattern, (x, y) in zip(pm.frequent, coords):
         axd['sms'].text(x, y / 10, pattern, ha='center', va='center')
-    axd['sms'].set(xticks=[], xlabel='Sequence motifs (minsup=2/3)')
+    axd['sms'].set(xticks=[], xlabel='Sequence motifs')
     remove_spines(axd['sms'])
 
     # Redundancy elimination
@@ -165,7 +154,7 @@ def main():
                 else 'black'
             )
             axd['seq_occ'].text(
-                0.335 + j * 0.04, y, char, ha='center', va='center', color=color
+                0.35 + j * 0.04, y, char, ha='center', va='center', color=color
             )
     axd['seq_occ'].set(xticks=[], yticks=[], xlabel='Sequence occurrences')
     remove_spines(axd['seq_occ'])
@@ -212,8 +201,7 @@ def main():
     )
     remove_spines(axd['rm'])
 
-    axd['seq'].spines['bottom'].set_position(('axes', 0.1933))
-    plt.savefig('figs/pipe.png')
+    plt.subplots_adjust(top=0.98, bottom=0.07, left=0.01, right=0.99)
     plt.savefig('figs/pipe.eps')
 
 
@@ -247,7 +235,7 @@ class Pipeline:
 
     def D(self, ax):
         ax.plot(self.data.T, lw=0.5)
-        self.axset(ax, 'Time series database')
+        self.axset(ax, 'Time series')
 
     def sax(self, ax):
         for b in get_breakpoints(self.alpha):
@@ -278,7 +266,7 @@ class Pipeline:
     def Ds(self, ax):
         sequences = '\n'.join(sax(self.data, self.seglen, self.alpha))
         ax.text(0.5, 0.5, sequences, ha='center', va='center')
-        ax.set(xticks=[], yticks=[], xlabel='Sequence database')
+        ax.set(xticks=[], yticks=[], xlabel='Sequence')
 
     def sm(self, ax):
         for motif, y, color in zip(self.mm.motifs, range(4, -1, -1), self.colors):
