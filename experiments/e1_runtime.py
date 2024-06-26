@@ -7,11 +7,13 @@ The train and test files are joined into one data set, on which the algorithms a
 Run time on each data set is recorded.
 """
 
-from multiprocessing import Pool
+from itertools import product
+from multiprocessing import Pool, cpu_count
 from os import listdir
 from os.path import join
 from time import perf_counter
 
+import numpy as np
 import stumpy
 from ostinato import ostinato
 
@@ -34,35 +36,31 @@ def main():
         seen = [row.split(',')[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
-    MINERS = [benchmark_miner_2_1, benchmark_miner_2_2, benchmark_stumpy]
-    with Pool(processes=16, maxtasksperchild=1) as p:
-        unseen = [(m, n) for m in MINERS for n in FILES if [m.__name__, n] not in seen]
+    MINERS = [benchmark_miner_2, benchmark_stumpy]
+    with Pool(processes=cpu_count(), maxtasksperchild=1) as p:
+        c = product(MINERS, FILES[:2], range(1, 11))
+        unseen = [(m, n, s) for (m, n, s) in c if [f'{m.__name__}_{s}', n] not in seen]
         p.starmap(benchmark, unseen)
 
 
-def benchmark(miner, name):
-    print(f'{miner.__name__}: {name}...')
+def benchmark(miner, name, seglen):
+    print(f'{miner.__name__}_{seglen}: {name}...')
     data = get_data(name)
     start = perf_counter()
-    miner(data)
+    miner(data, seglen)
     end = perf_counter()
     with open(FILE, 'a') as fp:
-        fp.write(f'{miner.__name__},{name},{end-start}\n')
-    print(f'{miner.__name__}: {name} done!')
+        fp.write(f'{miner.__name__}_{seglen},{name},{end-start}\n')
+    print(f'{miner.__name__}_{seglen}: {name} done!')
 
 
-def benchmark_miner_2_1(data):
-    miner = Miner(MINSUP, 1, ALPHA)
+def benchmark_miner_2(data, seglen):
+    miner = Miner(MINSUP, seglen, ALPHA)
     miner.mine(data)
 
 
-def benchmark_miner_2_2(data):
-    miner = Miner(MINSUP, 2, ALPHA)
-    miner.mine(data)
-
-
-def benchmark_stumpy(data):
-    data, length = get_length(data)
+def benchmark_stumpy(data, seglen):
+    data, length = get_length(data, seglen)
     stumpy.ostinato(data, length)
 
 
@@ -84,7 +82,10 @@ def get_data(name):
     return data
 
 
-def get_length(data):
+def get_length(data, seglen):
+    # Shrink time series length with PAA
+    data = [paa(ts, seglen) for ts in data]
+
     # The consensus motif for lengths shorter than 3 is meaningless
     data = [ts for ts in data if len(ts) >= 3]
 
@@ -100,6 +101,15 @@ def get_length(data):
     length = max(length, 3)
 
     return data, length
+
+
+def paa(series, seglen):
+    if too_short := (len(series) % seglen):
+        append = [np.mean(series[-too_short:])] * (seglen - too_short)
+        series = np.append(series, append)
+
+    segments = np.reshape(series, (-1, seglen))
+    return np.mean(segments, axis=1)
 
 
 if __name__ == '__main__':
