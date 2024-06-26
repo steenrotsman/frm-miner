@@ -37,8 +37,9 @@ def main():
     # Benchmark different miners using multiprocessing
     MINERS = [benchmark_miner_2, benchmark_stumpy]
     with Pool(processes=cpu_count(), maxtasksperchild=1) as p:
-        c = product(MINERS, FILES[:2], range(1, 11))
+        c = product(MINERS, FILES, range(1, 11))
         unseen = [(m, n, s) for (m, n, s) in c if [f'{m.__name__}_{s}', n] not in seen]
+        c = product(MINERS, FILES, range(1, 11))
         print(f'Already done {len(c) - len(unseen)} settings...')
         print(f'"just" {len(unseen)} to go!')
         p.starmap(benchmark, unseen)
