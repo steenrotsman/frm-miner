@@ -40,7 +40,7 @@ def main():
         c = product(MINERS, FILES, range(1, 11))
         unseen = [(m, n, s) for (m, n, s) in c if [f'{m.__name__}_{s}', n] not in seen]
         c = product(MINERS, FILES, range(1, 11))
-        print(f'Already done {len(c) - len(unseen)} settings...')
+        print(f'Already done {len(list(c)) - len(unseen)} settings...')
         print(f'"just" {len(unseen)} to go!')
         p.starmap(benchmark, unseen)
 
