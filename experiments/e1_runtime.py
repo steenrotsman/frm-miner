@@ -15,7 +15,6 @@ from time import perf_counter
 
 import numpy as np
 import stumpy
-from ostinato import ostinato
 
 from frm import Miner
 
@@ -62,11 +61,6 @@ def benchmark_miner_2(data, seglen):
 def benchmark_stumpy(data, seglen):
     data, length = get_length(data, seglen)
     stumpy.ostinato(data, length)
-
-
-def benchmark_ostinato(data):
-    data, length = get_length(data)
-    ostinato(data, length)
 
 
 def get_data(name):
