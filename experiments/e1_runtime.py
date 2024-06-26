@@ -8,7 +8,7 @@ Run time on each data set is recorded.
 """
 
 from itertools import product
-from multiprocessing import Pool, cpu_count
+from multiprocessing import Pool
 from os import listdir
 from os.path import join
 from time import perf_counter
@@ -36,7 +36,7 @@ def main():
 
     # Benchmark different miners using multiprocessing
     MINERS = [benchmark_miner_2, benchmark_stumpy]
-    with Pool(processes=cpu_count(), maxtasksperchild=1) as p:
+    with Pool(processes=32, maxtasksperchild=1) as p:
         c = product(MINERS, FILES, range(1, 11))
         unseen = [(m, n, s) for (m, n, s) in c if [f'{m.__name__}_{s}', n] not in seen]
         c = product(MINERS, FILES, range(1, 11))
