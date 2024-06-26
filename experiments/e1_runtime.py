@@ -39,6 +39,7 @@ def main():
     with Pool(processes=cpu_count(), maxtasksperchild=1) as p:
         c = product(MINERS, FILES[:2], range(1, 11))
         unseen = [(m, n, s) for (m, n, s) in c if [f'{m.__name__}_{s}', n] not in seen]
+        print(f'Already done {c - unseen} settings, "just" {unseen} to go!')
         p.starmap(benchmark, unseen)
 
 
