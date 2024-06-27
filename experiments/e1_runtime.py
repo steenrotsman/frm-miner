@@ -14,7 +14,7 @@ from os.path import join
 from time import perf_counter
 
 import numpy as np
-import stumpy
+from ostinato import ostinato
 
 from frm import Miner
 
@@ -35,7 +35,7 @@ def main():
         seen = [row.split(',')[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
-    MINERS = [benchmark_miner_2, benchmark_stumpy]
+    MINERS = [benchmark_miner_2, benchmark_ostinato]
     with Pool(processes=32, maxtasksperchild=1) as p:
         c = product(MINERS, FILES, range(1, 11))
         unseen = [(m, n, s) for (m, n, s) in c if [f'{m.__name__}_{s}', n] not in seen]
@@ -61,9 +61,9 @@ def benchmark_miner_2(data, seglen):
     miner.mine(data)
 
 
-def benchmark_stumpy(data, seglen):
+def benchmark_ostinato(data, seglen):
     data, length = get_length(data, seglen)
-    stumpy.ostinato(data, length)
+    ostinato(data, length)
 
 
 def get_data(name):
