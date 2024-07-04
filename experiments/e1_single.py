@@ -7,11 +7,10 @@ The train and test files are joined into one data set, on which the algorithms a
 Run time on each data set is recorded.
 """
 
-from itertools import product
-from os import listdir, remove
-from os.path import isfile, join
-from random import random
-from time import perf_counter, sleep
+import argparse
+from os import listdir
+from os.path import join
+from time import perf_counter
 
 import numpy as np
 import stumpy
@@ -19,7 +18,7 @@ import stumpy
 from frm import Miner
 
 SEEN_FILE = 'e1_runtime.csv'
-BUSY_FILE = 'e1_inprogress.csv'
+JOBS_FILE = 'e1_jobs.csv'
 FOLDER = 'UCRArchive_2018'
 FILES = listdir(FOLDER)
 PARTITIONS = ['TRAIN', 'TEST']
@@ -29,35 +28,23 @@ MINSUP = 0.3
 SEGLEN = 1
 ALPHA = 4
 
+parser = argparse.ArgumentParser(description="Benchmark one setting.")
+
+parser.add_argument('setting', type=int, nargs='?', default=0)
+args = parser.parse_args()
+
 
 def main():
-    # Get already calculated combinations from file
-    with open(SEEN_FILE) as fp:
-        seen = [row.split(',')[:2] for row in fp.readlines()]
-    MINERS = [benchmark_miner_2, benchmark_stumpy]
-    c = product(MINERS, FILES, range(1, 11))
-    u = [(m, n, s) for (m, n, s) in c if [f'{m.__name__}_{s}', n] not in seen]
+    with open(JOBS_FILE) as fp:
+        jobs = [row[:-1].split(',') for row in fp.readlines()]
 
-    # Wait until mutex is available
-    while isfile('mutex'):
-        sleep(random() * 5)
+    miner, name, seglen = jobs[args.setting]
 
-    # Use mutex file to prevent programs from grabbing a job simultaneously
-    open('mutex', 'w')
-
-    # Get in progress calculations from file
-    with open(BUSY_FILE) as fp:
-        busy = [row[:-1].split(',') for row in fp.readlines()]
-
-    available = [(m, n, s) for (m, n, s) in u if [f'{m.__name__}_{s}', n] not in busy]
-    available = sorted(available, key=lambda x: (x[2], x[1], x[0].__name__))
-
-    miner, name, seglen = available[0]
-    with open(BUSY_FILE, 'a') as fp:
-        fp.write(f'{miner.__name__}_{seglen},{name}\n')
-
-    # Now that a setting has been chosen, mutex can be released and job can start
-    remove('mutex')
+    if miner == 'benchmark_miner_2':
+        miner = benchmark_miner_2
+    elif miner == 'benchmark_stumpy':
+        miner = benchmark_stumpy
+    seglen = int(seglen)
 
     benchmark(miner, name, seglen)
 
