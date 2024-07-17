@@ -100,7 +100,7 @@ def plot_kofp(data):
             bests.append(best)
             print(best)
     for m, ax, best in zip((1100, 1140, 1200), axs, bests):
-        ax.plot(zscore(data[best[0]][best[1] : best[1] + m]), lw=1)
+        ax.plot(zscore(data[best[0]][best[1] : best[1] + m]), lw=1, c='b')
         ax.plot(zscore(data[best[2]][best[3] : best[3] + m]), lw=0.3, c='k')
         ax.set(ylim=(-3, 3), xticks=[0, m], yticks=[-2, 0, 2])
         remove_spines(ax, remove_y=False)
