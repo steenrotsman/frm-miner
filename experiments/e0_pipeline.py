@@ -3,20 +3,17 @@ This module finds patterns in the outlines of images from the MPEG-7 data set.
 The data set is freely available from https://dabi.temple.edu/external/shape/MPEG7/dataset.html
 """
 
-import json
-from itertools import chain, cycle
+from itertools import chain
 from os.path import join
 
 import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import text, transforms
-from matplotlib.gridspec import GridSpec
 from PIL import Image
 from plot import HEIGHT, WIDTH, colors, remove_spines
 
 from frm import Miner
-from frm.motif import Motif
 from frm.patterns import PatternMiner
 from frm.preprocessing import get_breakpoints, sax, standardise
 
@@ -197,12 +194,15 @@ def large_pipe(ts):
     rm = np.mean(occurrences, axis=0)
     axd['rm'].plot(rm, color=colors[1])
     axd['rm'].set(
-        xticks=[0, len(motif.pattern) * seglen - 1], xlabel='Representative motif'
+        xticks=[0, len(motif.pattern) * seglen - 1],
+        xlabel='Representative motif',
+        ylim=[-8, 8],
     )
     remove_spines(axd['rm'])
 
     plt.subplots_adjust(top=0.98, bottom=0.07, left=0.01, right=0.99)
     plt.savefig('figs/pipe.eps')
+    plt.savefig('figs/pipe.png')
 
 
 class Pipeline:
