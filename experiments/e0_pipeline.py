@@ -29,21 +29,21 @@ def main():
     files = [join(IMG_DIR, f'{NAME}-{i + 1}.gif') for i in range(3)]
     ts, contours = get_all_ts(files)
 
-    # Basic pipelines
-    plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
-    fig, axs = plt.subplots(ncols=5, figsize=(WIDTH, HEIGHT))
-    steps = [plot.D, plot.Ds, plot.sm, plot.occ, plot.rm]
-    plot.plot(fig, axs, ts, 'pipeline', steps)
+    # # Basic pipelines
+    # plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
+    # fig, axs = plt.subplots(ncols=5, figsize=(WIDTH, HEIGHT))
+    # steps = [plot.D, plot.Ds, plot.sm, plot.occ, plot.rm]
+    # plot.plot(fig, axs, ts, 'pipeline', steps)
 
-    plot = Pipeline(2 / 3, 32, ALPHA, LENGTH)
-    fig, axs = plt.subplots(ncols=3, figsize=(WIDTH, HEIGHT))
-    steps = [plot.D, plot.sax, plot.Ds]
-    plot.plot(fig, axs, [ts[0]], 'sax', steps)
+    # plot = Pipeline(2 / 3, 32, ALPHA, LENGTH)
+    # fig, axs = plt.subplots(ncols=3, figsize=(WIDTH, HEIGHT))
+    # steps = [plot.D, plot.sax, plot.Ds]
+    # plot.plot(fig, axs, [ts[0]], 'sax', steps)
 
-    plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
-    fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH, HEIGHT * 2))
-    steps = [plot.D, plot.sax, plot.Ds, plot.sm, plot.occ, plot.rm]
-    plot.plot(fig, chain.from_iterable(axs), ts, 'long', steps)
+    # plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
+    # fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH, HEIGHT * 2))
+    # steps = [plot.D, plot.sax, plot.Ds, plot.sm, plot.occ, plot.rm]
+    # plot.plot(fig, chain.from_iterable(axs), ts, 'long', steps)
 
     # Large pipeline
     large_pipe(ts)
@@ -196,7 +196,7 @@ def large_pipe(ts):
     axd['rm'].set(
         xticks=[0, len(motif.pattern) * seglen - 1],
         xlabel='Representative motif',
-        ylim=[-8, 8],
+        ylim=[-1.7, 11],
     )
     remove_spines(axd['rm'])
 
