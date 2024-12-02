@@ -3,12 +3,8 @@ from itertools import product
 from multiprocessing import Pool
 from os import listdir
 from os.path import join
-from time import perf_counter
 
-import matplotlib.pyplot as plt
 import numpy as np
-import stumpy
-from plot import plot_motifs, remove_spines
 from scipy.stats import zscore
 
 from frm import Miner
@@ -33,7 +29,7 @@ def main():
 
 def sim(_):
     name = random.choice(FILES)
-    data, motif_ts, motif_start, motif_length = get_sim_data(name)
+    data, motif_ts, motif_start, motif_length, injection_indices = get_sim_data(name)
     diff = [np.diff(row) for row in data]
 
     # Run Fvc oRM-Miner
@@ -91,7 +87,7 @@ def get_sim_data(name):
         inject_motif = data[inject_index][inject_start : inject_start + motif_length]
         inject_motif = np.mean(inject_motif) + np.std(inject_motif) * motif
         data[inject_index][inject_start : inject_start + motif_length] = inject_motif
-    return data, motif_ts, motif_start, motif_length
+    return data, motif_ts, motif_start, motif_length, injection_indices
 
 
 def check(motifs, motif_ts, seglen, motif_start, motif_length, min_overlap):
