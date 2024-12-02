@@ -68,17 +68,9 @@ class Motif:
         self.set_best_matches_and_distance()
         self.set_distance(p)
         self.set_representative()
-        # d = self.distance
-        # for i, series in enumerate(ts):
-        #     if i not in self.best_matches:
-        #         m = mass(ts[i], self.representative)
-        #         if self.get_radius(np.argmin(m), i) < self.distance:
-        #             self.best_matches[i] = np.argmin(m)
-        # self.set_distance(p)
-        # if self.distance != d:
-        #     print(distance, d)
         for i, index in self.best_matches.items():
             self.best_matches[i] *= seglen
+        self.get_more_matches()
 
     def set_best_matches_and_distance(self):
         extent = 0
@@ -111,9 +103,14 @@ class Motif:
         self.distance /= self.length ** (1 / p)
 
     def set_representative(self):
-        self.representative = np.nanmean(
-            [self.get_occurrence(p, i) for p, i in self.best_matches.items()], axis=0
-        )
+        with catch_warnings():
+            simplefilter("ignore")
+            self.representative = np.nanmean(
+                [self.get_occurrence(p, i) for p, i in self.best_matches.items()],
+                axis=0,
+            )
+        self.representative = self.representative[~np.isnan(self.representative)]
+        self.length = len(self.representative)
 
     def get_occurrence(self, ts, index):
         start = index * self._seglen
@@ -134,14 +131,32 @@ class Motif:
 
         return radius
 
+    def get_more_matches(self):
+        a = {}
+        for i, series in enumerate(self._ts):
+            if i not in self.best_matches:
+                with catch_warnings():
+                    simplefilter("ignore")
+                    m = mass(self._ts[i], self.representative)
+
+                best = np.argmin(m)
+                radius = 0
+                occ = zscore(self._ts[i][best : best + self.length])
+                for j, indexes in self.get_all_indexes().items():
+                    if i == j:
+                        continue
+                    dist = min(
+                        ED(occ, znorm(self.get_occurrence(j, idx))) for idx in indexes
+                    )
+                    radius = max(radius, dist)
+                if radius < self.distance:
+                    self.best_matches[i] = best
+                    a[i] = best
+        a
+
 
 def ED(a, b):
     return np.sqrt(np.nansum(np.square(a - b)))
 
 
 znorm = partial(zscore, nan_policy='omit')
-
-
-a, [0, 1, 2]
-b, [0]
-c, [0, 1, 2]
