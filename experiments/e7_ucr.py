@@ -41,10 +41,10 @@ def sim(_):
         min_overlap = THRESHOLD * motif_length
         found = check(motifs, motif_ts, seglen, motif_start, motif_length, min_overlap)
 
-    with open(FILE, 'a') as fp:
-        fp.write(
-            f'{name},{motif_ts},{motif_start},{motif_length},{len(injection_indices)},{minsup},{seglen},{alpha},{found}\n'
-        )
+        with open(FILE, 'a') as fp:
+            fp.write(
+                f'{name},{motif_ts},{motif_start},{motif_length},{len(injection_indices)},{minsup},{seglen},{alpha},{found}\n'
+            )
 
 
 def get_data(name):
