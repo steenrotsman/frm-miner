@@ -110,7 +110,7 @@ def get_sim_data(name):
     return data, motif_ts, motif_start, motif_length, injection_indices
 
 
-def reload_sim_data(name, motif_ts, motif_start, motif_length, support, _):
+def reload_sim_data(name, motif_ts, motif_start, motif_length, support):
     motif_ts = int(motif_ts)
     motif_start = int(motif_start)
     motif_length = int(motif_length)
