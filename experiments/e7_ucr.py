@@ -158,7 +158,7 @@ def get_unfinished():
     with open(FILE) as fp:
         for row in fp:
             *experiment, minsup, seglen, alpha, found = row.strip().split(',')
-            experiments[tuple(experiment)] = (minsup, seglen, alpha)
+            experiments[tuple(experiment)].append((minsup, seglen, alpha))
     total = len(experiments)
     for experiment, finished in experiments.copy().items():
         if len(finished) == len(MINSUP) * len(SEGLEN) * len(ALPHA):
