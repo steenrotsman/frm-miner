@@ -62,7 +62,6 @@ class Miner:
         discretised = sax(standardised, self.seglen, self.alpha)
         self.mine_patterns(discretised)
         self.map_patterns(standardised)
-        self.sort_patterns()
 
         return self.motifs if not self.k else self.motifs[: self.k]
 
@@ -82,7 +81,6 @@ class Miner:
         """Map patterns back to motifs."""
         for motif in self.motifs:
             motif.map(ts, self.seglen, self.p)
-
-    def sort_patterns(self):
-        """Sort patterns on their root mean squared error of representative and occurrences."""
         self.motifs.sort(key=attrgetter('distance'))
+        for motif in self.motifs[: self.k]:
+            motif.get_more_matches()

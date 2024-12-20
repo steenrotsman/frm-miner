@@ -70,7 +70,6 @@ class Motif:
         self.set_representative()
         for i, index in self.best_matches.items():
             self.best_matches[i] *= seglen
-        self.get_more_matches()
 
     def set_best_matches_and_distance(self):
         extent = 0
