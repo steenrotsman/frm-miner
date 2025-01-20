@@ -35,12 +35,12 @@ class Miner:
         Constructed motifs ordered by the distances to their occurrences.
     """
 
-    def __init__(self, minsup, seglen, alpha, omax=0.8, p=2, k=0):
+    def __init__(self, minsup, seglen, alpha, omax=0.8, mass=False, k=0):
         self.minsup = minsup
         self.seglen = seglen
         self.alpha = alpha
         self.omax = omax
-        self.p = p
+        self.mass = mass
         self.k = k
 
         self.motifs = None
@@ -80,7 +80,8 @@ class Miner:
     def map_patterns(self, ts):
         """Map patterns back to motifs."""
         for motif in self.motifs:
-            motif.map(ts, self.seglen, self.p)
+            motif.map(ts, self.seglen)
         self.motifs.sort(key=attrgetter('distance'))
-        for motif in self.motifs[: self.k]:
-            motif.get_more_matches()
+        if self.mass:
+            for motif in self.motifs[: self.k]:
+                motif.get_more_matches()

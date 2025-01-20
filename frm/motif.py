@@ -59,14 +59,14 @@ class Motif:
 
         return indexes
 
-    def map(self, ts, seglen, p):
+    def map(self, ts, seglen):
         """Map representative, matches, and distance using occurrences."""
         self._seglen = seglen
         self.length = len(self.pattern) * seglen
         self._ts = ts
 
         self.set_best_matches_and_distance()
-        self.set_distance(p)
+        self.set_distance()
         self.set_representative()
         for i, index in self.best_matches.items():
             self.best_matches[i] *= seglen
@@ -91,7 +91,7 @@ class Motif:
             radius = partial(self.get_radius, ts_index=i)
             self.best_matches[i] = min(indexes, key=radius)
 
-    def set_distance(self, p):
+    def set_distance(self):
         # TODO the extent is the maximum radius of any time series (or rather the two time series with the farthest apart occurrences)
         # Calculating extent could just be done in the set_best_matches method
         for (a, i), (b, j) in permutations(self.best_matches.items(), 2):
@@ -99,7 +99,7 @@ class Motif:
             occ2 = znorm(self.get_occurrence(b, j))
             distance = ED(occ1, occ2)
             self.distance = max(self.distance, distance)
-        self.distance /= self.length ** (1 / p)
+        self.distance /= self.length ** (1 / 2)
 
     def set_representative(self):
         with catch_warnings():
