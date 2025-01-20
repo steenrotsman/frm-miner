@@ -15,7 +15,7 @@ MOTIF_LEN = 512
 INJECT = 100
 
 # Parameters
-MINSUP = 0.6
+MINSUP = 0.3
 SEGLEN = 32
 ALPHA = 4
 K = 1
@@ -35,8 +35,11 @@ def main():
     data = np.array(data)
     plt.plot(data.T)
     plt.savefig(join('figs', '3 walks.png'))
+    plt.close()
     data = np.diff(data, axis=1)
+    plt.plot(data.T)
     plt.savefig(join('figs', '3 diff.png'))
+    plt.close()
 
     start = perf_counter()
     mm = Miner(MINSUP, SEGLEN, ALPHA)
