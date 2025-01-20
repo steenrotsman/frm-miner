@@ -31,7 +31,7 @@ def main():
             [zscore(ts) for ts in field],
             motifs,
             fn=f'5 {category} motifs',
-            yticks=[-1, 0, 1],
+            yticks=[-2, 0, 2],
         )
 
 
