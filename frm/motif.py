@@ -1,7 +1,14 @@
 from collections import defaultdict
+from functools import partial
+from itertools import permutations
 from warnings import catch_warnings, simplefilter
 
 import numpy as np
+from scipy.stats import zscore
+
+with catch_warnings():
+    simplefilter("ignore")
+    from mass_ts import mass2 as mass
 
 
 class Motif:
@@ -15,6 +22,7 @@ class Motif:
         self.distance = 0.0
         self.length = 0
         self._seglen = 0
+        self._ts = []
 
     def __repr__(self):
         return f"Motif('{self.pattern}')"
@@ -51,49 +59,103 @@ class Motif:
 
         return indexes
 
-    def map(self, ts, seglen, p):
-        """Map representative, matches, and naed using occurrences."""
+    def map(self, ts, seglen):
+        """Map representative, matches, and distance using occurrences."""
         self._seglen = seglen
         self.length = len(self.pattern) * seglen
-        self.set_average_occurrences(ts)
-        self.set_representative()
-        self.set_best_matches_and_distance(ts, p)
+        self._ts = ts
 
-    def set_average_occurrences(self, ts):
+        self.set_best_matches_and_distance()
+        self.set_distance()
+        self.set_representative()
+        for i, index in self.best_matches.items():
+            self.best_matches[i] *= seglen
+
+    def set_best_matches_and_distance(self):
+        extent = 0
         for i, indexes in self.get_all_indexes().items():
-            occurrences = []
+            min_radius = np.inf
             for index in indexes:
-                occurrence = self.get_occurrence(ts[i], index)
-                occurrences.append(occurrence)
-            with catch_warnings():
-                simplefilter("ignore")
-                self.average_occurrences[i] = np.nanmean(occurrences, axis=0)
+                radius = self.get_radius(index, i)
+                if radius < min_radius:
+                    min_radius = radius
+                    self.best_matches[i] = index
+            if min_radius > extent:
+                extent = min_radius
+
+            # If there is just one occurrence in a time series, use that
+            if len(indexes) == 1:
+                self.best_matches[i] = indexes[0]
+                continue
+            # Select index with minimal radius
+            radius = partial(self.get_radius, ts_index=i)
+            self.best_matches[i] = min(indexes, key=radius)
+
+    def set_distance(self):
+        # TODO the extent is the maximum radius of any time series (or rather the two time series with the farthest apart occurrences)
+        # Calculating extent could just be done in the set_best_matches method
+        for (a, i), (b, j) in permutations(self.best_matches.items(), 2):
+            occ1 = znorm(self.get_occurrence(a, i))
+            occ2 = znorm(self.get_occurrence(b, j))
+            distance = ED(occ1, occ2)
+            self.distance = max(self.distance, distance)
+        self.distance /= self.length ** (1 / 2)
+
+    def set_representative(self):
+        with catch_warnings():
+            simplefilter("ignore")
+            self.representative = np.nanmean(
+                [self.get_occurrence(p, i) for p, i in self.best_matches.items()],
+                axis=0,
+            )
+        self.representative = self.representative[~np.isnan(self.representative)]
+        self.length = len(self.representative)
 
     def get_occurrence(self, ts, index):
         start = index * self._seglen
         end = start + self.length
 
         # Ensure motif occurrences are all the same length
-        too_short = max(0, end - len(ts))
-        return np.hstack((ts[start:end], np.array(too_short * [np.nan])))
+        too_short = max(0, end - len(self._ts[ts]))
+        return np.hstack((self._ts[ts][start:end], np.array(too_short * [np.nan])))
 
-    def set_representative(self):
-        self.representative = np.nanmean(
-            [ao for ao in self.average_occurrences.values()], axis=0
-        )
-
-    def set_best_matches_and_distance(self, ts, p):
+    def get_radius(self, start_index, ts_index):
+        radius = 0
+        occ = zscore(self.get_occurrence(ts_index, start_index))
         for i, indexes in self.get_all_indexes().items():
-            best_match = 0
-            min_dist = np.inf
+            if i == ts_index:
+                continue
+            dist = min(ED(occ, znorm(self.get_occurrence(i, idx))) for idx in indexes)
+            radius = max(radius, dist)
 
-            for index in indexes:
-                occurrence = self.get_occurrence(ts[i], index)
-                dist = np.linalg.norm(occurrence - self.representative)
+        return radius
 
-                if dist < min_dist:
-                    min_dist = dist
-                    best_match = index
-            self.distance += min_dist
-            self.best_matches[i] = best_match * self._seglen
-        self.distance /= len(self.get_all_indexes()) * self.length ** (1 / p)
+    def get_more_matches(self):
+        a = {}
+        for i, series in enumerate(self._ts):
+            if i not in self.best_matches:
+                with catch_warnings():
+                    simplefilter("ignore")
+                    m = mass(self._ts[i], self.representative)
+
+                best = np.argmin(m)
+                radius = 0
+                occ = zscore(self._ts[i][best : best + self.length])
+                for j, indexes in self.get_all_indexes().items():
+                    if i == j:
+                        continue
+                    dist = min(
+                        ED(occ, znorm(self.get_occurrence(j, idx))) for idx in indexes
+                    )
+                    radius = max(radius, dist)
+                if radius < self.distance:
+                    self.best_matches[i] = best
+                    a[i] = best
+        a
+
+
+def ED(a, b):
+    return np.sqrt(np.nansum(np.square(a - b)))
+
+
+znorm = partial(zscore, nan_policy='omit')

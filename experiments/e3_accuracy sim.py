@@ -26,6 +26,13 @@ RNG = np.random.default_rng(0)
 
 def main():
     data = get_data(UNITS, TS_LEN, MOTIF_LEN, INJECT, NOISE_LEVELS)
+    fix, axs = plt.subplots(nrows=3, sharex='all')
+    for row, ax in zip(data[0.6], axs):
+        ax.plot(row, 'k')
+        remove_spines(ax)
+        ax.set_xticks([0, len(row)])
+    plt.savefig(join('figs', '3 data.eps'))
+    plt.savefig(join('figs', '3 data.png'))
 
     # FRM-Miner 1.0 and 2.0
     for p in (1, 2):
