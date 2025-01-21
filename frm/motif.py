@@ -148,10 +148,10 @@ class Motif:
                         ED(occ, znorm(self.get_occurrence(j, idx))) for idx in indexes
                     )
                     radius = max(radius, dist)
+                radius /= self.length ** (1 / 2)
                 if radius < self.distance:
                     self.best_matches[i] = best
                     a[i] = best
-        a
 
 
 def ED(a, b):
