@@ -22,8 +22,10 @@ class Miner:
         Segment length for Piecewise Aggregate Approximation.
     alpha : int
         Alphabet size for discretisation.
-    omax: float
+    omax: float, optional
         Maximal fraction of patterns contained in longer patters.
+    mass : bool, optional
+        Whether to scan the time series database to look for additional matches using MASS.
     p : int
         If 2, ranks motifs on ED (FRM-Miner 2.0). If 1, uses NAED (FRM-Miner 1.0)
     k : int, optional
