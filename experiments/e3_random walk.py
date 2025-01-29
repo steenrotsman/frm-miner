@@ -4,7 +4,7 @@ from warnings import catch_warnings, simplefilter
 
 import matplotlib.pyplot as plt
 import numpy as np
-from plot import remove_spines
+from plot import WIDTH, remove_spines
 from scipy.stats import zscore
 
 from frm import Miner
@@ -20,7 +20,7 @@ MOTIF_LEN = 512
 INJECT = 100
 
 # Parameters
-MINSUP = 0.3
+MINSUP = 0.5
 SEGLEN = 25
 ALPHA = 4
 K = 1
@@ -51,37 +51,38 @@ def main():
 
     # Discover motifs
     start = perf_counter()
-    mm = Miner(MINSUP, SEGLEN, ALPHA)
-    motifs = mm.mine(diff)
+    mm = Miner(MINSUP, SEGLEN, ALPHA, diff=1)
+    motifs = mm.mine(data)
     end = perf_counter()
     print(end - start)
 
     # Plot motifs
-    fig, ax = plt.subplots()
-    motif = motifs[0]
-    for ts, idx in motif.best_matches.items():
-        ax.plot(zscore(data[ts][idx : idx + motif.length]), lw=0.3)
-    ax.set(xticks=[0, motif.length])
-    remove_spines(ax, remove_y=False)
+    fig, axs = plt.subplots(4, 4, figsize=(WIDTH*2, WIDTH*2))
+    for motif, ax in zip(motifs, axs.flat):
+
+        for ts, idx in motif.best_matches.items():
+            ax.plot(zscore(data[ts][idx : idx + motif.length]), lw=0.3)
+        ax.set(xticks=[0, motif.length], xlabel=motif.distance)
+        remove_spines(ax, remove_y=False)
     plt.savefig(join('figs', '3 walk.png'))
 
-    # Plot additional occurrences
-    representative = np.mean(
-        [
-            zscore(data[ts][idx : idx + motif.length])
-            for ts, idx in motif.best_matches.items()
-        ],
-        axis=0,
-    )
-    for i, series in enumerate(data):
-        if i not in motif.best_matches:
-            with catch_warnings():
-                simplefilter("ignore")
-                idx = np.argmin(mass(data[i], representative))
-            ax.plot(zscore(data[i][idx : idx + motif.length]), lw=0.3)
+    # # Plot additional occurrences
+    # representative = np.mean(
+    #     [
+    #         zscore(data[ts][idx : idx + motif.length])
+    #         for ts, idx in motif.best_matches.items()
+    #     ],
+    #     axis=0,
+    # )
+    # for i, series in enumerate(data):
+    #     if i not in motif.best_matches:
+    #         with catch_warnings():
+    #             simplefilter("ignore")
+    #             idx = np.argmin(mass(data[i], representative))
+    #         ax.plot(zscore(data[i][idx : idx + motif.length]), lw=0.3)
 
-    plt.savefig(join('figs', '3 additional.png'))
-    plt.close()
+    # plt.savefig(join('figs', '3 additional.png'))
+    # plt.close()
 
 
 if __name__ == '__main__':

@@ -7,24 +7,29 @@ import numpy as np
 from scipy.stats import norm, zscore
 
 
-def sax(timeseries, seglen, alpha):
+def sax(ts, seglen, alpha, diff):
     """Symbolic Aggregate approXimation.
 
     Parameters
     ----------
-    timeseries : list
+    ts : list
         List of lists containing normalised time series to dicretise.
     seglen : int
         Segment length for PAA, factor by which discrete representation is shorter than time series.
     alpha : int
         Alphabet size; number of discrete elements the time series are to be binned into.
+    diff : int
+        Degree of differencing applied before discretisation.
 
     Returns
     -------
     List with a collection of discrete sequences from the time series.
     """
     breakpoints = get_breakpoints(alpha)
-    return [get_sax(series, seglen, breakpoints) for series in timeseries]
+
+    standardised = standardise(difference(ts, diff))
+
+    return [get_sax(series, seglen, breakpoints) for series in standardised]
 
 
 def get_sax(series, seglen, breakpoints):
@@ -64,6 +69,29 @@ def standardise(timeseries):
     except ValueError:
         return [np.nan_to_num(zscore(ts)) for ts in timeseries]
 
+
+def difference(timeseries, diff):
+    """Difference time series.
+
+    Differences data `diff` times.
+
+    Parameters
+    ----------
+    timeseries
+        Database of time series to difference.
+
+    diff
+        Degree of differences to take.
+
+    Returns
+    -------
+    Differenced
+        Database of differenced time series.
+    """
+    try:
+        return np.diff(timeseries, axis=1)
+    except ValueError:
+        return [np.diff(ts) for ts in timeseries]
 
 def get_breakpoints(a):
     return norm.ppf(np.arange(1, a) / a, loc=0)

@@ -28,7 +28,7 @@ class Motif:
         return f"Motif('{self.pattern}')"
 
     def __eq__(self, other):
-        if type(other) != type(self):
+        if type(other) is not type(self):
             return False
         return other.pattern == self.pattern
 
@@ -108,7 +108,7 @@ class Motif:
                 [self.get_occurrence(p, i) for p, i in self.best_matches.items()],
                 axis=0,
             )
-        self.representative = self.representative[~np.isnan(self.representative)]
+        self.representative = zscore(self.representative[~np.isnan(self.representative)])
         self.length = len(self.representative)
 
     def get_occurrence(self, ts, index):
