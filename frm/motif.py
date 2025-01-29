@@ -28,7 +28,7 @@ class Motif:
         return f"Motif('{self.pattern}')"
 
     def __eq__(self, other):
-        if type(other) != type(self):
+        if type(other) is not type(self):
             return False
         return other.pattern == self.pattern
 
