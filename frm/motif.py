@@ -59,17 +59,17 @@ class Motif:
 
         return indexes
 
-    def map(self, ts, seglen):
+    def map(self, ts, seglen, max_dist):
         """Map representative, matches, and distance using occurrences."""
         self._seglen = seglen
         self._ts = ts
         self.length = len(self.pattern) * seglen
 
-        self.set_best_matches_and_distance()
-        self.trim_length()
+        self.set_best_matches_and_distance(max_dist)
+        self.trim_length(max_dist)
         self.set_representative()
 
-    def set_best_matches_and_distance(self):
+    def set_best_matches_and_distance(self, max_dist):
         """Select occurrence with minimal radii and calculate extent."""
         for ts_index, start_indexes in self.get_all_indexes().items():
             min_radius = np.inf
@@ -80,7 +80,7 @@ class Motif:
                     self.best_matches[ts_index] = start_index
             self.distance = max(self.distance, min_radius)
 
-    def trim_length(self):
+    def trim_length(self, max_dist):
         """Trim length of occurrences if beneficial."""
         occurrences = np.array(
             [
