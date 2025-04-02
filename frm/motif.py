@@ -62,66 +62,86 @@ class Motif:
     def map(self, ts, seglen):
         """Map representative, matches, and distance using occurrences."""
         self._seglen = seglen
-        self.length = len(self.pattern) * seglen
         self._ts = ts
+        self.length = len(self.pattern) * seglen
 
         self.set_best_matches_and_distance()
-        self.set_distance()
+        self.trim_length()
         self.set_representative()
-        for i, index in self.best_matches.items():
-            self.best_matches[i] *= seglen
 
     def set_best_matches_and_distance(self):
-        extent = 0
-        for i, indexes in self.get_all_indexes().items():
+        """Select occurrence with minimal radii and calculate extent."""
+        for ts_index, start_indexes in self.get_all_indexes().items():
             min_radius = np.inf
-            for index in indexes:
-                radius = self.get_radius(index, i)
+            for start_index in start_indexes:
+                radius = self.get_radius(ts_index, start_index)
                 if radius < min_radius:
                     min_radius = radius
-                    self.best_matches[i] = index
-            if min_radius > extent:
-                extent = min_radius
+                    self.best_matches[ts_index] = start_index
+            self.distance = max(self.distance, min_radius)
 
-            # If there is just one occurrence in a time series, use that
-            if len(indexes) == 1:
-                self.best_matches[i] = indexes[0]
-                continue
-            # Select index with minimal radius
-            radius = partial(self.get_radius, ts_index=i)
-            self.best_matches[i] = min(indexes, key=radius)
+    def trim_length(self):
+        """Trim length of occurrences if beneficial."""
+        occurrences = np.array(
+            [
+                self.get_occurrence(ts_index, start_index)
+                for ts_index, start_index in self.best_matches.items()
+            ]
+        )
 
-    def set_distance(self):
-        # TODO the extent is the maximum radius of any time series (or rather the two time series with the farthest apart occurrences)
-        # Calculating extent could just be done in the set_best_matches method
+        # Find stable begin and end points of occurrences
+        diff = np.max(occurrences, axis=0) - np.min(occurrences, axis=0)
+        reference = np.mean(diff[self._seglen : -self._seglen])
+        left_trim = np.where(diff[: self._seglen] <= reference)[0]
+        left_trim = left_trim[0] if left_trim.size > 0 else 0
+        right_trim = np.where(diff[-self._seglen :] <= reference)[0]
+        right_trim = self._seglen - right_trim[-1] if right_trim.size > 0 else 0
+
+        # Apply left and right trim
+        for ts_index, start_index in self.best_matches.items():
+            self.best_matches[ts_index] = (start_index * self._seglen) + left_trim
+        self.length = len(self.pattern) * self._seglen - left_trim - right_trim
+
+        # Recalculate extent
+        self.distance = 0
         for (a, i), (b, j) in permutations(self.best_matches.items(), 2):
-            occ1 = znorm(self.get_occurrence(a, i))
-            occ2 = znorm(self.get_occurrence(b, j))
-            distance = ED(occ1, occ2)
-            self.distance = max(self.distance, distance)
+            occ1 = self.pad(znorm(self._ts[a][i : i + self.length]))
+            occ2 = self.pad(znorm(self._ts[b][j : j + self.length]))
+            self.distance = max(self.distance, ED(occ1, occ2))
         self.distance /= self.length ** (1 / 2)
 
     def set_representative(self):
+        """Set representative motif as stepwise average of occurrences."""
         with catch_warnings():
             simplefilter("ignore")
             self.representative = np.nanmean(
-                [self.get_occurrence(p, i) for p, i in self.best_matches.items()],
+                [
+                    self.pad(
+                        self._ts[ts_index][start_index : start_index + self.length]
+                    )
+                    for ts_index, start_index in self.best_matches.items()
+                ],
                 axis=0,
             )
         self.representative = self.representative[~np.isnan(self.representative)]
         self.length = len(self.representative)
 
-    def get_occurrence(self, ts, index):
-        start = index * self._seglen
+    def get_occurrence(self, ts_index, start_index):
+        """Get occurrence from time series with padding if needed."""
+        start = start_index * self._seglen
         end = start + self.length
 
-        # Ensure motif occurrences are all the same length
-        too_short = max(0, end - len(self._ts[ts]))
-        return np.hstack((self._ts[ts][start:end], np.array(too_short * [np.nan])))
+        return self.pad(self._ts[ts_index][start:end])
 
-    def get_radius(self, start_index, ts_index):
+    def pad(self, ts):
+        """Ensure occurrences are all the same length."""
+        short = self.length - len(ts)
+        return np.hstack((ts, np.array(short * [np.nan])))
+
+    def get_radius(self, ts_index, start_index):
+        """Maximum distance between pattern and nearest match in each ts."""
         radius = 0
-        occ = zscore(self.get_occurrence(ts_index, start_index))
+        occ = znorm(self.get_occurrence(ts_index, start_index))
         for i, indexes in self.get_all_indexes().items():
             if i == ts_index:
                 continue
@@ -131,6 +151,7 @@ class Motif:
         return radius
 
     def get_more_matches(self):
+        """Find matches in time series without matches if radius is not too high."""
         a = {}
         for i, series in enumerate(self._ts):
             if i not in self.best_matches:
@@ -140,7 +161,7 @@ class Motif:
 
                 best = np.argmin(m)
                 radius = 0
-                occ = zscore(self._ts[i][best : best + self.length])
+                occ = znorm(self._ts[i][best : best + self.length])
                 for j, indexes in self.get_all_indexes().items():
                     if i == j:
                         continue
@@ -155,7 +176,8 @@ class Motif:
 
 
 def ED(a, b):
+    """Euclidean distance. Note: a and b need to be normalised beforehand."""
     return np.sqrt(np.nansum(np.square(a - b)))
 
 
-znorm = partial(zscore, nan_policy='omit')
+znorm = partial(zscore, nan_policy="omit")
