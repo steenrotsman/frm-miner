@@ -62,15 +62,22 @@ class Motif:
     def map(self, ts, seglen, max_dist):
         """Map representative, matches, and distance using occurrences."""
         self._seglen = seglen
+        self._middle = slice(seglen, -seglen)
         self._ts = ts
         self.length = len(self.pattern) * seglen
 
         self.set_best_matches_and_distance(max_dist)
-        self.trim_length(max_dist)
-        self.set_representative()
+        if self.distance < max_dist:
+            self.trim_length(max_dist)
+        if self.distance < max_dist:
+            self.set_representative()
 
     def set_best_matches_and_distance(self, max_dist):
-        """Select occurrence with minimal radii and calculate extent."""
+        """Select occurrences with minimal radii and calculate extent.
+
+        Note. Radius is calculated w.r.t. the middle part of the motif. If the
+        extent of this middle part already exceeds max_dist, prune.
+        """
         for ts_index, start_indexes in self.get_all_indexes().items():
             min_radius = np.inf
             for start_index in start_indexes:
@@ -78,7 +85,11 @@ class Motif:
                 if radius < min_radius:
                     min_radius = radius
                     self.best_matches[ts_index] = start_index
-            self.distance = max(self.distance, min_radius)
+            self.distance = max(self.distance, min_radius / self.distance**0.5)
+
+            if self.distance > max_dist:
+                self.distance = float("inf")
+                return
 
     def trim_length(self, max_dist):
         """Trim length of occurrences if beneficial."""
@@ -91,7 +102,7 @@ class Motif:
 
         # Find stable begin and end points of occurrences
         diff = np.max(occurrences, axis=0) - np.min(occurrences, axis=0)
-        reference = np.mean(diff[self._seglen : -self._seglen])
+        reference = np.mean(diff[self._middle])
         left_trim = np.where(diff[: self._seglen] <= reference)[0]
         left_trim = left_trim[0] if left_trim.size > 0 else 0
         right_trim = np.where(diff[-self._seglen :] <= reference)[0]
@@ -143,13 +154,20 @@ class Motif:
         return np.hstack((ts, np.array(short * [np.nan])))
 
     def get_radius(self, ts_index, start_index):
-        """Maximum distance between pattern and nearest match in each ts."""
+        """Maximum distance between pattern and nearest match in each ts.
+
+        Note. Only uses the middle [seglen : -seglen] of each occurrence.
+        """
         radius = 0
-        occ = znorm(self.get_occurrence(ts_index, start_index))
+        occ = self.get_occurrence(ts_index, start_index)
+        occ = znorm(occ[self._middle])
         for i, indexes in self.get_all_indexes().items():
             if i == ts_index:
                 continue
-            dist = min(ED(occ, znorm(self.get_occurrence(i, idx))) for idx in indexes)
+            dist = min(
+                ED(occ, znorm(self.get_occurrence(i, idx)[self._middle]))
+                for idx in indexes
+            )
             radius = max(radius, dist)
 
         return radius
