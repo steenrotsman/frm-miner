@@ -107,8 +107,12 @@ class Motif:
         for (a, i), (b, j) in permutations(self.best_matches.items(), 2):
             occ1 = self.pad(znorm(self._ts[a][i : i + self.length]))
             occ2 = self.pad(znorm(self._ts[b][j : j + self.length]))
-            self.distance = max(self.distance, ED(occ1, occ2))
-        self.distance /= self.length ** (1 / 2)
+            self.distance = max(self.distance, ED(occ1, occ2) / self.length**0.5)
+
+            # Early stopping with upper bound
+            if self.distance > max_dist:
+                self.distance = float("inf")
+                return
 
     def set_representative(self):
         """Set representative motif as stepwise average of occurrences."""
