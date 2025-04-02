@@ -4,7 +4,7 @@ This module defines the mine_motifs function, which takes a database of
 time series and finds frequent or maximal motifs in it. The motifs can
 be filtered for length and ranked using different strategies.
 """
-
+import heapq
 from operator import attrgetter
 
 from .patterns import PatternMiner
@@ -62,8 +62,8 @@ class Miner:
         """
         standardised = standardise(ts)
         discretised = sax(standardised, self.seglen, self.alpha)
-        self.mine_patterns(discretised)
-        self.map_patterns(standardised)
+        patterns = self.mine_patterns(discretised)
+        self.map_patterns(standardised, patterns)
 
         return self.motifs if not self.k else self.motifs[: self.k]
 
@@ -77,13 +77,19 @@ class Miner:
         """
         pm = PatternMiner(self.minsup, self.omax)
         pm.mine(ds)
-        self.motifs = list(pm.frequent.values())
+        return list(pm.frequent.values())
 
-    def map_patterns(self, ts):
+    def map_patterns(self, ts, patterns):
         """Map patterns back to motifs."""
-        for motif in self.motifs:
-            motif.map(ts, self.seglen)
-        self.motifs.sort(key=attrgetter('distance'))
+        max_dist = float("inf")
+        for pattern in patterns:
+            pattern.map(ts, self.seglen, max_dist)
+            if self.k > 0 and len(self.motifs) < self.k:
+                heapq.heappush(self.motifs, (-pattern.distance, pattern))
+            else:
+                heapq.heappushpop(self.motifs, (-pattern.distance, pattern))
+                max_dist = -self.motifs[0][0]
+        self.motifs = [m for d, m in sorted(self.motifs, key=attrgetter('distance'))]
         if self.mass:
             for motif in self.motifs[: self.k]:
                 motif.get_more_matches()
