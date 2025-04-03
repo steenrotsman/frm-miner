@@ -4,8 +4,8 @@ This module defines the mine_motifs function, which takes a database of
 time series and finds frequent or maximal motifs in it. The motifs can
 be filtered for length and ranked using different strategies.
 """
+
 import heapq
-from operator import attrgetter
 
 from .patterns import PatternMiner
 from .preprocessing import sax, standardise
@@ -45,7 +45,7 @@ class Miner:
         self.mass = mass
         self.k = k
 
-        self.motifs = None
+        self.motifs = []
 
     def mine(self, ts):
         """Perform all steps in motif mining pipeline.
@@ -84,12 +84,12 @@ class Miner:
         max_dist = float("inf")
         for pattern in patterns:
             pattern.map(ts, self.seglen, max_dist)
-            if self.k > 0 and len(self.motifs) < self.k:
+            if self.k == 0 or len(self.motifs) < self.k:
                 heapq.heappush(self.motifs, (-pattern.distance, pattern))
             else:
                 heapq.heappushpop(self.motifs, (-pattern.distance, pattern))
                 max_dist = -self.motifs[0][0]
-        self.motifs = [m for d, m in sorted(self.motifs, key=attrgetter('distance'))]
+        self.motifs = [m for d, m in sorted(self.motifs)]
         if self.mass:
             for motif in self.motifs[: self.k]:
                 motif.get_more_matches()
