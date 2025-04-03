@@ -85,7 +85,7 @@ class Motif:
                 if radius < min_radius:
                     min_radius = radius
                     self.best_matches[ts_index] = start_index
-            self.distance = max(self.distance, min_radius / self.distance**0.5)
+            self.distance = max(self.distance, min_radius / len(self.pattern) ** 0.5)
 
             if self.distance > max_dist:
                 self.distance = float("inf")
@@ -164,10 +164,16 @@ class Motif:
         for i, indexes in self.get_all_indexes().items():
             if i == ts_index:
                 continue
-            dist = min(
-                ED(occ, znorm(self.get_occurrence(i, idx)[self._middle]))
-                for idx in indexes
-            )
+            elif i in self.best_matches:  # Already selected match for this ts
+                dist = ED(
+                    occ,
+                    znorm(self.get_occurrence(i, self.best_matches[i])[self._middle]),
+                )
+            else:
+                dist = min(
+                    ED(occ, znorm(self.get_occurrence(i, idx)[self._middle]))
+                    for idx in indexes
+                )
             radius = max(radius, dist)
 
         return radius
