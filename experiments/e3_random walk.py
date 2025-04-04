@@ -23,7 +23,7 @@ INJECT = 100
 MINSUP = 0.3
 SEGLEN = 25
 ALPHA = 4
-K = 1
+K = 4
 
 RNG = np.random.default_rng(3141657)
 
@@ -51,18 +51,18 @@ def main():
 
     # Discover motifs
     start = perf_counter()
-    mm = Miner(MINSUP, SEGLEN, ALPHA)
+    mm = Miner(MINSUP, SEGLEN, ALPHA, mass=True, k=K)
     motifs = mm.mine(diff)
     end = perf_counter()
     print(end - start)
 
     # Plot motifs
-    fig, ax = plt.subplots()
-    motif = motifs[0]
-    for ts, idx in motif.best_matches.items():
-        ax.plot(zscore(data[ts][idx : idx + motif.length]), lw=0.3)
-    ax.set(xticks=[0, motif.length])
-    remove_spines(ax, remove_y=False)
+    fig, axs = plt.subplots(ncols=K)
+    for motif, ax in zip(motifs, axs):
+        for ts, idx in motif.best_matches.items():
+            ax.plot(zscore(data[ts][idx : idx + motif.length]), lw=0.3)
+        ax.set(xticks=[0, motif.length], xlabel=len(motif.best_matches))
+        remove_spines(ax, remove_y=False)
     plt.savefig(join("figs", "3 walk.png"))
 
     # Plot additional occurrences
