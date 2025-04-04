@@ -17,7 +17,7 @@ params = {
     'font.sans-serif': 'Arial',
     'font.size': LETTERING_SIZE,
     'legend.fontsize': LETTERING_SIZE,
-    'savefig.dpi': 2400,
+    'savefig.dpi': 800,
     'text.usetex': False,
     'xtick.labelsize': LETTERING_SIZE,
     'ytick.labelsize': LETTERING_SIZE,
