@@ -2,7 +2,7 @@
 
 This module defines two functions for measuring the size of the index map/tree for both
 FRM-Miner 1.0 and FRM-Miner 2.0. The pympler.asizeof.asizeof function is used to measure
-the size of the dictionary that defines the index map/tree. The run times are severely 
+the size of the dictionary that defines the index map/tree. The run times are severely
 impacted by the memory profiling, especially for FRM-Miner 1.0.
 """
 

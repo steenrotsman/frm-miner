@@ -18,10 +18,10 @@ import stumpy
 
 from frm import Miner
 
-FILE = 'e1_runtime.csv'
-FOLDER = 'UCRArchive_2018'
+FILE = "e1_runtime.csv"
+FOLDER = "UCRArchive_2018"
 FILES = listdir(FOLDER)
-PARTITIONS = ['TRAIN', 'TEST']
+PARTITIONS = ["TRAIN", "TEST"]
 
 # Parameters for FRM-Miner
 MINSUP = 0.3
@@ -32,28 +32,28 @@ ALPHA = 4
 def main():
     # Get already calculated combinations from file
     with open(FILE) as fp:
-        seen = [row.split(',')[:2] for row in fp.readlines()]
+        seen = [row.split(",")[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
     MINERS = [benchmark_miner_2, benchmark_stumpy]
     with Pool(processes=32, maxtasksperchild=1) as p:
         c = product(MINERS, FILES, range(1, 11))
-        unseen = [(m, n, s) for (m, n, s) in c if [f'{m.__name__}_{s}', n] not in seen]
+        unseen = [(m, n, s) for (m, n, s) in c if [f"{m.__name__}_{s}", n] not in seen]
         c = product(MINERS, FILES, range(1, 11))
-        print(f'Already done {len(list(c)) - len(unseen)} settings...')
+        print(f"Already done {len(list(c)) - len(unseen)} settings...")
         print(f'"just" {len(unseen)} to go!')
         p.starmap(benchmark, unseen)
 
 
 def benchmark(miner, name, seglen):
-    print(f'{miner.__name__}_{seglen}: {name}...')
+    print(f"{miner.__name__}_{seglen}: {name}...")
     data = get_data(name)
     start = perf_counter()
     miner(data, seglen)
     end = perf_counter()
-    with open(FILE, 'a') as fp:
-        fp.write(f'{miner.__name__}_{seglen},{name},{end-start}\n')
-    print(f'{miner.__name__}_{seglen}: {name} done!')
+    with open(FILE, "a") as fp:
+        fp.write(f"{miner.__name__}_{seglen},{name},{end - start}\n")
+    print(f"{miner.__name__}_{seglen}: {name} done!")
 
 
 def benchmark_miner_2(data, seglen):
@@ -69,11 +69,11 @@ def benchmark_stumpy(data, seglen):
 def get_data(name):
     data = []
     for part in PARTITIONS:
-        with open(join(FOLDER, name, f'{name}_{part}.tsv')) as f:
+        with open(join(FOLDER, name, f"{name}_{part}.tsv")) as f:
             for row in f:
                 # Split data on tabs and parse to floats
                 data.append(
-                    [float(x) for x in row.strip('\n').split('\t')[1:] if x != 'NaN']
+                    [float(x) for x in row.strip("\n").split("\t")[1:] if x != "NaN"]
                 )
 
     return data
@@ -109,6 +109,6 @@ def paa(series, seglen):
     return np.mean(segments, axis=1)
 
 
-if __name__ == '__main__':
-    print('job start')
+if __name__ == "__main__":
+    print("job start")
     main()

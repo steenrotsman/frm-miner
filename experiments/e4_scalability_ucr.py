@@ -7,15 +7,15 @@ from e1_runtime import get_data
 
 
 def get_ucr_results(measure):
-    file = RUNTIME_FILE if measure == 'Seconds' else MEMORY_FILE
+    file = RUNTIME_FILE if measure == "Seconds" else MEMORY_FILE
     lengths = defaultdict(list)
     rows = defaultdict(list)
     total = defaultdict(list)
 
     with open(file) as fp:
         for row in fp.readlines():
-            experiment, name, result = tuple(row.split(','))
-            if experiment in ['benchmark_miner_2_2', '2']:
+            experiment, name, result = tuple(row.split(","))
+            if experiment in ["benchmark_miner_2_2", "2"]:
                 result = float(result)
                 data = get_data(name)
                 length = fmean(map(len, data))

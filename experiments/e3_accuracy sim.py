@@ -26,17 +26,17 @@ RNG = np.random.default_rng(0)
 
 def main():
     data = get_data(UNITS, TS_LEN, MOTIF_LEN, INJECT, NOISE_LEVELS)
-    fix, axs = plt.subplots(nrows=3, sharex='all')
+    fix, axs = plt.subplots(nrows=3, sharex="all")
     for row, ax in zip(data[0.6], axs):
-        ax.plot(row, 'k')
+        ax.plot(row, "k")
         remove_spines(ax)
         ax.set_xticks([0, len(row)])
-    plt.savefig(join('figs', '3 data.eps'))
-    plt.savefig(join('figs', '3 data.png'))
+    plt.savefig(join("figs", "3 data.eps"))
+    plt.savefig(join("figs", "3 data.png"))
 
     # FRM-Miner 1.0 and 2.0
     for p in (1, 2):
-        fig, axss = plt.subplots(K, len(NOISE_LEVELS), sharex='all', sharey='all')
+        fig, axss = plt.subplots(K, len(NOISE_LEVELS), sharex="all", sharey="all")
         for noise_level, axs in zip(NOISE_LEVELS, axss.T):
             rows = data[noise_level]
 
@@ -46,8 +46,8 @@ def main():
             axs[0].set_yticks([-2.5, 2.5])
             axs[2].set_xlabel(noise_level)
 
-        plt.savefig(join('figs', f'3 accuracy {p}.eps'))
-        plt.savefig(join('figs', f'3 accuracy {p}.png'))
+        plt.savefig(join("figs", f"3 accuracy {p}.eps"))
+        plt.savefig(join("figs", f"3 accuracy {p}.png"))
         plt.close()
 
     # Ostinato
@@ -104,17 +104,17 @@ def ostinato(data, m, i=[0]):
 
 
 def plot_ostinato(consensus_motifs, inject):
-    fig, axs = plt.subplots(ncols=len(consensus_motifs), sharex='all', sharey='all')
+    fig, axs = plt.subplots(ncols=len(consensus_motifs), sharex="all", sharey="all")
 
     for motif, ax, noise_level in zip(consensus_motifs, axs, NOISE_LEVELS):
-        ax.plot(motif, 'k', lw=0.5)
+        ax.plot(motif, "k", lw=0.5)
         ax.set(ylim=(-3, 3), xticks=[0, len(motif)], yticks=[-2.5, 2.5])
         ax.set_xlabel(noise_level)
         remove_spines(ax, remove_y=False)
 
-    plt.savefig(join('figs', '3 accuracy ostinato.eps'))
-    plt.savefig(join('figs', '3 accuracy ostinato.png'))
+    plt.savefig(join("figs", "3 accuracy ostinato.eps"))
+    plt.savefig(join("figs", "3 accuracy ostinato.png"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

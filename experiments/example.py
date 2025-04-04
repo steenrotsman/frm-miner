@@ -10,27 +10,27 @@ seed(0)
 ts = [[randint(0, 99) / 10 for i in range(8)] for j in range(4)]
 norm = standardise(ts)
 seq = sax(norm, 2, 3)
-amp = ' & '
-end = ' \\\\\n'
+amp = " & "
+end = " \\\\\n"
 for row in ts:
     print(amp.join(str(num) for num in row), end=end)
-print('\midrule')
+print("\midrule")
 for row in norm:
     print(amp.join(str(round(num, 3)) for num in row), end=end)
-print('\midrule')
+print("\midrule")
 for row in seq:
-    print(amp.join('\multicolumn{2}{c}{' + char + '}' for char in row), end=end)
+    print(amp.join("\multicolumn{2}{c}{" + char + "}" for char in row), end=end)
 
 pm = PatternMiner(0.75, 1)
 pm.mine(seq)
 print(list(pm.frequent.keys()))
-motif = pm.frequent['bb']
+motif = pm.frequent["bb"]
 print(motif.get_all_indexes())
 
 motif.map(norm, 2, 2)
 for row in motif.average_occurrences.values():
-    print(amp.join('\multirow{2}*{' + str(round(num, 3)) + '}' for num in row), end=end)
-print('{' + ', '.join(str(round(num, 3)) for num in motif.representative) + '}')
+    print(amp.join("\multirow{2}*{" + str(round(num, 3)) + "}" for num in row), end=end)
+print("{" + ", ".join(str(round(num, 3)) for num in motif.representative) + "}")
 
 for i, indexes in motif.get_all_indexes().items():
     for index in indexes:

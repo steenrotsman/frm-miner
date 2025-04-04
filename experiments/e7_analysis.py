@@ -6,12 +6,12 @@ import numpy as np
 from e7_ucr import ALPHA, SEGLEN
 from plot import remove_spines
 
-FILE = 'e7_ucr.csv'
+FILE = "e7_ucr.csv"
 
 experiments = defaultdict(list)
 with open(FILE) as fp:
     for row in fp:
-        *experiment, sup, m, s, a, f = row.strip().split(',')
+        *experiment, sup, m, s, a, f = row.strip().split(",")
         experiments[tuple(experiment)].append((float(m), int(s), int(a), eval(f)))
 
 # Count n successes for each experiment
@@ -30,14 +30,14 @@ print(round(y_values[0], 3) * 100)
 print(round(y_values[-1], 3) * 100)
 
 fix, ax = plt.subplots()
-ax.plot(x_values, y_values, marker='.', linestyle='-', color='k')
-ax.set_xlabel('Parameter combinations with retrieval')
-ax.set_ylabel('Success rate')
+ax.plot(x_values, y_values, marker=".", linestyle="-", color="k")
+ax.set_xlabel("Parameter combinations with retrieval")
+ax.set_ylabel("Success rate")
 ax.set_yticks([0.8, 0.9, 1.0])
 ax.set_xticks(range(5, 45, 5))
 remove_spines(ax, False)
-plt.savefig('figs/7 success.eps')
-plt.savefig('figs/7 success.png')
+plt.savefig("figs/7 success.eps")
+plt.savefig("figs/7 success.png")
 
 
 # Success rates for seglen and alpha
@@ -52,17 +52,17 @@ for settings in experiments.values():
             seglen_success[seglen][0] += 1
             alpha_success[alpha][0] += 1
 
-fix, axs = plt.subplots(ncols=2, sharey='all')
-x = zip([seglen_success, alpha_success], [SEGLEN, ALPHA], ['seglen', 'α'], axs)
+fix, axs = plt.subplots(ncols=2, sharey="all")
+x = zip([seglen_success, alpha_success], [SEGLEN, ALPHA], ["seglen", "α"], axs)
 for param, values, label, ax in x:
     success_rates = [param[v][0] / param[v][1] for v in param]
-    ax.plot(values, success_rates, marker='.', linestyle='-', color='k')
+    ax.plot(values, success_rates, marker=".", linestyle="-", color="k")
     ax.set_xlabel(label)
     remove_spines(ax, False)
-axs[0].set_ylabel('Success Rate')
+axs[0].set_ylabel("Success Rate")
 seglen_success = [seglen_success[v][0] / seglen_success[v][1] for v in seglen_success]
 ticks = [min(seglen_success), fmean(success_rates), max(seglen_success)]
 axs[0].set_yticks([round(tick, 3) for tick in ticks])
 axs[0].set_xticks(range(1, 11))
-plt.savefig('figs/7 params.eps')
-plt.savefig('figs/7 params.png')
+plt.savefig("figs/7 params.eps")
+plt.savefig("figs/7 params.png")

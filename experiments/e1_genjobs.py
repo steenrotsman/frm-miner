@@ -10,11 +10,11 @@ Run time on each data set is recorded.
 from itertools import product
 from os import listdir
 
-SEEN_FILE = 'e1_runtime.csv'
-JOBS_FILE = 'e1_jobs.csv'
-FOLDER = 'UCRArchive_2018'
+SEEN_FILE = "e1_runtime.csv"
+JOBS_FILE = "e1_jobs.csv"
+FOLDER = "UCRArchive_2018"
 FILES = listdir(FOLDER)
-PARTITIONS = ['TRAIN', 'TEST']
+PARTITIONS = ["TRAIN", "TEST"]
 
 # Parameters for FRM-Miner
 MINSUP = 0.3
@@ -25,18 +25,18 @@ ALPHA = 4
 def main():
     # Get already calculated combinations from file
     with open(SEEN_FILE) as fp:
-        seen = [row.split(',')[:2] for row in fp.readlines()]
+        seen = [row.split(",")[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
-    MINERS = ['benchmark_miner_2', 'benchmark_stumpy']
+    MINERS = ["benchmark_miner_2", "benchmark_stumpy"]
 
     c = product(MINERS, FILES, range(1, 11))
-    unseen = [(m, n, s) for (m, n, s) in c if [f'{m}_{s}', n] not in seen]
+    unseen = [(m, n, s) for (m, n, s) in c if [f"{m}_{s}", n] not in seen]
 
-    with open(JOBS_FILE, 'w') as fp:
+    with open(JOBS_FILE, "w") as fp:
         for m, n, s in sorted(unseen, key=lambda x: x[::-1]):
-            fp.write(f'{m},{n},{s}\n')
+            fp.write(f"{m},{n},{s}\n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -12,13 +12,13 @@ from multiprocessing import Pool
 from e1_runtime import FILES, get_data
 from patterns import profile_memory_peak
 
-FILE = 'e1_memory.csv'
+FILE = "e1_memory.csv"
 
 
 def main():
     # Get already calculated combinations from file
     with open(FILE) as fp:
-        seen = [row.split(',')[:2] for row in fp.readlines()]
+        seen = [row.split(",")[:2] for row in fp.readlines()]
 
     # Benchmark different miners using multiprocessing
     unseen = [(frm, n) for frm in (1, 2) for n in FILES if [str(frm), n] not in seen]
@@ -27,13 +27,13 @@ def main():
 
 
 def benchmark(frm, name):
-    print(f'FRM-Miner {frm}.0: {name}...')
+    print(f"FRM-Miner {frm}.0: {name}...")
     data = get_data(name)
     peak = profile_memory_peak(data, frm) / 1e6
-    with open(FILE, 'a') as fp:
-        fp.write(f'{frm},{name},{peak}\n')
-    print(f'FRM-Miner {frm}.0: {name} done!')
+    with open(FILE, "a") as fp:
+        fp.write(f"{frm},{name},{peak}\n")
+    print(f"FRM-Miner {frm}.0: {name} done!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

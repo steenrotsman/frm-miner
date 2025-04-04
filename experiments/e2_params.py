@@ -6,7 +6,7 @@ from e2_stocks import get_stocks
 
 from frm import Miner
 
-FILE = 'e2_params.csv'
+FILE = "e2_params.csv"
 
 
 # Parameter ranges for FRM-Miner
@@ -24,7 +24,7 @@ def main():
     with open(FILE) as fp:
         seen = []
         for row in fp.readlines():
-            i, m, s, a, o = row.split(',')[:5]
+            i, m, s, a, o = row.split(",")[:5]
             seen.append((int(i), float(m), int(s), int(a), float(o)))
 
     settings = product(range(N), MINSUP, SEGLEN, ALPHA, OMAX)
@@ -34,17 +34,17 @@ def main():
 
 
 def mine(i, minsup, seglen, alpha, omax):
-    print(f'{i},{minsup},{seglen},{alpha},{omax}...')
+    print(f"{i},{minsup},{seglen},{alpha},{omax}...")
     start = perf_counter()
     miner = Miner(minsup, seglen, alpha, max_overlap=omax)
     miner.mine(data)
     end = perf_counter()
-    print(f'{i},{minsup},{seglen},{alpha},{omax} done!')
+    print(f"{i},{minsup},{seglen},{alpha},{omax} done!")
 
-    with open(FILE, 'a') as fp:
+    with open(FILE, "a") as fp:
         time = end - start
-        fp.write(f'{i},{minsup},{seglen},{alpha},{omax},{time},{len(miner.motifs)}\n')
+        fp.write(f"{i},{minsup},{seglen},{alpha},{omax},{time},{len(miner.motifs)}\n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

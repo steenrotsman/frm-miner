@@ -42,11 +42,11 @@ def main():
 
     # Plot data
     plt.plot(data.T, lw=0.3)
-    plt.savefig(join('figs', '3 walks.png'))
+    plt.savefig(join("figs", "3 walks.png"))
     plt.close()
     diff = np.diff(data, axis=1)
     plt.plot(diff.T, lw=0.3)
-    plt.savefig(join('figs', '3 diff.png'))
+    plt.savefig(join("figs", "3 diff.png"))
     plt.close()
 
     # Discover motifs
@@ -63,7 +63,7 @@ def main():
         ax.plot(zscore(data[ts][idx : idx + motif.length]), lw=0.3)
     ax.set(xticks=[0, motif.length])
     remove_spines(ax, remove_y=False)
-    plt.savefig(join('figs', '3 walk.png'))
+    plt.savefig(join("figs", "3 walk.png"))
 
     # Plot additional occurrences
     representative = np.mean(
@@ -80,9 +80,9 @@ def main():
                 idx = np.argmin(mass(data[i], representative))
             ax.plot(zscore(data[i][idx : idx + motif.length]), lw=0.3)
 
-    plt.savefig(join('figs', '3 additional.png'))
+    plt.savefig(join("figs", "3 additional.png"))
     plt.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

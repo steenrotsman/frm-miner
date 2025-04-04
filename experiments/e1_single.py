@@ -17,11 +17,11 @@ import stumpy
 
 from frm import Miner
 
-SEEN_FILE = 'e1_runtime.csv'
-JOBS_FILE = 'e1_jobs.csv'
-FOLDER = 'UCRArchive_2018'
+SEEN_FILE = "e1_runtime.csv"
+JOBS_FILE = "e1_jobs.csv"
+FOLDER = "UCRArchive_2018"
 FILES = listdir(FOLDER)
-PARTITIONS = ['TRAIN', 'TEST']
+PARTITIONS = ["TRAIN", "TEST"]
 
 # Parameters for FRM-Miner
 MINSUP = 0.3
@@ -30,19 +30,19 @@ ALPHA = 4
 
 parser = argparse.ArgumentParser(description="Benchmark one setting.")
 
-parser.add_argument('setting', type=int, nargs='?', default=0)
+parser.add_argument("setting", type=int, nargs="?", default=0)
 args = parser.parse_args()
 
 
 def main():
     with open(JOBS_FILE) as fp:
-        jobs = [row[:-1].split(',') for row in fp.readlines()]
+        jobs = [row[:-1].split(",") for row in fp.readlines()]
 
     miner, name, seglen = jobs[args.setting]
 
-    if miner == 'benchmark_miner_2':
+    if miner == "benchmark_miner_2":
         miner = benchmark_miner_2
-    elif miner == 'benchmark_stumpy':
+    elif miner == "benchmark_stumpy":
         miner = benchmark_stumpy
     seglen = int(seglen)
 
@@ -50,14 +50,14 @@ def main():
 
 
 def benchmark(miner, name, seglen):
-    print(f'{miner.__name__}_{seglen}: {name}...')
+    print(f"{miner.__name__}_{seglen}: {name}...")
     data = get_data(name)
     start = perf_counter()
     miner(data, seglen)
     end = perf_counter()
-    with open(SEEN_FILE, 'a') as fp:
-        fp.write(f'{miner.__name__}_{seglen},{name},{end-start}\n')
-    print(f'{miner.__name__}_{seglen}: {name} done!')
+    with open(SEEN_FILE, "a") as fp:
+        fp.write(f"{miner.__name__}_{seglen},{name},{end - start}\n")
+    print(f"{miner.__name__}_{seglen}: {name} done!")
 
 
 def benchmark_miner_2(data, seglen):
@@ -73,11 +73,11 @@ def benchmark_stumpy(data, seglen):
 def get_data(name):
     data = []
     for part in PARTITIONS:
-        with open(join(FOLDER, name, f'{name}_{part}.tsv')) as f:
+        with open(join(FOLDER, name, f"{name}_{part}.tsv")) as f:
             for row in f:
                 # Split data on tabs and parse to floats
                 data.append(
-                    [float(x) for x in row.strip('\n').split('\t')[1:] if x != 'NaN']
+                    [float(x) for x in row.strip("\n").split("\t")[1:] if x != "NaN"]
                 )
 
     return data
@@ -113,5 +113,5 @@ def paa(series, seglen):
     return np.mean(segments, axis=1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

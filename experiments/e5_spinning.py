@@ -5,7 +5,7 @@ from scipy.stats import zscore
 
 from frm import Miner
 
-FIELD = 'heart_rate'
+FIELD = "heart_rate"
 
 # Miner parameters
 MINSUP = 0.3
@@ -18,22 +18,22 @@ def main():
     records = get_records(JSON_DIR)
 
     data = {
-        'spinning': get_fields([r for r in records if not r[-1]['distance']], FIELD),
-        'cycling': get_fields([r for r in records if r[-1]['distance']], FIELD),
+        "spinning": get_fields([r for r in records if not r[-1]["distance"]], FIELD),
+        "cycling": get_fields([r for r in records if r[-1]["distance"]], FIELD),
     }
 
     for category, field in data.items():
-        fig, axs = plt.subplots(ncols=K, sharey='all')
+        fig, axs = plt.subplots(ncols=K, sharey="all")
         miner = Miner(MINSUP, SEGLEN, ALPHA)
         motifs = miner.mine(field)
         plot_motifs(
             axs,
             [zscore(ts) for ts in field],
             motifs,
-            fn=f'5 {category} motifs',
+            fn=f"5 {category} motifs",
             yticks=[-2, 0, 2],
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

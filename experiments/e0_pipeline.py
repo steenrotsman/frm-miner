@@ -17,8 +17,8 @@ from frm import Miner
 from frm.patterns import PatternMiner
 from frm.preprocessing import get_breakpoints, sax, standardise
 
-IMG_DIR = 'mpeg7'
-NAME = 'cattle'
+IMG_DIR = "mpeg7"
+NAME = "cattle"
 SAMPLE = True
 ALPHA = 5
 LENGTH = 256
@@ -26,7 +26,7 @@ LENGTH = 256
 
 def main():
     # Load data
-    files = [join(IMG_DIR, f'{NAME}-{i + 1}.gif') for i in range(3)]
+    files = [join(IMG_DIR, f"{NAME}-{i + 1}.gif") for i in range(3)]
     ts, contours = get_all_ts(files)
 
     # # Basic pipelines
@@ -50,7 +50,7 @@ def main():
 
 
 def large_pipe(ts):
-    fig = plt.figure(figsize=(WIDTH, WIDTH * 1.2), layout='none')
+    fig = plt.figure(figsize=(WIDTH, WIDTH * 1.2), layout="none")
     axd = {}
     outer_grid = fig.add_gridspec(3, 3, wspace=0.1, hspace=0.5)
     inner_grids = []
@@ -64,7 +64,7 @@ def large_pipe(ts):
     inner_grids.append(outer_grid[2, 1].subgridspec(3, 1, hspace=0))
     inner_grids.append(outer_grid[2, 2].subgridspec(1, 1))
 
-    keys = ['ts', 'sax', 'seq', 'sms', 'red', 'seq_occ', 'ts_occ', 'ao', 'rm']
+    keys = ["ts", "sax", "seq", "sms", "red", "seq_occ", "ts_occ", "ao", "rm"]
     for gs, key in zip(inner_grids, keys):
         axd[key] = gs.subplots()
 
@@ -74,16 +74,16 @@ def large_pipe(ts):
 
     # Time series
     data = standardise([row[:256] for row in ts])
-    for row, ax in zip(data, axd['ts']):
+    for row, ax in zip(data, axd["ts"]):
         ax.plot(row)
         ax.set(xticks=[])
         remove_spines(ax)
-    axd['ts'][-1].set(xticks=[0, len(row) - 1], xlabel='Time series')
+    axd["ts"][-1].set(xticks=[0, len(row) - 1], xlabel="Time series")
 
     # SAX
-    for row, ax in zip(data, axd['sax']):
+    for row, ax in zip(data, axd["sax"]):
         for b in get_breakpoints(ALPHA):
-            ax.axhline(y=b, color='lightgrey', lw=0.5)
+            ax.axhline(y=b, color="lightgrey", lw=0.5)
 
         ax.plot(row)
         sequence = sax([row], seglen, alpha)[0]
@@ -93,51 +93,51 @@ def large_pipe(ts):
             x_values = np.arange(start_idx, end_idx)
             y_value = np.mean(row[start_idx:end_idx])
             y_values = np.full_like(x_values, y_value, dtype=y_value.dtype)
-            ax.plot(x_values, y_values, color='black', lw=0.5)
+            ax.plot(x_values, y_values, color="black", lw=0.5)
 
             middle_idx = (start_idx + end_idx) // 2
             ax.text(
                 middle_idx,
                 y_value + 0.7,
                 sequence[i // seglen],
-                ha='center',
-                va='center',
+                ha="center",
+                va="center",
             )
             ax.set(xticks=[])
             remove_spines(ax)
-    axd['sax'][-1].set(xticks=[0, len(row) - 1], xlabel='SAX')
+    axd["sax"][-1].set(xticks=[0, len(row) - 1], xlabel="SAX")
 
     # Sequence database
     sequences = sax(data, seglen, alpha)
     for sequence, y in zip(sequences, [0.7, 0.6, 0.5]):
-        axd['seq'].text(0.5, y, sequence, ha='center', va='center')
-    axd['seq'].set(xticks=[])  #  , xlabel='Sequence database')
-    label = text.Text(0.5, -0.18, 'Sequence database', ha='center', va='center')
+        axd["seq"].text(0.5, y, sequence, ha="center", va="center")
+    axd["seq"].set(xticks=[])  #  , xlabel='Sequence database')
+    label = text.Text(0.5, -0.18, "Sequence database", ha="center", va="center")
     label.set_transform(
         transforms.offset_copy(
-            axd['seq'].transAxes, axd['seq'].figure, x=5, y=0, units='points'
+            axd["seq"].transAxes, axd["seq"].figure, x=5, y=0, units="points"
         )
     )
     label.set_clip_on(False)
-    axd['seq'].add_artist(label)
-    remove_spines(axd['seq'])
+    axd["seq"].add_artist(label)
+    remove_spines(axd["seq"])
 
     # Sequence motifs
     pm = PatternMiner(minsup, omax=1)
     pm.mine(sax(data, seglen, alpha))
     coords = [(x, y) for x in (0.2, 0.45, 0.75) for y in range(9, 0, -1)]
     for pattern, (x, y) in zip(pm.frequent, coords):
-        axd['sms'].text(x, y / 10, pattern, ha='center', va='center')
-    axd['sms'].set(xticks=[], xlabel='Sequence motifs')
-    remove_spines(axd['sms'])
+        axd["sms"].text(x, y / 10, pattern, ha="center", va="center")
+    axd["sms"].set(xticks=[], xlabel="Sequence motifs")
+    remove_spines(axd["sms"])
 
     # Redundancy elimination
     pm.omax = 0.8
     pm.remove_redundant()
-    for pattern, y, c in zip(pm.frequent, (0.6, 0.4), ('k', colors[1])):
-        axd['red'].text(0.5, y, pattern, ha='center', va='center', color=c)
-    axd['red'].set(xticks=[], xlabel='Redundancy elimination')
-    remove_spines(axd['red'])
+    for pattern, y, c in zip(pm.frequent, (0.6, 0.4), ("k", colors[1])):
+        axd["red"].text(0.5, y, pattern, ha="center", va="center", color=c)
+    axd["red"].set(xticks=[], xlabel="Redundancy elimination")
+    remove_spines(axd["red"])
 
     # Sequence motif occurrences
     motif = list(pm.frequent.values())[1]
@@ -148,16 +148,16 @@ def large_pipe(ts):
                 if i in motif.indexes
                 and j
                 in range(motif.indexes[i][0], motif.indexes[i][0] + len(motif.pattern))
-                else 'black'
+                else "black"
             )
-            axd['seq_occ'].text(
-                0.35 + j * 0.04, y, char, ha='center', va='center', color=color
+            axd["seq_occ"].text(
+                0.35 + j * 0.04, y, char, ha="center", va="center", color=color
             )
-    axd['seq_occ'].set(xticks=[], yticks=[], xlabel='Sequence occurrences')
-    remove_spines(axd['seq_occ'])
+    axd["seq_occ"].set(xticks=[], yticks=[], xlabel="Sequence occurrences")
+    remove_spines(axd["seq_occ"])
 
     # Time series occurrences
-    for i, (row, ax) in enumerate(zip(data, axd['ts_occ'])):
+    for i, (row, ax) in enumerate(zip(data, axd["ts_occ"])):
         if i in motif.indexes:
             start = motif.indexes[i][0] * seglen
             end = start + len(motif.pattern) * seglen
@@ -168,20 +168,20 @@ def large_pipe(ts):
             ax.plot(row)
         ax.set(xticks=[])
         remove_spines(ax)
-    axd['ts_occ'][-1].set(xticks=[0, len(row) - 1], xlabel='Time series occurrences')
+    axd["ts_occ"][-1].set(xticks=[0, len(row) - 1], xlabel="Time series occurrences")
 
     # Average occurrences
-    for i, (row, ax) in enumerate(zip(data, axd['ao'])):
+    for i, (row, ax) in enumerate(zip(data, axd["ao"])):
         if i in motif.indexes:
             start = motif.indexes[i][0] * seglen
             end = start + len(motif.pattern) * seglen
             ax.plot(row[start:end], color=colors[1])
         else:
-            ax.text(0.5, 0.5, 'No occurrences', ha='center', va='center')
+            ax.text(0.5, 0.5, "No occurrences", ha="center", va="center")
         ax.set(xticks=[])
         remove_spines(ax)
-    axd['ao'][-1].set(
-        xticks=[0, len(motif.pattern) * seglen - 1], xlabel='Average occurrences'
+    axd["ao"][-1].set(
+        xticks=[0, len(motif.pattern) * seglen - 1], xlabel="Average occurrences"
     )
 
     # Representative motif
@@ -192,17 +192,17 @@ def large_pipe(ts):
             end = start + len(motif.pattern) * seglen
             occurrences.append(row[start:end])
     rm = np.mean(occurrences, axis=0)
-    axd['rm'].plot(rm, color=colors[1])
-    axd['rm'].set(
+    axd["rm"].plot(rm, color=colors[1])
+    axd["rm"].set(
         xticks=[0, len(motif.pattern) * seglen - 1],
-        xlabel='Representative motif',
+        xlabel="Representative motif",
         ylim=[-1.7, 11],
     )
-    remove_spines(axd['rm'])
+    remove_spines(axd["rm"])
 
     plt.subplots_adjust(top=0.98, bottom=0.07, left=0.01, right=0.99)
-    plt.savefig('figs/pipe.eps')
-    plt.savefig('figs/pipe.png')
+    plt.savefig("figs/pipe.eps")
+    plt.savefig("figs/pipe.png")
 
 
 class Pipeline:
@@ -217,7 +217,7 @@ class Pipeline:
 
         self.data = None
 
-        self.colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
+        self.colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
     def plot(self, fig, axs, data, name, steps):
         fig.align_labels()
@@ -229,17 +229,17 @@ class Pipeline:
             step(ax)
             remove_spines(ax)
 
-        plt.savefig(join('figs', f'0 {name}.eps'))
-        plt.savefig(join('figs', f'0 {name}.png'))
+        plt.savefig(join("figs", f"0 {name}.eps"))
+        plt.savefig(join("figs", f"0 {name}.png"))
         plt.close()
 
     def D(self, ax):
         ax.plot(self.data.T, lw=0.5)
-        self.axset(ax, 'Time series')
+        self.axset(ax, "Time series")
 
     def sax(self, ax):
         for b in get_breakpoints(self.alpha):
-            ax.axhline(y=b, color='lightgrey', lw=0.5)
+            ax.axhline(y=b, color="lightgrey", lw=0.5)
 
         ax.plot(self.data[0], lw=0.5)
         sequence = sax([self.data[0]], self.seglen, self.alpha)[0]
@@ -249,49 +249,49 @@ class Pipeline:
             x_values = np.arange(start_idx, end_idx)
             y_value = np.mean(self.data[0][start_idx:end_idx])
             y_values = np.full_like(x_values, y_value, dtype=y_value.dtype)
-            ax.plot(x_values, y_values, color='black', lw=0.5)
+            ax.plot(x_values, y_values, color="black", lw=0.5)
 
             middle_idx = (start_idx + end_idx) // 2
             ax.text(
                 middle_idx,
                 y_value + 0.5,
                 sequence[i // self.seglen],
-                ha='center',
-                va='center',
-                color='black',
+                ha="center",
+                va="center",
+                color="black",
             )
 
-        self.axset(ax, 'SAX')
+        self.axset(ax, "SAX")
 
     def Ds(self, ax):
-        sequences = '\n'.join(sax(self.data, self.seglen, self.alpha))
-        ax.text(0.5, 0.5, sequences, ha='center', va='center')
-        ax.set(xticks=[], yticks=[], xlabel='Sequence')
+        sequences = "\n".join(sax(self.data, self.seglen, self.alpha))
+        ax.text(0.5, 0.5, sequences, ha="center", va="center")
+        ax.set(xticks=[], yticks=[], xlabel="Sequence")
 
     def sm(self, ax):
         for motif, y, color in zip(self.mm.motifs, range(4, -1, -1), self.colors):
-            ax.text(0.5, y / 5, motif.pattern, ha='center', c=color)
-        ax.set(xticks=[], yticks=[], xlabel='Sequence motifs')
+            ax.text(0.5, y / 5, motif.pattern, ha="center", c=color)
+        ax.set(xticks=[], yticks=[], xlabel="Sequence motifs")
 
     def occ(self, ax):
         for i, ts in enumerate(self.data):
-            ax.plot(ts, 'k', lw=0.25)
+            ax.plot(ts, "k", lw=0.25)
             for motif, color in zip(self.mm.motifs, self.colors):
                 if i in motif.best_matches:
                     start = motif.best_matches[i]
                     end = start + motif.length
                     ax.plot(list(range(start, end)), ts[start:end], c=color, lw=0.5)
 
-        self.axset(ax, 'Occurrences')
+        self.axset(ax, "Occurrences")
 
     def rm(self, ax):
         for motif in self.mm.motifs:
             ax.plot(motif.representative, lw=0.5)
 
-        self.axset(ax, 'Representative motifs')
+        self.axset(ax, "Representative motifs")
 
     def empty(self, ax):
-        ax.text(0.5, 0.5, '...')
+        ax.text(0.5, 0.5, "...")
         ax.set(xticks=[], yticks=[])
 
     def axset(self, ax, xlabel):
@@ -366,7 +366,7 @@ def sample(ts, sample=512, cutoff=256):
 def plot_contour(motifs, contour, i, ax):
     x, y = contour_to_xy(contour)
     ax.set(xticks=[], yticks=[], ylim=[1, 0])
-    ax.plot(x, y, 'k', lw=0.5)
+    ax.plot(x, y, "k", lw=0.5)
     plot_motifs(motifs, i, x, y, ax)
 
 
@@ -389,5 +389,5 @@ def plot_motifs(motifs, i, x, y, ax):
             ax.plot(x[start:end], y[start:end], lw=1.5)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

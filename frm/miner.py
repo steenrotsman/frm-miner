@@ -4,6 +4,7 @@ This module defines the mine_motifs function, which takes a database of
 time series and finds frequent or maximal motifs in it. The motifs can
 be filtered for length and ranked using different strategies.
 """
+
 import heapq
 from operator import attrgetter
 
@@ -89,7 +90,7 @@ class Miner:
             else:
                 heapq.heappushpop(self.motifs, (-pattern.distance, pattern))
                 max_dist = -self.motifs[0][0]
-        self.motifs = [m for d, m in sorted(self.motifs, key=attrgetter('distance'))]
+        self.motifs = [m for d, m in sorted(self.motifs, key=attrgetter("distance"))]
         if self.mass:
             for motif in self.motifs[: self.k]:
                 motif.get_more_matches()

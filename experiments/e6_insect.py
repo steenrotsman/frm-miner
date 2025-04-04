@@ -17,8 +17,8 @@ USE_PRECOMPUTED = True
 
 
 def main():
-    insect = loadmat('e6_insectAllData.mat')
-    data = [np.reshape(insect[f'd{i}{i}'], (-1)) for i in range(1, 5)]
+    insect = loadmat("e6_insectAllData.mat")
+    data = [np.reshape(insect[f"d{i}{i}"], (-1)) for i in range(1, 5)]
     plot_data(data)
     plot_motif(data)
     plot_kofp(data)
@@ -43,17 +43,17 @@ def plot_data(data):
     # Aesthetics
     axs[0].set(xticks=[0, 120000])
     remove_spines(axs[0], remove_y=False)
-    axs[1].plot(zscore(data[ts_index][ss_index : ss_index + 800]), color='k', lw=0.3)
+    axs[1].plot(zscore(data[ts_index][ss_index : ss_index + 800]), color="k", lw=0.3)
     axs[1].set(ylim=(-3, 3), xticks=[0, 800], yticks=[-2, 0, 2])
     remove_spines(axs[1], remove_y=False)
 
-    plt.savefig(join('figs', '6 insect data.eps'))
-    plt.savefig(join('figs', '6 insect data.png'))
+    plt.savefig(join("figs", "6 insect data.eps"))
+    plt.savefig(join("figs", "6 insect data.png"))
     plt.close()
 
 
 def plot_motif(data):
-    fig, axs = plt.subplots(ncols=2, layout='constrained', sharey='all')
+    fig, axs = plt.subplots(ncols=2, layout="constrained", sharey="all")
     diff = [np.diff(row) for row in data]
 
     for minsup, ax in zip(MINSUP, axs):
@@ -70,18 +70,18 @@ def plot_motif(data):
             ],
             axis=0,
         )
-        ax.plot(representative, color='b', lw=1)
+        ax.plot(representative, color="b", lw=1)
         for ts, idx in motif.best_matches.items():
-            ax.plot(zscore(data[ts][idx : idx + motif.length]), color='k', lw=0.1)
+            ax.plot(zscore(data[ts][idx : idx + motif.length]), color="k", lw=0.1)
         ax.set(ylim=(-3, 3), xticks=[0, len(representative)])
         remove_spines(ax, remove_y=False)
-    plt.savefig(join('figs', '6 insect motifs.eps'))
-    plt.savefig(join('figs', '6 insect motifs.png'))
+    plt.savefig(join("figs", "6 insect motifs.eps"))
+    plt.savefig(join("figs", "6 insect motifs.png"))
     plt.close()
 
 
 def plot_kofp(data):
-    fig, axs = plt.subplots(ncols=3, sharey='all')
+    fig, axs = plt.subplots(ncols=3, sharey="all")
     bests = [[0, 65048, 1, 41809], [0, 65079, 1, 51051], [0, 65025, 1, 50989]]
     if not USE_PRECOMPUTED:
         for m, ax in zip((1100, 1140, 1200), axs):
@@ -100,14 +100,14 @@ def plot_kofp(data):
             bests.append(best)
             print(best)
     for m, ax, best in zip((1100, 1140, 1200), axs, bests):
-        ax.plot(zscore(data[best[0]][best[1] : best[1] + m]), lw=1, c='b')
-        ax.plot(zscore(data[best[2]][best[3] : best[3] + m]), lw=0.3, c='k')
+        ax.plot(zscore(data[best[0]][best[1] : best[1] + m]), lw=1, c="b")
+        ax.plot(zscore(data[best[2]][best[3] : best[3] + m]), lw=0.3, c="k")
         ax.set(ylim=(-3, 3), xticks=[0, m], yticks=[-2, 0, 2])
         remove_spines(ax, remove_y=False)
-    plt.savefig(join('figs', '6 insect kofP.eps'))
-    plt.savefig(join('figs', '6 insect kofP.png'))
+    plt.savefig(join("figs", "6 insect kofP.eps"))
+    plt.savefig(join("figs", "6 insect kofP.png"))
     plt.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

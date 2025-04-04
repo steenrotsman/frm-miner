@@ -8,8 +8,8 @@ from scipy.stats import zscore
 
 from frm import Miner
 
-JSON_DIR = 'bike'
-FIELD = 'speed'
+JSON_DIR = "bike"
+FIELD = "speed"
 
 # Miner parameters
 MINSUP = 0.3
@@ -23,10 +23,10 @@ def main():
     field = get_fields(records, FIELD)
     data = [zscore(ts) for ts in field]
 
-    fig, axs = plt.subplots(ncols=4, sharey='all', figsize=(WIDTH, HEIGHT))
+    fig, axs = plt.subplots(ncols=4, sharey="all", figsize=(WIDTH, HEIGHT))
     miner = Miner(MINSUP, SEGLEN, ALPHABET, k=K)
     motifs = miner.mine(field)
-    plot_motifs(axs, data, motifs, fn='5 bike motifs', yticks=[-3, 0, 3])
+    plot_motifs(axs, data, motifs, fn="5 bike motifs", yticks=[-3, 0, 3])
 
 
 def get_records(directory):
@@ -49,5 +49,5 @@ def get_fields(records, field_name):
     return fields
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

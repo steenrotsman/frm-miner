@@ -40,8 +40,8 @@ def get_sax(series, seglen, breakpoints):
         segments = series.reshape((-1, seglen))
         paa = np.mean(segments, axis=1)
 
-    discretised = np.digitize(paa, breakpoints) + ord('a')
-    return ''.join(chr(x) for x in discretised)
+    discretised = np.digitize(paa, breakpoints) + ord("a")
+    return "".join(chr(x) for x in discretised)
 
 
 def standardise(timeseries):

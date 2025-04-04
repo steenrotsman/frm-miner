@@ -10,10 +10,10 @@ from scipy.stats import zscore
 
 from frm import Miner
 
-FILE = 'e7_ucr.csv'
-FOLDER = 'UCRArchive_2018'
+FILE = "e7_ucr.csv"
+FOLDER = "UCRArchive_2018"
 FILES = listdir(FOLDER)
-PARTITIONS = ['TRAIN', 'TEST']
+PARTITIONS = ["TRAIN", "TEST"]
 THRESHOLD = 0.5
 
 # Parameters for FRM-Miner
@@ -45,9 +45,9 @@ def sim(_):
         min_overlap = THRESHOLD * motif_length
         found = check(motifs, motif_ts, seglen, motif_start, motif_length, min_overlap)
 
-        with open(FILE, 'a') as fp:
+        with open(FILE, "a") as fp:
             fp.write(
-                f'{name},{motif_ts},{motif_start},{motif_length},{len(injection_indices)},{minsup},{seglen},{alpha},{found}\n'
+                f"{name},{motif_ts},{motif_start},{motif_length},{len(injection_indices)},{minsup},{seglen},{alpha},{found}\n"
             )
 
 
@@ -61,24 +61,24 @@ def sim_setting(setting):
     min_overlap = THRESHOLD * length
     found = check(motifs, ts, seglen, start, length, min_overlap)
 
-    with open(FILE, 'a') as fp:
+    with open(FILE, "a") as fp:
         fp.write(
-            f'{experiment[0]},{ts},{start},{length},{support},{minsup},{seglen},{alpha},{found}\n'
+            f"{experiment[0]},{ts},{start},{length},{support},{minsup},{seglen},{alpha},{found}\n"
         )
 
 
 def get_data(name):
     data = []
     for part in PARTITIONS:
-        with open(join(FOLDER, name, f'{name}_{part}.tsv')) as f:
+        with open(join(FOLDER, name, f"{name}_{part}.tsv")) as f:
             for row in f:
                 # Split data on tabs and parse to floats
                 data.append(
                     np.array(
                         [
                             float(x)
-                            for x in row.strip('\n').split('\t')[1:]
-                            if x != 'NaN'
+                            for x in row.strip("\n").split("\t")[1:]
+                            if x != "NaN"
                         ]
                     )
                 )
@@ -157,7 +157,7 @@ def get_unfinished():
 
     with open(FILE) as fp:
         for row in fp:
-            *experiment, m, s, a, found = row.strip().split(',')
+            *experiment, m, s, a, found = row.strip().split(",")
             experiments[tuple(experiment)].append((float(m), int(s), int(a)))
 
     total = len(experiments)
@@ -180,5 +180,5 @@ def finish_settings(unfinished):
         p.map(sim_setting, to_finish)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
