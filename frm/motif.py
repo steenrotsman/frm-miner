@@ -64,38 +64,47 @@ class Motif:
         self._seglen = seglen
         self._middle = slice(seglen, -seglen)
         self._ts = ts
-        self.length = len(self.pattern) * seglen
+        self.length = len(self.pattern) * self._seglen
 
-        self.set_best_matches_and_distance(max_dist)
-        if self.distance < max_dist:
-            self.trim_length(max_dist)
-        if self.distance < max_dist:
-            self.set_representative()
+        self.set_representative()
+        self.set_best_matches()
+        self.trim_length()
+        self.set_distance(max_dist)
 
-    def set_best_matches_and_distance(self, max_dist):
-        """Select occurrences with minimal radii and calculate extent.
+    def set_representative(self):
+        """Set representative motif as stepwise average of occurrences."""
+        with catch_warnings():
+            simplefilter("ignore")
+            average_occurrences = [
+                np.nanmean(
+                    [
+                        self.get_occurrence(ts_index, start_index)
+                        for ts_index, start_indexes in self.get_all_indexes().items()
+                        for start_index in start_indexes
+                    ],
+                    axis=0,
+                )
+            ]
+            self.representative = np.nanmean(average_occurrences, axis=0)
+        self.representative = znorm(self.representative[~np.isnan(self.representative)])
+        self.length = len(self.representative)
 
-        Note. Radius is calculated w.r.t. the middle part of the motif. If the
-        extent of this middle part already exceeds max_dist, prune.
-        """
+    def set_best_matches(self):
+        """Select best matches to representative motif."""
         for ts_index, start_indexes in self.get_all_indexes().items():
-            min_radius = np.inf
+            min_dist = np.inf
             for start_index in start_indexes:
-                radius = self.get_radius(ts_index, start_index)
-                if radius < min_radius:
-                    min_radius = radius
+                occ = znorm(self.get_occurrence(ts_index, start_index))
+                dist = ED(self.representative, occ)
+                if dist < min_dist:
+                    min_dist = dist
                     self.best_matches[ts_index] = start_index
-            self.distance = max(self.distance, min_radius / len(self.pattern) ** 0.5)
 
-            if self.distance > max_dist:
-                self.distance = float("inf")
-                return
-
-    def trim_length(self, max_dist):
+    def trim_length(self):
         """Trim length of occurrences if beneficial."""
         occurrences = np.array(
             [
-                self.get_occurrence(ts_index, start_index)
+                self._ts[ts_index][start_index : start_index + self.length]
                 for ts_index, start_index in self.best_matches.items()
             ]
         )
@@ -103,17 +112,18 @@ class Motif:
         # Find stable begin and end points of occurrences
         diff = np.max(occurrences, axis=0) - np.min(occurrences, axis=0)
         reference = np.mean(diff[self._middle])
-        left_trim = np.where(diff[: self._seglen] <= reference)[0]
-        left_trim = left_trim[0] if left_trim.size > 0 else 0
-        right_trim = np.where(diff[-self._seglen :] <= reference)[0]
-        right_trim = self._seglen - right_trim[-1] if right_trim.size > 0 else 0
+        left_trim = np.where(diff[: self._seglen] > reference)[0]
+        left_trim = left_trim[-1] if left_trim.size > 0 else 0
+        right_trim = np.where(diff[-self._seglen :] > reference)[0]
+        right_trim = self._seglen - right_trim[0] if right_trim.size > 0 else 0
 
         # Apply left and right trim
         for ts_index, start_index in self.best_matches.items():
             self.best_matches[ts_index] = (start_index * self._seglen) + left_trim
         self.length = len(self.pattern) * self._seglen - left_trim - right_trim
 
-        # Recalculate extent
+    def set_distance(self, max_dist):
+        """Calculate extent."""
         self.distance = 0
         for (a, i), (b, j) in permutations(self.best_matches.items(), 2):
             occ1 = self.pad(znorm(self._ts[a][i : i + self.length]))
@@ -125,21 +135,16 @@ class Motif:
                 self.distance = float("inf")
                 return
 
-    def set_representative(self):
-        """Set representative motif as stepwise average of occurrences."""
-        with catch_warnings():
-            simplefilter("ignore")
-            self.representative = np.nanmean(
+        # Recalculate representative
+        self.representative = znorm(
+            np.nanmean(
                 [
-                    self.pad(
-                        self._ts[ts_index][start_index : start_index + self.length]
-                    )
+                    znorm(self._ts[ts_index][start_index : start_index + self.length])
                     for ts_index, start_index in self.best_matches.items()
                 ],
                 axis=0,
             )
-        self.representative = self.representative[~np.isnan(self.representative)]
-        self.length = len(self.representative)
+        )
 
     def get_occurrence(self, ts_index, start_index):
         """Get occurrence from time series with padding if needed."""
