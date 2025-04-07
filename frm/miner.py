@@ -26,8 +26,8 @@ class Miner:
         Maximal fraction of patterns contained in longer patters.
     mass : bool, optional
         Whether to scan the time series database to look for additional matches using MASS.
-    p : int
-        If 2, ranks motifs on ED (FRM-Miner 2.0). If 1, uses NAED (FRM-Miner 1.0)
+    eta : float, optional
+        Maximum increase in extent when looking for additional matches.
     diff : int, optional
         Degree of differencing applied before discretisation.
     k : int, optional
@@ -39,13 +39,16 @@ class Miner:
         Constructed motifs ordered by the distances to their occurrences.
     """
 
-    def __init__(self, minsup, seglen, alpha, omax=0.8, diff=0, mass=False, k=0):
+    def __init__(
+        self, minsup, seglen, alpha, omax=0.8, mass=False, eta=1.0, diff=0, k=0
+    ):
         self.minsup = minsup
         self.seglen = seglen
         self.alpha = alpha
         self.omax = omax
-        self.diff = diff
         self.mass = mass
+        self.eta = eta
+        self.diff = diff
         self.k = k
 
         self.motifs = []
@@ -64,8 +67,8 @@ class Miner:
             frequent motifs.
         """
         discretised = sax(ts, self.seglen, self.alpha, self.diff)
-        self.mine_patterns(discretised)
-        self.map_patterns(standardise(ts))
+        patterns = self.mine_patterns(discretised)
+        self.map_patterns(standardise(ts), patterns)
 
         return self.motifs if not self.k else self.motifs[: self.k]
 
@@ -94,4 +97,4 @@ class Miner:
         self.motifs = [m for d, m in sorted(self.motifs, reverse=True)]
         if self.mass:
             for motif in self.motifs[: self.k]:
-                motif.get_more_matches()
+                motif.get_more_matches(self.eta)
