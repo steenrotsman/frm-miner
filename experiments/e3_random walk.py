@@ -51,7 +51,7 @@ def main():
 
     # Discover motifs
     start = perf_counter()
-    mm = Miner(MINSUP, SEGLEN, ALPHA, mass=True, k=K)
+    mm = Miner(MINSUP, SEGLEN, ALPHA, mass=False, k=K)
     motifs = mm.mine(diff)
     end = perf_counter()
     print(end - start)
@@ -66,6 +66,8 @@ def main():
     plt.savefig(join("figs", "3 walk.png"))
 
     # Plot additional occurrences
+    ax = axs[0]
+    motif = motifs[0]
     representative = np.mean(
         [
             zscore(data[ts][idx : idx + motif.length])
