@@ -104,7 +104,7 @@ class Motif:
         """Trim length of occurrences if beneficial."""
         occurrences = np.array(
             [
-                self._ts[ts_index][start_index : start_index + self.length]
+                zscore(self._ts[ts_index][start_index : start_index + self.length])
                 for ts_index, start_index in self.best_matches.items()
             ]
         )
