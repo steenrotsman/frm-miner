@@ -29,6 +29,8 @@ class Miner:
         Whether to scan the time series database to look for additional matches using MASS.
     p : int
         If 2, ranks motifs on ED (FRM-Miner 2.0). If 1, uses NAED (FRM-Miner 1.0)
+    diff : int, optional
+        Degree of differencing applied before discretisation.
     k : int, optional
         Number of motifs to return. If 0, all motifs are returned.
 
@@ -38,11 +40,12 @@ class Miner:
         Constructed motifs ordered by the distances to their occurrences.
     """
 
-    def __init__(self, minsup, seglen, alpha, omax=0.8, mass=False, k=0):
+    def __init__(self, minsup, seglen, alpha, omax=0.8, diff=0, mass=False, k=0):
         self.minsup = minsup
         self.seglen = seglen
         self.alpha = alpha
         self.omax = omax
+        self.diff = diff
         self.mass = mass
         self.k = k
 
@@ -61,10 +64,9 @@ class Miner:
         res: list
             frequent motifs.
         """
-        standardised = standardise(ts)
-        discretised = sax(standardised, self.seglen, self.alpha)
-        patterns = self.mine_patterns(discretised)
-        self.map_patterns(standardised, patterns)
+        discretised = sax(ts, self.seglen, self.alpha, self.diff)
+        self.mine_patterns(discretised)
+        self.map_patterns(standardise(ts))
 
         return self.motifs if not self.k else self.motifs[: self.k]
 
