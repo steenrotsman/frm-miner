@@ -158,34 +158,11 @@ class Motif:
         short = self.length - len(ts)
         return np.hstack((ts, np.array(short * [np.nan])))
 
-    def get_radius(self, ts_index, start_index):
-        """Maximum distance between pattern and nearest match in each ts.
-
-        Note. Only uses the middle [seglen : -seglen] of each occurrence.
-        """
-        radius = 0
-        occ = self.get_occurrence(ts_index, start_index)
-        occ = znorm(occ[self._middle])
-        for i, indexes in self.get_all_indexes().items():
-            if i == ts_index:
-                continue
-            elif i in self.best_matches:  # Already selected match for this ts
-                dist = ED(
-                    occ,
-                    znorm(self.get_occurrence(i, self.best_matches[i])[self._middle]),
-                )
-            else:
-                dist = min(
-                    ED(occ, znorm(self.get_occurrence(i, idx)[self._middle]))
-                    for idx in indexes
-                )
-            radius = max(radius, dist)
-
-        return radius
-
-    def get_more_matches(self):
+    def get_more_matches(self, eta):
         """Find matches in time series without matches if radius is not too high."""
         a = {}
+        new_distance = self.distance
+        print(self.distance, self.distance * eta)
         for i, series in enumerate(self._ts):
             if i not in self.best_matches:
                 with catch_warnings():
@@ -195,17 +172,17 @@ class Motif:
                 best = np.argmin(m)
                 radius = 0
                 occ = znorm(self._ts[i][best : best + self.length])
-                for j, indexes in self.get_all_indexes().items():
-                    if i == j:
-                        continue
-                    dist = min(
-                        ED(occ, znorm(self.get_occurrence(j, idx))) for idx in indexes
-                    )
+                for j, idx in self.best_matches.items():
+                    dist = ED(occ, znorm(self._ts[j][idx : idx + self.length]))
                     radius = max(radius, dist)
                 radius /= self.length ** (1 / 2)
-                if radius < self.distance:
-                    self.best_matches[i] = best
+                print(radius)
+                if radius < self.distance * eta:
                     a[i] = best
+                    new_distance = max(new_distance, radius)
+        for i, idx in a.items():
+            self.best_matches[i] = idx
+        self.distance = new_distance
 
 
 def ED(a, b):
