@@ -91,7 +91,7 @@ class Miner:
             else:
                 heapq.heappushpop(self.motifs, (-pattern.distance, pattern))
                 max_dist = -self.motifs[0][0]
-        self.motifs = [m for d, m in sorted(self.motifs)]
+        self.motifs = [m for d, m in sorted(self.motifs, reverse=True)]
         if self.mass:
             for motif in self.motifs[: self.k]:
                 motif.get_more_matches()
