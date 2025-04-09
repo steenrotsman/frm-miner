@@ -139,7 +139,11 @@ class Motif:
         self.representative = znorm(
             np.nanmean(
                 [
-                    znorm(self._ts[ts_index][start_index : start_index + self.length])
+                    self.pad(
+                        znorm(
+                            self._ts[ts_index][start_index : start_index + self.length]
+                        )
+                    )
                     for ts_index, start_index in self.best_matches.items()
                 ],
                 axis=0,
