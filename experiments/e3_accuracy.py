@@ -3,10 +3,10 @@ from os.path import join
 import matplotlib.pyplot as plt
 import numpy as np
 import stumpy
-from plot import remove_spines
+from frm import Miner
 from scipy.stats import zscore
 
-from frm import Miner
+from plot import remove_spines
 
 # Simulation settings
 UNITS = 100
