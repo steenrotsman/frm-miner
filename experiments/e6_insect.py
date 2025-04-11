@@ -85,8 +85,8 @@ def plot_kofp(data):
             bests.append(best)
             print(best)
     for m, ax, best in zip((1000, 1083, 1100), axs, bests):
-        ax.plot(zscore(data[best[0]][best[1] : best[1] + m]), lw=0.5, c="k")
-        ax.plot(zscore(data[best[2]][best[3] : best[3] + m]), lw=0.5, c="b")
+        ax.plot(zscore(data[best[0]][best[1] : best[1] + m]), lw=0.5, c="b")
+        ax.plot(zscore(data[best[2]][best[3] : best[3] + m]), lw=0.5, c="k")
         ax.set(ylim=(-3, 3), xticks=[0, m], yticks=[-2, 0, 2])
         remove_spines(ax, remove_y=False)
     plt.savefig(join("figs", "6 insect kofP.eps"))
