@@ -3,6 +3,7 @@ from os.path import join
 import matplotlib
 import matplotlib.pyplot as plt
 from cycler import cycler
+from scipy.stats import zscore
 
 WIDTH = 0.0138 * 372
 HEIGHT = WIDTH / 4
@@ -33,7 +34,7 @@ def plot_motifs(flat_axs, data, motifs, length=0, fn="", **axset):
 
         # Plot matches of the representative motif
         for seq, index in motif.best_matches.items():
-            ax.plot(data[seq][index : index + motif.length], "k", lw=0.1)
+            ax.plot(zscore(data[seq][index : index + motif.length]), "k", lw=0.1)
 
         # Plot representative motif
         ax.plot(motif.representative, "b", lw=1)
