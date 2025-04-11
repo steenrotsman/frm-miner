@@ -29,10 +29,13 @@ PLOT = 3
 
 def main():
     # Plot example data
-    data = get_data(0.8)
+    data, locations = get_data(0.8)
     fig, ax = plt.subplots()
-    for row in data[:PLOT]:
-        ax.plot(row, "k", lw=0.3)
+    for row, start in zip(data[:PLOT], locations):
+        end = start + MOTIF_LEN
+        ax.plot(range(start), row[:start], "k", lw=0.3)
+        ax.plot(range(start, end), row[start:end], "b", lw=0.3)
+        ax.plot(range(end, len(row)), row[end:], "k", lw=0.3)
         ax.set(yticks=[-2.5, 2.5])
         remove_spines(ax, remove_y=False)
     plt.savefig(join("figs", "3 data.png"))
@@ -43,7 +46,7 @@ def main():
     fix, axs = plt.subplots(ncols=len(NOISE_LEVELS), sharey="all")
     for level, ax in zip(NOISE_LEVELS, axs):
         print("Discovering motifs for noise level", level)
-        data = get_data(level)
+        data, _ = get_data(level)
 
         # Discover motifs
         mm = Miner(MINSUP, SEGLEN, ALPHA, k=K, diff=1)
@@ -85,7 +88,7 @@ def get_data(noise_level):
             noisy_motif = MOTIF + RNG.normal(size=MOTIF_LEN, scale=noise_level)
             noise[i][loc : loc + MOTIF_LEN] = noisy_motif
 
-    return zscore(np.cumsum(noise, axis=1), axis=1)
+    return zscore(np.cumsum(noise, axis=1), axis=1), locations
 
 
 def ostinato(data, m, precomputed=None):
