@@ -3,10 +3,10 @@ from os.path import join
 import matplotlib.pyplot as plt
 import numpy as np
 import stumpy
-from frm import Miner
+from plot import remove_spines
 from scipy.stats import zscore
 
-from plot import remove_spines
+from frm import Miner
 
 # Simulation settings
 UNITS = 100
@@ -30,8 +30,8 @@ PLOT = 3
 def main():
     # Plot example data
     data = get_data(0.8)
-    fig, axs = plt.subplots(nrows=PLOT, sharex="all")
-    for row, ax in zip(data, axs):
+    fig, ax = plt.subplots()
+    for row in data[:PLOT]:
         ax.plot(row, "k", lw=0.3)
         ax.set(yticks=[-2.5, 2.5])
         remove_spines(ax, remove_y=False)
