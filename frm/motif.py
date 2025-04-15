@@ -62,13 +62,13 @@ class Motif:
     def map(self, ts, seglen, max_dist):
         """Map representative, matches, and distance using occurrences."""
         self._seglen = seglen
-        self._middle = slice(seglen, -seglen)
         self._ts = ts
         self.length = len(self.pattern) * self._seglen
 
         self.set_representative()
         self.set_best_matches()
-        self.trim_length()
+        if len(self.pattern) >= 3:
+            self.trim_length()
         self.set_distance(max_dist)
 
     def set_representative(self):
@@ -111,7 +111,7 @@ class Motif:
 
         # Find stable begin and end points of occurrences
         diff = np.max(occurrences, axis=0) - np.min(occurrences, axis=0)
-        reference = np.mean(diff[self._middle])
+        reference = np.mean(diff[self._seglen : -self._seglen])
         left_trim = np.where(diff[: self._seglen] > reference)[0]
         left_trim = left_trim[-1] if left_trim.size > 0 else 0
         right_trim = np.where(diff[-self._seglen :] > reference)[0]
