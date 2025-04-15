@@ -29,7 +29,7 @@ PLOT = 3
 
 def main():
     # Plot example data
-    data, locations = get_data(0.8)
+    data, locations = get_data(0.8, RNG)
     fig, ax = plt.subplots()
     for row, start in zip(data[:PLOT], locations):
         end = start + MOTIF_LEN
@@ -46,7 +46,7 @@ def main():
     fix, axs = plt.subplots(ncols=len(NOISE_LEVELS), sharey="all")
     for level, ax in zip(NOISE_LEVELS, axs):
         print("Discovering motifs for noise level", level)
-        data, _ = get_data(level)
+        data, _ = get_data(level, RNG)
 
         # Discover motifs
         mm = Miner(MINSUP, SEGLEN, ALPHA, k=K, diff=1)
@@ -65,7 +65,7 @@ def main():
     # Discover with Ostinato
     fig, axs = plt.subplots(ncols=len(NOISE_LEVELS), sharey="all")
     for level, ax, precomputed in zip(NOISE_LEVELS, axs, PRECOMPUTED):
-        data = get_data(level)
+        data = get_data(level, RNG)
         consensus_motif = ostinato(data, MOTIF_LEN, precomputed)
         ax.plot(zscore(consensus_motif), "k", lw=0.3)
         ax.set(xticks=[0, MOTIF_LEN])
@@ -75,17 +75,17 @@ def main():
     plt.close()
 
 
-def get_data(noise_level):
-    noise = RNG.normal(size=(UNITS, TS_LEN), scale=3)
-    locations = RNG.integers(0, TS_LEN - MOTIF_LEN, size=len(noise))
+def get_data(noise_level, rng):
+    noise = rng.normal(size=(UNITS, TS_LEN), scale=3)
+    locations = rng.integers(0, TS_LEN - MOTIF_LEN, size=len(noise))
     locations[INJECT:] = -1
-    RNG.shuffle(locations)
+    rng.shuffle(locations)
     for i, loc in enumerate(locations):
         if loc == -1:
             continue
         else:
             # Inject motif
-            noisy_motif = MOTIF + RNG.normal(size=MOTIF_LEN, scale=noise_level)
+            noisy_motif = MOTIF + rng.normal(size=MOTIF_LEN, scale=noise_level)
             noise[i][loc : loc + MOTIF_LEN] = noisy_motif
 
     return zscore(np.cumsum(noise, axis=1), axis=1), locations
