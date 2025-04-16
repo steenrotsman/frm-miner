@@ -25,7 +25,7 @@ def main():
 def sim(seed):
     # Randomly determine settings
     rng = np.random.default_rng(seed)
-    minsup = rng.uniform(0.0, 1.0)
+    minsup = rng.uniform(0.02, 1.0)
     seglen = rng.integers(1, 100)
     alpha = rng.integers(3, 10)
     omax = rng.uniform(0.5, 1.0)
