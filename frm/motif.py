@@ -28,9 +28,14 @@ class Motif:
         return f"Motif('{self.pattern}')"
 
     def __eq__(self, other):
-        if type(other) is not type(self):
+        if not isinstance(other, self.__class__):
             return False
         return other.pattern == self.pattern
+
+    def __lt__(self, other):
+        if not isinstance(other, self.__class__):
+            return NotImplemented
+        return self.distance < other.distance
 
     def record_index(self, i, j):
         """Record starting index of pattern in sequence i at position j."""
