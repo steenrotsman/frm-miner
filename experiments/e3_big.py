@@ -17,11 +17,11 @@ RNG = np.random.default_rng(1234)
 Setting = namedtuple("Setting", ["name", "length", "support", "noise"])
 
 SETTINGS = [
-    Setting("peak", 3000, 9000, 1),
-    Setting("trough", 3500, 8000, 1),
-    Setting("up", 4000, 7000, 1),
-    Setting("down", 4500, 6000, 1),
-    Setting("constant", 5000, 5000, 1),
+    Setting("peak", 300, 9000, 1),
+    Setting("trough", 350, 8000, 1),
+    Setting("up", 400, 7000, 1),
+    Setting("down", 450, 6000, 1),
+    Setting("constant", 500, 5000, 1),
 ]
 MOTIFS = [
     zscore(np.arange(0, SETTINGS[0].length)),
