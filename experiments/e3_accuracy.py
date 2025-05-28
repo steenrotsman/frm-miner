@@ -65,10 +65,10 @@ def main():
     # Discover with Ostinato
     fig, axs = plt.subplots(ncols=len(NOISE_LEVELS), sharey="all")
     for level, ax, precomputed in zip(NOISE_LEVELS, axs, PRECOMPUTED):
-        data = get_data(level, RNG)
+        data, locations = get_data(level, RNG)
         consensus_motif = ostinato(data, MOTIF_LEN, precomputed)
         ax.plot(zscore(consensus_motif), "k", lw=0.3)
-        ax.set(xticks=[0, MOTIF_LEN])
+        ax.set(xticks=[0, MOTIF_LEN], xlabel=level)
         remove_spines(ax, remove_y=False)
     plt.savefig(join("figs", "3 consensus.png"))
     plt.savefig(join("figs", "3 consensus.eps"))

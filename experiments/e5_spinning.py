@@ -24,7 +24,7 @@ def main():
 
     for category, field in data.items():
         fig, axs = plt.subplots(ncols=K, sharey="all")
-        miner = Miner(MINSUP, SEGLEN, ALPHA)
+        miner = Miner(MINSUP, SEGLEN, ALPHA, diff=1)
         motifs = miner.mine(field)
         plot_motifs(
             axs,

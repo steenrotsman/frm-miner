@@ -2,14 +2,15 @@ from os.path import join
 
 import matplotlib.pyplot as plt
 import numpy as np
+from mass_ts import mass2 as mass
 from plot import plot_motifs, remove_spines
 from scipy.io import loadmat
 from scipy.stats import zscore
-from stumpy import ostinato, stump
+from stumpy import ostinato
 
 from frm import Miner
 
-MINSUP = [1, 0.5]
+MINSUP = [1, 0.75, 0.5]
 SEGLEN = 30
 ALPHABET = 4
 
@@ -21,11 +22,10 @@ def main():
     data = [np.reshape(insect[f"d{i}{i}"], (-1)) for i in range(1, 5)]
     plot_data(data)
     plot_motif(data)
-    plot_kofp(data)
 
 
 def plot_data(data):
-    fig, axs = plt.subplots(ncols=2)
+    fig, axs = plt.subplots(ncols=3)
 
     # Plot data
     for row in data:
@@ -47,50 +47,32 @@ def plot_data(data):
     axs[1].set(ylim=(-3, 3), xticks=[0, 800], yticks=[-2, 0, 2])
     remove_spines(axs[1], remove_y=False)
 
+    for i, row in enumerate(data):
+        if i == ts_index:
+            start = ss_index
+        else:
+            start = np.argmin(mass(row, data[ts_index][ss_index : ss_index + 800]))
+        axs[2].plot(zscore(row[start : start + 800]), lw=0.3)
+        axs[2].set(ylim=(-3, 3), xticks=[0, 800], yticks=[-2, 0, 2])
+
+    remove_spines(axs[2], remove_y=False)
+
     plt.savefig(join("figs", "6 insect data.eps"))
     plt.savefig(join("figs", "6 insect data.png"))
     plt.close()
 
 
 def plot_motif(data):
-    fig, axs = plt.subplots(ncols=2, sharey="all")
+    fig, axs = plt.subplots(ncols=len(MINSUP), sharey="all")
     for minsup, ax in zip(MINSUP, axs):
         # Mine frequent motifs in differenced data
         miner = Miner(minsup, SEGLEN, ALPHABET, diff=1)
         motifs = miner.mine(data)
         motif = motifs[0]
         plot_motifs([ax], data, [motif])
+        ax.set(ylim=(-3, 3), xlabel=f"minsup = {minsup}", yticks=[-2, 0, 2])
     plt.savefig(join("figs", "6 insect motifs.eps"))
     plt.savefig(join("figs", "6 insect motifs.png"))
-    plt.close()
-
-
-def plot_kofp(data):
-    fig, axs = plt.subplots(ncols=3, sharey="all")
-    bests = [[0, 65072, 1, 41837], [0, 65057, 1, 41822], [0, 65048, 1, 41809]]
-    if not USE_PRECOMPUTED:
-        for m, ax in zip((1000, 1083, 1100), axs):
-            outs = []
-            # As k=2, this is equal to the best motif pair across all ABJoins
-            for i in range(4):
-                # Though ABJoin(A,B)!=(ABJoin(B,A)), bestPair(A,B)==bestPair(B,A)
-                for j in range(i + 1, 4):
-                    if i == j:
-                        continue
-                    out = stump(data[i], m, data[j], ignore_trivial=False)
-                    outs.append(
-                        [i, np.argmin(out[:, 0]), j, out[np.argmin(out[:, 0])][1]]
-                    )
-            best = min(outs, key=lambda x: x[0])
-            bests.append(best)
-            print(best)
-    for m, ax, best in zip((1000, 1083, 1100), axs, bests):
-        ax.plot(zscore(data[best[0]][best[1] : best[1] + m]), lw=0.5, c="b")
-        ax.plot(zscore(data[best[2]][best[3] : best[3] + m]), lw=0.5, c="k")
-        ax.set(ylim=(-3, 3), xticks=[0, m], yticks=[-2, 0, 2])
-        remove_spines(ax, remove_y=False)
-    plt.savefig(join("figs", "6 insect kofP.eps"))
-    plt.savefig(join("figs", "6 insect kofP.png"))
     plt.close()
 
 
