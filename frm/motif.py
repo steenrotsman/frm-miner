@@ -1,6 +1,5 @@
 from collections import defaultdict
 from functools import partial
-from itertools import permutations
 from warnings import catch_warnings, simplefilter
 
 import numpy as np
@@ -128,18 +127,7 @@ class Motif:
         self.length = len(self.pattern) * self._seglen - left_trim - right_trim
 
     def set_distance(self, max_dist):
-        """Calculate extent."""
-        self.distance = 0
-        for (a, i), (b, j) in permutations(self.best_matches.items(), 2):
-            occ1 = self.pad(znorm(self._ts[a][i : i + self.length]))
-            occ2 = self.pad(znorm(self._ts[b][j : j + self.length]))
-            self.distance = max(self.distance, ED(occ1, occ2) / self.length**0.5)
-
-            # Early stopping with upper bound
-            if self.distance > max_dist:
-                self.distance = float("inf")
-                return
-
+        """Calculate distance."""
         # Recalculate representative
         self.representative = znorm(
             np.nanmean(
@@ -154,6 +142,13 @@ class Motif:
                 axis=0,
             )
         )
+
+        # Calculate NAED
+        for ts_index, start in self.best_matches.items():
+            occ = self.pad(znorm(self._ts[ts_index][start : start + self.length]))
+            self.distance += np.nansum((occ - self.representative) ** 2) ** 0.5
+
+        self.distance /= (len(self.best_matches)) * (self.length) ** (0.5)
 
     def get_occurrence(self, ts_index, start_index):
         """Get occurrence from time series with padding if needed."""

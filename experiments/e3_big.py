@@ -1,11 +1,9 @@
 from collections import namedtuple
-from multiprocessing import Pool
 from os.path import join
 
 import matplotlib.pyplot as plt
 import numpy as np
-from plot import WIDTH, plot_motifs
-from scipy.stats import zscore
+from plot import HEIGHT, WIDTH, plot_motifs
 
 from frm import Miner
 
@@ -13,73 +11,73 @@ from frm import Miner
 UNITS = 10000
 TS_LEN = 10000
 RNG = np.random.default_rng(1234)
+NOISE = 2
+Setting = namedtuple("Setting", ["name", "support", "motif"])
 
-Setting = namedtuple("Setting", ["name", "length", "support", "noise"])
-
+LENGTHS = [200, 250, 300, 350]
 SETTINGS = [
-    Setting("peak", 300, 9000, 1),
-    Setting("trough", 350, 8000, 1),
-    Setting("up", 400, 7000, 1),
-    Setting("down", 450, 6000, 1),
-    Setting("constant", 500, 5000, 1),
-]
-MOTIFS = [
-    zscore(np.arange(0, SETTINGS[0].length)),
-    zscore(np.arange(SETTINGS[1].length, 0, -1)),
-    np.ones(SETTINGS[2].length) / 5,
-    -np.ones(SETTINGS[3].length) / 5,
-    np.zeros(SETTINGS[4].length),
+    Setting("up", 9000, np.linspace(-3, 3, LENGTHS[0]) ** 2),
+    Setting("peak", 8500, np.linspace(4, -4, LENGTHS[1])),
+    Setting("down", 8000, -(np.linspace(-3, 3, LENGTHS[2]) ** 2)),
+    Setting("dip", 7500, np.linspace(-4, 4, LENGTHS[3])),
 ]
 
 
 # Starting indices for motifs in each time series
 LOCATIONS = [
-    RNG.integers(0, 1000, size=UNITS),
-    RNG.integers(2000, 3000, size=UNITS),
-    RNG.integers(4000, 5000, size=UNITS),
-    RNG.integers(6000, 7000, size=UNITS),
-    RNG.integers(8000, 9000, size=UNITS),
+    RNG.integers(0, 1500, size=UNITS),
+    RNG.integers(2500, 4000, size=UNITS),
+    RNG.integers(5000, 6500, size=UNITS),
+    RNG.integers(7500, 9000, size=UNITS),
 ]
 
 # Parameters
 MINSUP = 0.3
-SEGLEN = [30, 50, 70, 75, 100]
+SEGLEN = 30
 ALPHA = 4
+OMAX = 0.6
 DIFF = 1
-K = 5
+K = 4
 
 
 def main():
-    ts = get_data()
+    ts, ground_truth = get_data()
 
-    with Pool(len(SEGLEN)) as p:
-        motifss = p.starmap(get_motifs, [(ts, seglen) for seglen in SEGLEN])
+    fig, ax = plt.subplots(nrows=1, sharex=True, figsize=(WIDTH, HEIGHT))
+    # Select rows with and without motifs
+    for row, indices in zip(ts, ground_truth):
+        ts_index = np.where(indices == -1)[0][0]
+        ax.plot(ts[ts_index])
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    plt.savefig(join("figs", "3 bigdata.png"))
 
-    fig, axss = plt.subplots(ncols=K, nrows=len(SEGLEN), figsize=(WIDTH, WIDTH))
-    for motifs, axs in zip(motifss, axss):
-        plot_motifs(axs, ts, motifs)
-    plt.savefig(join("figs", "3 big.png"))
-    plt.savefig(join("figs", "3 big.eps"))
+    motifs = get_motifs(ts)
+    for motif in motifs:
+        print(motif.length, len(motif.best_matches))
+    fig, axs = plt.subplots(ncols=K, figsize=(WIDTH, HEIGHT), sharey="all")
+    plot_motifs(axs, ts, motifs, fn="3 big final")
 
 
 def get_data():
     # Gaussian noise
-    noise = RNG.normal(0, 5, size=(UNITS, TS_LEN))
-
+    ts = RNG.normal(0, NOISE, size=(UNITS, TS_LEN))
     # Only keep starting indices for motif-specific support number of time series
-    for locations, setting, motif in zip(LOCATIONS, SETTINGS, MOTIFS):
+    ground_truth = []
+    for locations, length, setting in zip(LOCATIONS, LENGTHS, SETTINGS):
         locations[setting.support :] = -1
         RNG.shuffle(locations)
+        ground_truth.append(locations)
         for i, loc in enumerate(locations):
             if loc == -1:
                 continue
-            noisy_motif = motif + RNG.normal(size=setting.length, scale=setting.noise)
-            noise[i][loc : loc + setting.length] = noisy_motif
-    return zscore(np.cumsum(noise, axis=1), axis=1)
+            noisy_motif = setting.motif + RNG.normal(size=length)
+            ts[i][loc : loc + length] = noisy_motif
+    return np.cumsum(ts, axis=1), ground_truth
 
 
-def get_motifs(ts, seglen):
-    mm = Miner(MINSUP, seglen, ALPHA, k=K, diff=DIFF)
+def get_motifs(ts):
+    mm = Miner(MINSUP, SEGLEN, ALPHA, k=K, diff=DIFF, omax=OMAX)
     motifs = mm.mine(ts)
     return motifs
 

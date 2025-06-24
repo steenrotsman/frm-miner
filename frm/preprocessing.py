@@ -13,7 +13,7 @@ def sax(ts, seglen, alpha, diff):
     Parameters
     ----------
     ts : list
-        List of lists containing normalised time series to dicretise.
+        List of lists containing time series to dicretise.
     seglen : int
         Segment length for PAA, factor by which discrete representation is shorter than time series.
     alpha : int
@@ -92,6 +92,7 @@ def difference(timeseries, diff):
         return np.diff(timeseries, axis=1)
     except ValueError:
         return [np.diff(ts) for ts in timeseries]
+
 
 def get_breakpoints(a):
     return norm.ppf(np.arange(1, a) / a, loc=0)
