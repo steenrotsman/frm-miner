@@ -2,11 +2,11 @@ from itertools import product
 from multiprocessing import Pool
 from time import perf_counter
 
-from e2_stocks import get_stocks
-
 from frm import Miner
 
-FILE = "e2_params.csv"
+from e9_stocks import get_stocks
+
+FILE = "e9_params.csv"
 
 
 # Parameter ranges for FRM-Miner

@@ -29,21 +29,21 @@ def main():
     files = [join(IMG_DIR, f"{NAME}-{i + 1}.gif") for i in range(3)]
     ts, contours = get_all_ts(files)
 
-    # # Basic pipelines
+    # Basic pipelines
     # plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
     # fig, axs = plt.subplots(ncols=5, figsize=(WIDTH, HEIGHT))
     # steps = [plot.D, plot.Ds, plot.sm, plot.occ, plot.rm]
-    # plot.plot(fig, axs, ts, 'pipeline', steps)
+    # plot.plot(fig, axs, ts, "pipeline", steps)
 
-    # plot = Pipeline(2 / 3, 32, ALPHA, LENGTH)
-    # fig, axs = plt.subplots(ncols=3, figsize=(WIDTH, HEIGHT))
-    # steps = [plot.D, plot.sax, plot.Ds]
-    # plot.plot(fig, axs, [ts[0]], 'sax', steps)
+    plot = Pipeline(2 / 3, 32, ALPHA, LENGTH)
+    fig, axs = plt.subplots(ncols=3, figsize=(WIDTH, HEIGHT))
+    steps = [plot.D, plot.sax, plot.Ds]
+    plot.plot(fig, axs, [ts[0]], "Fig2", steps)
 
     # plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
     # fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH, HEIGHT * 2))
     # steps = [plot.D, plot.sax, plot.Ds, plot.sm, plot.occ, plot.rm]
-    # plot.plot(fig, chain.from_iterable(axs), ts, 'long', steps)
+    # plot.plot(fig, chain.from_iterable(axs), ts, "long", steps)
 
     # Large pipeline
     large_pipe(ts)
@@ -86,7 +86,7 @@ def large_pipe(ts):
             ax.axhline(y=b, color="lightgrey", lw=0.5)
 
         ax.plot(row)
-        sequence = sax([row], seglen, alpha)[0]
+        sequence = sax([row], seglen, alpha, 0)[0]
         for i in range(0, len(row), seglen):
             start_idx = i
             end_idx = i + seglen
@@ -108,7 +108,7 @@ def large_pipe(ts):
     axd["sax"][-1].set(xticks=[0, len(row) - 1], xlabel="SAX")
 
     # Sequence database
-    sequences = sax(data, seglen, alpha)
+    sequences = sax(data, seglen, alpha, 0)
     for sequence, y in zip(sequences, [0.7, 0.6, 0.5]):
         axd["seq"].text(0.5, y, sequence, ha="center", va="center")
     axd["seq"].set(xticks=[])  #  , xlabel='Sequence database')
@@ -124,7 +124,7 @@ def large_pipe(ts):
 
     # Sequence motifs
     pm = PatternMiner(minsup, omax=1)
-    pm.mine(sax(data, seglen, alpha))
+    pm.mine(sax(data, seglen, alpha, 0))
     coords = [(x, y) for x in (0.2, 0.45, 0.75) for y in range(9, 0, -1)]
     for pattern, (x, y) in zip(pm.frequent, coords):
         axd["sms"].text(x, y / 10, pattern, ha="center", va="center")
@@ -196,13 +196,12 @@ def large_pipe(ts):
     axd["rm"].set(
         xticks=[0, len(motif.pattern) * seglen - 1],
         xlabel="Representative motif",
-        ylim=[-1.7, 11],
+        ylim=[-1.7, 5],
     )
     remove_spines(axd["rm"])
 
     plt.subplots_adjust(top=0.98, bottom=0.07, left=0.01, right=0.99)
-    plt.savefig("figs/pipe.eps")
-    plt.savefig("figs/pipe.png")
+    plt.savefig("figs/Fig1.pdf")
 
 
 class Pipeline:
@@ -229,8 +228,7 @@ class Pipeline:
             step(ax)
             remove_spines(ax)
 
-        plt.savefig(join("figs", f"0 {name}.eps"))
-        plt.savefig(join("figs", f"0 {name}.png"))
+        plt.savefig(join("figs", f"{name}.pdf"))
         plt.close()
 
     def D(self, ax):
@@ -242,7 +240,7 @@ class Pipeline:
             ax.axhline(y=b, color="lightgrey", lw=0.5)
 
         ax.plot(self.data[0], lw=0.5)
-        sequence = sax([self.data[0]], self.seglen, self.alpha)[0]
+        sequence = sax([self.data[0]], self.seglen, self.alpha, 0)[0]
         for i in range(0, len(self.data[0]), self.seglen):
             start_idx = i
             end_idx = i + self.seglen
@@ -264,7 +262,7 @@ class Pipeline:
         self.axset(ax, "SAX")
 
     def Ds(self, ax):
-        sequences = "\n".join(sax(self.data, self.seglen, self.alpha))
+        sequences = "\n".join(sax(self.data, self.seglen, self.alpha, 0))
         ax.text(0.5, 0.5, sequences, ha="center", va="center")
         ax.set(xticks=[], yticks=[], xlabel="Sequence")
 
@@ -285,7 +283,7 @@ class Pipeline:
         self.axset(ax, "Occurrences")
 
     def rm(self, ax):
-        for motif in self.mm.motifs:
+        for motif in self.mm.motifs[:4]:
             ax.plot(motif.representative, lw=0.5)
 
         self.axset(ax, "Representative motifs")

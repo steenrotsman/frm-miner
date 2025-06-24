@@ -8,7 +8,8 @@ from scipy.stats import zscore
 WIDTH = 0.0138 * 372
 HEIGHT = WIDTH / 4
 LETTERING_SIZE = 8
-colors = ["#1f77b4", "#30c546", "#8b0072", "#efac35"]
+colors = ["#2040b0", "#30b546", "#8b0072", "#efac35"]
+
 params = {
     "axes.labelsize": LETTERING_SIZE,
     "axes.prop_cycle": cycler(color=colors),
@@ -37,7 +38,7 @@ def plot_motifs(flat_axs, data, motifs, length=0, fn="", **axset):
             ax.plot(zscore(data[seq][index : index + motif.length]), "k", lw=0.1)
 
         # Plot representative motif
-        ax.plot(motif.representative, "b", lw=1)
+        ax.plot(motif.representative, lw=1)
 
         # Aesthetics
         if not xticks:
@@ -45,8 +46,7 @@ def plot_motifs(flat_axs, data, motifs, length=0, fn="", **axset):
         ax.set(**axset)
         remove_spines(ax, remove_y=False)
     if fn:
-        plt.savefig(join("figs", f"{fn}.eps"))
-        plt.savefig(join("figs", f"{fn}.png"))
+        plt.savefig(join("figs", f"{fn}.pdf"))
         plt.close()
 
 
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     from PIL import Image
 
     for i in range(4):
-        plt.plot([i, i])
+        plt.plot([i, i], lw=8)
     plt.savefig(join("figs", "colors.png"))
     img = Image.open(join("figs", "colors.png"))
     img_gray = img.convert("L")

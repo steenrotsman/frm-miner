@@ -10,31 +10,22 @@ SIZE = 3
 SETTINGS = [
     # file, x_method, y_method, x_name, y_name, lines, fn
     (
-        "e1_runtime.csv",
-        "benchmark_py_miner_1_2",
-        "benchmark_miner_2_2",
+        "e5_runtime.csv",
+        "benchmark_miner_1",
+        "benchmark_miner_2",
         "FRM-Miner 1.0",
         "FRM-Miner 2.0",
         2,
-        "frm runtime",
+        "8",
     ),
     (
-        "e1_runtime.csv",
-        "benchmark_stumpy",
-        "benchmark_miner_2_2",
-        "Ostinato",
-        "FRM-Miner",
-        5,
-        "ostinato runtime",
-    ),
-    (
-        "e1_memory.csv",
+        "e6_memory.csv",
         "1",
         "2",
         "FRM-Miner 1.0",
         "FRM-Miner 2.0",
         2,
-        "frm memory",
+        "9",
     ),
 ]
 
@@ -59,7 +50,7 @@ def get_results(file):
 
 def print_results(runtimes):
     for method, runtime in runtimes.items():
-        print(f"{method[10:]}: {sum(runtime.values()) / 3600:.2f}")
+        print(f"{method}: {sum(runtime.values()) / 3600:.2f}")
 
 
 def plot_results(runtimes, x_method, y_method, x_name, y_name, lines, fn):
@@ -99,8 +90,7 @@ def plot_results(runtimes, x_method, y_method, x_name, y_name, lines, fn):
     plt.ylabel(y_name)
     plt.legend()
 
-    plt.savefig(join("figs", f"1 {fn}.eps"))
-    plt.savefig(join("figs", f"1 {fn}.png"))
+    plt.savefig(join("figs", f"Fig{fn}.pdf"))
     plt.close()
 
 

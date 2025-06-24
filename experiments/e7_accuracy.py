@@ -3,10 +3,10 @@ from os.path import join
 import matplotlib.pyplot as plt
 import numpy as np
 import stumpy
-from plot import remove_spines
+from frm import Miner
 from scipy.stats import zscore
 
-from frm import Miner
+from plot import remove_spines
 
 # Simulation settings
 UNITS = 100
@@ -38,8 +38,7 @@ def main():
         ax.plot(range(end, len(row)), row[end:], "k", lw=0.3)
         ax.set(yticks=[-2.5, 2.5])
         remove_spines(ax, remove_y=False)
-    plt.savefig(join("figs", "3 data.png"))
-    plt.savefig(join("figs", "3 data.eps"))
+    plt.savefig(join("figs", "Fig10.pdf"))
     plt.close()
 
     # Vary noise levels
@@ -58,8 +57,7 @@ def main():
             ax.plot(zscore(data[ts][idx : idx + motif.length]), lw=0.3)
         ax.set(xticks=[0, motif.length], xlabel=level)
         remove_spines(ax, remove_y=False)
-    plt.savefig(join("figs", "3 accuracy.png"))
-    plt.savefig(join("figs", "3 accuracy.eps"))
+    plt.savefig(join("figs", "Fig11.pdf"))
     plt.close()
 
     # Discover with Ostinato
@@ -70,8 +68,7 @@ def main():
         ax.plot(zscore(consensus_motif), "k", lw=0.3)
         ax.set(xticks=[0, MOTIF_LEN], xlabel=level)
         remove_spines(ax, remove_y=False)
-    plt.savefig(join("figs", "3 consensus.png"))
-    plt.savefig(join("figs", "3 consensus.eps"))
+    plt.savefig(join("figs", "Fig12.pdf"))
     plt.close()
 
 

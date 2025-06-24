@@ -2,13 +2,13 @@ from os.path import join
 
 import matplotlib.pyplot as plt
 import numpy as np
+from frm import Miner
 from mass_ts import mass2 as mass
-from plot import plot_motifs, remove_spines
 from scipy.io import loadmat
 from scipy.stats import zscore
 from stumpy import ostinato
 
-from frm import Miner
+from plot import plot_motifs, remove_spines
 
 MINSUP = [1, 0.75, 0.5]
 SEGLEN = 30
@@ -18,7 +18,7 @@ USE_PRECOMPUTED = True
 
 
 def main():
-    insect = loadmat("e6_insectAllData.mat")
+    insect = loadmat("e4_insectAllData.mat")
     data = [np.reshape(insect[f"d{i}{i}"], (-1)) for i in range(1, 5)]
     plot_data(data)
     plot_motif(data)
@@ -57,8 +57,7 @@ def plot_data(data):
 
     remove_spines(axs[2], remove_y=False)
 
-    plt.savefig(join("figs", "6 insect data.eps"))
-    plt.savefig(join("figs", "6 insect data.png"))
+    plt.savefig(join("figs", "Fig6.pdf"))
     plt.close()
 
 
@@ -71,8 +70,7 @@ def plot_motif(data):
         motif = motifs[0]
         plot_motifs([ax], data, [motif])
         ax.set(ylim=(-3, 3), xlabel=f"minsup = {minsup}", yticks=[-2, 0, 2])
-    plt.savefig(join("figs", "6 insect motifs.eps"))
-    plt.savefig(join("figs", "6 insect motifs.png"))
+    plt.savefig(join("figs", "Fig7.pdf"))
     plt.close()
 
 

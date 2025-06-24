@@ -3,9 +3,9 @@ from os.path import join
 
 import matplotlib.pyplot as plt
 import numpy as np
-from plot import HEIGHT, WIDTH, plot_motifs
-
 from frm import Miner
+
+from plot import HEIGHT, WIDTH, plot_motifs
 
 # Simulation settings
 UNITS = 10000
@@ -50,13 +50,11 @@ def main():
         ax.plot(ts[ts_index])
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
-    plt.savefig(join("figs", "3 bigdata.png"))
+    plt.savefig(join("figs", "Fig3.pdf"))
 
     motifs = get_motifs(ts)
-    for motif in motifs:
-        print(motif.length, len(motif.best_matches))
     fig, axs = plt.subplots(ncols=K, figsize=(WIDTH, HEIGHT), sharey="all")
-    plot_motifs(axs, ts, motifs, fn="3 big final")
+    plot_motifs(axs, ts, motifs, fn="Fig4")
 
 
 def get_data():

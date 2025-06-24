@@ -3,10 +3,10 @@ from os import listdir
 from os.path import join
 
 import matplotlib.pyplot as plt
-from plot import HEIGHT, WIDTH, plot_motifs
+from frm import Miner
 from scipy.stats import zscore
 
-from frm import Miner
+from plot import HEIGHT, WIDTH, plot_motifs
 
 JSON_DIR = "bike"
 FIELD = "speed"
@@ -14,7 +14,7 @@ FIELD = "speed"
 # Miner parameters
 MINSUP = 0.3
 SEGLEN = 15
-ALPHABET = 5
+ALPHABET = 4
 K = 4
 
 
@@ -26,7 +26,7 @@ def main():
     fig, axs = plt.subplots(ncols=4, sharey="all", figsize=(WIDTH, HEIGHT))
     miner = Miner(MINSUP, SEGLEN, ALPHABET, k=K)
     motifs = miner.mine(field)
-    plot_motifs(axs, data, motifs, fn="5 bike motifs", yticks=[-3, 0, 3])
+    plot_motifs(axs, data, motifs, fn="Fig5", yticks=[-3, 0, 3])
 
 
 def get_records(directory):

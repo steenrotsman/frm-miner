@@ -2,9 +2,10 @@ from os.path import join
 from statistics import fmean
 
 import matplotlib.pyplot as plt
+
 import plot  # noqa
 
-FILE = "e2_params.csv"
+FILE = "e9_params.csv"
 
 MINSUP = [0.1, 0.3, 0.5, 0.7, 0.9]
 SEGLEN = [10, 20, 30, 40, 50]
@@ -66,6 +67,5 @@ twin.set(ylabel="n Patterns")
 twin.set_yticks([0, 50, 100], labels=[0, 50, 100])
 fig.legend(handles=[time[0], patterns[0]], loc="outside lower center", ncols=2)
 
-plt.savefig(join("figs", "2 params.eps"))
-plt.savefig(join("figs", "2 params.png"))
+plt.savefig(join("figs", "Fig15.pdf"))
 plt.close()

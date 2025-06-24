@@ -6,14 +6,14 @@ from time import perf_counter
 
 import matplotlib.pyplot as plt
 import numpy as np
-from e1_runtime import benchmark_miner_2_2
-from e4_scalability_ucr import get_ucr_results
+from e5_runtime import FILE as RUNTIME_FILE
+from e5_runtime import benchmark_miner_2, get_data
+from e6_memory import FILE as MEMORY_FILE
 from patterns import profile_memory_peak
 from plot import remove_spines
 
-TIME_FILE = "e4_scalability sim.csv"
-SPACE_FILE = "e4_scalability sim memory.csv"
-NAME = "4 scalability"
+TIME_FILE = "e8_scalability sim.csv"
+SPACE_FILE = "e8_scalability sim memory.csv"
 
 LENGTHS = [10**i for i in range(2, 5)]
 ROWS = [10**i for i in range(2, 5)]
@@ -25,11 +25,11 @@ RNG = np.random.default_rng(0)
 
 
 def main():
-    experiment(TIME_FILE, "Seconds", PLOT)
-    experiment(SPACE_FILE, "Megabytes", PLOT)
+    experiment(TIME_FILE, "Seconds", PLOT, 13)
+    experiment(SPACE_FILE, "Megabytes", PLOT, 14)
 
 
-def experiment(file, measure, plot):
+def experiment(file, measure, plot, fig):
     seen = get_seen(file)
     for setting in product(LENGTHS, ROWS, range(ITER)):
         if setting[2] < 10 or (setting[0] * setting[1] < 1e6 and measure == "Seconds"):
@@ -37,7 +37,7 @@ def experiment(file, measure, plot):
                 simulation(*setting, file, measure)
     results = get_results(file)
     if plot:
-        plot_results(*results, NAME, measure)
+        plot_results(*results, fig, measure)
 
 
 def get_seen(file):
@@ -52,13 +52,13 @@ def get_seen(file):
 def simulation(length, rows, iter, file, measure):
     name = f"{length} {rows} {iter} ({measure})"
     print(f"{name}...")
-    data = get_data(length, rows)
+    data = make_data(length, rows)
 
     if measure == "Megabytes":
         result = profile_memory_peak(data, 2) / 1e6
     else:
         start = perf_counter()
-        benchmark_miner_2_2(data)
+        benchmark_miner_2(data)
         end = perf_counter()
         result = end - start
 
@@ -67,7 +67,7 @@ def simulation(length, rows, iter, file, measure):
     print(f"{name} done!")
 
 
-def get_data(length, rows):
+def make_data(length, rows):
     data = RNG.standard_normal((rows, length))
     motif_length = length // 10
     motif = RNG.standard_normal(motif_length)
@@ -128,8 +128,7 @@ def plot_results(lengths, rows, total, name, measure, marker=".", ls="-"):
     axs[2].set_xticks([1e4, 1e6, 1e8])
     plt.minorticks_on()
 
-    plt.savefig(join("figs", f"{name} {measure}.eps"))
-    plt.savefig(join("figs", f"{name} {measure}.png"))
+    plt.savefig(join("figs", f"Fig{name}.pdf"))
     plt.close()
 
 
@@ -140,6 +139,31 @@ def calculate_ticks(data):
     yticks = [ymin, ymax]
 
     return yticks
+
+
+def get_ucr_results(measure):
+    file = RUNTIME_FILE if measure == "Seconds" else MEMORY_FILE
+    lengths = defaultdict(list)
+    rows = defaultdict(list)
+    total = defaultdict(list)
+
+    with open(file) as fp:
+        for row in fp.readlines():
+            experiment, name, result = tuple(row.split(","))
+            if experiment in ["benchmark_miner_2", "2"]:
+                result = float(result)
+                data = get_data(name)
+                length = fmean(map(len, data))
+                row = len(data)
+
+                lengths[length].append(result)
+                rows[row].append(result)
+                total[row * length].append(result)
+
+    lengths = {size: fmean(x) for size, x in lengths.items()}
+    rows = {size: fmean(x) for size, x in rows.items()}
+    total = {size: fmean(x) for size, x in total.items()}
+    return lengths, rows, total
 
 
 if __name__ == "__main__":
