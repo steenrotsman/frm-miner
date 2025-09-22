@@ -3,9 +3,9 @@ from os.path import join
 
 import matplotlib.pyplot as plt
 import numpy as np
-from frm import Miner
+from plot import plot_motifs
 
-from plot import HEIGHT, WIDTH, plot_motifs
+from frm import Miner
 
 # Simulation settings
 UNITS = 10000
@@ -43,7 +43,7 @@ K = 4
 def main():
     ts, ground_truth = get_data()
 
-    fig, ax = plt.subplots(nrows=1, sharex=True, figsize=(WIDTH, HEIGHT))
+    fig, ax = plt.subplots(nrows=1, sharex=True)
     # Select rows with and without motifs
     for row, indices in zip(ts, ground_truth):
         ts_index = np.where(indices == -1)[0][0]
@@ -53,7 +53,7 @@ def main():
     plt.savefig(join("figs", "Fig3.pdf"))
 
     motifs = get_motifs(ts)
-    fig, axs = plt.subplots(ncols=K, figsize=(WIDTH, HEIGHT), sharey="all")
+    fig, axs = plt.subplots(ncols=K, sharey="all")
     plot_motifs(axs, ts, motifs, fn="Fig4")
 
 

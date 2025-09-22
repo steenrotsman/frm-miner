@@ -3,7 +3,7 @@ from math import ceil, floor, log10
 from os.path import join
 
 import matplotlib.pyplot as plt
-from plot import WIDTH
+from plot import COLWIDTH
 
 SIZE = 3
 
@@ -54,7 +54,7 @@ def print_results(runtimes):
 
 
 def plot_results(runtimes, x_method, y_method, x_name, y_name, lines, fn):
-    plt.figure(figsize=[WIDTH / 1.5, WIDTH / 1.5])
+    plt.figure(figsize=[COLWIDTH, COLWIDTH])
     plt.xscale("log")
     plt.yscale("log")
 

@@ -5,7 +5,14 @@ import matplotlib.pyplot as plt
 from cycler import cycler
 from scipy.stats import zscore
 
-WIDTH = 0.0138 * 372
+# From LaTeX class
+TEXTWIDTH_PT = 495.0
+COLUMNWIDTH_PT = 238.96417
+PT_TO_INCH = 72.27
+
+# Convert to inch for matplotlib
+WIDTH = TEXTWIDTH_PT / PT_TO_INCH
+COLWIDTH = COLUMNWIDTH_PT / PT_TO_INCH
 HEIGHT = WIDTH / 4
 LETTERING_SIZE = 8
 colors = ["#2040b0", "#30b546", "#8b0072", "#efac35"]
@@ -34,8 +41,9 @@ def plot_motifs(flat_axs, data, motifs, length=0, fn="", **axset):
         limit = len(motif.representative) if not length else length
 
         # Plot matches of the representative motif
-        for seq, index in motif.best_matches.items():
-            ax.plot(zscore(data[seq][index : index + motif.length]), "k", lw=0.1)
+        for i, (seq, index) in enumerate(motif.best_matches.items()):
+            if len(motif.best_matches.items()) < 1000 or i % 100 == 0:
+                ax.plot(zscore(data[seq][index : index + motif.length]), "k", lw=0.1)
 
         # Plot representative motif
         ax.plot(motif.representative, lw=1)

@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import text, transforms
 from PIL import Image
-from plot import HEIGHT, WIDTH, colors, remove_spines
+from plot import WIDTH, colors, remove_spines
 
 from frm import Miner
 from frm.patterns import PatternMiner
@@ -31,12 +31,12 @@ def main():
 
     # Basic pipelines
     # plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
-    # fig, axs = plt.subplots(ncols=5, figsize=(WIDTH, HEIGHT))
+    # fig, axs = plt.subplots(ncols=5)
     # steps = [plot.D, plot.Ds, plot.sm, plot.occ, plot.rm]
     # plot.plot(fig, axs, ts, "pipeline", steps)
 
     plot = Pipeline(2 / 3, 32, ALPHA, LENGTH)
-    fig, axs = plt.subplots(ncols=3, figsize=(WIDTH, HEIGHT))
+    fig, axs = plt.subplots(ncols=3)
     steps = [plot.D, plot.sax, plot.Ds]
     plot.plot(fig, axs, [ts[0]], "Fig2", steps)
 
@@ -125,7 +125,7 @@ def large_pipe(ts):
     # Sequence motifs
     pm = PatternMiner(minsup, omax=1)
     pm.mine(sax(data, seglen, alpha, 0))
-    coords = [(x, y) for x in (0.2, 0.45, 0.75) for y in range(9, 0, -1)]
+    coords = [(x, y) for x in (0.2, 0.45, 0.75) for y in range(7, 1, -1)]
     for pattern, (x, y) in zip(pm.frequent, coords):
         axd["sms"].text(x, y / 10, pattern, ha="center", va="center")
     axd["sms"].set(xticks=[], xlabel="Sequence motifs")
