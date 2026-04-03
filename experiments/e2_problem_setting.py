@@ -1,4 +1,7 @@
+import csv
 from collections import namedtuple
+from itertools import product
+from multiprocessing import Pool
 from os.path import join
 
 import matplotlib.pyplot as plt
@@ -12,6 +15,9 @@ UNITS = 10000
 TS_LEN = 10000
 RNG = np.random.default_rng(1234)
 NOISE = 2
+OVERLAP = 0.5
+RUNS = 1000
+PATH = "e2_problem_setting.csv"
 Setting = namedtuple("Setting", ["name", "support", "motif"])
 
 LENGTHS = [200, 250, 300, 350]
@@ -21,7 +27,7 @@ SETTINGS = [
     Setting("down", 8000, -(np.linspace(-3, 3, LENGTHS[2]) ** 2)),
     Setting("dip", 7500, np.linspace(-4, 4, LENGTHS[3])),
 ]
-
+FIELDS = ["run"] + [setting.name for setting in SETTINGS]
 
 # Starting indices for motifs in each time series
 LOCATIONS = [
@@ -41,20 +47,24 @@ K = 4
 
 
 def main():
+    with open(PATH, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=FIELDS)
+        writer.writeheader()
+    with Pool(8) as p:
+        list(p.imap_unordered(single_run, range(RUNS)))
+
+
+def single_run(run):
+    print(f"Run {run}...")
     ts, ground_truth = get_data()
-
-    fig, ax = plt.subplots(nrows=1, sharex=True)
-    # Select rows with and without motifs
-    for row, indices in zip(ts, ground_truth):
-        ts_index = np.where(indices == -1)[0][0]
-        ax.plot(ts[ts_index])
-    ax.spines["right"].set_visible(False)
-    ax.spines["top"].set_visible(False)
-    plt.savefig(join("figs", "Fig3.pdf"))
-
     motifs = get_motifs(ts)
-    fig, axs = plt.subplots(ncols=K, sharey="all")
-    plot_motifs(axs, ts, motifs, fn="Fig4")
+    if run == 0:
+        plot_data_and_results(ts, ground_truth, motifs)
+    result = evaluate_motifs(ground_truth, motifs)
+    with open(PATH, "a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=FIELDS)
+        writer.writerow({"run": run, **result})
+    print(f"Run {run} done!")
 
 
 def get_data():
@@ -78,6 +88,55 @@ def get_motifs(ts):
     mm = Miner(MINSUP, SEGLEN, ALPHA, k=K, diff=DIFF, omax=OMAX)
     motifs = mm.mine(ts)
     return motifs
+
+
+def plot_data_and_results(ts, ground_truth, motifs):
+    fig, ax = plt.subplots(nrows=1, sharex=True)
+    # Select rows with and without motifs
+    for row, indices in zip(ts, ground_truth):
+        ts_index = np.where(indices == -1)[0][0]
+        ax.plot(ts[ts_index])
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    plt.savefig(join("figs", "Fig3.pdf"))
+
+    fig, axs = plt.subplots(ncols=K, sharey="all")
+    plot_motifs(axs, ts, motifs, fn="Fig4")
+
+
+def evaluate_motifs(ground_truth, motifs):
+    # Convert starting indices to (start, end) ranges for ground truth motifs
+    gt_intervals = [
+        {
+            ts_idx: (start, start + length)
+            for ts_idx, start in enumerate(locations)
+            if start != -1
+        }
+        for locations, length in zip(ground_truth, LENGTHS)
+    ]
+
+    # Initialize result
+    result = {setting.name: 0 for setting in SETTINGS}
+
+    # Check if the discovered motifs correspond to the embedded motifs
+    for (gt, setting), motif in product(zip(gt_intervals, SETTINGS), motifs):
+        if match(gt, motif):
+            result[setting.name] = 1
+    return result
+
+
+def match(gt, motif):
+    overlapping = sum(
+        1
+        for ts_idx, start in motif.best_matches.items()
+        if ts_idx in gt and cover(start, start + motif.length, *gt[ts_idx]) > OVERLAP
+    )
+    return overlapping >= len(motif.best_matches) / 2
+
+
+def cover(start, end, gt_start, gt_end):
+    overlap = max(0, min(end, gt_end) - max(start, gt_start))
+    return overlap / (gt_end - gt_start)
 
 
 if __name__ == "__main__":
