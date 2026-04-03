@@ -166,7 +166,6 @@ class Motif:
         """Find matches in time series without matches if radius is not too high."""
         a = {}
         new_distance = self.distance
-        print(self.distance, self.distance * eta)
         for i, series in enumerate(self._ts):
             if i not in self.best_matches:
                 with catch_warnings():
@@ -180,7 +179,6 @@ class Motif:
                     dist = ED(occ, znorm(self._ts[j][idx : idx + self.length]))
                     radius = max(radius, dist)
                 radius /= self.length ** (1 / 2)
-                print(radius)
                 if radius < self.distance * eta:
                     a[i] = best
                     new_distance = max(new_distance, radius)
