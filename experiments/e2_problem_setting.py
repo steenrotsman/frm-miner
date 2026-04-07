@@ -13,7 +13,7 @@ from frm import Miner
 # Simulation settings
 UNITS = 10000
 TS_LEN = 10000
-RNG = np.random.default_rng(1234)
+SEED = 1234
 NOISE = 2
 OVERLAP = 0.5
 RUNS = 1000
@@ -27,15 +27,8 @@ SETTINGS = [
     Setting("down", 8000, -(np.linspace(-3, 3, LENGTHS[2]) ** 2)),
     Setting("dip", 7500, np.linspace(-4, 4, LENGTHS[3])),
 ]
-FIELDS = ["run"] + [setting.name for setting in SETTINGS]
+FIELDS = ["run"] + [f"{s.name}{x}" for s in SETTINGS for x in ["", "_r", "_l"]]
 
-# Starting indices for motifs in each time series
-LOCATIONS = [
-    RNG.integers(0, 1500, size=UNITS),
-    RNG.integers(2500, 4000, size=UNITS),
-    RNG.integers(5000, 6500, size=UNITS),
-    RNG.integers(7500, 9000, size=UNITS),
-]
 
 # Parameters
 MINSUP = 0.3
@@ -55,7 +48,6 @@ def main():
 
 
 def single_run(run):
-    print(f"Run {run}...")
     ts, ground_truth = get_data()
     motifs = get_motifs(ts)
     if run == 0:
@@ -64,22 +56,34 @@ def single_run(run):
     with open(PATH, "a", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=FIELDS)
         writer.writerow({"run": run, **result})
-    print(f"Run {run} done!")
 
 
-def get_data():
+def get_data(run=0):
+    # Make each run independently reproducible
+    rng = np.random.default_rng(SEED + run)
+
+    # Starting indices for motifs in each time series
+    locations = [
+        rng.integers(0, 1500, size=UNITS),
+        rng.integers(2500, 4000, size=UNITS),
+        rng.integers(5000, 6500, size=UNITS),
+        rng.integers(7500, 9000, size=UNITS),
+    ]
+
     # Gaussian noise
-    ts = RNG.normal(0, NOISE, size=(UNITS, TS_LEN))
-    # Only keep starting indices for motif-specific support number of time series
+    ts = rng.normal(0, NOISE, size=(UNITS, TS_LEN))
+
+    # Insert motifs
     ground_truth = []
-    for locations, length, setting in zip(LOCATIONS, LENGTHS, SETTINGS):
+    for locations, length, setting in zip(locations, LENGTHS, SETTINGS):
+        # Only keep starting indices for motif-specific support number of time series
         locations[setting.support :] = -1
-        RNG.shuffle(locations)
+        rng.shuffle(locations)
         ground_truth.append(locations)
         for i, loc in enumerate(locations):
             if loc == -1:
                 continue
-            noisy_motif = setting.motif + RNG.normal(size=length)
+            noisy_motif = setting.motif + rng.normal(size=length)
             ts[i][loc : loc + length] = noisy_motif
     return np.cumsum(ts, axis=1), ground_truth
 
@@ -116,12 +120,14 @@ def evaluate_motifs(ground_truth, motifs):
     ]
 
     # Initialize result
-    result = {setting.name: 0 for setting in SETTINGS}
+    result = {f"{s.name}{x}": 0 for s in SETTINGS for x in ["", "_r", "_l"]}
 
     # Check if the discovered motifs correspond to the embedded motifs
     for (gt, setting), motif in product(zip(gt_intervals, SETTINGS), motifs):
         if match(gt, motif):
             result[setting.name] = 1
+            result[f"{setting.name}_r"] = len(motif.best_matches) / setting.support
+            result[f"{setting.name}_l"] = motif.length / len(setting.motif)
     return result
 
 
