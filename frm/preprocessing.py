@@ -89,7 +89,7 @@ def difference(timeseries, diff):
         Database of differenced time series.
     """
     try:
-        return np.diff(timeseries, axis=1)
+        return np.diff(timeseries, n=diff, axis=1)
     except ValueError:
         return [np.diff(ts) for ts in timeseries]
 

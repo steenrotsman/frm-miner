@@ -3,7 +3,6 @@ This module finds patterns in the outlines of images from the MPEG-7 data set.
 The data set is freely available from https://dabi.temple.edu/external/shape/MPEG7/dataset.html
 """
 
-from itertools import chain
 from os.path import join
 
 import cv2 as cv
@@ -13,14 +12,15 @@ from matplotlib import text, transforms
 from PIL import Image
 from plot import WIDTH, colors, remove_spines
 
-from frm import Miner
 from frm.patterns import PatternMiner
 from frm.preprocessing import get_breakpoints, sax, standardise
 
 IMG_DIR = "mpeg7"
 NAME = "cattle"
 SAMPLE = True
+MINSUP = 2 / 3
 ALPHA = 5
+SEGLEN = 32
 LENGTH = 256
 
 
@@ -28,28 +28,52 @@ def main():
     # Load data
     files = [join(IMG_DIR, f"{NAME}-{i + 1}.gif") for i in range(3)]
     ts, contours = get_all_ts(files)
-
-    # Basic pipelines
-    # plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
-    # fig, axs = plt.subplots(ncols=5)
-    # steps = [plot.D, plot.Ds, plot.sm, plot.occ, plot.rm]
-    # plot.plot(fig, axs, ts, "pipeline", steps)
-
-    plot = Pipeline(2 / 3, 32, ALPHA, LENGTH)
-    fig, axs = plt.subplots(ncols=3)
-    steps = [plot.D, plot.sax, plot.Ds]
-    plot.plot(fig, axs, [ts[0]], "Fig2", steps)
-
-    # plot = Pipeline(2 / 3, 16, ALPHA, LENGTH)
-    # fig, axs = plt.subplots(nrows=2, ncols=3, figsize=(WIDTH, HEIGHT * 2))
-    # steps = [plot.D, plot.sax, plot.Ds, plot.sm, plot.occ, plot.rm]
-    # plot.plot(fig, chain.from_iterable(axs), ts, "long", steps)
-
-    # Large pipeline
+    small_pipe(ts)
     large_pipe(ts)
 
 
+def small_pipe(ts):
+    fig, axs = plt.subplots(ncols=3)
+
+    # Time series
+    axs[0].plot(ts[0], lw=0.5)
+    axs[0].set(ylim=(-3, 3), xticks=[0, len(ts) - 1], yticks=[], xlabel="Time series")
+
+    # SAX breakpoints
+    for b in get_breakpoints(ALPHA):
+        axs[1].axhline(y=b, color="lightgrey", lw=0.5)
+
+    # SAX segments
+    axs[1].plot(ts[0], lw=0.5)
+    sequence = sax([ts[0]], SEGLEN, ALPHA, 0)[0]
+    for i in range(0, len(ts[0]), SEGLEN):
+        start_idx = i
+        end_idx = i + SEGLEN
+        x_values = np.arange(start_idx, end_idx)
+        y_value = np.mean(ts[0][start_idx:end_idx])
+        y_values = np.full_like(x_values, y_value, dtype=y_value.dtype)
+        axs[1].plot(x_values, y_values, color="black", lw=0.5)
+
+        middle_idx = (start_idx + end_idx) // 2
+        axs[1].text(
+            middle_idx,
+            y_value + 0.5,
+            sequence[i // SEGLEN],
+            ha="center",
+            va="center",
+            color="black",
+        )
+
+    axs[1].set(ylim=(-3, 3), xticks=[0, len(ts) - 1], yticks=[], xlabel="SAX")
+
+    # Sequences
+    sequences = "\n".join(sax(ts, SEGLEN, ALPHA, 0))
+    axs[2].text(0.5, 0.5, sequences, ha="center", va="center")
+    axs[2].set(xticks=[], yticks=[], xlabel="Sequence")
+
+
 def large_pipe(ts):
+    # Set up nested grid (3x3 cells where some cells contain 3 rows)
     fig = plt.figure(figsize=(WIDTH, WIDTH * 1.2), layout="none")
     axd = {}
     outer_grid = fig.add_gridspec(3, 3, wspace=0.1, hspace=0.5)
@@ -68,10 +92,6 @@ def large_pipe(ts):
     for gs, key in zip(inner_grids, keys):
         axd[key] = gs.subplots()
 
-    minsup = 2 / 3
-    alpha = ALPHA
-    seglen = 32
-
     # Time series
     data = standardise([row[:256] for row in ts])
     for row, ax in zip(data, axd["ts"]):
@@ -86,10 +106,10 @@ def large_pipe(ts):
             ax.axhline(y=b, color="lightgrey", lw=0.5)
 
         ax.plot(row)
-        sequence = sax([row], seglen, alpha, 0)[0]
-        for i in range(0, len(row), seglen):
+        sequence = sax([row], SEGLEN, ALPHA, 0)[0]
+        for i in range(0, len(row), SEGLEN):
             start_idx = i
-            end_idx = i + seglen
+            end_idx = i + SEGLEN
             x_values = np.arange(start_idx, end_idx)
             y_value = np.mean(row[start_idx:end_idx])
             y_values = np.full_like(x_values, y_value, dtype=y_value.dtype)
@@ -99,7 +119,7 @@ def large_pipe(ts):
             ax.text(
                 middle_idx,
                 y_value + 0.7,
-                sequence[i // seglen],
+                sequence[i // SEGLEN],
                 ha="center",
                 va="center",
             )
@@ -108,7 +128,7 @@ def large_pipe(ts):
     axd["sax"][-1].set(xticks=[0, len(row) - 1], xlabel="SAX")
 
     # Sequence database
-    sequences = sax(data, seglen, alpha, 0)
+    sequences = sax(data, SEGLEN, ALPHA, 0)
     for sequence, y in zip(sequences, [0.7, 0.6, 0.5]):
         axd["seq"].text(0.5, y, sequence, ha="center", va="center")
     axd["seq"].set(xticks=[])  #  , xlabel='Sequence database')
@@ -123,9 +143,9 @@ def large_pipe(ts):
     remove_spines(axd["seq"])
 
     # Sequence motifs
-    pm = PatternMiner(minsup, omax=1)
-    pm.mine(sax(data, seglen, alpha, 0))
-    coords = [(x, y) for x in (0.2, 0.45, 0.75) for y in range(7, 1, -1)]
+    pm = PatternMiner(MINSUP, omax=1)
+    pm.mine(sax(data, SEGLEN, ALPHA, 0))
+    coords = [(x, y) for x in (0.2, 0.4, 0.6, 0.8) for y in range(8, 1, -1)]
     for pattern, (x, y) in zip(pm.frequent, coords):
         axd["sms"].text(x, y / 10, pattern, ha="center", va="center")
     axd["sms"].set(xticks=[], xlabel="Sequence motifs")
@@ -159,8 +179,8 @@ def large_pipe(ts):
     # Time series occurrences
     for i, (row, ax) in enumerate(zip(data, axd["ts_occ"])):
         if i in motif.indexes:
-            start = motif.indexes[i][0] * seglen
-            end = start + len(motif.pattern) * seglen
+            start = motif.indexes[i][0] * SEGLEN
+            end = start + len(motif.pattern) * SEGLEN
             ax.plot(range(start), row[:start], color=colors[0])
             ax.plot(range(start, end), row[start:end], color=colors[1])
             ax.plot(range(end, len(row)), row[end:], color=colors[0])
@@ -173,28 +193,28 @@ def large_pipe(ts):
     # Average occurrences
     for i, (row, ax) in enumerate(zip(data, axd["ao"])):
         if i in motif.indexes:
-            start = motif.indexes[i][0] * seglen
-            end = start + len(motif.pattern) * seglen
+            start = motif.indexes[i][0] * SEGLEN
+            end = start + len(motif.pattern) * SEGLEN
             ax.plot(row[start:end], color=colors[1])
         else:
             ax.text(0.5, 0.5, "No occurrences", ha="center", va="center")
         ax.set(xticks=[])
         remove_spines(ax)
     axd["ao"][-1].set(
-        xticks=[0, len(motif.pattern) * seglen - 1], xlabel="Average occurrences"
+        xticks=[0, len(motif.pattern) * SEGLEN - 1], xlabel="Average occurrences"
     )
 
     # Representative motif
     occurrences = []
     for i, row in enumerate(data):
         if i in motif.indexes:
-            start = motif.indexes[i][0] * seglen
-            end = start + len(motif.pattern) * seglen
+            start = motif.indexes[i][0] * SEGLEN
+            end = start + len(motif.pattern) * SEGLEN
             occurrences.append(row[start:end])
     rm = np.mean(occurrences, axis=0)
     axd["rm"].plot(rm, color=colors[1])
     axd["rm"].set(
-        xticks=[0, len(motif.pattern) * seglen - 1],
+        xticks=[0, len(motif.pattern) * SEGLEN - 1],
         xlabel="Representative motif",
         ylim=[-1.7, 5],
     )
@@ -202,98 +222,6 @@ def large_pipe(ts):
 
     plt.subplots_adjust(top=0.98, bottom=0.07, left=0.01, right=0.99)
     plt.savefig("figs/Fig1.pdf")
-
-
-class Pipeline:
-    def __init__(self, minsup, seglen, alpha, length):
-        self.minsup = minsup
-        self.seglen = seglen
-        self.alpha = alpha
-
-        self.length = length
-
-        self.mm = Miner(minsup, seglen, alpha)
-
-        self.data = None
-
-        self.colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
-
-    def plot(self, fig, axs, data, name, steps):
-        fig.align_labels()
-
-        self.data = standardise([row[: self.length] for row in data])
-        self.mm.mine(self.data)
-
-        for ax, step in zip(axs, steps):
-            step(ax)
-            remove_spines(ax)
-
-        plt.savefig(join("figs", f"{name}.pdf"))
-        plt.close()
-
-    def D(self, ax):
-        ax.plot(self.data.T, lw=0.5)
-        self.axset(ax, "Time series")
-
-    def sax(self, ax):
-        for b in get_breakpoints(self.alpha):
-            ax.axhline(y=b, color="lightgrey", lw=0.5)
-
-        ax.plot(self.data[0], lw=0.5)
-        sequence = sax([self.data[0]], self.seglen, self.alpha, 0)[0]
-        for i in range(0, len(self.data[0]), self.seglen):
-            start_idx = i
-            end_idx = i + self.seglen
-            x_values = np.arange(start_idx, end_idx)
-            y_value = np.mean(self.data[0][start_idx:end_idx])
-            y_values = np.full_like(x_values, y_value, dtype=y_value.dtype)
-            ax.plot(x_values, y_values, color="black", lw=0.5)
-
-            middle_idx = (start_idx + end_idx) // 2
-            ax.text(
-                middle_idx,
-                y_value + 0.5,
-                sequence[i // self.seglen],
-                ha="center",
-                va="center",
-                color="black",
-            )
-
-        self.axset(ax, "SAX")
-
-    def Ds(self, ax):
-        sequences = "\n".join(sax(self.data, self.seglen, self.alpha, 0))
-        ax.text(0.5, 0.5, sequences, ha="center", va="center")
-        ax.set(xticks=[], yticks=[], xlabel="Sequence")
-
-    def sm(self, ax):
-        for motif, y, color in zip(self.mm.motifs, range(4, -1, -1), self.colors):
-            ax.text(0.5, y / 5, motif.pattern, ha="center", c=color)
-        ax.set(xticks=[], yticks=[], xlabel="Sequence motifs")
-
-    def occ(self, ax):
-        for i, ts in enumerate(self.data):
-            ax.plot(ts, "k", lw=0.25)
-            for motif, color in zip(self.mm.motifs, self.colors):
-                if i in motif.best_matches:
-                    start = motif.best_matches[i]
-                    end = start + motif.length
-                    ax.plot(list(range(start, end)), ts[start:end], c=color, lw=0.5)
-
-        self.axset(ax, "Occurrences")
-
-    def rm(self, ax):
-        for motif in self.mm.motifs[:4]:
-            ax.plot(motif.representative, lw=0.5)
-
-        self.axset(ax, "Representative motifs")
-
-    def empty(self, ax):
-        ax.text(0.5, 0.5, "...")
-        ax.set(xticks=[], yticks=[])
-
-    def axset(self, ax, xlabel):
-        ax.set(ylim=(-3, 3), xticks=[0, self.length - 1], yticks=[], xlabel=xlabel)
 
 
 def get_all_ts(files: list):
@@ -359,32 +287,6 @@ def sample(ts, sample=512, cutoff=256):
         res.append(ts[int(a)])
         a = a + step
     return res[:cutoff]
-
-
-def plot_contour(motifs, contour, i, ax):
-    x, y = contour_to_xy(contour)
-    ax.set(xticks=[], yticks=[], ylim=[1, 0])
-    ax.plot(x, y, "k", lw=0.5)
-    plot_motifs(motifs, i, x, y, ax)
-
-
-def contour_to_xy(contour):
-    """Convert contour to a list of (x,y) points."""
-    x, y = list(zip(*contour))
-
-    max_x = max(x)
-    max_y = max(y)
-
-    return [i / max_x for i in x], [i / max_y for i in y]
-
-
-def plot_motifs(motifs, i, x, y, ax):
-    """Plot all motifs occurring in a unit."""
-    for motif in zip(motifs):
-        if m := motif.best_matches.get(i, False):
-            start = m
-            end = start + motif.length
-            ax.plot(x[start:end], y[start:end], lw=1.5)
 
 
 if __name__ == "__main__":
