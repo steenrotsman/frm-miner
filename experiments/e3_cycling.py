@@ -26,7 +26,7 @@ def main():
     fig, axs = plt.subplots(ncols=4, sharey="all")
     miner = Miner(MINSUP, SEGLEN, ALPHABET, k=K)
     motifs = miner.mine(field)
-    plot_motifs(axs, data, motifs, fn="Fig5", yticks=[-3, 0, 3])
+    plot_motifs(axs, data, motifs, fn="Fig6", yticks=[-3, 0, 3])
 
 
 def get_records(directory):

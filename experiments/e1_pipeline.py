@@ -12,13 +12,14 @@ from matplotlib import text, transforms
 from PIL import Image
 from plot import WIDTH, colors, remove_spines
 
+from frm import Miner
 from frm.patterns import PatternMiner
 from frm.preprocessing import get_breakpoints, sax, standardise
 
 IMG_DIR = "mpeg7"
 NAME = "cattle"
 SAMPLE = True
-MINSUP = 2 / 3
+MINSUP = 3 / 5
 ALPHA = 5
 SEGLEN = 32
 LENGTH = 256
@@ -26,17 +27,74 @@ LENGTH = 256
 
 def main():
     # Load data
-    files = [join(IMG_DIR, f"{NAME}-{i + 1}.gif") for i in range(3)]
+    files = [join(IMG_DIR, f"{NAME}-{i + 1}.gif") for i in range(5)]
     ts, contours = get_all_ts(files)
     small_pipe(ts)
-    large_pipe(ts)
+    sax_pipe(ts[0])
+    large_pipe(ts[:3])
 
 
 def small_pipe(ts):
-    fig, axs = plt.subplots(ncols=3)
+    fig, axs = plt.subplots(ncols=5)
+    fig.align_labels()
+    ts = standardise(ts)
+    miner = Miner(MINSUP, SEGLEN, ALPHA)
+    miner.mine(ts)
 
     # Time series
-    axs[0].plot(ts[0], lw=0.5)
+    axs[0].plot(ts.T, lw=0.5)
+    axs[0].set(
+        ylim=(-3, 3),
+        xticks=[0, len(ts[0]) - 1],
+        yticks=[],
+        xlabel="Time series database",
+    )
+
+    # Sequences
+    sequences = "\n".join(sax(ts, SEGLEN, ALPHA, 0))
+    axs[1].text(0.5, 0.5, sequences, ha="center", va="center")
+    axs[1].set(xticks=[], yticks=[], xlabel="Sequence database")
+
+    # Sequence motifs
+    for motif, y, color in zip(miner.motifs, range(6, -1, -1), colors):
+        axs[2].text(
+            0.5, y / 10 + 0.025, motif.pattern, ha="center", va="center", color=color
+        )
+    axs[2].set(xticks=[], yticks=[], xlabel="Sequence motifs")
+
+    # Occurrences and representative motif
+    for i, row in enumerate(ts):
+        axs[3].plot(row, "k", lw=0.25)
+        motif, color = miner.motifs[1], colors[1]
+        if i in motif.best_matches:
+            start = motif.best_matches[i]
+            end = start + motif.length
+            axs[3].plot(list(range(start, end)), row[start:end], color, lw=0.5)
+
+        axs[4].plot(motif.representative, color, lw=0.5)
+
+    axs[3].set(
+        ylim=(-3, 3), xticks=[0, len(ts[0]) - 1], yticks=[], xlabel="Occurrences"
+    )
+    axs[4].set(
+        ylim=(-3, 3),
+        xticks=[0, len(ts[0]) - 1],
+        yticks=[],
+        xlabel="Representative motif",
+    )
+    for i in range(5):
+        remove_spines(axs[i])
+    fig.align_labels()
+    plt.savefig("figs/Fig1.pdf")
+    plt.close()
+
+
+def sax_pipe(ts):
+    fig, axs = plt.subplots(ncols=3)
+    ts = standardise([ts])[0]
+
+    # Time series
+    axs[0].plot(ts, lw=0.5)
     axs[0].set(ylim=(-3, 3), xticks=[0, len(ts) - 1], yticks=[], xlabel="Time series")
 
     # SAX breakpoints
@@ -44,13 +102,13 @@ def small_pipe(ts):
         axs[1].axhline(y=b, color="lightgrey", lw=0.5)
 
     # SAX segments
-    axs[1].plot(ts[0], lw=0.5)
-    sequence = sax([ts[0]], SEGLEN, ALPHA, 0)[0]
-    for i in range(0, len(ts[0]), SEGLEN):
+    axs[1].plot(ts, lw=0.5)
+    sequence = sax([ts], SEGLEN, ALPHA, 0)[0]
+    for i in range(0, len(ts), SEGLEN):
         start_idx = i
         end_idx = i + SEGLEN
         x_values = np.arange(start_idx, end_idx)
-        y_value = np.mean(ts[0][start_idx:end_idx])
+        y_value = np.mean(ts[start_idx:end_idx])
         y_values = np.full_like(x_values, y_value, dtype=y_value.dtype)
         axs[1].plot(x_values, y_values, color="black", lw=0.5)
 
@@ -67,9 +125,15 @@ def small_pipe(ts):
     axs[1].set(ylim=(-3, 3), xticks=[0, len(ts) - 1], yticks=[], xlabel="SAX")
 
     # Sequences
-    sequences = "\n".join(sax(ts, SEGLEN, ALPHA, 0))
+    sequences = "\n".join(sax([ts], SEGLEN, ALPHA, 0))
     axs[2].text(0.5, 0.5, sequences, ha="center", va="center")
     axs[2].set(xticks=[], yticks=[], xlabel="Sequence")
+
+    for i in range(3):
+        remove_spines(axs[i])
+    fig.align_labels()
+    plt.savefig("figs/Fig2.pdf")
+    plt.close()
 
 
 def large_pipe(ts):
@@ -221,7 +285,8 @@ def large_pipe(ts):
     remove_spines(axd["rm"])
 
     plt.subplots_adjust(top=0.98, bottom=0.07, left=0.01, right=0.99)
-    plt.savefig("figs/Fig1.pdf")
+    plt.savefig("figs/Fig3.pdf")
+    plt.close()
 
 
 def get_all_ts(files: list):

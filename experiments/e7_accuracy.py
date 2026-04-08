@@ -38,7 +38,7 @@ def main():
         ax.plot(range(end, len(row)), row[end:], "k", lw=0.3)
         ax.set(yticks=[-2.5, 2.5])
         remove_spines(ax, remove_y=False)
-    plt.savefig(join("figs", "Fig10.pdf"))
+    plt.savefig(join("figs", "Fig11.pdf"))
     plt.close()
 
     # Vary noise levels
@@ -57,7 +57,7 @@ def main():
             ax.plot(zscore(data[ts][idx : idx + motif.length]), lw=0.3)
         ax.set(xticks=[0, motif.length], xlabel=level)
         remove_spines(ax, remove_y=False)
-    plt.savefig(join("figs", "Fig11.pdf"))
+    plt.savefig(join("figs", "Fig12.pdf"))
     plt.close()
 
     # Discover with Ostinato
@@ -68,7 +68,7 @@ def main():
         ax.plot(zscore(consensus_motif), "k", lw=0.3)
         ax.set(xticks=[0, MOTIF_LEN], xlabel=level)
         remove_spines(ax, remove_y=False)
-    plt.savefig(join("figs", "Fig12.pdf"))
+    plt.savefig(join("figs", "Fig13.pdf"))
     plt.close()
 
 

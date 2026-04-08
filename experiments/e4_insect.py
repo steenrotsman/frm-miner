@@ -57,7 +57,7 @@ def plot_data(data):
 
     remove_spines(axs[2], remove_y=False)
 
-    plt.savefig(join("figs", "Fig6.pdf"))
+    plt.savefig(join("figs", "Fig7.pdf"))
     plt.close()
 
 
@@ -70,7 +70,7 @@ def plot_motif(data):
         motif = motifs[0]
         plot_motifs([ax], data, [motif])
         ax.set(ylim=(-3, 3), xlabel=f"minsup = {minsup}", yticks=[-2, 0, 2])
-    plt.savefig(join("figs", "Fig7.pdf"))
+    plt.savefig(join("figs", "Fig8.pdf"))
     plt.close()
 
 

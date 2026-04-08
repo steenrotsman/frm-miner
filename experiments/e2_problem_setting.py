@@ -102,10 +102,10 @@ def plot_data_and_results(ts, ground_truth, motifs):
         ax.plot(ts[ts_index])
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
-    plt.savefig(join("figs", "Fig3.pdf"))
+    plt.savefig(join("figs", "Fig4.pdf"))
 
     fig, axs = plt.subplots(ncols=K, sharey="all")
-    plot_motifs(axs, ts, motifs, fn="Fig4")
+    plot_motifs(axs, ts, motifs, fn="Fig5")
 
 
 def evaluate_motifs(ground_truth, motifs):

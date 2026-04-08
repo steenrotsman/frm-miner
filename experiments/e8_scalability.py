@@ -25,8 +25,8 @@ RNG = np.random.default_rng(0)
 
 
 def main():
-    experiment(TIME_FILE, "Seconds", PLOT, 13)
-    experiment(SPACE_FILE, "Megabytes", PLOT, 14)
+    experiment(TIME_FILE, "Seconds", PLOT, 14)
+    experiment(SPACE_FILE, "Megabytes", PLOT, 15)
 
 
 def experiment(file, measure, plot, fig):
