@@ -30,8 +30,8 @@ def main():
     files = [join(IMG_DIR, f"{NAME}-{i + 1}.gif") for i in range(5)]
     ts, contours = get_all_ts(files)
     small_pipe(ts)
-    sax_pipe(ts[0])
     large_pipe(ts[:3])
+    sax_pipe(ts[0])
 
 
 def small_pipe(ts):
@@ -132,7 +132,7 @@ def sax_pipe(ts):
     for i in range(3):
         remove_spines(axs[i])
     fig.align_labels()
-    plt.savefig("figs/Fig2.pdf")
+    plt.savefig("figs/Fig3.pdf")
     plt.close()
 
 
@@ -285,7 +285,7 @@ def large_pipe(ts):
     remove_spines(axd["rm"])
 
     plt.subplots_adjust(top=0.98, bottom=0.07, left=0.01, right=0.99)
-    plt.savefig("figs/Fig3.pdf")
+    plt.savefig("figs/Fig2.pdf")
     plt.close()
 
 
