@@ -33,7 +33,7 @@ def main():
     ts, subjects = get_data(COLS[2])
     miner = Miner(MINSUP, SEGLEN, ALPHA, diff=DIFF, omax=OMAX, k=K)
     motifs = miner.mine(ts)
-    plot_motifs([axs[2]], ts, [motifs[2]], fn="tetris")
+    plot_motifs([axs[2]], ts, [motifs[2]], fn="Fig9")
 
 
 def get_data(column):

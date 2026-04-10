@@ -16,7 +16,7 @@ SETTINGS = [
         "FRM-Miner 1.0",
         "FRM-Miner 2.0",
         2,
-        "9",
+        "10",
     ),
     (
         "e6_memory.csv",
@@ -25,7 +25,7 @@ SETTINGS = [
         "FRM-Miner 1.0",
         "FRM-Miner 2.0",
         2,
-        "10",
+        "11",
     ),
 ]
 

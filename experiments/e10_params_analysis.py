@@ -67,5 +67,5 @@ twin.set(ylabel="n Patterns")
 twin.set_yticks([0, 50, 100], labels=[0, 50, 100])
 fig.legend(handles=[time[0], patterns[0]], loc="outside lower center", ncols=2)
 
-plt.savefig(join("figs", "Fig16.pdf"))
+plt.savefig(join("figs", "Fig17.pdf"))
 plt.close()
