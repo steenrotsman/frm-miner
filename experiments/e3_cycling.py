@@ -13,7 +13,7 @@ FIELD = "speed"
 
 # Miner parameters
 MINSUP = 0.3
-SEGLEN = 15
+SEGLEN = 6
 ALPHABET = 4
 K = 4
 
