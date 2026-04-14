@@ -34,21 +34,21 @@ jobs:
 
 
   build_wheel:
-  name: Build Wheel
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v4
+    name: Build Wheel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-    - name: Build wheel
-      run: pipx run build --wheel
+      - name: Build wheel
+        run: pipx run build --wheel
 
-    - name: Check metadata
-      run: pipx run twine check dist/*
+      - name: Check metadata
+        run: pipx run twine check dist/*
 
-    - uses: actions/upload-artifact@v4
-      with:
-        name: wheels
-        path: dist/*.whl
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels
+          path: dist/*.whl
 
 
   upload_all:
