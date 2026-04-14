@@ -51,5 +51,4 @@ include = ["frm*"]
 [tool.cibuildwheel]
 test-command = "pytest {project}/tests"
 test-extras = ["test"]
-skip = ["pp*", "*-musllinux_aarch64"]
-test-skip = ["*universal2:arm64"]
+skip = ["*_i686", "*_ppc64le", "*_s390x", "*_universal2"]
