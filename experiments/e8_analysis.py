@@ -3,10 +3,10 @@ from statistics import fmean
 
 import matplotlib.pyplot as plt
 import numpy as np
-from e7_ucr import ALPHA, SEGLEN
+from e8_ucr import ALPHA, SEGLEN
 from plot import remove_spines
 
-FILE = "e7_ucr.csv"
+FILE = "e8_ucr.csv"
 
 experiments = defaultdict(list)
 with open(FILE) as fp:

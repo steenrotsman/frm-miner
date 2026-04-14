@@ -15,7 +15,7 @@ from time import perf_counter
 
 from frm import Miner
 
-FILE = "e5_runtime.csv"
+FILE = "e6_runtime.csv"
 FOLDER = "UCRArchive_2018"
 FILES = listdir(FOLDER)
 PARTITIONS = ["TRAIN", "TEST"]

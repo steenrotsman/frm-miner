@@ -2,10 +2,9 @@ from os.path import join
 from statistics import fmean
 
 import matplotlib.pyplot as plt
-
 import plot  # noqa
 
-FILE = "e9_params.csv"
+FILE = "e10_params.csv"
 
 MINSUP = [0.1, 0.3, 0.5, 0.7, 0.9]
 SEGLEN = [10, 20, 30, 40, 50]

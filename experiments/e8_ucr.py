@@ -10,7 +10,7 @@ from scipy.stats import zscore
 
 from frm import Miner
 
-FILE = "e7_ucr.csv"
+FILE = "e8_ucr.csv"
 FOLDER = "UCRArchive_2018"
 FILES = listdir(FOLDER)
 PARTITIONS = ["TRAIN", "TEST"]

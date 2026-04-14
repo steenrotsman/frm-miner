@@ -86,6 +86,7 @@ def small_pipe(ts):
         remove_spines(axs[i])
     fig.align_labels()
     plt.savefig("figs/Fig1.pdf")
+    plt.savefig("../pipeline.png")
     plt.close()
 
 

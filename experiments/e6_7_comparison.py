@@ -10,7 +10,7 @@ SIZE = 3
 SETTINGS = [
     # file, x_method, y_method, x_name, y_name, lines, fn
     (
-        "e5_runtime.csv",
+        "e6_runtime.csv",
         "benchmark_miner_1",
         "benchmark_miner_2",
         "FRM-Miner 1.0",
@@ -19,7 +19,7 @@ SETTINGS = [
         "10",
     ),
     (
-        "e6_memory.csv",
+        "e7_memory.csv",
         "1",
         "2",
         "FRM-Miner 1.0",

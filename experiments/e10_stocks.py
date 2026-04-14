@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 def get_stocks():
     try:
-        with open("e2_stocks.pkl", "rb") as fp:
+        with open("e10_stocks.pkl", "rb") as fp:
             volumes = pickle.load(fp)
     except FileNotFoundError:
         # https://stockanalysis.com/stocks/
@@ -5981,7 +5981,7 @@ def get_stocks():
             if volume and len(volume) >= 100
         ]
 
-        with open("experiments/e2_stocks.pkl", "wb") as fp:
+        with open("e10_stocks.pkl", "wb") as fp:
             pickle.dump(volumes, fp)
 
     return volumes

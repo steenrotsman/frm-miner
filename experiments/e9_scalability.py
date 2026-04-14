@@ -6,14 +6,14 @@ from time import perf_counter
 
 import matplotlib.pyplot as plt
 import numpy as np
-from e5_runtime import FILE as RUNTIME_FILE
-from e5_runtime import benchmark_miner_2, get_data
-from e6_memory import FILE as MEMORY_FILE
+from e6_runtime import FILE as RUNTIME_FILE
+from e6_runtime import benchmark_miner_2, get_data
+from e7_memory import FILE as MEMORY_FILE
 from patterns import profile_memory_peak
 from plot import remove_spines
 
-TIME_FILE = "e8_scalability sim.csv"
-SPACE_FILE = "e8_scalability sim memory.csv"
+TIME_FILE = "e9_scalability sim.csv"
+SPACE_FILE = "e9_scalability sim memory.csv"
 
 LENGTHS = [10**i for i in range(2, 5)]
 ROWS = [10**i for i in range(2, 5)]

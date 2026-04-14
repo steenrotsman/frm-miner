@@ -9,10 +9,10 @@ Peak memory use on each data set is recorded.
 
 from multiprocessing import Pool
 
-from e5_runtime import FILES, get_data
+from e6_runtime import FILES, get_data
 from patterns import profile_memory_peak
 
-FILE = "e6_memory.csv"
+FILE = "e7_memory.csv"
 
 
 def main():
