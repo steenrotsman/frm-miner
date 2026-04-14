@@ -59,24 +59,24 @@ jobs:
           path: wheelhouse/*.whl
 
 
-upload_all:
-  name: Upload if release
-  needs: [build_wheels, build_sdist]
-  runs-on: ubuntu-latest
-  environment: pypi
-  if: github.event_name == 'release' && github.event.action == 'published'
-  steps:
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.x"
+  upload_all:
+    name: Upload if release
+    needs: [build_wheels, build_sdist]
+    runs-on: ubuntu-latest
+    environment: pypi
+    if: github.event_name == 'release' && github.event.action == 'published'
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
 
-    - uses: actions/download-artifact@v4
-      with:
-        path: dist
-        merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
 
-    - uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: __token__
-        password: ${{ secrets.pypi_password }}
-        attestations: false
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.pypi_password }}
+          attestations: false
