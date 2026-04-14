@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "frm-miner"
-version = "0.0.8"
+version = "1.0"
 authors = [
     {name = "Stijn J. Rotman", email = "s.j.rotman@uvt.nl"},
 ]
@@ -20,6 +20,8 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Intended Audience :: Science/Research",
 ]
 dependencies = [
