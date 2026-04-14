@@ -7,7 +7,7 @@ import numpy as np
 from scipy.stats import norm, zscore
 
 
-def sax(ts, seglen, alpha, diff):
+def sax(ts, seglen, alpha, diff=0):
     """Symbolic Aggregate approXimation.
 
     Parameters
