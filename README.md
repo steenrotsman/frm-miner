@@ -1,6 +1,6 @@
 # FRM-Miner #
 
-Frequent Representative Motif Miner (FRM-Miner): Efficiently Mining Frequent Representative Motifs in Large Collections of Time Series.
+FRM-Miner: Efficient Motif Discovery in Large Collections of Time Series.
 
 ![Pipeline of FRM-Miner: A time series database is discretised into a sequence database using SAX. Non-overlapping frequent sequential patterns without gaps are mined, after which their occurrences are mapped back to the time series. The occurrences are then used to construct frequent representative motifs.](pipeline.png)
 
